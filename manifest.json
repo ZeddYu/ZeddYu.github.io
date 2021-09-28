@@ -3,5 +3,5 @@
     "short_name": "HackerWeb",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#F5F5FA"
+    "background_color": "#303030"
 }

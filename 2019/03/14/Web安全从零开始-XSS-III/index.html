@@ -258,8 +258,7 @@ qznLcsROx4GACP2dm0UCKCzCG+HiZ1guq6ZZDob/Tng<span class=o>=</span>
 <h4 id=http-header>HTTP Header</h4>
 <p>通过 Meta 的方式很是简单，但当涉及到的页面较多时，使用 Meta 标签的方式需要在每个页面都各自加上。而如果通过服务端配置 HTML 返回的响应头 HTTP header 带上 CSP 的指令的话，那将能够一劳永逸，同时支持多个页面。下图为响应头</p>
 <p><a class=link href=https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png target=_blank rel=noopener><figure>
-<a href=https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png loading=lazy alt=http>
+<a href=https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png><img src=https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png loading=lazy alt=http>
 </a>
 <figcaption>http</figcaption>
 </figure></a></p>
@@ -368,21 +367,18 @@ qznLcsROx4GACP2dm0UCKCzCG+HiZ1guq6ZZDob/Tng<span class=o>=</span>
 <span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
 </code></pre></div><p>当前目录下随便放置一个文件提供引入即可，然后我们可以发现<code>iframe</code>当中其实就是个 html 页面</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009928.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009928.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009928.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009928.jpg loading=lazy>
 </a>
 </figure></p>
 <p>然后我们尝试对其进行修改</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=nb>window</span><span class=p>.</span><span class=nx>frames</span><span class=p>[</span><span class=mi>0</span><span class=p>].</span><span class=nb>document</span><span class=p>.</span><span class=nx>head</span><span class=p>.</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=s2>&#34;hasaki!&#34;</span><span class=p>;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003468.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003468.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003468.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003468.jpg loading=lazy>
 </a>
 </figure></p>
 <p>我们就可以在<code>iframe</code>的页面中发现<code>&lt;head></code>标签内容已经被我们改成了<code>hasaki!</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000023.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000023.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000023.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000023.jpg loading=lazy>
 </a>
 </figure></p>
 <p>做到这里，我们基本可以想到，如果我们引用的是一个没有 CSP 策略的地址含有恶意的 js 代码会怎么样呢？我们可以试一下</p>
@@ -413,8 +409,7 @@ qznLcsROx4GACP2dm0UCKCzCG+HiZ1guq6ZZDob/Tng<span class=o>=</span>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=nx>alert</span><span class=p>(</span><span class=s1>&#39;Wow! Origin: &#39;</span><span class=o>+</span><span class=nx>location</span><span class=p>.</span><span class=nx>origin</span><span class=o>+</span><span class=s1>&#39;\nUrl: &#39;</span><span class=o>+</span><span class=nx>top</span><span class=p>.</span><span class=nx>location</span><span class=p>.</span><span class=nx>href</span><span class=o>+</span><span class=s1>&#39;?&#39;</span><span class=p>);</span>
 </code></pre></div><p>可以发现执行了 javascript 代码</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004313.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004313.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004313.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004313.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=example-2>Example 2</h4>

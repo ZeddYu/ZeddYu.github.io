@@ -69,8 +69,7 @@ Sec
 <p>既然有<code>eval()</code>，那是不是可以执行命令呢？答案是当然可以的。</p>
 <p>首先我们来看正则表达式的效果如下图所示</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006336.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006336.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006336.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006336.jpg loading=lazy>
 </a>
 </figure></p>
 <p>如果小括号前有数字或者字母的话就会<code>die()</code>掉整个程序，大概意思就是防止直接使用函数，例如不能直接使用<code>system('ls')</code>这样子。</p>
@@ -104,8 +103,7 @@ Sec
 <span class=nv>$a</span> <span class=o>=</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>phpinfo()</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>;</span>
 <span class=cp>?&gt;</span><span class=err>
 </span></code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005936.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005936.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005936.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005936.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=thinking>Thinking</h3>
@@ -118,20 +116,17 @@ Sec
 <p>我们可以看到<code>${phpinfo()}</code>里面在严格意义上来说并不是一个变量，那为什么可以执行呢？</p>
 <p>让我们来看一个例子</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007200.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007200.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007200.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007200.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007816.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007816.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007816.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007816.jpg loading=lazy>
 </a>
 </figure></p>
 <p>在 php 中，可以接受函数的返回值作为变量名，而<code>phpinfo()</code>的返回值为<code>TRUE</code>，所以先将<code>phpinfo()</code>执行了，将返回值返回作为了变量名。</p>
 <p>我们可以再来看一个例子。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000457.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000457.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000457.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000457.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里就更清楚的说明了执行了<code>system('whomai')</code>并把其返回值<code>zedd</code>作为了变量，最后<code>$zedd</code>才被修改了。</p>
@@ -156,8 +151,7 @@ Sec
 <span class=cp>?&gt;</span><span class=err>
 </span></code></pre></div><p>那加上<code>addslashes()</code>方法呢？既然不能逃逸双引号，我们就可以利用 php 复杂变量来处理。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002715.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002715.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002715.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002715.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=difficult>Difficult</h3>
@@ -173,31 +167,26 @@ Sec
 </span></code></pre></div><p>好的，终于回到了我们题目，这样的话就不能单纯地使用函数方法了。那我们可以怎么做呢？</p>
 <p>如果开启了<code>Notice</code>回显的话，我们可以利用反引号就可以简单实现命令执行了</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002827.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002827.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002827.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002827.jpg loading=lazy>
 </a>
 </figure></p>
 <p>那要是没开启呢？自然不可行了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007385.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007385.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007385.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007385.jpg loading=lazy>
 </a>
 </figure></p>
 <p>接下来就可以利用可变函数的与字符串拼接的特性了，简单来说就用下图的技巧，详细的可以移步个人博客查看<a class=link href=https://blog.zeddyu.info/2019/02/28/Some-Tricks-of-Bypass-php-waf/ target=_blank rel=noopener>Some Tricks of Bypass php waf</a></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008760.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008760.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008760.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008760.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003443.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003443.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003443.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003443.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以我们可以这里玩法就很多样了</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009115.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009115.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009115.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009115.jpg loading=lazy>
 </a>
 </figure></p>
 <p>关于 php 复杂变量的玩法还有很多，这里就大概说到这里吧，文中有不对之处还望师傅们斧正。</p>

@@ -60,8 +60,7 @@ Sec
 <p>In the future, if there is a new summary, I will also send my <a class=link href=https://blog.zeddyu.info target=_blank rel=noopener>blog</a>.</p>
 <h2 id=tlnr>TL;NR</h2>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:426px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520131941.jpg data-size=1931x1086>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520131941.jpg width=1931 height=1086 srcset="/2019/12/08/HTTP-Smuggling-en/20200520131941_hu60d960ed495a2b585e6ac44f86f4cb6d_142835_480x0_resize_q75_box.jpg 480w, /2019/12/08/HTTP-Smuggling-en/20200520131941_hu60d960ed495a2b585e6ac44f86f4cb6d_142835_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520131941.jpg data-size=1931x1086><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520131941.jpg width=1931 height=1086 srcset="/2019/12/08/HTTP-Smuggling-en/20200520131941_hu60d960ed495a2b585e6ac44f86f4cb6d_142835_480x0_resize_q75_box.jpg 480w, /2019/12/08/HTTP-Smuggling-en/20200520131941_hu60d960ed495a2b585e6ac44f86f4cb6d_142835_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>Pic from <a class=link href="https://twitter.com/SpiderSec/status/1200413390339887104?s=19" target=_blank rel=noopener>https://twitter.com/SpiderSec/status/1200413390339887104?s=19</a></p>
@@ -93,8 +92,7 @@ Sec
 </blockquote>
 <p>The more important introduction in HTTP / 1.1 is the pipeline technology. The following is a comparison chart with and without piepeline technology:</p>
 <p><figure class=gallery-image style=flex-grow:143;flex-basis:345px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520134869.png data-size=2560x1780>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520134869.png width=2560 height=1780 srcset="/2019/12/08/HTTP-Smuggling-en/20200520134869_hu705e3a4eab06dc8a2b4bfbfa9dc6ca0d_101432_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520134869_hu705e3a4eab06dc8a2b4bfbfa9dc6ca0d_101432_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520134869.png data-size=2560x1780><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520134869.png width=2560 height=1780 srcset="/2019/12/08/HTTP-Smuggling-en/20200520134869_hu705e3a4eab06dc8a2b4bfbfa9dc6ca0d_101432_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520134869_hu705e3a4eab06dc8a2b4bfbfa9dc6ca0d_101432_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>We can clearly see that after using the pipeline, there is no need to wait for the previous request to complete its response before processing the second request. This is like asynchronous processing.</p>
@@ -189,24 +187,20 @@ in\r\n\r\nchunks.\r\n
 </blockquote>
 <p>Here is a picture from @mengchen :</p>
 <p><figure class=gallery-image style=flex-grow:132;flex-basis:318px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520133872.png data-size=532x401>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520133872.png width=532 height=401 srcset="/2019/12/08/HTTP-Smuggling-en/20200520133872_hu6951c364d3c4f44760904149a67b0bef_13305_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520133872_hu6951c364d3c4f44760904149a67b0bef_13305_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520133872.png data-size=532x401><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520133872.png width=532 height=401 srcset="/2019/12/08/HTTP-Smuggling-en/20200520133872_hu6951c364d3c4f44760904149a67b0bef_13305_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520133872_hu6951c364d3c4f44760904149a67b0bef_13305_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>Generally speaking, the reverse proxy and back-end server will not use pipeline technology, or even keep-alive. The measures taken by the reverse proxy is to reuse the TCP connection, because compare with the reverse proxy and back-end server, the reverse proxy server and the back-end server IP are relatively fixed, and requests from different users establish a link with the back-end server through the proxy server, and the TCP link between the two is reused.</p>
 <p><figure class=gallery-image style=flex-grow:136;flex-basis:326px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520139456.png data-size=1836x1350>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139456.png width=1836 height=1350 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139456_hu5e3b7b73fc89eaa2bc08dfabf445d6a5_290162_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139456_hu5e3b7b73fc89eaa2bc08dfabf445d6a5_290162_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520139456.png data-size=1836x1350><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139456.png width=1836 height=1350 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139456_hu5e3b7b73fc89eaa2bc08dfabf445d6a5_290162_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139456_hu5e3b7b73fc89eaa2bc08dfabf445d6a5_290162_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p><figure class=gallery-image style=flex-grow:133;flex-basis:320px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520130675.png data-size=1770x1325>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520130675.png width=1770 height=1325 srcset="/2019/12/08/HTTP-Smuggling-en/20200520130675_hu79f605ea54634d6194051308bbfa9f2f_230289_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520130675_hu79f605ea54634d6194051308bbfa9f2f_230289_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520130675.png data-size=1770x1325><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520130675.png width=1770 height=1325 srcset="/2019/12/08/HTTP-Smuggling-en/20200520130675_hu79f605ea54634d6194051308bbfa9f2f_230289_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520130675_hu79f605ea54634d6194051308bbfa9f2f_230289_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p><figure class=gallery-image style=flex-grow:135;flex-basis:324px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520134020.png data-size=1830x1354>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520134020.png width=1830 height=1354 srcset="/2019/12/08/HTTP-Smuggling-en/20200520134020_hue4a8c6ca94078ac11f24cc468ac24f79_240215_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520134020_hue4a8c6ca94078ac11f24cc468ac24f79_240215_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520134020.png data-size=1830x1354><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520134020.png width=1830 height=1354 srcset="/2019/12/08/HTTP-Smuggling-en/20200520134020_hue4a8c6ca94078ac11f24cc468ac24f79_240215_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520134020_hue4a8c6ca94078ac11f24cc468ac24f79_240215_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <blockquote>
@@ -378,31 +372,26 @@ Transfer-Encoding
 <pre tabindex=0><code>GET /foo\r\n
 </code></pre><p>And HTTP/0.9 request and response packets do not have headers. Such as:</p>
 <p><figure class=gallery-image style=flex-grow:151;flex-basis:363px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520134497.png data-size=1832x1211>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520134497.png width=1832 height=1211 srcset="/2019/12/08/HTTP-Smuggling-en/20200520134497_hu3b252fe33c04093db1d24da66617f96f_235581_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520134497_hu3b252fe33c04093db1d24da66617f96f_235581_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520134497.png data-size=1832x1211><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520134497.png width=1832 height=1211 srcset="/2019/12/08/HTTP-Smuggling-en/20200520134497_hu3b252fe33c04093db1d24da66617f96f_235581_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520134497_hu3b252fe33c04093db1d24da66617f96f_235581_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>Because HTTP/0.9 response packets do not have headers, they are particularly interesting to be used in HTTP Smuggling.</p>
 <p><figure class=gallery-image style=flex-grow:138;flex-basis:331px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520136500.png data-size=1813x1313>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520136500.png width=1813 height=1313 srcset="/2019/12/08/HTTP-Smuggling-en/20200520136500_hu0d851efc7bfc2f3d462ebdb0c26e2ed5_374595_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520136500_hu0d851efc7bfc2f3d462ebdb0c26e2ed5_374595_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520136500.png data-size=1813x1313><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520136500.png width=1813 height=1313 srcset="/2019/12/08/HTTP-Smuggling-en/20200520136500_hu0d851efc7bfc2f3d462ebdb0c26e2ed5_374595_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520136500_hu0d851efc7bfc2f3d462ebdb0c26e2ed5_374595_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>The meaning of this picture is that we use HTTP/0.9 for Smuggle when HTTP Smuggling. This is not the HTTP/0.9 standard format, but because some middleware no longer supports the standard format of directly parsing HTTP/0.9, but it is still possible to parse specified HTTP version. Then the following situations may exist:</p>
 <p><figure class=gallery-image style=flex-grow:146;flex-basis:350px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520134449.png data-size=1785x1222>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520134449.png width=1785 height=1222 srcset="/2019/12/08/HTTP-Smuggling-en/20200520134449_huc1a1067a40e0522509ca788e028740b2_238319_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520134449_huc1a1067a40e0522509ca788e028740b2_238319_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520134449.png data-size=1785x1222><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520134449.png width=1785 height=1222 srcset="/2019/12/08/HTTP-Smuggling-en/20200520134449_huc1a1067a40e0522509ca788e028740b2_238319_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520134449_huc1a1067a40e0522509ca788e028740b2_238319_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p><figure class=gallery-image style=flex-grow:140;flex-basis:337px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520139919.png data-size=1762x1253>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139919.png width=1762 height=1253 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139919_hu81fc8321e62bfa0f5bf6b0369d8b8d81_278838_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139919_hu81fc8321e62bfa0f5bf6b0369d8b8d81_278838_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520139919.png data-size=1762x1253><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139919.png width=1762 height=1253 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139919_hu81fc8321e62bfa0f5bf6b0369d8b8d81_278838_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139919_hu81fc8321e62bfa0f5bf6b0369d8b8d81_278838_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>The above two figures show a rough attack flow. The 24-33664 bytes in chewy2.jpg have a complete HTTP response message. When Golang is processing HTTP/0.9, since we specified <code>Range: bytes=24-33664</code>, we can specify to obtain 24-33664 bytes of the response message, which is to obtain the HTTP message we stored in the picture, and then return it to Golang. Golang standardizes HTTP/0.9 and then remove headers. So the response looks like a new response.</p>
 <p><figure class=gallery-image style=flex-grow:133;flex-basis:319px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520131041.png data-size=1594x1197>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520131041.png width=1594 height=1197 srcset="/2019/12/08/HTTP-Smuggling-en/20200520131041_hu21a474fe0b9136fcb730fae9f1a910eb_239990_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520131041_hu21a474fe0b9136fcb730fae9f1a910eb_239990_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520131041.png data-size=1594x1197><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520131041.png width=1594 height=1197 srcset="/2019/12/08/HTTP-Smuggling-en/20200520131041_hu21a474fe0b9136fcb730fae9f1a910eb_239990_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520131041_hu21a474fe0b9136fcb730fae9f1a910eb_239990_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>When a normal user requests, if Apache reuses the TCP / IP link, it will return the HTTP message we constructed in the picture as a response packet to the user. This is also a very typical idea of HTTP Response Splitting. For details, please see the video demo <a class=link href="https://www.youtube.com/watch?v=lY_Mf2Fv7kI" target=_blank rel=noopener>HTTP Smuggling Examples 2016</a></p>
@@ -498,8 +487,7 @@ the origination timestamp for the message in which it appears.</p>
 </code></pre></div><p>We don&rsquo;t need to know much about other codes. Here we can know that white space is treated the same as <code>:</code> colon, that is, if there is a space, the field name before <code>:</code> will be processed normally and will not be thrown error or other operations. This is inconsistent with the specifications of the RFC standard, and parsing differences will occur.</p>
 <p>@ Bi3g0 built a clearer schematic of the vulnerability:</p>
 <p><figure>
-<a href=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png loading=lazy>
+<a href=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png loading=lazy>
 </a>
 </figure></p>
 <p>The example used here is to use ELB as the front server and Netty as the backend server. We send the following request:</p>
@@ -530,8 +518,7 @@ the origination timestamp for the message in which it appears.</p>
 <p>In the next few attack methods, we can use some Labs provided by @portswigger to practice for us to deepen our understanding. <a class=link href=https://portswigger.net/web-security/request-smuggling target=_blank rel=noopener>Labs-HTTP request smuggling</a></p>
 <p>Remember to cancel BurpSuite&rsquo;s automatic update Content-Length function before doing it.</p>
 <p><figure class=gallery-image style=flex-grow:158;flex-basis:381px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520135762.jpg data-size=2560x1612>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520135762.jpg width=2560 height=1612 srcset="/2019/12/08/HTTP-Smuggling-en/20200520135762_hu99a744ea0805facb74e8940a81aa0415_343035_480x0_resize_q75_box.jpg 480w, /2019/12/08/HTTP-Smuggling-en/20200520135762_hu99a744ea0805facb74e8940a81aa0415_343035_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520135762.jpg data-size=2560x1612><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520135762.jpg width=2560 height=1612 srcset="/2019/12/08/HTTP-Smuggling-en/20200520135762_hu99a744ea0805facb74e8940a81aa0415_343035_480x0_resize_q75_box.jpg 480w, /2019/12/08/HTTP-Smuggling-en/20200520135762_hu99a744ea0805facb74e8940a81aa0415_343035_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>First let&rsquo;s look at the situation of CL-TE: <a class=link href=https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te target=_blank rel=noopener>Lab: HTTP request smuggling, basic CL.TE vulnerability</a></p>
@@ -551,13 +538,11 @@ the origination timestamp for the message in which it appears.</p>
 G
 </code></pre></div><p>We can send above requests twice.</p>
 <p><figure class=gallery-image style=flex-grow:158;flex-basis:381px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520137370.jpg data-size=2560x1612>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520137370.jpg width=2560 height=1612 srcset="/2019/12/08/HTTP-Smuggling-en/20200520137370_hu99a744ea0805facb74e8940a81aa0415_570314_480x0_resize_q75_box.jpg 480w, /2019/12/08/HTTP-Smuggling-en/20200520137370_hu99a744ea0805facb74e8940a81aa0415_570314_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520137370.jpg data-size=2560x1612><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520137370.jpg width=2560 height=1612 srcset="/2019/12/08/HTTP-Smuggling-en/20200520137370_hu99a744ea0805facb74e8940a81aa0415_570314_480x0_resize_q75_box.jpg 480w, /2019/12/08/HTTP-Smuggling-en/20200520137370_hu99a744ea0805facb74e8940a81aa0415_570314_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p><figure class=gallery-image style=flex-grow:158;flex-basis:381px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520138381.jpg data-size=2560x1612>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520138381.jpg width=2560 height=1612 srcset="/2019/12/08/HTTP-Smuggling-en/20200520138381_hu99a744ea0805facb74e8940a81aa0415_309108_480x0_resize_q75_box.jpg 480w, /2019/12/08/HTTP-Smuggling-en/20200520138381_hu99a744ea0805facb74e8940a81aa0415_309108_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520138381.jpg data-size=2560x1612><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520138381.jpg width=2560 height=1612 srcset="/2019/12/08/HTTP-Smuggling-en/20200520138381_hu99a744ea0805facb74e8940a81aa0415_309108_480x0_resize_q75_box.jpg 480w, /2019/12/08/HTTP-Smuggling-en/20200520138381_hu99a744ea0805facb74e8940a81aa0415_309108_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>We can make the second method to construct the HTTP method of GPOST. For details, we can follow this flowchart to see:</p>
@@ -613,8 +598,7 @@ GPOST / HTTP/1.1
 \r\n
 </code></pre><p>Here we can send more than two HTTP request packets, and we can receive the response as shown below.</p>
 <p><figure class=gallery-image style=flex-grow:287;flex-basis:689px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520139652.png data-size=1912x666>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139652.png width=1912 height=666 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139652_hu17eb6e3730c5246fad7ba01d5aab91c9_158643_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139652_hu17eb6e3730c5246fad7ba01d5aab91c9_158643_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520139652.png data-size=1912x666><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139652.png width=1912 height=666 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139652_hu17eb6e3730c5246fad7ba01d5aab91c9_158643_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139652_hu17eb6e3730c5246fad7ba01d5aab91c9_158643_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>The process flow is similar to CL-TE. When the Front server processes this request, it will be processed first according to TE. It will consider the above request as a whole and then forward it to the Backend server. When the Backend server processes it according to CL, it will consider that <code> 12\r\n</code> is the body of the first request, the following is the second request, so it will respond to GPOST as an unrecognized HTTP Method.</p>
@@ -649,8 +633,7 @@ GPOST / HTTP/1.1
 \r\n
 </code></pre><p>We can get the response as shown below.</p>
 <p><figure class=gallery-image style=flex-grow:396;flex-basis:951px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520132864.png data-size=1872x472>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520132864.png width=1872 height=472 srcset="/2019/12/08/HTTP-Smuggling-en/20200520132864_hub2c3924287ae78ebafe68510e79d0c4a_131995_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520132864_hub2c3924287ae78ebafe68510e79d0c4a_131995_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520132864.png data-size=1872x472><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520132864.png width=1872 height=472 srcset="/2019/12/08/HTTP-Smuggling-en/20200520132864_hub2c3924287ae78ebafe68510e79d0c4a_131995_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520132864_hub2c3924287ae78ebafe68510e79d0c4a_131995_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>We can see that two TE fields are used here, and the value of the second TE field is non-standard. Here, Front chooses to process the first TE first. The entire request is a normal request and will be forwarded to the Backend server. The backend server prioritizes the second TE. If the second TE value is abnormal, the CL field will be used for processing. This request will be split into two requests due to the CL field value 4.</p>
@@ -704,13 +687,11 @@ GPOST / HTTP/1.1
 </span><span class=g>
 </span></code></pre></div><p>The response obtained is as follows.</p>
 <p><figure class=gallery-image style=flex-grow:247;flex-basis:593px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520132539.png data-size=2732x1104>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520132539.png width=2732 height=1104 srcset="/2019/12/08/HTTP-Smuggling-en/20200520132539_hu82cea801bede417e51f8b19f26489d8c_435403_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520132539_hu82cea801bede417e51f8b19f26489d8c_435403_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520132539.png data-size=2732x1104><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520132539.png width=2732 height=1104 srcset="/2019/12/08/HTTP-Smuggling-en/20200520132539_hu82cea801bede417e51f8b19f26489d8c_435403_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520132539_hu82cea801bede417e51f8b19f26489d8c_435403_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p><figure class=gallery-image style=flex-grow:244;flex-basis:586px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520138223.png data-size=2692x1102>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520138223.png width=2692 height=1102 srcset="/2019/12/08/HTTP-Smuggling-en/20200520138223_huf939152edb9b38a2923b84736a7e119d_382911_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520138223_huf939152edb9b38a2923b84736a7e119d_382911_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520138223.png data-size=2692x1102><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520138223.png width=2692 height=1102 srcset="/2019/12/08/HTTP-Smuggling-en/20200520138223_huf939152edb9b38a2923b84736a7e119d_382911_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520138223_huf939152edb9b38a2923b84736a7e119d_382911_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>You can see that the second request we got the response of <code>/admin</code></p>
@@ -737,8 +718,7 @@ GPOST / HTTP/1.1
 </span><span class=g>
 </span></code></pre></div><p>We can see that the content of the <code>/admin</code> panel. If it dosen&rsquo;t work, you can send it a few times.</p>
 <p><figure class=gallery-image style=flex-grow:250;flex-basis:601px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520139301.png data-size=2716x1084>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139301.png width=2716 height=1084 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139301_hu7bedf9275de91192ecee6020683bccc8_362890_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139301_hu7bedf9275de91192ecee6020683bccc8_362890_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520139301.png data-size=2716x1084><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139301.png width=2716 height=1084 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139301_hu7bedf9275de91192ecee6020683bccc8_362890_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139301_hu7bedf9275de91192ecee6020683bccc8_362890_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>We got the deleted api, so we can use HTTP Smuggling to access this <code>/admin/delete?username=carlos</code>, and construct the following data packet.</p>
@@ -760,8 +740,7 @@ GPOST / HTTP/1.1
 </span><span class=g>
 </span><span class=g>
 </span></code></pre></div><p><figure class=gallery-image style=flex-grow:477;flex-basis:1146px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520130304.png data-size=2504x524>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520130304.png width=2504 height=524 srcset="/2019/12/08/HTTP-Smuggling-en/20200520130304_hu0175d88a59eeb36d8c49299c38c5b63d_158004_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520130304_hu0175d88a59eeb36d8c49299c38c5b63d_158004_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520130304.png data-size=2504x524><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520130304.png width=2504 height=524 srcset="/2019/12/08/HTTP-Smuggling-en/20200520130304_hu0175d88a59eeb36d8c49299c38c5b63d_158004_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520130304_hu0175d88a59eeb36d8c49299c38c5b63d_158004_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>This attack method is similar to HTTP SSRF. The main point is to control the value of CL. For example, the value of CL in the first packet is 28, which is calculated as follows:</p>
@@ -790,32 +769,27 @@ GET /admin HTTP/1.1\r\n					--&gt; 19+2 = 21 bytes
 </blockquote>
 <p>According to the title hint here, the scene is a CL-TE scene and a search box is given. We try to search for a 123 at will. We can find that the search result &ldquo;123&rdquo; is directly echoed into the corresponding one.</p>
 <p><figure class=gallery-image style=flex-grow:236;flex-basis:567px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520137721.png data-size=2744x1160>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520137721.png width=2744 height=1160 srcset="/2019/12/08/HTTP-Smuggling-en/20200520137721_hub50b6fc5f7ebef0fd44a371cf6c0350f_398118_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520137721_hub50b6fc5f7ebef0fd44a371cf6c0350f_398118_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520137721.png data-size=2744x1160><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520137721.png width=2744 height=1160 srcset="/2019/12/08/HTTP-Smuggling-en/20200520137721_hub50b6fc5f7ebef0fd44a371cf6c0350f_398118_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520137721_hub50b6fc5f7ebef0fd44a371cf6c0350f_398118_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>Attempted access using HTTP Smuggling, but was blocked.</p>
 <p><figure class=gallery-image style=flex-grow:242;flex-basis:583px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520130471.png data-size=2760x1136>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520130471.png width=2760 height=1136 srcset="/2019/12/08/HTTP-Smuggling-en/20200520130471_hu5f3e54a29af102d9ba6c674829d383e8_446113_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520130471_hu5f3e54a29af102d9ba6c674829d383e8_446113_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520130471.png data-size=2760x1136><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520130471.png width=2760 height=1136 srcset="/2019/12/08/HTTP-Smuggling-en/20200520130471_hu5f3e54a29af102d9ba6c674829d383e8_446113_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520130471_hu5f3e54a29af102d9ba6c674829d383e8_446113_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>But we can try to use the search echo to leak the request header forwarded by the Front server:</p>
 <p><figure class=gallery-image style=flex-grow:241;flex-basis:580px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520136832.png data-size=2746x1136>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520136832.png width=2746 height=1136 srcset="/2019/12/08/HTTP-Smuggling-en/20200520136832_hu9994654d2469390c0de1e33059aa8ff0_427182_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520136832_hu9994654d2469390c0de1e33059aa8ff0_427182_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520136832.png data-size=2746x1136><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520136832.png width=2746 height=1136 srcset="/2019/12/08/HTTP-Smuggling-en/20200520136832_hu9994654d2469390c0de1e33059aa8ff0_427182_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520136832_hu9994654d2469390c0de1e33059aa8ff0_427182_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>If you only add the X-*-Ip request header later, you cannot access the admin panel, because this will make Backend receive two duplicate request headers. In this scenario, the Backend server judges the duplicate request headers.</p>
 <p><figure class=gallery-image style=flex-grow:396;flex-basis:950px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520132406.png data-size=2376x600>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520132406.png width=2376 height=600 srcset="/2019/12/08/HTTP-Smuggling-en/20200520132406_hu16aa6ca07f473a93dbeb9e104dc7afc4_177895_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520132406_hu16aa6ca07f473a93dbeb9e104dc7afc4_177895_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520132406.png data-size=2376x600><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520132406.png width=2376 height=600 srcset="/2019/12/08/HTTP-Smuggling-en/20200520132406_hu16aa6ca07f473a93dbeb9e104dc7afc4_177895_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520132406_hu16aa6ca07f473a93dbeb9e104dc7afc4_177895_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>So we need to &ldquo;hide&rdquo; the request headers added by the Front server, we can use Smuggling to &ldquo;hide&rdquo; the request headers added by other Front servers, and then we can get the admin panel.</p>
 <p><figure class=gallery-image style=flex-grow:243;flex-basis:585px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520135698.png data-size=2750x1128>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520135698.png width=2750 height=1128 srcset="/2019/12/08/HTTP-Smuggling-en/20200520135698_hu80fb90c4bcf5214543a7f721439e0856_396396_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520135698_hu80fb90c4bcf5214543a7f721439e0856_396396_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520135698.png data-size=2750x1128><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520135698.png width=2750 height=1128 srcset="/2019/12/08/HTTP-Smuggling-en/20200520135698_hu80fb90c4bcf5214543a7f721439e0856_396396_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520135698_hu80fb90c4bcf5214543a7f721439e0856_396396_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>The whole process looks relatively simple, but if you do it carefully, you will find the CL value is quite important. Let&rsquo;s take a look at how the CL value of the packet requested by the Front is calculated:</p>
@@ -859,8 +833,7 @@ Cookie: session=ipRivKyVnK41ZGBQk7JvtKjbD4drk2At
 csrf=oIjWmI8aLjIzqX18n5mNCnJieTnOVWPN&amp;postId=5&amp;name=1&amp;email=1%40qq.com&amp;website=http%3A%2F%2Fwww.baidu.com&amp;comment=1
 </code></pre></div><p>As long as the later CL is large enough, we can use HTTP Smuggling to stitch the next user&rsquo;s request into our last comment parameter, and then we can see the request header of others when we look at the comment.</p>
 <p><figure class=gallery-image style=flex-grow:120;flex-basis:288px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520138700.png data-size=1560x1296>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520138700.png width=1560 height=1296 srcset="/2019/12/08/HTTP-Smuggling-en/20200520138700_hua6e8412a6ef3578e4ab827630a75d1bf_499712_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520138700_hua6e8412a6ef3578e4ab827630a75d1bf_499712_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520138700.png data-size=1560x1296><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520138700.png width=1560 height=1296 srcset="/2019/12/08/HTTP-Smuggling-en/20200520138700_hua6e8412a6ef3578e4ab827630a75d1bf_499712_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520138700_hua6e8412a6ef3578e4ab827630a75d1bf_499712_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <h3 id=exploit-reflected-xss>Exploit Reflected XSS</h3>
@@ -872,8 +845,7 @@ csrf=oIjWmI8aLjIzqX18n5mNCnJieTnOVWPN&amp;postId=5&amp;name=1&amp;email=1%40qq.c
 </blockquote>
 <p>Still in the CL-TE, we can find a reflection XSS at the UA, but this is useless, so we have to find some way to upgrade the hazard.</p>
 <p><figure class=gallery-image style=flex-grow:243;flex-basis:584px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520139474.png data-size=2750x1130>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139474.png width=2750 height=1130 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139474_hude383cc9b3ba2c29595540bbc50bb3d5_342653_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139474_hude383cc9b3ba2c29595540bbc50bb3d5_342653_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520139474.png data-size=2750x1130><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139474.png width=2750 height=1130 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139474_hude383cc9b3ba2c29595540bbc50bb3d5_342653_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139474_hude383cc9b3ba2c29595540bbc50bb3d5_342653_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>We can construct the following packets, just send them once.</p>
@@ -899,13 +871,11 @@ csrf=oIjWmI8aLjIzqX18n5mNCnJieTnOVWPN&amp;postId=5&amp;name=1&amp;email=1%40qq.c
 </span><span class=g>x=1
 </span></code></pre></div><p>Then we casually visit any page on the site and it will <code>alert(1)</code> because our request is embedded in the second request above.</p>
 <p><figure class=gallery-image style=flex-grow:492;flex-basis:1182px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520132106.png data-size=2050x416>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520132106.png width=2050 height=416 srcset="/2019/12/08/HTTP-Smuggling-en/20200520132106_hu01eadd1b5dcc0165595c765d37250671_114636_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520132106_hu01eadd1b5dcc0165595c765d37250671_114636_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520132106.png data-size=2050x416><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520132106.png width=2050 height=416 srcset="/2019/12/08/HTTP-Smuggling-en/20200520132106_hu01eadd1b5dcc0165595c765d37250671_114636_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520132106_hu01eadd1b5dcc0165595c765d37250671_114636_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p><figure class=gallery-image style=flex-grow:144;flex-basis:346px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520131892.png data-size=2200x1524>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520131892.png width=2200 height=1524 srcset="/2019/12/08/HTTP-Smuggling-en/20200520131892_hu35572018ca65b54a1871444088798712_637223_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520131892_hu35572018ca65b54a1871444088798712_637223_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520131892.png data-size=2200x1524><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520131892.png width=2200 height=1524 srcset="/2019/12/08/HTTP-Smuggling-en/20200520131892_hu35572018ca65b54a1871444088798712_637223_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520131892_hu35572018ca65b54a1871444088798712_637223_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <h3 id=turn-an-on-site-redirect-into-an-open-redirect>Turn An On-Site Redirect Into An Open Redirect</h3>
@@ -944,8 +914,7 @@ csrf=oIjWmI8aLjIzqX18n5mNCnJieTnOVWPN&amp;postId=5&amp;name=1&amp;email=1%40qq.c
 <p>This environment is also a scenario where the host can be modified to redirect, and the <code>/post/next?postId=2</code> route redirect to <code>/post?postId=4</code>.</p>
 <p>According to the description of the call, we need to implement cache poisoning. For example, here we choose <code>/resources/js/tracking.js</code> for poisoning. LAB also gives us a service for manufacturing poisoning, so we can set the following settings.</p>
 <p><figure class=gallery-image style=flex-grow:95;flex-basis:229px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520130636.png data-size=1488x1556>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520130636.png width=1488 height=1556 srcset="/2019/12/08/HTTP-Smuggling-en/20200520130636_hue1b3d443f7be1b59207b551904f71de7_131373_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520130636_hue1b3d443f7be1b59207b551904f71de7_131373_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520130636.png data-size=1488x1556><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520130636.png width=1488 height=1556 srcset="/2019/12/08/HTTP-Smuggling-en/20200520130636_hue1b3d443f7be1b59207b551904f71de7_131373_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520130636_hue1b3d443f7be1b59207b551904f71de7_131373_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>Send the following packets once.</p>
@@ -973,14 +942,12 @@ Content-Length: 10
 x=1
 </code></pre></div><p>Then visit <code>/resources/js/tracking.js</code>:</p>
 <p><figure class=gallery-image style=flex-grow:704;flex-basis:1691px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520135018.png data-size=2706x384>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520135018.png width=2706 height=384 srcset="/2019/12/08/HTTP-Smuggling-en/20200520135018_hu8304788bd5c68547a9f6dded523935ab_122797_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520135018_hu8304788bd5c68547a9f6dded523935ab_122797_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520135018.png data-size=2706x384><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520135018.png width=2706 height=384 srcset="/2019/12/08/HTTP-Smuggling-en/20200520135018_hu8304788bd5c68547a9f6dded523935ab_122797_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520135018_hu8304788bd5c68547a9f6dded523935ab_122797_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>We can see that the redirect address of the response packet has been changed to the our exploit address, and then we visit the normal server homepage.</p>
 <p><figure class=gallery-image style=flex-grow:454;flex-basis:1091px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520131794.png data-size=1692x372>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520131794.png width=1692 height=372 srcset="/2019/12/08/HTTP-Smuggling-en/20200520131794_huce671dbf3d5c29e12c03050423134d18_78923_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520131794_huce671dbf3d5c29e12c03050423134d18_78923_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520131794.png data-size=1692x372><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520131794.png width=1692 height=372 srcset="/2019/12/08/HTTP-Smuggling-en/20200520131794_huce671dbf3d5c29e12c03050423134d18_78923_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520131794_huce671dbf3d5c29e12c03050423134d18_78923_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>We can <code>alert(1)</code> !</p>
@@ -1050,20 +1017,17 @@ x=1
 </span><span class=g>Location: http://skeletonscribe.net?, c.paypal.com/webstatic/ 
 </span></code></pre></div><p>But the Paypal login page has a CSP rule <code>script-src</code> which block this redirect.</p>
 <p><figure>
-<a href=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg loading=lazy>
+<a href=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg loading=lazy>
 </a>
 </figure></p>
 <p>Later, the author noticed that the login page loads a sub-page on c.paypal.com in a dynamically generated iframe. This sub-page didn&rsquo;t use CSP and also used a js file poisoned by the author! Although this can control the iframe page, because of the same-origin policy, the data of the parent page cannot be read.</p>
 <p><figure>
-<a href=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg loading=lazy>
+<a href=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg loading=lazy>
 </a>
 </figure></p>
 <p>His colleague then discovered a page at paypal.com/us/gifts that didn&rsquo;t use CSP, and also imported his poisoned JS file. By using his JS to redirect the c.paypal.com iframe to that URL (and triggering our JS import for the third time) he could finally access the parent and steal plaintext PayPal passwords from everyone who logged in using Safari or IE.</p>
 <p><figure>
-<a href=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg loading=lazy>
+<a href=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@masterhttps://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg loading=lazy>
 </a>
 </figure></p>
 <p>Paypal&rsquo;s first fix was to modify the Akamai configuration to reject requests containing <code>Transfer-Encoding: chunked</code>. But the author bypassed it quikly by constructing a newline header.</p>
@@ -1298,8 +1262,7 @@ Description: Could not process this request.
 <p>This is an interesting part. It was fuzzed at the beginning of October. Finally, I decided to test <a class=link href=https://caddyserver.com/v1/ target=_blank rel=noopener>caddy</a> , and took it to fuzz. Because I was lazy, I used the environment on the docker hub [caddy](https: //hub.docker. com/r/abiosoft/caddy).</p>
 <p>So, here we are.</p>
 <p><figure class=gallery-image style=flex-grow:318;flex-basis:765px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520139367.png data-size=1728x542>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139367.png width=1728 height=542 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139367_hud0c9f6f46052366238d8c334bde9ef11_133963_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139367_hud0c9f6f46052366238d8c334bde9ef11_133963_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520139367.png data-size=1728x542><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520139367.png width=1728 height=542 srcset="/2019/12/08/HTTP-Smuggling-en/20200520139367_hud0c9f6f46052366238d8c334bde9ef11_133963_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520139367_hud0c9f6f46052366238d8c334bde9ef11_133963_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>I was very happy at the time, thinking that getting a CVE was so simple. Because it is smiliar with Netty CVE , It could also produce a parsing difference. Then I and the mentor carefully explored the reason for this, followed the code, and found that it may be the cause of a native library in Golang.</p>
@@ -1326,8 +1289,7 @@ Description: Could not process this request.
 <p>Then I went to check the differences between HTTP/2 and HTTP/1.1. In my opinion, I think that Request multiplexing over a single TCP connection is mainly added to HTTP/2, which means that using HTTP/2 can use a single TCP connection to request resources. This reduces the possibility of TCP connection reuse, even if you can smuggle, you can only hit yourself and the introduction of a new binary framing mechanism also limits this attack. And more imporantly, <code>Transfer-Encoding: chunk</code> is canceled in HTTP/2. :P</p>
 <p>For details, please refer to <a class=link href=https://developers.google.com/web/fundamentals/performance/http2##%E6%AF%8F%E4%B8%AA%E6%9D%A5%E6%BA%90%E4%B8%80%E4%B8%AA%E8%BF%9E%E6%8E%A5 target=_blank rel=noopener>the introduction of HTTP / 2</a></p>
 <p><figure class=gallery-image style=flex-grow:119;flex-basis:287px>
-<a href=/2019/12/08/HTTP-Smuggling-en/20200520132137.png data-size=747x624>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520132137.png width=747 height=624 srcset="/2019/12/08/HTTP-Smuggling-en/20200520132137_hufeaacba2cd839e6dab3a7a2ba7820971_43489_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520132137_hufeaacba2cd839e6dab3a7a2ba7820971_43489_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2019/12/08/HTTP-Smuggling-en/20200520132137.png data-size=747x624><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2019/12/08/HTTP-Smuggling-en/20200520132137.png width=747 height=624 srcset="/2019/12/08/HTTP-Smuggling-en/20200520132137_hufeaacba2cd839e6dab3a7a2ba7820971_43489_480x0_resize_box_3.png 480w, /2019/12/08/HTTP-Smuggling-en/20200520132137_hufeaacba2cd839e6dab3a7a2ba7820971_43489_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <h2 id=bonus>Bonus</h2>

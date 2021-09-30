@@ -121,8 +121,7 @@ Sec
 <h4 id=介绍-3>介绍</h4>
 <p>不论是服务器端或客户端的XSS过滤器，都认定过滤后的HTML源代码应该与浏览器所渲染后的HTML代码保持一致，至少不会出现很大的出入。然而，如果用户所提供的富文本内容通过 javascript 代码进属性后，一些意外的变化会使得这个认定不再成立：一串看似没有任何危害的HTML代码，将逃过XSS过滤器的检测，最终进入某个DOM节点中，浏览器的渲染引擎会将本来没有任何危害的HTML代码渲染成具有潜在危险的XSS攻击代码。随后，该段攻击代码，可能会被JS代码中的其它一些流程输出到DOM中或是其它方式被再次渲染，从而导致XSS的执行。 这种由于HTML内容进后发生意外变化（mutation，突变，来自遗传学的一个单词，大家都知道的基因突变，gene mutation），而最终导致XSS的攻击流程，被称为突变XSS（mXSS, Mutation-based Cross-Site-Scripting）。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000864.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000864.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000864.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000864.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=常见注入点-2>常见注入点</h4>

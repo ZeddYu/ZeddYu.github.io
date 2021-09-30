@@ -139,8 +139,7 @@ Sec
 </ol>
 <p>大致流程如下图所示</p>
 <p><figure class=gallery-image style=flex-grow:107;flex-basis:256px>
-<a href=/2021/04/20/tls-poison/Part1-1/1.png data-size=642x600>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/1.png width=642 height=600 srcset="/2021/04/20/tls-poison/Part1-1/1_hu9840a12b0c9b7c877edfff2136b575fb_24312_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part1-1/1_hu9840a12b0c9b7c877edfff2136b575fb_24312_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1-1/1.png data-size=642x600><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/1.png width=642 height=600 srcset="/2021/04/20/tls-poison/Part1-1/1_hu9840a12b0c9b7c877edfff2136b575fb_24312_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part1-1/1_hu9840a12b0c9b7c877edfff2136b575fb_24312_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>对于不同的密钥算法又会产生稍微不一致的流程，这里并不作为重点，所以我们就不再展开描述了。</p>
@@ -165,14 +164,12 @@ Sec
 </code></pre><p>同时 RFC 建议 Session ID的寿命上限为24小时，因为获得<code>master_secret</code>的攻击者可能会冒充被入侵的一方，直到相应的 Session ID 失效。</p>
 <p>整个重用过程我们可以从下图比较直观的看到：</p>
 <p><figure class=gallery-image style=flex-grow:180;flex-basis:433px>
-<a href=/2021/04/20/tls-poison/Part1-1/2.jpeg data-size=1836x1017>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/2.jpeg width=1836 height=1017 srcset="/2021/04/20/tls-poison/Part1-1/2_hue44bda8995747aaed9911047a76daeed_128378_480x0_resize_q75_box.jpeg 480w, /2021/04/20/tls-poison/Part1-1/2_hue44bda8995747aaed9911047a76daeed_128378_1024x0_resize_q75_box.jpeg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1-1/2.jpeg data-size=1836x1017><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/2.jpeg width=1836 height=1017 srcset="/2021/04/20/tls-poison/Part1-1/2_hue44bda8995747aaed9911047a76daeed_128378_480x0_resize_q75_box.jpeg 480w, /2021/04/20/tls-poison/Part1-1/2_hue44bda8995747aaed9911047a76daeed_128378_1024x0_resize_q75_box.jpeg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>客户端首先发送了一个 Client Hello 消息给服务端，并且其 Session ID 为空，这时候 Server 响应了 Server Hello 当中就会返回一个 32 字节长度的 Session ID。现在客户端和服务器的 TLS 会话缓存中都存储了 Session ID，其值为 56bcf9f6ea40ac1bbf05ff7fd209d423da9f96404103226c7f927ad7a2992433。这样做的好处就是，在下一次TLS连接请求中，客户端不需要再经历完整的TLS握手。</p>
 <p><figure class=gallery-image style=flex-grow:133;flex-basis:320px>
-<a href=/2021/04/20/tls-poison/Part1-1/3.jpeg data-size=1842x1381>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/3.jpeg width=1842 height=1381 srcset="/2021/04/20/tls-poison/Part1-1/3_hu97b73ab9bda1eda36da7bd2a3a39df84_249905_480x0_resize_q75_box.jpeg 480w, /2021/04/20/tls-poison/Part1-1/3_hu97b73ab9bda1eda36da7bd2a3a39df84_249905_1024x0_resize_q75_box.jpeg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1-1/3.jpeg data-size=1842x1381><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/3.jpeg width=1842 height=1381 srcset="/2021/04/20/tls-poison/Part1-1/3_hu97b73ab9bda1eda36da7bd2a3a39df84_249905_480x0_resize_q75_box.jpeg 480w, /2021/04/20/tls-poison/Part1-1/3_hu97b73ab9bda1eda36da7bd2a3a39df84_249905_1024x0_resize_q75_box.jpeg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>客户端只需在其 Client Hello 消息中发送之前从 Server 那里得知的 Session ID ，然后 Server 确认这个 Session ID 在它的 TLS 会话缓存之后，它们就会进行所谓的 Abbreviated TLS Handshake 。在这次 TLS 握手过程中不会交换证书或密钥信息，之前协商好的密钥会被重新使用，这样就完成了一次 TLS Session Resumption 。</p>
@@ -232,20 +229,17 @@ struct {
 </code></pre><p>当客户端希望恢复会话时，它在 ClientHello 消息中的 SessionTicket 扩展中包含该票据。然后服务器对收到的票据进行解密，验证票据的有效性，从票据的内容中检索会话状态，并使用这个状态来恢复会话。如果服务器成功验证了客户端的票据，那么就可以在 ServerHello 之后加入 NewSessionTicket 握手消息来续订票据。</p>
 <p>我们可以通过实例来进一步了解这个机制：</p>
 <p><figure class=gallery-image style=flex-grow:117;flex-basis:282px>
-<a href=/2021/04/20/tls-poison/Part1-1/4.jpeg data-size=1842x1565>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/4.jpeg width=1842 height=1565 srcset="/2021/04/20/tls-poison/Part1-1/4_hu6c56500b33cfd75b614390182f42cbae_201551_480x0_resize_q75_box.jpeg 480w, /2021/04/20/tls-poison/Part1-1/4_hu6c56500b33cfd75b614390182f42cbae_201551_1024x0_resize_q75_box.jpeg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1-1/4.jpeg data-size=1842x1565><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/4.jpeg width=1842 height=1565 srcset="/2021/04/20/tls-poison/Part1-1/4_hu6c56500b33cfd75b614390182f42cbae_201551_480x0_resize_q75_box.jpeg 480w, /2021/04/20/tls-poison/Part1-1/4_hu6c56500b33cfd75b614390182f42cbae_201551_1024x0_resize_q75_box.jpeg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>客户端首先通过在 Client Hello 消息中添加 SessionTickets TLS Extension 来表明它支持无状态会话恢复（绿色部分）， Server 还会通过发送包含有空的 SessionTicket TLS Extension 的 Server Hello 消息给 Client ，表示 Server 支持 SessionTicket TLS Extension（红色部分）。</p>
 <p><figure class=gallery-image style=flex-grow:193;flex-basis:463px>
-<a href=/2021/04/20/tls-poison/Part1-1/5.jpeg data-size=2076x1074>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/5.jpeg width=2076 height=1074 srcset="/2021/04/20/tls-poison/Part1-1/5_hubf2b9626c16d68e5995626c3ff97f0a2_324328_480x0_resize_q75_box.jpeg 480w, /2021/04/20/tls-poison/Part1-1/5_hubf2b9626c16d68e5995626c3ff97f0a2_324328_1024x0_resize_q75_box.jpeg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1-1/5.jpeg data-size=2076x1074><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/5.jpeg width=2076 height=1074 srcset="/2021/04/20/tls-poison/Part1-1/5_hubf2b9626c16d68e5995626c3ff97f0a2_324328_480x0_resize_q75_box.jpeg 480w, /2021/04/20/tls-poison/Part1-1/5_hubf2b9626c16d68e5995626c3ff97f0a2_324328_1024x0_resize_q75_box.jpeg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>在握手完成之前，也就是 Finished 之前，Server 会发送一个名为 New Session Ticket 的新 TLS 消息，其中包含加密的会话信息（如主密、使用的密码等），Server 可以在稍后使用它专门为此生成的唯一密钥进行解密。从这一点开始，Client 会将 Session Ticket 保存在它的 TLS 缓存中，直到下一次它在 Session Ticket过期之前都可以使用它与之前的 Server 恢复 TLS 会话。</p>
 <p><figure class=gallery-image style=flex-grow:213;flex-basis:511px>
-<a href=/2021/04/20/tls-poison/Part1-1/6.jpeg data-size=2068x970>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/6.jpeg width=2068 height=970 srcset="/2021/04/20/tls-poison/Part1-1/6_hu225dfd93b7ef0b864516101b0f8b281f_329874_480x0_resize_q75_box.jpeg 480w, /2021/04/20/tls-poison/Part1-1/6_hu225dfd93b7ef0b864516101b0f8b281f_329874_1024x0_resize_q75_box.jpeg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1-1/6.jpeg data-size=2068x970><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/6.jpeg width=2068 height=970 srcset="/2021/04/20/tls-poison/Part1-1/6_hu225dfd93b7ef0b864516101b0f8b281f_329874_480x0_resize_q75_box.jpeg 480w, /2021/04/20/tls-poison/Part1-1/6_hu225dfd93b7ef0b864516101b0f8b281f_329874_1024x0_resize_q75_box.jpeg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>现在，当 Client 想要重新使用之前的会话时，它在 Client Hello 消息的 SessionTicket TLS Extension 中发送了 Session Ticket，此时我们所注意到，客户端也创建了一个新的会话 ID ，用于以下目的：</p>
@@ -305,8 +299,7 @@ Auth | {CertificateVerify*}
                Figure 1: Message Flow for Full TLS Handshake
 </code></pre><p>TLS 1.2 与 1.3 简要的握手对比如下图所示：</p>
 <p><figure class=gallery-image style=flex-grow:138;flex-basis:331px>
-<a href=/2021/04/20/tls-poison/Part1-1/7.png data-size=700x507>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/7.png width=700 height=507 srcset="/2021/04/20/tls-poison/Part1-1/7_hu271267037a65c65f379987e7a1029dfa_34691_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part1-1/7_hu271267037a65c65f379987e7a1029dfa_34691_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1-1/7.png data-size=700x507><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1-1/7.png width=700 height=507 srcset="/2021/04/20/tls-poison/Part1-1/7_hu271267037a65c65f379987e7a1029dfa_34691_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part1-1/7_hu271267037a65c65f379987e7a1029dfa_34691_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <h4 id=tls-13-session-resumption---psk>TLS 1.3 Session Resumption - PSK</h4>
@@ -376,20 +369,17 @@ Auth | {CertificateVerify*}
 </ol>
 <p>我们可以通过一个简单的例子来直观感受一下 TLS 1.3 基于 PSK 的握手过程：</p>
 <p><figure class=gallery-image style=flex-grow:175;flex-basis:420px>
-<a href=/2021/04/20/tls-poison/Part1/1.png data-size=1848x1054>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/1.png width=1848 height=1054 srcset="/2021/04/20/tls-poison/Part1/1_hu6da4d2762ebd0ec4862cf226c5334240_98489_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part1/1_hu6da4d2762ebd0ec4862cf226c5334240_98489_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1/1.png data-size=1848x1054><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/1.png width=1848 height=1054 srcset="/2021/04/20/tls-poison/Part1/1_hu6da4d2762ebd0ec4862cf226c5334240_98489_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part1/1_hu6da4d2762ebd0ec4862cf226c5334240_98489_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>如上图所示，Client 第一次与 Server 握手发送 Client Hello 消息时，只包含了 key_share 拓展，Server 也做出响应的回应，使用包含 key_share 拓展的消息进行回应。</p>
 <p><figure class=gallery-image style=flex-grow:175;flex-basis:420px>
-<a href=/2021/04/20/tls-poison/Part1/2.png data-size=1848x1054>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/2.png width=1848 height=1054 srcset="/2021/04/20/tls-poison/Part1/2_hu880df27391c5647fb0836173f1852b82_101253_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part1/2_hu880df27391c5647fb0836173f1852b82_101253_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1/2.png data-size=1848x1054><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/2.png width=1848 height=1054 srcset="/2021/04/20/tls-poison/Part1/2_hu880df27391c5647fb0836173f1852b82_101253_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part1/2_hu880df27391c5647fb0836173f1852b82_101253_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>Client 在第二次发送 Client Hello 消息时，带上了之前 Server 在 NewSessionTicket 发送的 pre_shared_key ，将其作为拓展发送至 Server ，随后 Server 响应 Server Hello 消息时，也使用 pre_shared_key 作为拓展响应，这样就完成了基于 PSK 的 Session Resumption</p>
 <p><figure class=gallery-image style=flex-grow:175;flex-basis:421px>
-<a href=/2021/04/20/tls-poison/Part1/3.png data-size=1854x1056>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/3.png width=1854 height=1056 srcset="/2021/04/20/tls-poison/Part1/3_hu07584ca64fbb7069b5cd90688409ea93_137473_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part1/3_hu07584ca64fbb7069b5cd90688409ea93_137473_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1/3.png data-size=1854x1056><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/3.png width=1854 height=1056 srcset="/2021/04/20/tls-poison/Part1/3_hu07584ca64fbb7069b5cd90688409ea93_137473_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part1/3_hu07584ca64fbb7069b5cd90688409ea93_137473_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>可能有同学会问为什么我们看不到类似 TLS 1.2 当中直接有一个 NewSessionTicket 呢？我们可以仔细回顾一下上面的 RFC 流程图，Server 返回的 NewSessionTicket 消息有个中括号，而这里的中括号表示的是使用从 <code>[sender]_application_traffic_secret_N</code> 导出的密钥保护的信息，所以我们使用 wireshark 无法直接看到其中的内容，但是其中我们使用 opnssl 时候能够更明显的看到 Server 发过来的 TLS Session Ticket ，如图所示，也就是我们 Client 在进行恢复会话时所携带的 PSK ，在使用 openssl 进行恢复会话时，就会提示我们已经恢复了会话。这样就完成了一次 Session Resumption</p>
@@ -434,16 +424,14 @@ Auth | {CertificateVerify*}
 <p>服务器端请求伪造 (Server-Side Request Forgery, SSRF) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）</p>
 <p>SSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。比如从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。</p>
 <p><figure>
-<a href=https://dpsvdv74uwwos.cloudfront.net/statics/img/blogposts/exploiting_ssrf_vulnerability.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://dpsvdv74uwwos.cloudfront.net/statics/img/blogposts/exploiting_ssrf_vulnerability.png loading=lazy>
+<a href=https://dpsvdv74uwwos.cloudfront.net/statics/img/blogposts/exploiting_ssrf_vulnerability.png><img src=https://dpsvdv74uwwos.cloudfront.net/statics/img/blogposts/exploiting_ssrf_vulnerability.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=dns-rebinding>DNS Rebinding</h3>
 <p>DNS重新绑定是计算机攻击的一种形式。 在这种攻击中，恶意网页会导致访问者运行客户端脚本，攻击网络上其他地方的计算机。攻击者注册一个域名（如attacker.com），并在攻击者控制下将其代理给DNS服务器。 服务器配置为很短响应时间的TTL记录，防止响应被缓存。 当受害者浏览到恶意域时，攻击者的DNS 服务器首先用托管恶意客户端代码的服务器的 IP 地址作出响应。 例如，他们可以将受害者的浏览器指向包含旨在在受害者计算机上执行的恶意 JavaScript 或 Flash 脚本的网站。</p>
 <p>恶意客户端代码会对原始域名（例如attacker.com）进行额外访问，这些都是由同源政策所允许的。 但是，当受害者的浏览器运行该脚本时，它会为该域创建一个新的 DNS 请求，并且攻击者会使用新的 IP 地址进行回复。 例如，他们可以使用内部 IP 地址或互联网上某个目标的IP地址进行回复。</p>
 <p><figure>
-<a href=https://torbencapiau.be/wp-content/uploads/2019/12/chrome_O70990jBNt-1024x574.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://torbencapiau.be/wp-content/uploads/2019/12/chrome_O70990jBNt-1024x574.png loading=lazy>
+<a href=https://torbencapiau.be/wp-content/uploads/2019/12/chrome_O70990jBNt-1024x574.png><img src=https://torbencapiau.be/wp-content/uploads/2019/12/chrome_O70990jBNt-1024x574.png loading=lazy>
 </a>
 </figure></p>
 <h2 id=tls-poison>TLS Poison</h2>
@@ -505,38 +493,33 @@ Auth | {CertificateVerify*}
 <li>首先第一步攻击者发送一个 <a class=link href=https://jmaddux.com:25 target=_blank rel=noopener>https://jmaddux.com:25</a> 的地址给一个 Client ，Client 会首先进行 DNS 查询询问 jmaddux.com 的 IP 地址，此时攻击者自己控制的 DNS Server 可以自定义响应为一个正常的 IP ，比如 35.x.x.x ，此时我们可以给这个响应记录非常短非常短的 TTL ，以便让 Client 不要缓存我们的 DNS 记录。</li>
 </ol>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:426px>
-<a href=/2021/04/20/tls-poison/Part1/4.jpg data-size=4000x2250>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/4.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part1/4_hue3ced5d4030d4798a04e7f97568a1313_138683_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part1/4_hue3ced5d4030d4798a04e7f97568a1313_138683_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1/4.jpg data-size=4000x2250><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/4.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part1/4_hue3ced5d4030d4798a04e7f97568a1313_138683_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part1/4_hue3ced5d4030d4798a04e7f97568a1313_138683_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <ol start=2>
 <li>第二步， Client 会与攻击者指定的 35.x.x.x 这个攻击者的服务器进行 TLS 握手，并获得攻击者服务器返回给 Client 的特制的票据，在图中表示为 Payload ，然后完成 TLS 握手。</li>
 </ol>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:426px>
-<a href=/2021/04/20/tls-poison/Part1/5.jpg data-size=4000x2250>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/5.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part1/5_hue3ced5d4030d4798a04e7f97568a1313_114395_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part1/5_hue3ced5d4030d4798a04e7f97568a1313_114395_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1/5.jpg data-size=4000x2250><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/5.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part1/5_hue3ced5d4030d4798a04e7f97568a1313_114395_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part1/5_hue3ced5d4030d4798a04e7f97568a1313_114395_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <ol start=3>
 <li>第三部，当 Client 想与 Server 恢复会话时，需要再次查找 jmaddux.com 的 DNS 记录，由于攻击者之前给的 DNS 记录 TTL 时间非常非常短，让其在此时在自己的缓存中查不到原来的记录，这样会使得 Client 又去询问 jmaddux.com 的 DNS 记录，此时攻击者让其 DNS Server 返回 127.0.0.1 这个地址。</li>
 </ol>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:426px>
-<a href=/2021/04/20/tls-poison/Part1/6.jpg data-size=4000x2250>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/6.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part1/6_hue3ced5d4030d4798a04e7f97568a1313_140165_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part1/6_hue3ced5d4030d4798a04e7f97568a1313_140165_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1/6.jpg data-size=4000x2250><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/6.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part1/6_hue3ced5d4030d4798a04e7f97568a1313_140165_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part1/6_hue3ced5d4030d4798a04e7f97568a1313_140165_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <ol start=4>
 <li>最后，如果 Client 不校验本次获得的 ip 是否与上次一致，就会尝试与 127.0.0.1:25 进行 TLS Session Resumption ，也就是说， Client 会拿着攻击者特制的票据访问 127.0.0.1:25 ，尝试与之恢复 TLS 会话，这里就表现为 Client 发送含有 Payload 的 Client Hello 消息到 SMTP 服务器，至此完成一次 SSRF 攻击。</li>
 </ol>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:426px>
-<a href=/2021/04/20/tls-poison/Part1/7.jpg data-size=4000x2250>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/7.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part1/7_hue3ced5d4030d4798a04e7f97568a1313_108725_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part1/7_hue3ced5d4030d4798a04e7f97568a1313_108725_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part1/7.jpg data-size=4000x2250><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part1/7.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part1/7_hue3ced5d4030d4798a04e7f97568a1313_108725_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part1/7_hue3ced5d4030d4798a04e7f97568a1313_108725_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>整体的流程图如下图所示：</p>
 <p><figure>
-<a href=https://raw.githubusercontent.com/jmdx/TLS-poison/master/diagram.svg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://raw.githubusercontent.com/jmdx/TLS-poison/master/diagram.svg loading=lazy>
+<a href=https://raw.githubusercontent.com/jmdx/TLS-poison/master/diagram.svg><img src=https://raw.githubusercontent.com/jmdx/TLS-poison/master/diagram.svg loading=lazy>
 </a>
 </figure></p>
 <p>这里再对图中进行一些解释：</p>
@@ -619,8 +602,7 @@ Auth | {CertificateVerify*}
 </code></pre><p>PS: 注意这里需要加上<code>-L</code>参数允许 curl 进行重定向。</p>
 <p>接着如果第一次 DNS 就把我们的域名解析到 127.0.0.1的话，可以多试几次直到域名解析到你的 TLS VPS IP 上为止，然后等待 1 min 左右，如果网络顺畅，一切顺利的话，在 1min 左右就可以完成本次攻击。攻击效果如下图所示：</p>
 <p><figure class=gallery-image style=flex-grow:175;flex-basis:420px>
-<a href=/2021/04/20/tls-poison/Part2/1.png data-size=1846x1054>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/1.png width=1846 height=1054 srcset="/2021/04/20/tls-poison/Part2/1_hudb6c955d257b39b5487f90edf61894f2_91192_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/1_hudb6c955d257b39b5487f90edf61894f2_91192_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/1.png data-size=1846x1054><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/1.png width=1846 height=1054 srcset="/2021/04/20/tls-poison/Part2/1_hudb6c955d257b39b5487f90edf61894f2_91192_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/1_hudb6c955d257b39b5487f90edf61894f2_91192_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>其中可能会产生几种结果</p>
@@ -631,8 +613,7 @@ Auth | {CertificateVerify*}
 <h3 id=the-details-of-original-method>The Details OF Original Method</h3>
 <p>在整理这篇文章之前，我也参考了很多文章，虽然这些文章没有明确的说明这个攻击的攻击载体，也就是 Payload 最大长度是 32 字节，但是都给了让我产生了一种先入为主的概念，在我印象当中它就只局限于 32 字节，然后我去详细去看作者公开的 PDF 时，发现作者在演示攻击 SMTP 时有一个图是这样的：</p>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:426px>
-<a href=/2021/04/20/tls-poison/Part2/2.jpg data-size=4000x2250>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/2.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part2/2_huc2ac9bc6383ed5fe6012934970cc9925_268682_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part2/2_huc2ac9bc6383ed5fe6012934970cc9925_268682_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/2.jpg data-size=4000x2250><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/2.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part2/2_huc2ac9bc6383ed5fe6012934970cc9925_268682_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part2/2_huc2ac9bc6383ed5fe6012934970cc9925_268682_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>其中我们可以看到这个 payload 已经远远超过了 32 字节，然后我抱着疑惑去反复查看作者公布的演讲录像，其中他有这么说到（但愿我的英语听力以及 Youtube 字幕足够准确）：</p>
@@ -650,8 +631,7 @@ Auth | {CertificateVerify*}
 <p>所以，感觉一切都有些明朗了，那我们再来尝试一下超越 32 字节的 payload ，看看到底能不能实现。依旧按照如上的流程做好 setup ，只不过不同的是我们需要在 TLS VPS 的 redis 上修改一下 payload ，这次我们随意修改一下，只要够长就好，这里一定要注意把要发给 memcached 的 payload 当中的<code>set</code>指令的第三个参数修改成其 value 的长度，比如说我们这里修改 payload 为：<code>set payload "\r\nset foo 0 0 79\nThis time I'm really in your cache and I can write what I want into your cache.\r\n"</code>。（当然还是建议在实验之前使用之前的方法测试一下自己的 payload 能否写入到 memcached 当中）</p>
 <p>Ok. Here we go.</p>
 <p><figure class=gallery-image style=flex-grow:176;flex-basis:422px>
-<a href=/2021/04/20/tls-poison/Part2/3.png data-size=2487x1413>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/3.png width=2487 height=1413 srcset="/2021/04/20/tls-poison/Part2/3_hu6ab3e74ef1d6eb180f017806d2e5dbf7_219815_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/3_hu6ab3e74ef1d6eb180f017806d2e5dbf7_219815_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/3.png data-size=2487x1413><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/3.png width=2487 height=1413 srcset="/2021/04/20/tls-poison/Part2/3_hu6ab3e74ef1d6eb180f017806d2e5dbf7_219815_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/3_hu6ab3e74ef1d6eb180f017806d2e5dbf7_219815_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>当当，我们已经可以写入超过 32 字节的数据啦！</p>
@@ -734,8 +714,7 @@ Auth | {CertificateVerify*}
 <p>A记录地址不通，会连接到 AAAA 记录地址上。</p>
 </blockquote>
 <p><figure>
-<a href=https://www.zhaoj.in/wp-content/uploads/2020/10/1602817765b4f463b4513262746c16fe6f1b72278f-1024x377.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://www.zhaoj.in/wp-content/uploads/2020/10/1602817765b4f463b4513262746c16fe6f1b72278f-1024x377.png loading=lazy>
+<a href=https://www.zhaoj.in/wp-content/uploads/2020/10/1602817765b4f463b4513262746c16fe6f1b72278f-1024x377.png><img src=https://www.zhaoj.in/wp-content/uploads/2020/10/1602817765b4f463b4513262746c16fe6f1b72278f-1024x377.png loading=lazy>
 </a>
 </figure></p>
 <p>但是比较遗憾的是，如果对于一个域名进行这样的设置，AAAA 记录指向 TLS VPS 的 IPv6 地址上，A 记录指向 127.0.0.1 地址，实际测试 当中， curl 总是优先 127.0.0.1 ，并且没有随机的做法；如果对于一个域名进行这样的设置，AAAA 记录指向 ::1 地址上，A 记录指向 TLS VPS 的 IPv4 地址上，curl 总是优先 ::1</p>
@@ -752,8 +731,7 @@ Auth | {CertificateVerify*}
 <li>对于返回的双 A 记录，一个配置为 TLS VPS IP ，另一个为 0.0.0.0 ，curl 每次都会优先使用 TLS VPS IP ，如果不能通信才会接着使用 0.0.0.0:11211</li>
 </ul>
 <p><figure class=gallery-image style=flex-grow:203;flex-basis:488px>
-<a href=/2021/04/20/tls-poison/Part2/4.png data-size=889x437>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/4.png width=889 height=437 srcset="/2021/04/20/tls-poison/Part2/4_hu31456a41d3e16b28fb790815c8ee2e36_20327_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/4_hu31456a41d3e16b28fb790815c8ee2e36_20327_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/4.png data-size=889x437><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/4.png width=889 height=437 srcset="/2021/04/20/tls-poison/Part2/4_hu31456a41d3e16b28fb790815c8ee2e36_20327_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/4_hu31456a41d3e16b28fb790815c8ee2e36_20327_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>那根据已知信息，那么与上文的做法类似，我们是不是也可以让 curl 第一次建立链接，拿到我们分配的 payload 后，断开连接，让其第二次连接不通而去选择另外一个 IP 呢？</p>
@@ -765,8 +743,7 @@ Auth | {CertificateVerify*}
 <pre tabindex=0><code>target/debug/custom-tls -p 11210 --verbose --certs /root/tls/fullchain.pem --key /root/tls/privkey.pem http
 </code></pre><p>Ok. Let&rsquo;s have a try.</p>
 <p><figure class=gallery-image style=flex-grow:187;flex-basis:450px>
-<a href=/2021/04/20/tls-poison/Part2/5.png data-size=2488x1326>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/5.png width=2488 height=1326 srcset="/2021/04/20/tls-poison/Part2/5_hu676b5f6eee32a3080595e57c23121cbf_180423_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/5_hu676b5f6eee32a3080595e57c23121cbf_180423_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/5.png data-size=2488x1326><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/5.png width=2488 height=1326 srcset="/2021/04/20/tls-poison/Part2/5_hu676b5f6eee32a3080595e57c23121cbf_180423_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/5_hu676b5f6eee32a3080595e57c23121cbf_180423_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>可以看到这里 curl 不需要再经过多次重定向，只需要一次重定向就可以稳定进行 SSRF ，也不再需要依靠 DNS Rebinding 的稳定性了。</p>
@@ -778,8 +755,7 @@ Auth | {CertificateVerify*}
 <p>对于 Client ，我们不能再使用 curl ，因为其并没有实现 Ticket Session 插件&mldr;所以我选用了老版本 Chrome 70.0.3538.77 for Ubuntu 进行学习。（提醒这里不要用 Firefox ，因为作者在 PDF 中表示过 Firefox 没有这个“特性”）</p>
 <p>依旧在 TLS Server 上使用 proxy.py ，接着确定准备好就可以在本地打开 chrome 访问自己 TLS Server 的地址：</p>
 <p><figure class=gallery-image style=flex-grow:176;flex-basis:422px>
-<a href=/2021/04/20/tls-poison/Part2/6.png data-size=2489x1413>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/6.png width=2489 height=1413 srcset="/2021/04/20/tls-poison/Part2/6_hu4add21394cc3a52eb10f2958d8b66648_221896_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/6_hu4add21394cc3a52eb10f2958d8b66648_221896_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/6.png data-size=2489x1413><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/6.png width=2489 height=1413 srcset="/2021/04/20/tls-poison/Part2/6_hu4add21394cc3a52eb10f2958d8b66648_221896_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/6_hu4add21394cc3a52eb10f2958d8b66648_221896_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>因为 Chrome 的一个特殊机制，使用 Chrome 测试我们并不能像 curl 那样一次就能成功，这里我们最好使把 Chrome 的 Keep local data only until you quit your browser 选项打开以及设置每次打开 Chrome 时就打开我们的 TLS Server 地址，这样实验就比较方便了，多试几次我们就可以看到上图这个效果。</p>
@@ -825,28 +801,24 @@ Auth | {CertificateVerify*}
 </span></code></pre></div><p>虽然可以 debug 找到问题所在，但是并不能完美地修正这个问题，只能做个临时的处理办法来解决这个问题，而且自己时间精力并不太足够，所以如果有同学有比较好的办法解决这个问题欢迎提 PR 修正这个问题！</p>
 <p>然后在 redis 中修改 payload 为 32 字节长度：<code>set payload "\r\nset foo 0 0 13\nI am so poor.\r\n"</code>。好了，那就让我们来试一下吧！</p>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:424px>
-<a href=/2021/04/20/tls-poison/Part2/7.png data-size=2489x1406>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/7.png width=2489 height=1406 srcset="/2021/04/20/tls-poison/Part2/7_hu821c40ec508b5e7ed8bf8ef5f753c6c3_249225_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/7_hu821c40ec508b5e7ed8bf8ef5f753c6c3_249225_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/7.png data-size=2489x1406><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/7.png width=2489 height=1406 srcset="/2021/04/20/tls-poison/Part2/7_hu821c40ec508b5e7ed8bf8ef5f753c6c3_249225_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/7_hu821c40ec508b5e7ed8bf8ef5f753c6c3_249225_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>虽然我们只能使用 32 字节的 Session ID ，但是对于 memcahed ，我们可以使用<code>append</code>命令进行追加，例如：<code>set payload "\nappend foo 0 0 11\nSo so poor.\r\n"</code>。并且因为我们注释了那两行，所以对于重新设置了的 payload ，我们需要重新启动一次 TLS Server</p>
 <p><figure class=gallery-image style=flex-grow:176;flex-basis:422px>
-<a href=/2021/04/20/tls-poison/Part2/8.png data-size=2488x1413>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/8.png width=2488 height=1413 srcset="/2021/04/20/tls-poison/Part2/8_hu6652aacda7b16ec9207a3e7f648d8d01_254736_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/8_hu6652aacda7b16ec9207a3e7f648d8d01_254736_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/8.png data-size=2488x1413><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/8.png width=2488 height=1413 srcset="/2021/04/20/tls-poison/Part2/8_hu6652aacda7b16ec9207a3e7f648d8d01_254736_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/8_hu6652aacda7b16ec9207a3e7f648d8d01_254736_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>好了，以上就是我们关于 TLS Poison 漏洞复现的部分。</p>
 <h3 id=attack-impact>Attack Impact</h3>
 <p>在作者的报告中指出如下的 Client 对 TLS 会话进行了缓存：</p>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:426px>
-<a href=/2021/04/20/tls-poison/Part2/9.jpg data-size=4000x2250>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/9.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part2/9_hue3fd5ef5b9fdb7f8953ed34bc4e5ebf3_206135_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part2/9_hue3fd5ef5b9fdb7f8953ed34bc4e5ebf3_206135_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/9.jpg data-size=4000x2250><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/9.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part2/9_hue3fd5ef5b9fdb7f8953ed34bc4e5ebf3_206135_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part2/9_hue3fd5ef5b9fdb7f8953ed34bc4e5ebf3_206135_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>作者还给出了在内网中易受攻击的服务：</p>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:426px>
-<a href=/2021/04/20/tls-poison/Part2/10.jpg data-size=4000x2250>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/10.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part2/10_huec90f9b345a489df0fb4c7271b94542c_270501_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part2/10_huec90f9b345a489df0fb4c7271b94542c_270501_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/10.jpg data-size=4000x2250><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/10.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part2/10_huec90f9b345a489df0fb4c7271b94542c_270501_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part2/10_huec90f9b345a489df0fb4c7271b94542c_270501_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <h2 id=more-than-tls-poison>More Than TLS Poison</h2>
@@ -1219,8 +1191,7 @@ $4 = {s_addr = 16777343}
   <span class=k>if</span> <span class=p>(</span><span class=n>a1_dst_scope</span> <span class=o>&gt;</span> <span class=n>a2_dst_scope</span><span class=p>)</span>
     <span class=k>return</span> <span class=mi>1</span><span class=p>;</span>
 </code></pre></div><p><figure class=gallery-image style=flex-grow:469;flex-basis:1126px>
-<a href=/2021/04/20/tls-poison/Part3/1.png data-size=873x186>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part3/1.png width=873 height=186 srcset="/2021/04/20/tls-poison/Part3/1_hu5cc4a9cbe8acb4cf16ec0c82890b59e5_7281_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part3/1_hu5cc4a9cbe8acb4cf16ec0c82890b59e5_7281_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part3/1.png data-size=873x186><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part3/1.png width=873 height=186 srcset="/2021/04/20/tls-poison/Part3/1_hu5cc4a9cbe8acb4cf16ec0c82890b59e5_7281_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part3/1_hu5cc4a9cbe8acb4cf16ec0c82890b59e5_7281_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>跳出<code>rfc3484_sort</code>进入到 <code>qsort_r</code> 函数，也就是在此处执行完比较就直接返回到了<code>qsort</code>函数，并且从执行结果来看，是因为 <code>a1_dst_scope > a2_dst_scope</code> 比较结果执行了<code>return 1</code>。所以按照<code>qsort</code>函数文档说明，如果返回了一个大于 0 的值，则说明要将第一个参数需要排在第二个参数之后，这里 a1 代表的我们的 vps 地址需要排在 a2 代表的 127.0.0.1 地址之后，所以经过<code>rfc3484_sort</code>函数返回的顺序则是 127.0.0.1 作为首选地址，VPS 地址其次。</p>
@@ -1391,8 +1362,7 @@ $4 = {s_addr = 16777343}
 <p>我们可以简单验证一下自己的想法：直接在一个域名上同时设置 AAAA 记录为 ::ffff:7f00:0001 ，A 记录为随意一个 IPv4 公网地址。</p>
 <p>使用 curl 请求我们设置的域名，得到的结果如下图所示：</p>
 <p><figure class=gallery-image style=flex-grow:90;flex-basis:218px>
-<a href=/2021/04/20/tls-poison/Part2/11.png data-size=851x936>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/11.png width=851 height=936 srcset="/2021/04/20/tls-poison/Part2/11_hu638683dfe91602d13d0d44b2ef7c3794_51387_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/11_hu638683dfe91602d13d0d44b2ef7c3794_51387_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/11.png data-size=851x936><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/11.png width=851 height=936 srcset="/2021/04/20/tls-poison/Part2/11_hu638683dfe91602d13d0d44b2ef7c3794_51387_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/11_hu638683dfe91602d13d0d44b2ef7c3794_51387_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>可以看到，这两个地址是随机返回的。</p>
@@ -1408,8 +1378,7 @@ $4 = {s_addr = 16777343}
 <p>我们可以尝试一下使用 IPv4-Mapped 这类地址进行实验看看能不能写入 Memcached，同样的 DNS 配置：在一个域名上同时设置 AAAA 记录为 ::ffff:7f00:0001 ，A 记录为随意一个 IPv4 公网地址。</p>
 <p>然后其他操作基本同双 A 记录实验方式一致，使用 proxy.py 拒绝客户端对 TLS 服务端的第二次请求以达到 DNS Rebinding 的效果，于是得到的实验结果如下图所示：</p>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:426px>
-<a href=/2021/04/20/tls-poison/Part2/12.png data-size=1920x1080>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/12.png width=1920 height=1080 srcset="/2021/04/20/tls-poison/Part2/12_hufdeecf05438ce9066290e0d808448a97_153292_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/12_hufdeecf05438ce9066290e0d808448a97_153292_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part2/12.png data-size=1920x1080><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part2/12.png width=1920 height=1080 srcset="/2021/04/20/tls-poison/Part2/12_hufdeecf05438ce9066290e0d808448a97_153292_480x0_resize_box_3.png 480w, /2021/04/20/tls-poison/Part2/12_hufdeecf05438ce9066290e0d808448a97_153292_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>说明 Memcached 可以从 IPv4-Mapped 这类地址写入。</p>
@@ -1418,8 +1387,7 @@ $4 = {s_addr = 16777343}
 <p>所以，对于该类漏洞首要的防护手段就是需要确认进行 TLS 会话重用的地址与之前的地址一致，而这个实现途径有很多种方式，比如说防御 DNS Rebinding 的方式能在一定程度上缓解到整个漏洞利用，但是对于 DNS Rebinding 的传统防守方式有些小伙伴可能会说 Client 只做一次 DNS 解析，之后就一直使用这个 IP 解析结果，但是如果 Client 存在像文中那样的挨个尝试建立连接后使用第一个连接成功的 IP 的现象的话，我们就可以使用上文提到的双 A 记录的方式来绕过该类限制。</p>
 <p>那怎么做才是最好呢？作者在防御章节做出了自己阐述：</p>
 <p><figure class=gallery-image style=flex-grow:177;flex-basis:426px>
-<a href=/2021/04/20/tls-poison/Part3/3.jpg data-size=4000x2250>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part3/3.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part3/3_huec90f9b345a489df0fb4c7271b94542c_276466_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part3/3_huec90f9b345a489df0fb4c7271b94542c_276466_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
+<a href=/2021/04/20/tls-poison/Part3/3.jpg data-size=4000x2250><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2021/04/20/tls-poison/Part3/3.jpg width=4000 height=2250 srcset="/2021/04/20/tls-poison/Part3/3_huec90f9b345a489df0fb4c7271b94542c_276466_480x0_resize_q75_box.jpg 480w, /2021/04/20/tls-poison/Part3/3_huec90f9b345a489df0fb4c7271b94542c_276466_1024x0_resize_q75_box.jpg 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>作者建议将 (hostname, port, ip_addr) 作为缓存键值对进行绑定，但是我个人认为这并不是一个良好的缓解措施，因为在当今 CDN 大流行的情况下，很难说这个域名会一直使用到同一个 IP ，如果将域名、端口、IP 三者绑定的话，对于 CDN 之类的服务会话重用机制消耗将会大大提升。</p>

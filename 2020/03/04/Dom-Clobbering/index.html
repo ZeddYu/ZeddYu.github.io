@@ -69,30 +69,26 @@ Sec
 <p>其实 Dom Clobbering 比较简单，我们看几个简单的例子就能知道它是干什么了的。</p>
 <h3 id=exmaple-1---create>Exmaple 1 - Create</h3>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png loading=lazy>
 </a>
 </figure></p>
 <p>从图中我们可以看到通过 id 或者 name 属性，我们可以在<code>document</code>或者<code>window</code>对象下创建一个对象。</p>
 <h3 id=example-2---overwrite>Example 2 - Overwrite</h3>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png loading=lazy>
 </a>
 </figure></p>
 <p>可以看到<code>document.cookie</code>已经被我们用 img 标签给覆盖了</p>
 <h3 id=example-3---overwrite2>Example 3 - Overwrite2</h3>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png loading=lazy>
 </a>
 </figure></p>
 <p>可以看到我们通过多层覆盖掉了<code>document.body.appendChild</code>方法。</p>
 <h2 id=attack-method>Attack Method</h2>
 <p>既然我们可以通过这种方式去创建或者覆盖 document 或者 window 对象的某些值，但是看起来我们举的例子只是利用标签创建或者覆盖最终得到的也是标签，是一个<code>HTMLElment</code>对象。</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png loading=lazy>
 </a>
 </figure></p>
 <p>但是对于大多数情况来说，我们可能更需要将其转换为一个可控的字符串类型，以便我们进行操作。</p>
@@ -104,8 +100,7 @@ Sec
 <span class=p>.</span><span class=nx>filter</span><span class=p>(</span><span class=nx>p</span> <span class=p>=&gt;</span> <span class=nx>p</span> <span class=o>&amp;&amp;</span> <span class=nx>p</span><span class=p>.</span><span class=nx>prototype</span> <span class=o>&amp;&amp;</span> <span class=nx>p</span><span class=p>.</span><span class=nx>prototype</span><span class=p>.</span><span class=nx>toString</span> <span class=o>!==</span> <span class=nb>Object</span><span class=p>.</span><span class=nx>prototype</span><span class=p>.</span><span class=nx>toString</span><span class=p>)</span>
 </code></pre></div><p>我们可以得到两种标签对象：<code>HTMLAreaElement (&lt;area>)</code>& <code>HTMLAnchorElement (&lt;a>)</code>，这两个标签对象我们都可以利用<code>href</code>属性来进行字符串转换。</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=htmlcollection>HTMLCollection</h3>
@@ -147,8 +142,7 @@ getter Element? namedItem(DOMString name);
   <span class=p>&lt;</span><span class=nt>a</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;x&#34;</span> <span class=na>name</span><span class=o>=</span><span class=s>y</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;1:hasaki&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
 <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=html-relationships>HTML Relationships</h3>
@@ -275,8 +269,7 @@ a:password
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;&lt;</span><span class=nt>a</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;defaultAvatar&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>a</span><span class=p>&gt;&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;1:&amp;quot;onerror=alert(1)//&#34;</span> <span class=na>name</span><span class=o>=</span><span class=s>&#34;avatar&#34;</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;defaultAvatar&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>a</span><span class=p>&gt;&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
 </code></pre></div><p>我们再随便评论一下就好了，就可以触发我们构造的 XSS 了。</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=labclobbering-dom-attributes-to-bypass-html-filters>Lab:Clobbering DOM attributes to bypass HTML filters</h3>
@@ -426,16 +419,14 @@ a:password
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>form</span> <span class=na>id</span><span class=o>=</span><span class=s>x</span> <span class=na>tabindex</span><span class=o>=</span><span class=s>0</span> <span class=na>onfocus</span><span class=o>=</span><span class=s>alert(document.cookie)</span><span class=p>&gt;&lt;</span><span class=nt>input</span> <span class=na>id</span><span class=o>=</span><span class=s>attributes</span><span class=p>&gt;</span>
 </code></pre></div><p>把它当作评论提交</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png loading=lazy>
 </a>
 </figure></p>
 <p>但是如果直接交给用户点击的话是不会触发的，因为评论是由 aJax 请求拿到的，直接访问的话，Dom 树是还没有评论的，得需要等待 JS 执行完成才会有评论，所以这里我们需要一个延时或者阻塞的操作。比较简单的是利用<code>iframe</code>进行<code>setTimeout</code></p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>iframe</span> <span class=na>src</span><span class=o>=</span><span class=s>https://your-lab-id.web-security-academy.net/post?postId=3</span> <span class=na>onload</span><span class=o>=</span><span class=s>&#34;setTimeout(a=&gt;this.src=this.src+&#39;#x&#39;,500)&#34;</span><span class=p>&gt;</span>
 </code></pre></div><p>这里要注意一定要得等评论加载完毕再用<code>#x</code>选择<code>form</code>，所以这里的 500ms 需要根据自己的网络情况适当调整。</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=cve-2017-0928-bypassing-sanitization-using-dom-clobbering>CVE-2017-0928 Bypassing sanitization using DOM clobbering</h3>
@@ -458,20 +449,17 @@ a:password
 <h3 id=xss-in-gmails-amp4email-via-dom-clobbering>XSS in GMail’s AMP4Email via DOM Clobbering</h3>
 <p>终于到了我们开头提到的 OWASP Top 10 提名的攻击实例了，作者首先通过直接在控制台输入 window 进行 fuzz</p>
 <p><figure>
-<a href=https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-7.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-7.png loading=lazy>
+<a href=https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-7.png><img src=https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-7.png loading=lazy>
 </a>
 </figure></p>
 <p>这里他首先利用了<code>AMP</code>，尝试插入<code>&lt;a id=AMP></code>，但是这个<code>AMP</code>被 ban 了</p>
 <p><figure>
-<a href=https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-8.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-8.png loading=lazy>
+<a href=https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-8.png><img src=https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-8.png loading=lazy>
 </a>
 </figure></p>
 <p>接着找到下一个<code>AMP_MODE</code>，这个没有被 ban ，反而让作者发现了这里加载失败的 URL 当中有一个<code>undefined</code></p>
 <p><figure>
-<a href=https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-9.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-9.png loading=lazy>
+<a href=https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-9.png><img src=https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-9.png loading=lazy>
 </a>
 </figure></p>
 <p>这就是作者插入了<code>&lt;a id=AMP_MODE></code>导致产生的<code>undefined</code>，主要产生这个问题的代码经作者简化后是这样的：</p>

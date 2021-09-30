@@ -60,8 +60,7 @@ CTF
 <p>由于环境关掉了，这里就不放图了。说一下几个解法。</p>
 <p>首先通过弱口令 karaf/karaf 进行认证，进入发现是 jetty 的中间件，然后思路一直走偏在这个中间件上，直到有师傅跟我说 ghost pepper 指的是 Jolokia…nb&mldr;</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009331.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009331.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009331.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009331.jpg loading=lazy>
 </a>
 </figure></p>
 <p>然后又参考了几篇腾讯云鼎的相关文章：</p>
@@ -109,16 +108,14 @@ Open basedir: /var/www/html:/tmp/7833d7f27adcba46bdfd6c9c31c89904
 Hint: eval($_POST[&ldquo;backdoor&rdquo;]);</p>
 </blockquote>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008570.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008570.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008570.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008570.jpg loading=lazy>
 </a>
 </figure></p>
 <h2 id=the-first-way-to-hack>The first way to Hack</h2>
 <p>一看题目意图也比较明显，需要我们利用<code>Imagick</code>这个模块去进行 rce</p>
 <p>我们先直接看看<code>phpinfo()</code>，发现果然是能执行命令的基本都被 disable 掉了</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002789.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002789.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002789.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002789.jpg loading=lazy>
 </a>
 </figure></p>
 <p>我们还可以调用<code>readfile()</code>来查看题目源代码</p>
@@ -145,8 +142,7 @@ Hint: eval($_POST[&ldquo;backdoor&rdquo;]);</p>
 <p>{% endcolorquote %}</p>
 <p>例如就像这样，设置了<code>ini_set('open_basedir','/var/www/html');</code>之后，我们只能在<code>/var/www/html</code>进行操作，即<code>open_basedir</code>是用来限制访问目录的</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006126.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006126.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006126.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006126.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=bypass-open_basedir>Bypass Open_Basedir</h3>
@@ -167,8 +163,7 @@ Hint: eval($_POST[&ldquo;backdoor&rdquo;]);</p>
 <h3 id=劫持攻击>劫持攻击</h3>
 <p>参考的绕过文章使用了<code>mail()</code>函数，我们可以看看</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004191.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004191.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004191.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004191.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里确实开启了子进程，那我们再试试引入<code>putenv()</code>的效果，配合动态链接库尝试劫持，代码来自<a class=link href=https://github.com/TarlogicSecurity/Chankro target=_blank rel=noopener>Chankro</a></p>
@@ -211,14 +206,12 @@ Hint: eval($_POST[&ldquo;backdoor&rdquo;]);</p>
 <span class=nx>mail</span><span class=p>(</span><span class=s1>&#39;&#39;</span><span class=p>,</span><span class=s1>&#39;&#39;</span><span class=p>,</span><span class=s1>&#39;&#39;</span><span class=p>,</span><span class=s1>&#39;&#39;</span><span class=p>);</span>
 <span class=cp>?&gt;</span><span class=err>
 </span></code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004080.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004080.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004080.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004080.jpg loading=lazy>
 </a>
 </figure></p>
 <p>可以看到已经执行了<code>ls</code>命令并成功输出了<code>hacked</code>，使用<code>strace</code>看看我们可以发现执行顺序。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008064.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008064.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008064.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008064.jpg loading=lazy>
 </a>
 </figure></p>
 <p>当然还有另一种劫持，直接选择一个函数进行劫持，例如我们通过<code>strace php test.php</code>发现调用了<code>geteuid()</code>以及<code>getpid()</code>函数，我们可以在<code>hack.c</code>中这么写</p>
@@ -242,15 +235,13 @@ Hint: eval($_POST[&ldquo;backdoor&rdquo;]);</p>
 
 </code></pre></div><p>这样也可以完成劫持</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002758.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002758.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002758.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002758.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=getflag>GetFlag</h3>
 <p>所以我们需要找到一个可以启动子进程的函数，以实现我们劫持函数做到 RCE 的目的，然后这里我本地调通了但是远程不知道怎么没打通&mldr;</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009740.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009740.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009740.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009740.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里我直接用<code>new</code>了一个<code>.jpg</code>也可以调用子进程，但是服务器却没有触发&mldr;</p>
@@ -287,8 +278,7 @@ Hint: eval($_POST[&ldquo;backdoor&rdquo;]);</p>
 </code></pre></div><h3 id=the-other-way>The other way</h3>
 <p>也可以利用<a class=link href=https://www.php.net/manual/zh/function.error-log.php target=_blank rel=noopener>error_log</a>这个方法，这个方法也开启了子进程调用了<code>sendmail</code>方法。按照之前的思路进行就可以了</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007064.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007064.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007064.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007064.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=参考>参考</h3>
@@ -300,15 +290,13 @@ Hint: eval($_POST[&ldquo;backdoor&rdquo;]);</p>
 //&#34;@BPGDecodeDelegate@&#34; -b 16 -o &#34;%o.png&#34; &#34;%i&#34;; @MVDelegate@ &#34;%o.png&#34; &#34;%o&#34;
 </code></pre></div><p>这里参考了其他师傅的 wp ，主要是利用了<code>@BPGDecodeDelegate</code>对于后缀<code>.bpg</code>的解析，它会去 PATH 中寻找相关的<code>bpgenc</code>文件</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009100.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009100.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009100.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009100.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以我们只需要设置一个恶意的 PATH ，并在这个文件夹下放入我们的可执行文件。</p>
 <p>只要找到函数要执行的文件我们就可以进行操作了。例如下面用了<code>Imagick->readImage()</code>的方法</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002391.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002391.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002391.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002391.jpg loading=lazy>
 </a>
 </figure></p>
 <h1 id=conclusion>Conclusion</h1>

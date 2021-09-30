@@ -123,8 +123,7 @@ CTF
 <span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
 <span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119004834.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119004834.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119004834.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119004834.png loading=lazy>
 </a>
 </figure></p>
 <p>可以看到我们这里收到了<code>value^="7"</code>选择器发来的请求，所以我们也可以i使用枚举思想来进行爆破获取 token1</p>
@@ -304,8 +303,7 @@ CTF
 <span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
 </code></pre></div><p>效果如下图所示：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119122947.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119122947.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119122947.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119122947.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=token1---same-origin>Token1 - Same Origin</h3>
@@ -341,8 +339,7 @@ CTF
 <span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 <span class=p>&lt;</span><span class=nt>iframe</span> <span class=na>src</span><span class=o>=</span><span class=s>&#34;http://127.0.0.1:3000/token/78&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>iframe</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119122446.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119122446.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119122446.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119122446.png loading=lazy>
 </a>
 </figure></p>
 <p>这里<code>zedd.vv</code>映射到了 127.0.0.1 ，可以看到因为不同源，<code>zedd.vv</code>是拿不到 iframe 的 cookie 的，而通过 127.0.0.1 访问 test.html ，因为服务对于 cookie 的设置存在<code>Path=/</code>，所以我们能在父页面也能拿到 iframe 当中的 cookie</p>
@@ -354,8 +351,7 @@ CTF
 </ul>
 <p>简而言之，字体中的连字是至少两个具有图形表示形式的字符的序列。最常见的连字可能是"fi"序列。在下面的图片中，我们可以很清晰地看到"f"与"i"；而在第二行中，我们对这两个字母的顺序使用了不同的字体表示-字母"f"的顶部连接到"i"上方的点。这里我们应该将连字与字距区别开来：字距调整仅确定字体中字母之间的距离，而连字是给定字符序列的完全独立的字形（图形符号）。</p>
 <p><figure>
-<a href=https://sekurak.pl/wp-content/uploads/2017/09/bez_nazwy.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://sekurak.pl/wp-content/uploads/2017/09/bez_nazwy.png loading=lazy>
+<a href=https://sekurak.pl/wp-content/uploads/2017/09/bez_nazwy.png><img src=https://sekurak.pl/wp-content/uploads/2017/09/bez_nazwy.png loading=lazy>
 </a>
 </figure></p>
 <p>我们可以借助 fontforge 来生成我们需要的连字，因为现代浏览器已经不支持 SVG 格式的字体了，我们可以利用 fontforge 将 SVG 格式转换成 WOFF 格式，我们可以准备一个名为 script.fontforge 的文件，内容如下：</p>
@@ -445,8 +441,7 @@ Generate<span class=o>(</span><span class=nv>$1</span>:r + <span class=s2>&#34;.
 <span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
 <span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119230534.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119230534.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119230534.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119230534.png loading=lazy>
 </a>
 </figure></p>
 <p>访问 test.html 之后我们可以看到收到了请求。</p>
@@ -727,15 +722,13 @@ Generate<span class=o>(</span><span class=nv>$1</span>:r + <span class=s2>&#34;.
 <span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
 </code></pre></div><p>至于 width 为 500 px，是<code>script</code>标签内内容长度，这个需要宽度也比较关键，因为 svg 中连字的构建也不是特比好构建，也就是如果无法构建好连字，也就无法弄出滚动条，也就无处触发我们构造的请求了。所以 iframe 的宽度并不是越宽越好&mldr; svg horiz-adv-x 的参数也不是越大就能触发&mldr;</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120012326.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120012326.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120012326.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120012326.png loading=lazy>
 </a>
 </figure></p>
 <p>如果按照原作者设置的 iframe width 为 40px，svg 连字 horiz-adv-x 参数为 1000 的话，就会出现如上情况。如果各位小伙伴去自己尝试一下就会发现，有一个很明显的 lightblue 颜色的瞬间，也就是 script 标签的颜色，个人认为因为浏览器渲染的顺序问题，先把在这个场景中长度为 463px 的 script 标签首先因为<code>display:table</code>的原因，在网络请求字体之前首先被渲染了，所以会看到一条 lightblue 颜色带一闪而过，导致撑破了 iframe 设置的长度，也就产生了滚动条，随即触发了我们构造的请求，随后字体才会被浏览器进行渲染，然后将我们构造的其他字体设为 0 宽度。</p>
 <p>而且还有一些问题就是缓存的问题，效果如下：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120013522.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120013522.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120013522.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120013522.png loading=lazy>
 </a>
 </figure></p>
 <p>这也是原作者在原文提到的先发送一个请求让 chrome 缓存好字体的原因，但是这个方法及其不稳定&mldr;用原作者的代码直接跑跑的结果也是五花八门，每次跑都不一样。</p>
@@ -956,21 +949,18 @@ Generate<span class=o>(</span><span class=nv>$1</span>:r + <span class=s2>&#34;.
 <p>终于可以回到我们的题目了，其实走完以上流程，这个题目已经迎刃而解了，出题人出的点也正是 token2 的点。</p>
 <p>随便注册一个账号之后，我们可以在 theme 参数发现有代码注入的地方，但是过滤了尖括号，我们可以用<code>%0a</code>进行换行</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120133900.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120133900.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120133900.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120133900.png loading=lazy>
 </a>
 </figure></p>
 <p>但是我们的最终目的跟 token2 场景类似，还是拿到 script 标签中的 secret 变量</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120134348.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120134348.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120134348.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120134348.png loading=lazy>
 </a>
 </figure></p>
 <p>根据 token2 场景的解法，接下来我们至少需要做到可以执行我们任意 css 代码才行。</p>
 <p>根据文档<a class=link href=https://www.w3.org/TR/css-syntax-3/#newline-diagram target=_blank rel=noopener>css newline</a>，我们可以知道换行有如下写法：</p>
 <p><figure>
-<a href=https://xzfile.aliyuncs.com/media/upload/picture/20191029162244-48373126-fa25-1.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://xzfile.aliyuncs.com/media/upload/picture/20191029162244-48373126-fa25-1.png loading=lazy>
+<a href=https://xzfile.aliyuncs.com/media/upload/picture/20191029162244-48373126-fa25-1.png><img src=https://xzfile.aliyuncs.com/media/upload/picture/20191029162244-48373126-fa25-1.png loading=lazy>
 </a>
 </figure></p>
 <p>而且文档里也提到了<a class=link href=https://www.w3.org/TR/css-syntax-3/#error-handling target=_blank rel=noopener>error-handling</a></p>
@@ -1021,14 +1011,12 @@ Generate<span class=o>(</span><span class=nv>$1</span>:r + <span class=s2>&#34;.
 <span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
 </code></pre></div><p>这里我用 php 简单模拟了题目环境，做起来比较简便，也比较开心</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191121002617.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191121002617.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191121002617.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191121002617.png loading=lazy>
 </a>
 </figure></p>
 <p>And&mldr;</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191121002928.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191121002928.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191121002928.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191121002928.png loading=lazy>
 </a>
 </figure></p>
 <p>现场做出来的真是 CSS 带师 orz&mldr;</p>

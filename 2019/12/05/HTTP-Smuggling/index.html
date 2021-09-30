@@ -56,8 +56,7 @@ Sec
 <p>后续如果有新的总结发现也会发自己的<a class=link href=https://blog.zeddyu.info target=_blank rel=noopener>垃圾博客</a>或者先知（就看国际黑客陈师傅给不给过了）</p>
 <h1 id=tlnr>TL;NR</h1>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205171217.jpeg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205171217.jpeg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205171217.jpeg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205171217.jpeg loading=lazy>
 </a>
 </figure></p>
 <p>Pic from <a class=link href="https://twitter.com/SpiderSec/status/1200413390339887104?s=19" target=_blank rel=noopener>https://twitter.com/SpiderSec/status/1200413390339887104?s=19</a></p>
@@ -91,8 +90,7 @@ Sec
 </blockquote>
 <p>在 HTTP/1.1 中比较重要的引入就是 pipeline 技术了，以下是使用以及不使用 piepeline 技术的对比图：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191017234109.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191017234109.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191017234109.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191017234109.png loading=lazy>
 </a>
 </figure></p>
 <p>我们可以清晰地看到，使用了 pipeline 之后不必再需要等待前一个请求完成其响应再处理第二个请求了，这个有点异步处理的意思在里面。</p>
@@ -187,24 +185,20 @@ in\r\n\r\nchunks.\r\n
 </blockquote>
 <p>这里引用 @mengchen 师傅发的图：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205171057.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205171057.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205171057.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205171057.png loading=lazy>
 </a>
 </figure></p>
 <p>一般来说，反向代理与后端服务器不会使用 pipeline 技术，甚至也不会去使用 Keep-Alive ，更多时候反向代理采取的措施是重用 TCP 链接，因为对于反向代理与后端服务器来说，反向代理服务器与后端服务器 IP 相对固定，不同用户的请求通过代理服务器与后端服务器建立链接，将这两者之间的 TCP 链接进行重用，也就顺理成章了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132520.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132520.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132520.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132520.png loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132258.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132258.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132258.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132258.png loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132605.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132605.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132605.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132605.png loading=lazy>
 </a>
 </figure></p>
 <blockquote>
@@ -375,31 +369,26 @@ Transfer-Encoding
 <pre tabindex=0><code>GET /foo\r\n
 </code></pre><p>并且 HTTP/0.9 请求包与响应包是都没有 headers 的概念的，也就是说如下：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130142331.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130142331.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130142331.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130142331.png loading=lazy>
 </a>
 </figure></p>
 <p>因为 HTTP/0.9 响应包没有 headers 的特性，在 HTTP Smuggling 中利用起来也就特别的有意思了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143300.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143300.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143300.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143300.png loading=lazy>
 </a>
 </figure></p>
 <p>这张图的意思就是我们在 HTTP Smuggling 的时候使用 HTTP/0.9 进行 Smuggle ，这并不是 HTTP/0.9 标准的格式，但是由于一些中间件已经不支持直接解析 HTTP/0.9 的标准格式了，但是还可能存在解析这种指定 HTTP version 的情况。于是就可能存在以下这种情况：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143557.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143557.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143557.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143557.png loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143626.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143626.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143626.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143626.png loading=lazy>
 </a>
 </figure></p>
 <p>上面两个图展现了一个大致的攻击流程，chewy2.jpg 当中的 24-33664 字节有着一个完整的 HTTP 响应报文，当 Golang 在处理 HTTP/0.9 的时候，由于我们指定了<code>Range: bytes=24-33664</code>，就是我们可以指定获取响应报文的 24-33664 个字节，也就是获取了我们存放在图片当中的 HTTP 报文，然后返回给 Golang ，Golang 对于 HTTP/0.9 再进行标准化去头的处理，这样响应看起来就是一个新的响应了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130153851.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130153851.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130153851.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130153851.png loading=lazy>
 </a>
 </figure></p>
 <p>当一个正常用户去请求的时候，如果 Apache 重新使用了 TCP/IP 链接，就会将我们构造在图片当中的 HTTP 报文当作响应包返回给用户。这也是一个很典型的 HTTP Response Splitting 的思路。具体可以看看视频演示 <a class=link href="https://www.youtube.com/watch?v=lY_Mf2Fv7kI" target=_blank rel=noopener>HTTP Smuggling Examples 2016</a></p>
@@ -495,8 +484,7 @@ the origination timestamp for the message in which it appears.</p>
 </code></pre></div><p>其他的代码我们并不需要过多了解，这里我们可以知道这里将空格与<code>:</code>冒号同样处理了，也就是如果存在空格会把<code>:</code>其之前的 field name 正常处理，并不会抛出错误或者进行其他操作。这样就与 RFC 标准的规范不一致了，于是就会产生解析差异。</p>
 <p>@Bi3g0 构建了比较清晰的漏洞原理图：</p>
 <p><figure>
-<a href=https://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png loading=lazy>
+<a href=https://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png><img src=https://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png loading=lazy>
 </a>
 </figure></p>
 <p>这里用的例子是采用 ELB 作为 Front 服务器，Netty 作为 Backend 服务器进行举例，我们发送如下请求：</p>
@@ -527,8 +515,7 @@ the origination timestamp for the message in which it appears.</p>
 <p>接下来几个攻击方式我们可以通过 @portswigger 提供的几个 Lab 给我们进行练习以加深理解——<a class=link href=https://portswigger.net/web-security/request-smuggling target=_blank rel=noopener>HTTP request smuggling</a></p>
 <p>在做之前记得要把 BurpSuite 的自动更新 Content-Length 功能取消了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013185654.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013185654.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013185654.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013185654.jpg loading=lazy>
 </a>
 </figure></p>
 <p>首先我们来看 CL-TE 的情况：<a class=link href=https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te target=_blank rel=noopener>Lab: HTTP request smuggling, basic CL.TE vulnerability</a></p>
@@ -548,13 +535,11 @@ the origination timestamp for the message in which it appears.</p>
 G
 </code></pre></div><p>根据题目的提示要求，这里我们发送两次以上 HTTP 请求包：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013190441.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013190441.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013190441.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013190441.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013190452.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013190452.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013190452.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013190452.jpg loading=lazy>
 </a>
 </figure></p>
 <p>我们就可以使第二次请求构造出 GPOST 的 HTTP Method 了，详细的我们可以按照下面这个流程图来看看：</p>
@@ -612,8 +597,7 @@ GPOST / HTTP/1.1
 \r\n
 </code></pre><p>根据题目的提示要求，这里我们发送两次以上 HTTP 请求包即可，我们可以收到如下图所示的响应。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191122230209.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191122230209.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191122230209.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191122230209.png loading=lazy>
 </a>
 </figure></p>
 <p>过程流程与 CL-TE 类似，Front 服务器处理这个请求的时候按照 TE 优先处理，会认为上面的请求为一个请求整体，然后转发给 Backend 服务器，Backend 服务器在处理的时候按照 CL 优先处理，会认为<code>12\r\n</code>为第一个请求的 body ，以下为第二个请求，所以会响应 GPOST 为无法识别的 HTTP Method。</p>
@@ -648,8 +632,7 @@ GPOST / HTTP/1.1
 \r\n
 </code></pre><p>我们就可以得到如下图的响应：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123002425.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123002425.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123002425.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123002425.png loading=lazy>
 </a>
 </figure></p>
 <p>我们可以看到这里是用了两个 TE 字段，并且第二个 TE 字段值非标准值，这里 Front 选择对第一个 TE 进行优先处理，整个请求则为正常请求，会转发给 Backend 服务器，而 Backend 服务器以第二个 TE 进行优先处理，而第二个 TE 值非正常，则会取 CL 字段进行处理，这样这个请求就会因为 CL 字段设置的值 4 而被拆分为两个请求。</p>
@@ -703,13 +686,11 @@ GPOST / HTTP/1.1
 </span><span class=g>
 </span></code></pre></div><p>得到的响应如下两图</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123154656.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123154656.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123154656.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123154656.png loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123154609.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123154609.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123154609.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123154609.png loading=lazy>
 </a>
 </figure></p>
 <p>可以看到第二个请求我们得到了<code>/admin</code>的响应</p>
@@ -736,8 +717,7 @@ GPOST / HTTP/1.1
 </span><span class=g>
 </span></code></pre></div><p>我们可以看到成功访问到了<code>/admin</code>面板内容，如果不成功可以多发送几次试试看</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123155053.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123155053.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123155053.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123155053.png loading=lazy>
 </a>
 </figure></p>
 <p>得到了删除的 api ，于是我们再利用 HTTP Smuggling 访问这个 <code>/admin/delete?username=carlos</code> 即可，构造如下数据包：</p>
@@ -759,8 +739,7 @@ GPOST / HTTP/1.1
 </span><span class=g>
 </span><span class=g>
 </span></code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123155603.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123155603.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123155603.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123155603.png loading=lazy>
 </a>
 </figure></p>
 <p>这种攻击方式类似 HTTP SSRF ，主要的点就是在控制 CL 数值上，比如说第一个数据包 CL 的值为 28 ，是这么计算的：</p>
@@ -793,32 +772,27 @@ GET /admin HTTP/1.1\r\n					--&gt; 19+2 = 21 个字节
 </blockquote>
 <p>这里根据题目提示，场景是一个 CL-TE 的场景，并且给出一个搜索框，我们尝试随便搜索一个 123 ，可以发现搜索结果“123”直接回显到了相应当中。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124191719.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124191719.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124191719.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124191719.png loading=lazy>
 </a>
 </figure></p>
 <p>尝试使用 HTTP Smuggling 方式访问，但是被 blocked ：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124203138.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124203138.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124203138.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124203138.png loading=lazy>
 </a>
 </figure></p>
 <p>然后我们可以尝试利用搜索回显把 Front 服务器转发的请求头给泄露出来：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124202357.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124202357.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124202357.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124202357.png loading=lazy>
 </a>
 </figure></p>
 <p>如果后面只是添加那个 X-*-Ip 的请求头是访问不了 admin 面板的，因为这样会让 Backend 收到两个重复的请求头，在这个场景当中，Backend 服务器对重复的请求头做出了判断：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124204018.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124204018.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124204018.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124204018.png loading=lazy>
 </a>
 </figure></p>
 <p>所以我们需要把 Front 服务器添加的请求头给“隐藏”掉，我们就可以利用 Smuggling 通过 body 的方式把其他 Front 服务器添加的请求头“隐藏”掉，然后我们就可以得到 admin 面板回显：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124203108.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124203108.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124203108.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124203108.png loading=lazy>
 </a>
 </figure></p>
 <p>整个流程看起来比较简单，但是仔细做的话，其实 CL 的值比较关键，我们来看看泄露 Front 请求的那个数据包的 CL 值怎么算的：</p>
@@ -862,8 +836,7 @@ Cookie: session=ipRivKyVnK41ZGBQk7JvtKjbD4drk2At
 csrf=oIjWmI8aLjIzqX18n5mNCnJieTnOVWPN&amp;postId=5&amp;name=1&amp;email=1%40qq.com&amp;website=http%3A%2F%2Fwww.baidu.com&amp;comment=1
 </code></pre></div><p>只要下面这个 CL 足够大，我们就可以用 HTTP Smuggling 把下一个用户的请求拼接到我们最后一个 comment 参数里面了，然后我们在看评论处就可以看到别人的请求头了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124213544.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124213544.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124213544.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124213544.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=exploit-reflected-xss>Exploit Reflected XSS</h3>
@@ -875,8 +848,7 @@ csrf=oIjWmI8aLjIzqX18n5mNCnJieTnOVWPN&amp;postId=5&amp;name=1&amp;email=1%40qq.c
 </blockquote>
 <p>还是依旧的 CL-TE 场景，我们可以在 UA 处发现有一个反射 XSS，but 单是这样没什么用，所以我们得想点办法升级危害。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124235543.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124235543.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124235543.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124235543.png loading=lazy>
 </a>
 </figure></p>
 <p>我们可以构造以下数据包，只要发送一次</p>
@@ -902,13 +874,11 @@ csrf=oIjWmI8aLjIzqX18n5mNCnJieTnOVWPN&amp;postId=5&amp;name=1&amp;email=1%40qq.c
 </span><span class=g>x=1
 </span></code></pre></div><p>然后我们随便访问该站任何页面都会被弹窗了，因为我们的请求被嵌入到了上面的第二个请求当中：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191125000410.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191125000410.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191125000410.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191125000410.png loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191125001149.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191125001149.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191125001149.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191125001149.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=turn-an-on-site-redirect-into-an-open-redirect>Turn An On-Site Redirect Into An Open Redirect</h3>
@@ -947,8 +917,7 @@ csrf=oIjWmI8aLjIzqX18n5mNCnJieTnOVWPN&amp;postId=5&amp;name=1&amp;email=1%40qq.c
 <p>这个环境也是一个可以修改 Host 进行跳转的场景，而在<code>/post/next?postId=2</code>路由正好有一个跳转的 api 供我们使用，这个路由跳转到的是<code>/post?postId=4</code>。</p>
 <p>根据题目描述，我们需要实现缓存投毒， 例如这里我们就选择<code>/resources/js/tracking.js</code>进行投毒，LAB 还给了我们制造投毒的服务，于是我们可以进行以下设置：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129014911.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129014911.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129014911.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129014911.png loading=lazy>
 </a>
 </figure></p>
 <p>发送以下数据包一次：</p>
@@ -976,14 +945,12 @@ Content-Length: 10
 x=1
 </code></pre></div><p>然后访问<code>/resources/js/tracking.js</code>:</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129015245.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129015245.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129015245.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129015245.png loading=lazy>
 </a>
 </figure></p>
 <p>我们可以看到响应包的跳转地址被我们修改成了我们 exploit 的服务器地址，然后我们访问正常服务器主页试试：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129015530.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129015530.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129015530.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129015530.png loading=lazy>
 </a>
 </figure></p>
 <p>可以看到成功<code>alert(1)</code>。</p>
@@ -1057,20 +1024,17 @@ x=1
 </span><span class=g>Location: http://skeletonscribe.net?, c.paypal.com/webstatic/ 
 </span></code></pre></div><p>但是 Paypal 登录页面有 CSP 规则 <code>script-src</code> 限制了这个跳转。</p>
 <p><figure>
-<a href=https://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg loading=lazy>
+<a href=https://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg><img src=https://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg loading=lazy>
 </a>
 </figure></p>
 <p>后来作者发现该页面还有一个动态生成的 iframe 引入了 c.paypal.com ，且该子页面没有 CSP 而且还引入了作者投毒的 js 文件！虽然这样可以控制 iframe 页面，但是由于同源策略，是读不到父页面的数据的。</p>
 <p><figure>
-<a href=https://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg loading=lazy>
+<a href=https://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg><img src=https://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg loading=lazy>
 </a>
 </figure></p>
 <p>再接着作者的同事在 paypal.com/us/gifts 发现了一个不使用 CSP 的页面，并且也导入了作者投毒的 js 文件，这样作者终于通过 js 将 c.paypal.com 的 iframe 重定向到了 paypal.com/us/gifts ，这样就同源了，也就可以读取父页面的数据了。</p>
 <p><figure>
-<a href=https://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg loading=lazy>
+<a href=https://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg><img src=https://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg loading=lazy>
 </a>
 </figure></p>
 <p>Paypal 第一次修复是将 Akamai 配置修改成拒绝含有 Transfer-Encoding: chunked 的请求，但是后来又被作者构造了一个换行的 header 绕过了：</p>
@@ -1305,8 +1269,7 @@ Description: Could not process this request.
 <p>这个是比较有意思的一个部分，当时是在10月初 fuzz 的，然后也找了挺久的目标，最后停留在了之前同学推荐的一个中间件 <a class=link href=https://caddyserver.com/v1/ target=_blank rel=noopener>caddy</a> 上（现在是 11月 27 日，竟然出 caddy 2 了&mldr;），然后拿他进行了实验，由于自己比较懒用了 docker hub 上的环境 <a class=link href=https://hub.docker.com/r/abiosoft/caddy target=_blank rel=noopener>caddy</a>。</p>
 <p>于是就有了：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129022617.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129022617.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129022617.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129022617.png loading=lazy>
 </a>
 </figure></p>
 <p>当时找到挺开心的，以为一个 CVE 就这么简单的到手了，因为 Netty CVE 给的启示嘛，这也算是一个解析差异。然后当时我跟导师还仔细深入探究了这个产生的原因，跟了一下代码，发现可能是 Go 某个原生库的原因，我本地也单独抽了其中有问题的代码测了一遍，确认就是那个库的原因。</p>
@@ -1335,8 +1298,7 @@ Description: Could not process this request.
 <p>之后我去查询了一下 HTTP/2 与 HTTP/1.1 的差异，个人认为主要是 HTTP/2 中加入了 Request multiplexing over a single TCP connection ，也就是说使用 HTTP/2 可以使用单个 TCP 连接来进行请求资源，也就减少了 TCP 连接复用的可能性，即使能 Smuggle 也只能打自己；而且对于新的二进制分帧机制引入也对该种攻击做出了限制。</p>
 <p>具体可以参考 <a class=link href=https://developers.google.com/web/fundamentals/performance/http2#%E6%AF%8F%E4%B8%AA%E6%9D%A5%E6%BA%90%E4%B8%80%E4%B8%AA%E8%BF%9E%E6%8E%A5 target=_blank rel=noopener>HTTP/2 简介</a></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205225455.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205225455.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205225455.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205225455.png loading=lazy>
 </a>
 </figure></p>
 <h1 id=bonus>Bonus</h1>

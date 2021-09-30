@@ -72,8 +72,7 @@ CTF
 </code></pre></div><p>使用 HTML 编码将我们的 payload 进行编码绕过</p>
 <pre tabindex=0><code>--&gt;&lt;svg/onload=alert()&gt;
 </code></pre><p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165018.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165018.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165018.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165018.png loading=lazy>
 </a>
 </figure></p>
 <p>但是这里我们并不能直接传入 HTML 编码绕过，得需要加一个 img 标签利用其属性进行绕过，为什么呢？</p>
@@ -100,14 +99,12 @@ CTF
 <h3 id=difficult-version>Difficult Version</h3>
 <p>再过滤了实体编码<code>&amp;#;</code>之后我们要怎么绕过呢？我们先给出一个 Trick ，在这里我们可以使用<code>&lt;?</code>进行绕过。</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165157.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165157.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165157.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165157.png loading=lazy>
 </a>
 </figure></p>
 <p>可以看到我们在使用了<code>&lt;?</code>之后成功把 p 标签逃逸了出来，可是为什么呢？我们可以输出第一步的<code>template.innerHTML</code>看看</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165902.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165902.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165902.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165902.png loading=lazy>
 </a>
 </figure></p>
 <p>我们可以发现在第一步渲染的时候，传入的<code>&lt;?</code>已经变成了<code>&lt;!--?--></code>，存在<code>--></code>可以将注释闭合。可是这是为什么呢？</p>
@@ -285,8 +282,7 @@ aaa&lt;!--?bbb--&gt;ccc
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>button</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;keanu&#34;</span> <span class=na>data-toggle</span><span class=o>=</span><span class=s>&#34;popover&#34;</span> <span class=na>data-container</span><span class=o>=</span><span class=s>&#34;#number&#34;</span> <span class=na>data-content</span><span class=o>=</span><span class=s>&#34;hello&#34;</span><span class=p>&gt;</span>
 </code></pre></div><p>利用题目中原有的<code>$("#keanu").popover("show");</code>来触发我们的 popover ，我们暂且先注释掉题目当中的延迟关闭的功能以便于我们观察。</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201165048.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201165048.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201165048.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201165048.png loading=lazy>
 </a>
 </figure></p>
 <p>尽管 eval 执行出错，但是我们可以发现 number 标签当中确实被我们注入了一些其他的内容</p>
@@ -298,8 +294,7 @@ aaa&lt;!--?bbb--&gt;ccc
 </code></pre></div><p>即可实现 XSS，所以 payload:</p>
 <pre tabindex=0><code>number='&amp;name=&lt;button id%3D&quot;keanu&quot; data-toggle%3D&quot;popover&quot; data-container%3D&quot;%23number&quot; data-content%3D&quot;'%3Balert(1)%3B%2F%2F&quot;&gt;
 </code></pre><p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201170536.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201170536.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201170536.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201170536.png loading=lazy>
 </a>
 </figure></p>
 <h2 id=ww3>WW3</h2>
@@ -354,8 +349,7 @@ aaa&lt;!--?bbb--&gt;ccc
 <span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 </code></pre></div><p>这个题目让我深深地体会到了 JavaScript 的恶意&mldr;先放个图，大家自行先体会一下，然后我们开始分析一下题目。</p>
 <p><figure>
-<a href=https://i.redd.it/rz3o1yibnc511.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://i.redd.it/rz3o1yibnc511.png loading=lazy>
+<a href=https://i.redd.it/rz3o1yibnc511.png><img src=https://i.redd.it/rz3o1yibnc511.png loading=lazy>
 </a>
 </figure></p>
 <p>题目用比较多的代码做了一个获取图片以及输出自定义 text 的功能，仍旧是上题的四个外部 JS 文件，以及一大段 JS 代码。本题涉及到 JavaScript 比较多的黑魔法，我们一个个来看看。</p>
@@ -393,8 +387,7 @@ aaa&lt;!--?bbb--&gt;ccc
 <h3 id=dom-clobbering>DOM Clobbering</h3>
 <p>首先我们先来看看几个比较有趣的例子：</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201223309.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201223309.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201223309.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201223309.png loading=lazy>
 </a>
 </figure></p>
 <p>根据 MDN 文档</p>
@@ -403,14 +396,12 @@ aaa&lt;!--?bbb--&gt;ccc
 </blockquote>
 <p>这里的<code>document.domain</code>并没有获取到我的域名<code>zedd.vv</code>，反而是获取到了 img 标签，然后我们可以直接输出 document 对象来看看是怎么回事</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224629.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224629.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224629.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224629.png loading=lazy>
 </a>
 </figure></p>
 <p>通过这个例子我们可以知道，可以通过一些标签的 id(name) 属性来控制 document(window) 通过 DOM API(BOM API) 获取到的某个东西</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224817.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224817.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224817.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224817.png loading=lazy>
 </a>
 </figure></p>
 <p>我查阅过相关资料，也询问过一些前端的专业人员，这里给我的解释是"document 和 window 两个变量，其实是 DOM 和 BOM 的规范，一般来说这两个不应该被当做普通的 JS 对象，但是规范与实现不同"，&ldquo;都是因为上古遗留问题，现在哪有直接写 document.xxx 来获取元素的，TS 和 eslint 都会报错&rdquo;。</p>
@@ -493,8 +484,7 @@ aaa&lt;!--?bbb--&gt;ccc
   <span class=nb>document</span><span class=p>.</span><span class=nx>write</span><span class=p>(</span><span class=s2>&#34;&lt;img src=x onerror=test(this,x)&gt;&#34;</span><span class=p>);</span>
 <span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200202004222.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200202004222.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200202004222.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200202004222.png loading=lazy>
 </a>
 </figure></p>
 <p>原理都是一样的，这里<code>test</code>函数在<code>onerror</code>作用域找到了 x 变量，所以就不会再去找 window 作用域下的 <code>x=false</code>变量了，所以本题我们需要引入一个<code>name=notify</code>的标签来“覆盖”掉原来的 notify 变量。</p>
@@ -513,8 +503,7 @@ aaa&lt;!--?bbb--&gt;ccc
   <span class=p>...</span>
 <span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201222425.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201222425.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201222425.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201222425.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=jquerys-mxss>JQuery&rsquo;s &lsquo;mXSS&rsquo;</h3>
@@ -557,8 +546,7 @@ Elon
 </code></pre><p>这里我也不是非常清楚作者为啥要加一个 img 参数//全程没有用到</p>
 <p>最后再来一遍：</p>
 <p><figure>
-<a href=https://i.redd.it/rz3o1yibnc511.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://i.redd.it/rz3o1yibnc511.png loading=lazy>
+<a href=https://i.redd.it/rz3o1yibnc511.png><img src=https://i.redd.it/rz3o1yibnc511.png loading=lazy>
 </a>
 </figure></p>
 <h2 id=references>References</h2>

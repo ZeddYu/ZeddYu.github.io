@@ -61,42 +61,35 @@ flag格式为NUAACTF{.*}
 <p>根据题目描述，我们要做的肯定就是要去登录<code>admin[1-4] || admin</code>了。</p>
 <p>首先进入题目界面，发现题目功能很简单，首页只提供注册登录两个功能。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008462.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008462.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008462.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008462.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006729.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006729.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006729.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006729.jpg loading=lazy>
 </a>
 </figure></p>
 <p>我们先随便登录注册一下，进去后发现有个重置密码的功能。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006219.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006219.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006219.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006219.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000480.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000480.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000480.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000480.jpg loading=lazy>
 </a>
 </figure></p>
 <p>重置一下抓包看看。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007019.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007019.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007019.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007019.jpg loading=lazy>
 </a>
 </figure></p>
 <p>然后真的发现自己邮箱里面多了一封重置密码的邮件。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004224.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004224.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004224.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004224.jpg loading=lazy>
 </a>
 </figure></p>
 <p>扫目录可以得到<code>www.zip</code>，发现题目的所有基本源码。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002659.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002659.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002659.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002659.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=思路>思路</h4>
@@ -223,8 +216,7 @@ else{
 <span class=k>echo</span> <span class=nx>substr</span><span class=p>(</span><span class=nx>md5</span><span class=p>(</span><span class=nx>mt_rand</span><span class=p>()),</span><span class=mi>0</span><span class=p>,</span><span class=mi>6</span><span class=p>);</span>
 </code></pre></div><p>猜解得到密码登录就可以得到<code>flag</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000323.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000323.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000323.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000323.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里避免给大家竞争随机…就给了5个<code>amdin</code>，其实应该注册一个就对应给一个<code>admin</code>，但是感觉5个应该差不多了&mldr;</p>
@@ -238,20 +230,17 @@ flag格式为NUAACTF{.*}
 </code></pre><h4 id=信息收集-1>信息收集</h4>
 <p>题目设置非常简单</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005541.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005541.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005541.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005541.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003674.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003674.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003674.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003674.jpg loading=lazy>
 </a>
 </figure></p>
 <p>就一个登录注册界面。然后给了一个<code>www.zip</code>的附件，放出了关键源码。</p>
 <p>然后，随便点一个选课，就报错了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007526.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007526.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007526.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007526.jpg loading=lazy>
 </a>
 </figure></p>
 <p>再看看源码，其中在<code>user.py</code>中发现</p>
@@ -338,8 +327,7 @@ flag格式为NUAACTF{.*}
 <span class=o>&gt;&gt;&gt;</span> <span class=p>()</span><span class=o>.</span><span class=vm>__class__</span><span class=o>.</span><span class=vm>__bases__</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>__subclasses__</span><span class=p>()[</span><span class=mi>59</span><span class=p>]</span><span class=o>.</span><span class=fm>__init__</span><span class=o>.</span><span class=n>func_globals</span><span class=o>.</span><span class=n>values</span><span class=p>()[</span><span class=mi>13</span><span class=p>][</span><span class=s1>&#39;eval&#39;</span><span class=p>](</span><span class=s1>&#39;__import__(&#34;os&#34;).popen(&#34;cat ./flag&#34;).read()&#39;</span> <span class=p>)</span>
 <span class=s1>&#39;NUAACTF</span><span class=si>{F14sssskkkrrr_D3Bug_n0t_S4f3}</span><span class=s1>&#39;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005783.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005783.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005783.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005783.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=web3----张哥的金牌之旅>Web3 张哥的金牌之旅</h3>
@@ -347,26 +335,22 @@ flag格式为NUAACTF{.*}
 <h4 id=信息收集-2>信息收集</h4>
 <p>打开发现是个<code>java</code>框架。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009939.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009939.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009939.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009939.jpg loading=lazy>
 </a>
 </figure></p>
 <p>提供了简单的登录注册。</p>
 <p>然后发现只有<code>A+B</code>问题可以点</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007413.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007413.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007413.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007413.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000008.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000008.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000008.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000008.jpg loading=lazy>
 </a>
 </figure></p>
 <p>代码提交页面提供代码提交，查看最后一次提交的代码功能。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008525.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008525.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008525.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008525.jpg loading=lazy>
 </a>
 </figure></p>
 <p>引用代码提示</p>
@@ -376,66 +360,56 @@ flag格式为NUAACTF{.*}
 <h4 id=思路-1>思路</h4>
 <p>既然引用代码处，可以引用<code>http</code>协议的<code>url</code>，那我们可以试试用<code>file</code>如何。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002047.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002047.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002047.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002047.jpg loading=lazy>
 </a>
 </figure></p>
 <p>发现是<code>forbidden</code>，通过<code>fuzz</code>我们可以得到<code>jar netdoc</code>两个<code>java SSRF</code>支持的协议没有被<code>ban</code>，而且需要再最后加入<code>?1.c</code>来绕过后缀检测</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004138.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004138.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004138.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004138.jpg loading=lazy>
 </a>
 </figure></p>
 <p>然后查看最后一次代码提交，发现并没有什么改变。</p>
 <p>试试<code>netdoc</code>，传入<code>netdoc:///?1.c</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006090.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006090.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006090.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006090.jpg loading=lazy>
 </a>
 </figure></p>
 <p>发现可以得到回显</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004440.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004440.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004440.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004440.jpg loading=lazy>
 </a>
 </figure></p>
 <p>但是直接请求<code>flag</code>，发现被<code>ban</code>掉了，所以我们得另寻他路。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007131.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007131.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007131.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007131.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=突破口>突破口</h4>
 <p>通过查看一系列文件，发现如果直接读<code>class</code>文件的话，直接展示出来了<code>class</code>二进制文件，那我们下载下来会不会也是<code>class</code>文件的形式呢</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007767.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007767.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007767.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007767.jpg loading=lazy>
 </a>
 </figure></p>
 <p>下载下来后，我们用<code>file</code>看一下，果然是个<code>java class</code>文件</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002918.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002918.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002918.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002918.jpg loading=lazy>
 </a>
 </figure></p>
 <p>用<code>JD-GUI</code>打开得到源码</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003338.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003338.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003338.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003338.jpg loading=lazy>
 </a>
 </figure></p>
 <p>题目描述说需要逆向师傅其实指的就是这里需要逆向<code>class</code>文件，（其实也不需要…直接用<code>JD-GUI</code>直接就能看了&mldr;</p>
 <p>这里省略了其他源码的审计。</p>
 <p>然后看到貌似多出的这个<code>User.class</code>类，然后发现了比较敏感的<code>readObject()</code>函数，<code>java</code>反序列化漏洞特征，可能存在<code>java</code>反序列化漏洞</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002742.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002742.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002742.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002742.jpg loading=lazy>
 </a>
 </figure></p>
 <p>然后找到其利用的地方，发现在<code>netdoc:///app/webapps/ROOT/WEB-INF/classes/org/nuaa/tomax/logindemo/controller/UserController.class</code>调用了<code>User</code>类。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003437.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003437.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003437.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003437.jpg loading=lazy>
 </a>
 </figure></p>
 <p><code>UserController.class</code>的关键部分:</p>
@@ -453,13 +427,11 @@ flag格式为NUAACTF{.*}
   <span class=o>}</span>
 </code></pre></div><p>在看到<code>SysUtil.class</code>:</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009204.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009204.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009204.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009204.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000635.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000635.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000635.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000635.jpg loading=lazy>
 </a>
 </figure></p>
 <p>发现竟然有部分貌似真的需要逆向，但是其实仔细往下看，利用点跟上面那段代码没太大关系。</p>
@@ -737,25 +709,21 @@ Task Completed
 <span class=cp>?&gt;</span><span class=err>
 </span></code></pre></div><p>然后我们在首页得到那个 img 路径，利用文件包含，可以发现成功执行命令。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005329.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005329.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005329.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005329.jpg loading=lazy>
 </a>
 </figure></p>
 <p>接下来简化一下操作，我就直接把那些 php disable 去掉。然后我们发现有个文件</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005968.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005968.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005968.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005968.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000961.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000961.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000961.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000961.jpg loading=lazy>
 </a>
 </figure></p>
 <p>传 ew + busybox，拿<code>use auxiliary/scanner/portscan/tcp</code>，得到 172.20.0.3 这个 ip 上有端口开着</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000103.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000103.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000103.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000103.jpg loading=lazy>
 </a>
 </figure></p>
 <p>挂好 ew 之后，我们尝试用 smbclient 来连接内网的 samba 服务（这里第二天来弄了，之前又起了一个 container ，所以 ip 变成了 172.21.0.3</p>
@@ -785,49 +753,41 @@ NT_STATUS_ACCESS_DENIED making remote directory /share1
 取消挂载 umount /mnt/tmp
 </code></pre></div><p>若出现了下图的错误，则需要加上<code>-m SMB2</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008707.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008707.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008707.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008707.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001888.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001888.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001888.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001888.jpg loading=lazy>
 </a>
 </figure></p>
 <p>可以看到挂载了一个 www 目录，接着进入交互模式</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009321.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009321.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009321.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009321.jpg loading=lazy>
 </a>
 </figure></p>
 <p>得到第一部分的 flag</p>
 <p>然后发现在 172.21.0.4 上开放着 8080 端口</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009107.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009107.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009107.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009107.jpg loading=lazy>
 </a>
 </figure></p>
 <p>挂代理请求 172.21.0.4:8080 发现是 Apache Tomcat/7.0.79</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000082.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000082.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000082.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000082.jpg loading=lazy>
 </a>
 </figure></p>
 <p>访问 manager 尝试了弱密码无果，尝试 CVE-2017-12615</p>
 <p>直接上 msf</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007852.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007852.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007852.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007852.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001642.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001642.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001642.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001642.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005769.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005769.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005769.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005769.jpg loading=lazy>
 </a>
 </figure></p>
 <p>成功拿到两段 flag</p>

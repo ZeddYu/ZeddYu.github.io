@@ -122,8 +122,7 @@ CTF
 <p>终于在<code>0x1f0x9d</code>得到一个文件类型是<code>compress'd data</code>，虽然有单引号，但是不存在我们可控的数据。</p>
 <p>还有一个是<code>0xfb0x01</code>得到一个文件类型是<code>QDOS object ''</code>，看起来很对的样子，有两个单引号，并且我们貌似可以在单引号之间插入数据，我们可以随便测试一下</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png loading=lazy>
 </a>
 </figure></p>
 <p>发现这里被吃掉了一个<code>p</code>，于是我们调整一下 payload 就可以用来注入了。</p>
@@ -132,8 +131,7 @@ CTF
 </code></pre><pre tabindex=0><code class=language-sqlite data-lang=sqlite>ATTACH DATABASE 'z.php' AS t;insert INTO t.e (d) VALUES ('&lt;?php eval($_POST[a])?&gt;');/*
 </code></pre><p>这里可能需要注意的就是有长度限制，所以我们需要分两次来写 shell</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=other-file>other file</h3>
@@ -141,36 +139,31 @@ CTF
 <h4 id=tex-dvi-file>TeX DVI file</h4>
 <p>0xf702 文件头，在填充一定数据后有我们完全可控的数据</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png loading=lazy>
 </a>
 </figure></p>
 <h4 id=jpeg>jpeg</h4>
 <p>在 jpeg 的 EXIF 数据段中有用来标识 software 的数据也是我们可控的地方，同样用来标识 comment 的地方我们也可控。于是我们可以使用 exiftool 来修改图片。</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>exiftool -overwrite_original -comment<span class=o>=</span><span class=s2>&#34;payload&#34;</span> -software<span class=o>=</span><span class=s2>&#34;payload2&#34;</span> 1.jpg
 </code></pre></div><p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png loading=lazy>
 </a>
 </figure></p>
 <h4 id=heading>#!</h4>
 <p>我们还可以利用<code>#!/</code>的文件来构造 payload</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png loading=lazy>
 </a>
 </figure></p>
 <h4 id=gz>gz</h4>
 <p>利用<code>gunzip</code>生成的 gz 文件，我们也可以用来注入，我们可控的数据是它的文件名</p>
 <p><figure>
-<a href=https://posts.xh4h.com/assets/images/36c3/gunzip1.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://posts.xh4h.com/assets/images/36c3/gunzip1.png loading=lazy>
+<a href=https://posts.xh4h.com/assets/images/36c3/gunzip1.png><img src=https://posts.xh4h.com/assets/images/36c3/gunzip1.png loading=lazy>
 </a>
 </figure></p>
 <p>当然我们也可以直接修改 gz 文件内容</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png loading=lazy>
 </a>
 </figure></p>
 <h2 id=writeupbin>WriteUpBin</h2>
@@ -299,8 +292,7 @@ CTF
 <span class=p>&lt;/</span><span class=nt>form</span><span class=p>&gt;</span>
 </code></pre></div><p><code>data-parsley-trigger</code>指定了<code>blur</code>事件，也就是当我们的 input 失焦时，会显示我们的错误信息，并且在 id 为 div1 的元素中显示，更重要的是，浏览器也将其进行了渲染。</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png loading=lazy>
 </a>
 </figure></p>
 <p>###Click</p>
@@ -309,8 +301,7 @@ CTF
 <p>首先，因为<code>find_element_by_xpath</code>只会得到第一个 id 为 like 的 input 标签，而我们通过 parsley.js 可以将错误信息输出到指定页面位置，所以我们大概可以有一个想法，把一个没有用的单独的 id 为 like 的 input 标签插入到原来的点赞按钮之前。</p>
 <p>但是这有什么用呢？我们再来仔细看看 admin 要点赞的那个页面</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png loading=lazy>
 </a>
 </figure></p>
 <p>页面上部分是 header.php ，会展示当前用户所提交的 writeup ，也就是说 admin 的这个页面，第一个也是唯一一个 a 标签就是 flag 的地址，现在的问题就变成了我们怎么获取这个地址的问题了，更详细的来说，我们如何获取这个 a 标签中的 href 属性值，或者更确切的说就是获取 writeup id 的事情了。</p>
@@ -357,8 +348,7 @@ CTF
             <span class=k>break</span>
 </code></pre></div><p>拿到 writeup id 之后直接访问即可：</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=other-selector>Other Selector</h3>
@@ -541,8 +531,7 @@ CTF
     <span class=n>l</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
 </code></pre></div><p>这样我在本机上用 fswatch 很明显可以看到临时文件已经生成，并且文件内容就是我们发送的内容。</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=keep-temp-file>Keep Temp File</h3>
@@ -592,8 +581,7 @@ CTF
 </ol>
 <p>由于第二个极短的时间窗，我们需要比较准确地调控延迟时间，之前没调控好时间以及文件大小，挂一晚上脚本都没有 hit 中一次，第二天经过 @rebirth 的深刻指点，修改了一下延迟时间以及服务器响应的文件的大小，成功率得到了很大的提高，基本每次都可以 getflag。</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png loading=lazy>
 </a>
 </figure></p>
 <p>脚本放在<a class=link href=https://gist.github.com/ZeddYu/42159da911e82dba923b375a9f64ad65 target=_blank rel=noopener>gist-exp.py</a>，其中 192.168.34.1 是本地题目地址，192.168.151.132 是 client 的地址。</p>

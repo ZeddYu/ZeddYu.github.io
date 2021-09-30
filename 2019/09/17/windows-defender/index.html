@@ -80,8 +80,7 @@ CTF
 <p>我们可以做个简单的验证，我们先只使用以下代码测试：</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>mal</span> <span class=o>=</span> <span class=s2>&#34;X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&#34;</span><span class=p>;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181803.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181803.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181803.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181803.png loading=lazy>
 </a>
 </figure></p>
 <p>可以发现我们并没有触发 Windows Defender，即使字符串是 EICAR 测试样本，说明了字符串不受 EICAR 特征影响。</p>
@@ -89,8 +88,7 @@ CTF
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kd>var</span> <span class=nx>mal</span> <span class=o>=</span> <span class=s2>&#34;X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&#34;</span><span class=p>;</span>
 <span class=nb>eval</span><span class=p>(</span><span class=nx>mal</span><span class=p>);</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181841.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181841.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181841.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181841.png loading=lazy>
 </a>
 </figure></p>
 <p>没错，在保存的时候就立马触发了 Windows Defender ，足以验证当中有一个 Javascript Engine 进行了内容检测，而且即使没有完整的 Javascript 标签，也可以触发 Windows defender。</p>
@@ -101,8 +99,7 @@ CTF
 <span class=nb>eval</span><span class=p>(</span><span class=nx>mal</span><span class=p>);</span>
 <span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100623.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100623.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100623.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100623.png loading=lazy>
 </a>
 </figure></p>
 <p>非常棒，并没有被检测出恶意内容。</p>
@@ -113,8 +110,7 @@ CTF
 <span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 <span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100640.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100640.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100640.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100640.png loading=lazy>
 </a>
 </figure></p>
 <p>也很棒，也没有检测出恶意内容。</p>
@@ -126,8 +122,7 @@ CTF
 <span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 <span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100648.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100648.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100648.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100648.png loading=lazy>
 </a>
 </figure></p>
 <p>Done! 触发了恶意内容检测。</p>
@@ -139,8 +134,7 @@ CTF
 <span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 <span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>a<span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103004.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103004.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103004.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103004.png loading=lazy>
 </a>
 </figure></p>
 <p>这里我们获取的是<code>&lt;body></code>标签中的第一个字符，也就是<code>a</code>，不构成 EICAR 测试样本，所以触发不了 Windows Defender 也很正常。</p>
@@ -152,8 +146,7 @@ CTF
 <span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 <span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>*<span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103146.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103146.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103146.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103146.png loading=lazy>
 </a>
 </figure></p>
 <p>很棒，意料之中地触发了 Windows Defender。</p>
@@ -206,8 +199,7 @@ CTF
 <span class=o>&gt;</span>     <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>n</span><span class=p>);</span>
 <span class=p>{</span> <span class=nx>num</span><span class=o>:</span> <span class=s1>&#39;*&#39;</span> <span class=p>}</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912130704.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912130704.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912130704.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912130704.png loading=lazy>
 </a>
 </figure></p>
 <p>这样我们就可以通过“盲注”的方式获取<code>&lt;body></code>标签中的秘密数据了。</p>

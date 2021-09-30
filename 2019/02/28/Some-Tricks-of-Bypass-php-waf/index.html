@@ -64,16 +64,14 @@ Sec
 </code></pre></div><p>执行命令不只这几个函数，还有很多，这里就拿这几个来举例。毫无疑问，这里肯定是可以执行命令。</p>
 <p>那我们先直接尝试读取<code>/etc/passwd</code>，显然，这里还没到代码层面就直接被 waf 了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007415.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007415.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007415.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007415.jpg loading=lazy>
 </a>
 </figure></p>
 <p>原因可能是因为<code>/etc/passwd</code>的敏感原因</p>
 <h3 id=绕过-waf>绕过 waf</h3>
 <p>那我们接下来先尝试绕过 waf ，可以尝试使用<code>/etc/pas\swd</code>绕过，也可以使用其他空变量，当然方法很多</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002257.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002257.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002257.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002257.jpg loading=lazy>
 </a>
 </figure></p>
 <p>可以发现，我们是成功绕过 waf ，来到了代码层面，接下来我们就需要考虑怎么绕过命令执行函数了</p>
@@ -118,20 +116,17 @@ Sec
 </span><span class=c1></span><span class=cp>?&gt;</span><span class=err>
 </span></code></pre></div><p>也就是说<code>$var(args)</code>跟<code>“string”(args);</code>是与<code>function(args)</code>等效的。于是我们可以有</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000584.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000584.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000584.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000584.jpg loading=lazy>
 </a>
 </figure></p>
 <p>尝试<code>"\x73\x79\x73\x74\x65\x6d"("whoami")</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003062.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003062.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003062.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003062.jpg loading=lazy>
 </a>
 </figure></p>
 <p>确实可以执行无误，然后我们就可以利用这个特性绕过对<code>system</code>的检测了</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009239.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009239.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009239.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009239.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=改进输入检测>改进输入检测</h3>
@@ -146,20 +141,17 @@ Sec
 </code></pre></div><p>增加了对单引号与双引号的检测，这时候应该怎么办呢</p>
 <p>让我们再来看一个特性</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003524.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003524.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003524.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003524.jpg loading=lazy>
 </a>
 </figure></p>
 <p>也就是说在 PHP 中，字符串表达可以有以上这几种方法，于是我们可以用以上的方式尝试替代双引号。第一种是类似<code>(system)(whoami);</code>，然而在 php 中我们可以用<code>.</code>来拼接字符串，于是也可以有<code>(sys.(te).m)(whoami);</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006608.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006608.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006608.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006608.jpg loading=lazy>
 </a>
 </figure></p>
 <p>也可以使用<code>/?a=system&b=ls&code=$_GET[a]($_GET[b]);</code>的解析方法来绕过</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004860.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004860.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004860.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004860.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里我们还可以使用其他技巧，比如我们可以在函数名和参数内插入注释（这种方法在绕过某些WAF规则集方面非常有用，这些规则集会拦截特定的PHP函数名</p>
@@ -168,13 +160,11 @@ php -r &quot;system/*this is a comment*/(whoami);&quot;
 php -r &quot;system/*this is a comment*/(wh./*foo*/(oa)/*bar*/.mi);&quot;
 php -r &quot;(s/*foo*/.(ys)./*bar*/tem)/*this is a comment*/(wh./*foo*/(oa)/*bar*/.mi);&quot;
 </code></pre><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009365.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009365.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009365.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009365.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001559.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001559.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001559.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001559.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=get_defined_functions>get_defined_functions</h3>
@@ -186,33 +176,28 @@ php -r &quot;(s/*foo*/.(ys)./*bar*/tem)/*this is a comment*/(wh./*foo*/(oa)/*bar
 </blockquote>
 <p>这个函数是可将用户定义的和内置函数均返回的。获取内置函数可以使用<code>$arr[“internal”]</code>，获取用户定义的函数可以使用<code>$arr[“user”]</code>。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005250.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005250.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005250.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005250.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以我们可以尝试找到<code>system</code>函数</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008754.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008754.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008754.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008754.jpg loading=lazy>
 </a>
 </figure></p>
 <p>配合前面的方法，效果拔群，不过<code>system</code>函数不一定都是 1077 ，使用的时候最好可以<code>grep</code>查找一下<code>system</code>函数的下标</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003939.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003939.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003939.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003939.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=字符数组>字符数组</h3>
 <p>我们可以将PHP中的每个字符串当成一组字符来使用（基本上与 Python 相同），并且我们可以使用<code>$string[2]</code>或者<code>$string[-3]</code>语法来引用单个字符。这种方法也有可能绕过基于PHP函数名的防护规则。比如，我们可以使用<code>$a="eimstdy";</code>这个字符串构造出<code>system("id");</code>语句。需要空格的话就在<code>$a</code>中加入空格就好了。</p>
 <p>也可以使用一些内置变量，不再赘述，如下图所示</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006073.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006073.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006073.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006073.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003486.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003486.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003486.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003486.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=参考>参考</h3>

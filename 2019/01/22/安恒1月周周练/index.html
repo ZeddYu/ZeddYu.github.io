@@ -105,22 +105,19 @@ CTF
 ?data=O%3A%2B4%3A&quot;baby&quot;%3A1%3A%7Bs%3A4%3A&quot;file&quot;%3Bs%3A8%3A&quot;flag.php&quot;%3B%7D
 </code></pre><p>得到<code>flag</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003356.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003356.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003356.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003356.jpg loading=lazy>
 </a>
 </figure></p>
 <h2 id=web2-ezweb2>Web2 ezweb2</h2>
 <p>发现<code>Cookie</code>里有<code>user=dXNlcg%3D%3D</code>，base64解码得到<code>user=user</code>，尝试改为<code>admin</code>，直接进入到了<code>admin.php</code>的后台。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000735.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000735.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000735.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000735.jpg loading=lazy>
 </a>
 </figure></p>
 <p>随便试了一下，发现是个命令执行。命令执行可以参考我上篇文章，<a class=link href=https://blog.zeddyu.info/2019/01/17/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/ target=_blank rel=noopener>巧用命令注入的N种方式</a>。</p>
 <p><code>ls</code>可以得到</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005581.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005581.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005581.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005581.jpg loading=lazy>
 </a>
 </figure></p>
 <p>随便<code>fuzz</code>了一下，发现可以用<code>cat&lt;>config.php</code>直接读取文件，文件内容如下。</p>
@@ -173,14 +170,12 @@ CTF
 <span class=k>include</span> <span class=s1>&#39;./templates/index.html&#39;</span><span class=p>;</span>
 </code></pre></div><p>找了几个目录都找不到<code>flag</code>，看来应该要到列目录才可以，但是又过滤了空格，就没办法用<code>ls ..</code>这样，但是绕过空格的方法很多，我们这里直接用<code>ls$IFS/</code>绕过空格。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002011.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002011.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002011.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002011.jpg loading=lazy>
 </a>
 </figure></p>
 <p>看到<code>flag</code>文件名字，直接读就好了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006422.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006422.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006422.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006422.jpg loading=lazy>
 </a>
 </figure></p>
 <h2 id=总结>总结</h2>

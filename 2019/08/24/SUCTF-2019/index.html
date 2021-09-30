@@ -69,14 +69,12 @@ CTF
 <p>通过 @zsx 师傅的挖掘，发现基本上大多数 PHP stream 都可以通过 phar:// 来触发，但是就是没有提及 php:// 伪协议。</p>
 <p>So，让我们用最常见的 <code>php://filter/read=convert.base64-encode/resource=</code>试一下</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121822.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121822.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121822.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121822.png loading=lazy>
 </a>
 </figure></p>
 <p>好的，那么再看看文件包含如何</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121956.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121956.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121956.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121956.png loading=lazy>
 </a>
 </figure></p>
 <p>一点也不意外，我们可以通过 php://filter 来绕过一些开头限制进行 phar 反序列化</p>
@@ -85,20 +83,17 @@ CTF
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=nx>libxml_disable_entity_loader</span><span class=p>(</span><span class=k>true</span><span class=p>);</span>
 </code></pre></div><p>禁用了外部实体，虽然题目给出的反射类确实可以反射，而且也可以进行 XXE，也有过相关的 CTF题 <a class=link href=https://www.anquanke.com/post/id/170299#h2-2 target=_blank rel=noopener>Annoying class</a>，虽然控制了 /flag 读取权限，可是为什么还要禁用外部实体呢？难不成 XXE 也可以反序列化？</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150125.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150125.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150125.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150125.png loading=lazy>
 </a>
 </figure></p>
 <p>Test.xml 中的内容就是上面 <code>$xml</code>的内容</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150346.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150346.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150346.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150346.png loading=lazy>
 </a>
 </figure></p>
 <p>当然 php://filter 在这里也适用</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150839.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150839.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150839.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150839.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=mysql>Mysql</h3>
@@ -121,8 +116,7 @@ CTF
 <span class=nv>$m</span><span class=o>-&gt;</span><span class=na>query</span><span class=p>(</span><span class=s1>&#39;select 1;&#39;</span><span class=p>);</span>
 </code></pre></div><p>其实也就是 @LoRexxar' 在 Tsec 上进行的分享 <a class=link href=https://paper.seebug.org/998/ target=_blank rel=noopener>Comprehensive analysis of the mysql client attack chain</a> 的内容了，@zsx 文章中指出</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820151817.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820151817.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820151817.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820151817.png loading=lazy>
 </a>
 </figure></p>
 <p>既然可以这么触发，那么 Rogue Mysql 的攻击当然适用于 phar 反序列化了。</p>

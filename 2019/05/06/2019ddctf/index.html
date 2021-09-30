@@ -110,8 +110,7 @@ NULL</p>
 <span class=cp>?&gt;</span><span class=err>
 </span></code></pre></div><p>很简单的变量覆盖。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009556.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009556.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009556.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009556.jpg loading=lazy>
 </a>
 </figure></p>
 <h2 id=web-2-web-签到题>Web 2 WEB 签到题</h2>
@@ -296,8 +295,7 @@ NULL</p>
 <span class=p>}</span>
 </code></pre></div><p>这里循环使用<code>sprintf</code>格式化打印<code>$arr</code>，所以我们只需要让第二次存在一个<code>%s</code>，即可让他打印出<code>$this->eacrykey</code>，所以可以构造<code>nickname=%s</code>即可得到<code>$this->eacrykey</code>为 EzblrbNS</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009342.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009342.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009342.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009342.jpg loading=lazy>
 </a>
 </figure></p>
 <p>之后我们可以发现主要就是要构造<code>$session</code>这个变量来触发<code>session_read()</code>函数中的<code>$session = unserialize($session);</code></p>
@@ -508,8 +506,7 @@ Flag格式：<code>DDCTF{.....}</code>，也就是请手动包裹上<code>DDCTF{
 <span class=mi>1</span>
 </code></pre></div><p>所以我们就可以利用这个特性，利用题目中的<code>event_handler</code>来执行任意函数。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002577.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002577.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002577.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002577.jpg loading=lazy>
 </a>
 </figure></p>
 <p>利用<code>#</code>成功绕过了后缀的限制执行了<code>show_flag_function</code>函数。</p>
@@ -569,8 +566,7 @@ Flag格式：<code>DDCTF{.....}</code>，也就是请手动包裹上<code>DDCTF{
 </code></pre></div><p>这个函数进入循环执行函数的条件为<code>while len(request.event_queue) > 0</code>，而<code>trigger_event</code>函数是可以控制<code>request.event_queue</code>的关键，所以按照我们之前的思路，我们是不是可以利用这个函数来控制我们的执行顺序呢？</p>
 <p>例如我们可以先尝试构造<code>action:trigger_event%23;action:buy;8</code>，我们本地可以通过<code>app.logger.info</code>来查看<code>execute_event_loop</code>循环中的<code>action</code>与<code>args</code>参数，我们可以得到</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005313.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005313.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005313.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005313.jpg loading=lazy>
 </a>
 </figure></p>
 <p>可以看到执行了<code>but_handler</code>函数，我们注意<code>trigger_event</code>中是可以接受数组的</p>
@@ -579,8 +575,7 @@ Flag格式：<code>DDCTF{.....}</code>，也就是请手动包裹上<code>DDCTF{
 </code></pre></div><p>对于数组的处理，他会挨个加入到<code>request.event_queue</code>，所以我们就可以利用传入数组来控制执行顺序，只要我们传入一个第一个参数为<code>but_handler</code>的函数，第二个参数为<code>get_Flag</code>的函数就可以实现在调用花费函数之前来输出 Flag 了。</p>
 <p>怎么构造数组呢？在<code>execute_event_loop</code>中对于参数的处理可以自己随便测试一下就知道了他是以<code>:;</code>之后的字符串以<code>#</code>为分割来形成数组的。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001621.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001621.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001621.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001621.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以这样子我们就成功将<code>get_flag</code>函数优先调用了。接下来就是处理一些细节的事情了，比如调用<code>get_Flag</code>在源代码中是<code>get_flag_handler</code>，所以我们需要传入的参数是<code>action:get_flag</code>，以及 Flag 最后是通过以下函数调用<code>trigger_event</code>把 Flag 输出到<code>session['log']</code>当中的。</p>
@@ -590,8 +585,7 @@ Flag格式：<code>DDCTF{.....}</code>，也就是请手动包裹上<code>DDCTF{
     <span class=n>trigger_event</span><span class=p>(</span><span class=s1>&#39;action:view;index&#39;</span><span class=p>)</span>
 </code></pre></div><p>所以我们的 payload 就是<code>action:trigger_event%23;action:buy;8%23action:get_flag;</code>，再通过p牛的 flask cookie 解密脚本即可得到 flag</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009428.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009428.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009428.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009428.jpg loading=lazy>
 </a>
 </figure></p>
 <h2 id=web-5-欢迎报名ddctf>Web 5 欢迎报名DDCTF</h2>
@@ -604,26 +598,22 @@ Flag格式：<code>DDCTF{.....}</code>，也就是请手动包裹上<code>DDCTF{
 <h3 id=hacking-4>Hacking</h3>
 <p>一开始根本打不了…而且还被人用 Beff 搅屎了&mldr;而且严重怀疑这题是中途改题的…很坑</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008967.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008967.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008967.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008967.jpg loading=lazy>
 </a>
 </figure></p>
 <p>首先题目设置比较简单</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009535.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009535.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009535.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009535.jpg loading=lazy>
 </a>
 </figure></p>
 <p>测试 XSS ，但是贼坑的误导你，返回了想误导你走入 sql 注入的大坑。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004518.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004518.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004518.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004518.jpg loading=lazy>
 </a>
 </figure></p>
 <p>我们可以用 xss 拿到 admin.php 的 html 源码</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005558.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005558.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005558.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005558.jpg loading=lazy>
 </a>
 </figure></p>
 <p>看到源码中一个接口，直接访问提示需要一个 id 的传参，随便输入之后看到响应包</p>
@@ -639,32 +629,27 @@ Flag格式：<code>DDCTF{.....}</code>，也就是请手动包裹上<code>DDCTF{
 </code></pre></div><p>发现<code>Content-Type</code>为<code>charset=gbk</code>，猜测是一个宽字节注入。而且并没有什么过滤，直接开注，可能唯一需要一点 trick 的就是需要用十六进制绕过被转义的单引号了&mldr;</p>
 <p>注出库名</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002153.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002153.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002153.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002153.jpg loading=lazy>
 </a>
 </figure></p>
 <p>注出表名</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001782.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001782.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001782.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001782.jpg loading=lazy>
 </a>
 </figure></p>
 <p>注出字段名</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009597.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009597.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009597.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009597.jpg loading=lazy>
 </a>
 </figure></p>
 <p>拿到 flag</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005221.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005221.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005221.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005221.jpg loading=lazy>
 </a>
 </figure></p>
 <p>当然也可以用 sqlmap 直接跑。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009838.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009838.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009838.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009838.jpg loading=lazy>
 </a>
 </figure></p>
 <p>也可以指定使用<code>--tamper unmagicquotes</code>来进行注入</p>
@@ -689,21 +674,18 @@ Flag格式：<code>DDCTF{.....}</code>，也就是请手动包裹上<code>DDCTF{
 <span class=n>Cookie</span><span class=o>:</span> <span class=l>user_name=zedd; REVEL_SESSION=ef66cfc3f5199180eea686597f4a1e72</span>
 </code></pre></div><p>然后看到一道类似<a class=link href=https://wulidecade.cn/index.php/archives/127/#menu_index_7 target=_blank rel=noopener>护网杯Itshop</a>题目，所以考虑这个地方是不是也是用的是余额-支出这么个操作来溢出呢</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007646.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007646.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007646.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007646.jpg loading=lazy>
 </a>
 </figure></p>
 <p>查找 GoLang 的相关数据类型，用 uint32 成功溢出。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007444.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007444.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007444.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007444.jpg loading=lazy>
 </a>
 </figure></p>
 <p>猜测在 price 转换成 int 的时候发生溢出变成 -1 ，导致余额减去花费大于0，成功绕过判断买到入场券。</p>
 <p>之后就比较简单了，可以通过输入 ticket 杀 bot ，猜测 id 与 ticket 有某种映射关系，可以注册一系列小号买 ticket 保大号杀。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006639.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006639.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006639.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006639.jpg loading=lazy>
 </a>
 </figure></p>
 <p>附上脚本。</p>
@@ -749,8 +731,7 @@ Flag格式：<code>DDCTF{.....}</code>，也就是请手动包裹上<code>DDCTF{
 </code></pre></div><p>这题还有一种 trick 就是猜榜单已经做出来的师傅的密码，一般 id 都是师傅们的 id ，密码大多都是12345678(别问我怎么知道…我也是12345678&mldr;</p>
 <p>比如这位师傅，用 12345678 登进去就拿到他的 flag 了。后面就是你敢不敢交的问题了&mldr;手动斜眼，毕竟后面有一段看起来貌似是随机的字符串…可能是主办方用来防作弊的？不得而知…hhhh</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006149.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006149.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006149.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006149.jpg loading=lazy>
 </a>
 </figure></p>
 <p>后面看官方的 wp 发现光房预设解其实是想让选手用 md5 长度拓展攻击去做的，也可以通过下面这题 mysql 弱口令来读吃鸡的源码拿 flag。</p>
@@ -997,14 +978,12 @@ Flag格式：<code>DDCTF{.....}</code>，也就是请手动包裹上<code>DDCTF{
         <span class=k>return</span> <span class=kc>False</span>
 </code></pre></div><p>可以读<code>/etc/passwd</code>拿到 mysql 的路径，然后根据 mysql 的路径与 flag 在数据库中的位置提示，我们可以直接读<code>/var/lib/mysql/security/flag.ibd</code>中可以拿到 flag，也可以读<code>/var/lib/mysql/ibdata1</code>，只是这个文件一般比较大。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004554.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004554.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004554.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004554.jpg loading=lazy>
 </a>
 </figure></p>
 <p>也有师傅说可以读<code>.mysqlhistory</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005095.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005095.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005095.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005095.jpg loading=lazy>
 </a>
 </figure></p>
 <p><code>.mysql_history</code>虽然读不到数据库内容，但是在这里可以看到这里出题者是用了<code>insert</code>，我们可以看到他的操作的语句，也拿到了 flag</p>

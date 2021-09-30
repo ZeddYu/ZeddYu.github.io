@@ -140,8 +140,7 @@ CTF
 <p>做的还是比较有意思的一题，可惜当时做的比较zz，本来可以一血，就是因为自己弄的太不小心了。</p>
 <p>因为之前一直在研究 HTTP Smuggling 的东西，我在腾讯的导师也对这个挺感兴趣的，前阵子给我发了一个 Websocket Smuggling</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113011351.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113011351.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113011351.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113011351.png loading=lazy>
 </a>
 </figure></p>
 <p>看完后一脸懵逼，文章跟之前 Black Hat 2019 HTTP Desync 那个议题一样，只说了有这么个攻击面，但是没有说怎么产生的，但是还好给了 POC 以及一些 challs ，虽然我当时复现了一下，但是依然懵逼。</p>
@@ -193,8 +192,7 @@ CTF
     <span class=n>main</span><span class=p>(</span><span class=s1>&#39;47.105.57.19:3000&#39;</span><span class=p>)</span>
 </code></pre></div><p>发现是个302跳转&mldr;</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112113326.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112113326.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112113326.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112113326.png loading=lazy>
 </a>
 </figure></p>
 <p>看来还是得起本地环境来试试看，刚好 <a class=link href=https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193 target=_blank rel=noopener>vulhub</a> 有一个环境（p牛辣是真的牛批</p>
@@ -212,15 +210,13 @@ CTF
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=cp>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
 </code></pre></div><p>让我们试试看，把 burp 与文章 burp 拉到同样高度，然后 xml 标签之后随便弄几个 payload</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112180836.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112180836.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112180836.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112180836.png loading=lazy>
 </a>
 </figure></p>
 <p>我靠，简直一毛一样 XD</p>
 <p>我感觉我要一血了，侧信道攻击真的牛批。然而正如上图，他喵的还是没回显啊&mldr;</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112115732.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112115732.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112115732.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112115732.png loading=lazy>
 </a>
 </figure></p>
 <p>Emmm&mldr;.陷入沉思</p>
@@ -358,14 +354,12 @@ Content-Disposition: form-data; name=&#34;stream.body&#34;
 <span class=nt>&lt;item/&gt;</span>
 <span class=nt>&lt;/RDF&gt;</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113000752.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113000752.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113000752.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113000752.png loading=lazy>
 </a>
 </figure></p>
 <p>这样我们就成功构造了回显，然后用 smuggling 方法发送上面的请求就可以了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113000857.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113000857.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113000857.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113000857.png loading=lazy>
 </a>
 </figure></p>
 <p>给比我做的快的师傅递茶tql，自己还是做的太慢了orz&mldr;</p>

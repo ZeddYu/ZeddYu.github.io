@@ -154,14 +154,12 @@ if(isset($payload)){
 <h3 id=全宇宙最简单的sql>全宇宙最简单的SQL</h3>
 <p>页面会返回两种错误，一种是登录失败，一种是数据库查询失败</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004508.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004508.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004508.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004508.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以我们可以通过利用<code>admin'</code>等操作来 fuzz 闭合方式，得到可以使用单引号闭合。但是通过万能密码可以发现一些关键字被替换了</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006144.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006144.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006144.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006144.jpg loading=lazy>
 </a>
 </figure></p>
 <p>通过一些简单的 fuzz 可以发现有以下关键字被过滤了</p>
@@ -242,14 +240,12 @@ admin' and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b 
 <pre tabindex=0><code>F1AG@1s-at_/fll1llag_h3r3
 </code></pre><p>进去看到 admin 页面，也很明显，也就是 Rogue mysql 那一套了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007327.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007327.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007327.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007327.jpg loading=lazy>
 </a>
 </figure></p>
 <p>DDCTF 2019 /HGAME 2019我都有写相关的 wp ，这里就不再重复了。老一套的操作，不过这里他是不能指定端口，固定访问你的 3306 ，所以你需要把自己的 vps 的 3306 端口开启才行。按照密码提示直接读就是了</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009620.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009620.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009620.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009620.jpg loading=lazy>
 </a>
 </figure></p>
 <p>顺便拿了一波题目源码</p>
@@ -397,8 +393,7 @@ admin' and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b 
 <pre tabindex=0><code>frombase 和 tobase 都只能在 2 和 36 之间（包括 2 和 36）。高于十进制的数字用字母 a-z 表示，例如 a 表示 10，b 表示 11 以及 z 表示 35。
 </code></pre><p>也就是第二位，第三位参数可以在 2 到 36 之间，而且高于十进制的用字母表示！既然拼接进去的都是字符串，转换出来拼接进去应该可以执行。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001017.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001017.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001017.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001017.jpg loading=lazy>
 </a>
 </figure></p>
 <p>本地使用<code>base_convert(55490343972,10,36)()</code>成功执行<code>phpinfo</code>，远程也执行了<code>phpinfo</code>看看是不是有什么问题，看了一圈然而并没有发现什么问题。</p>
@@ -438,14 +433,12 @@ cat *
 ($pi=base_convert),$pi(696468,10,36)($pi(37907361743,10,36)(7267726570202466));
 </code></pre><p>接着队友说可以用<code>rgrep ag</code>去弄，而且本地打通了&mldr;但是远程以上没打通…我又修改了尝试去<code>rgrep fl</code>，也没打通，当时是这样的</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009292.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009292.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009292.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009292.jpg loading=lazy>
 </a>
 </figure></p>
 <p>写 wp 的时候，突然又发现可以打通了&mldr;</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001335.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001335.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001335.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001335.jpg loading=lazy>
 </a>
 </figure></p>
 <p>也是神奇&mldr;最后当时还是按照自己的思路去走了，感觉是不是哪里出问题了，确定有<code>flag.php</code>，最后尝试修改<code>cat f*</code>，</p>
@@ -456,8 +449,7 @@ cat f*
 </code></pre><pre tabindex=0><code>$pi=base_convert(37907361743,10,36),$pi(65786563)($pi(dechex(109270211257898)))
 </code></pre><p>拿到 flag（复现环境下）</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001518.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001518.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001518.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001518.jpg loading=lazy>
 </a>
 </figure></p>
 <pre tabindex=0><code>base_convert(37907361743,10,36)(dechex(1598506324));($$pi){1}(($$pi){2})&amp;1=system&amp;2=cat%20flag.php

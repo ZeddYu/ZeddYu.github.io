@@ -56,29 +56,25 @@ CTF
 <p>地址在<a class=link href=http://39.106.184.130:8084/ target=_blank rel=noopener>http://39.106.184.130:8084/</a></p>
 <p>扫目录得到<code>.DS_Store</code>文件，使用 lijiejie 的 dstore_exp 工具恢复文件，又得到一个<code>CTF_Can_U_Tell_Me_The_Flag</code>的文件夹，发现有<code>.git</code> ，直接用 GitHack 弄下来，在<code>git log</code>中发现 flag</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705124910.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705124910.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705124910.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705124910.png loading=lazy>
 </a>
 </figure></p>
 <h2 id=web2>Web2</h2>
 <p>Web2地址给了两个，两个地址都不一样…蒙蔽&mldr;</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705160448.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705160448.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705160448.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705160448.png loading=lazy>
 </a>
 </figure></p>
 <p>第二个地址给了个 GitLab 的地址，我以为官方弄错了啥的，一直怼第一个地址，各种猜，SSRF、注入啥的都猜了结果都没用。</p>
 <p>结果在赛后有师傅说 Gitlab 有越权&mldr;然后自己扫了一下当真扫到了<code>/root</code>的地址，可以越权访问 Administrator 的页面</p>
 <p>或者说可以看到 Administrator 的提交记录</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705160903.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705160903.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705160903.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705160903.png loading=lazy>
 </a>
 </figure></p>
 <p>可以看到下面有个 commit 描述：增加读取 flag 代码…然后得到源码&mldr;</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705161423.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705161423.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705161423.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705161423.png loading=lazy>
 </a>
 </figure></p>
 <p>后面就没什么好说的了&mldr;源码如下：</p>
@@ -135,29 +131,25 @@ CTF
 </span><span class=err>    &lt;/body&gt;
 </span><span class=err>&lt;/html&gt;
 </span></code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705161503.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705161503.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705161503.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705161503.png loading=lazy>
 </a>
 </figure></p>
 <h2 id=web3>Web3</h2>
 <p>发现由<code> JSESSIONID=54361A6D54D3993C78020F67804A0248</code>，直接上 struts-scan ，可以扫到s2-045，直接上<a class=link href=https://github.com/iBearcat/S2-045 target=_blank rel=noopener>exp</a> 可以拿到 shell</p>
 <p>但是可以发现 flag.txt 只有 600 的权限，查看内核，尝试用<a class=link href=https://github.com/backlion/CVE-2018-17182 target=_blank rel=noopener>CVE-2018-18182</a>进行提权，后来貌似被主办方修了，没提成功。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002520.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002520.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002520.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002520.png loading=lazy>
 </a>
 </figure></p>
 <p>尝试使用 SUID 进行提权，可以参考<a class=link href=https://www.anquanke.com/post/id/86979 target=_blank rel=noopener>【安全科普】Linux提权——利用可执行文件SUID</a></p>
 <p>使用<code>find / -user root -perm -4000 -print 2>/dev/null</code>查看可以拥有 SUID 权限的执行文件：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002656.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002656.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002656.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002656.png loading=lazy>
 </a>
 </figure></p>
 <p>发现有<code>tac</code>命令，然后直接用<code>tac</code>就可以拿到 flag 了</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002850.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002850.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002850.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002850.png loading=lazy>
 </a>
 </figure></p>
 <p>这里比赛的时候直接用<code>tac</code>可以拿到了，现在又不可以了&mldr;不知道是不是这个 exp 的原因…没有深入&mldr;</p>
@@ -167,24 +159,21 @@ CTF
 <p>然而用这个文本里面的登录第一个 web admin 账户，没有成功&mldr;</p>
 <p>看第二个 web 地址回显了一个 mysql 的错误。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003258.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003258.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003258.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003258.png loading=lazy>
 </a>
 </figure></p>
 <p>不确定是不是被搅屎了…两个 web 地址的脑洞真搞不动&mldr;</p>
 <p>（盲猜第一个进入管理员后用 Rogue mysql 来拿 flag</p>
 <h2 id=web5>Web5</h2>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003455.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003455.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003455.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003455.png loading=lazy>
 </a>
 </figure></p>
 <p>中间有个按钮用来随机 id ，一看就是个注入题。ban了比较多的关键字，大小写也绕不过，而且还 ban 了<code>information_schema</code>关键字。那就说明不能用一般的注入方法来弄。</p>
 <p>尝试 bool 盲注，可以利用</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=p>(</span><span class=k>case</span><span class=w> </span><span class=k>when</span><span class=w> </span><span class=p>(</span><span class=n>hex</span><span class=p>(</span><span class=n>substr</span><span class=p>(</span><span class=w> </span><span class=k>database</span><span class=p>()</span><span class=w> </span><span class=p>,</span><span class=mi>1</span><span class=p>,</span><span class=mi>1</span><span class=p>))</span><span class=w> </span><span class=k>in</span><span class=p>(</span><span class=mi>33</span><span class=p>)</span><span class=w> </span><span class=p>)</span><span class=w> </span><span class=k>then</span><span class=w> </span><span class=mi>1</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=mi>0</span><span class=w> </span><span class=k>end</span><span class=p>)</span><span class=w>
 </span></code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003804.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003804.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003804.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003804.png loading=lazy>
 </a>
 </figure></p>
 <p>得到数据库名为 deb7cb73f0ea2b2af2d1e3715fd12044 。接下来怎么弄表名呢？尝试了好一会，绕不过限制，然后题目又提示 flag 长度为32&mldr;</p>

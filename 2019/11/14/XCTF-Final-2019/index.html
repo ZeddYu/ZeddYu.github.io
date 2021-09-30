@@ -58,8 +58,7 @@ CTF
 <p>后来我发现<code>/user</code>个人界面有 ip 记录，于是尝试 XFF 注入无果，但是可以把 XFF 直接回显到页面上。发现<code>/server_status</code>，发现有大家的访问记录。陷入思考ing&mldr;</p>
 <p>队友突然看到有一个访问记录<code>/user/1.css</code>（类似的这么一个路由，不太想得起来了），马上想到可能是缓存投毒，联想跟上文说的 XFF 的设置，想到可以缓存投毒将反射 xss 变成缓存 xss ，这样就可以打到 admin 了。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109012449.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109012449.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109012449.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109012449.png loading=lazy>
 </a>
 </figure></p>
 <h2 id=babypress>babypress</h2>
@@ -203,14 +202,12 @@ second hint: if you can exploit in your local, it should be possible to exploit 
     <span class=k>return</span> <span class=nv>$arr</span><span class=p>;</span>
 <span class=p>}</span>
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109024547.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109024547.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109024547.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109024547.png loading=lazy>
 </a>
 </figure></p>
 <p>可以看到在图中已经拿到了文件内容回显，所以当时我们就用这个 SSRF 拿到了 flag</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109020248.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109020248.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109020248.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109020248.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=upload>upload</h3>
@@ -296,13 +293,11 @@ Content-Disposition: form-data; name=&#34;allow_file_maxsize&#34;
 -----------------------------6593480186465200061941970669--
 </code></pre></div><p>虽然报错了但是我们依然上传成功了，直接访问那个路径即可。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109134834.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109134834.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109134834.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109134834.png loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109135000.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109135000.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109135000.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109135000.png loading=lazy>
 </a>
 </figure></p>
 <h2 id=lfi2019>lfi2019</h2>
@@ -729,8 +724,7 @@ Content-Disposition: form-data; name=&#34;allow_file_maxsize&#34;
 <h1 id=conclusion>Conclusion</h1>
 <p>体验极其好的一次比赛，非常感谢 @r3kapig 师傅们的精心准备，毫不夸张地说，这是本年度体验最好的一场比赛，无论从题目质量或者是从比赛过程的体验，都是非常棒的。希望国内以后更多一些这类的良心比赛！</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113235515.jpeg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113235515.jpeg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113235515.jpeg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113235515.jpeg loading=lazy>
 </a>
 </figure></p>
 </section>

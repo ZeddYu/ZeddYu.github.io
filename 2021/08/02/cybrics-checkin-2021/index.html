@@ -85,8 +85,7 @@ CTF
 <p>Another point to be noted is that, even if the length of plaintext is a multiple of the block size, padding is still needed. In this case, 0x10 bytes will be appended, with each byte value being <code>\x10</code>.</p>
 </blockquote>
 <p><figure>
-<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729103443272.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729103443272.png loading=lazy alt=image-20210729103443272>
+<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729103443272.png><img src=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729103443272.png loading=lazy alt=image-20210729103443272>
 </a>
 <figcaption>image-20210729103443272</figcaption>
 </figure></p>
@@ -94,8 +93,7 @@ CTF
 <p>Before moving on, we also need to be fimilar with <strong>AES-CBC</strong>, which is the most common mode that padding oracle attack can be mounted on.</p>
 <p>In CBC mode, plaintext is padded and divided into several plaintext blocks. Each plaintext block is XORed with the previous ciphertext block before being AES encrypted. The first plaintext block is XORed with a randomly generated initializaiton vector (IV). The final encryption result is the concatenation of the ciphertext blocks with IV at the head. Decryption just reverses these operations.</p>
 <p><figure>
-<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729140911415.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729140911415.png loading=lazy alt=image-20210729140911415>
+<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729140911415.png><img src=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729140911415.png loading=lazy alt=image-20210729140911415>
 </a>
 <figcaption>image-20210729140911415</figcaption>
 </figure></p>
@@ -105,8 +103,7 @@ CTF
 <p>Suppose the attack has possession of a ciphertext which can be divided into an <code>IV</code> and 3 ciphertext blocks <code>c1, c2, c3</code> . The purpose of the attacker is to decrypt the last ciphertext block <code>c3</code>.</p>
 <p>The attacker changes the last byte of <code>c2</code> (XORed with some value), and then send it to the server. The server responses with either a &ldquo;<em>PADDING_ERROR</em>&rdquo; response or a 500 <em>status code</em> reponse. If we gets a 500 <em>status code</em> response, we succeed. This implies that the unpadding check is passed, and the last plaintext block MUST end with <code>b"\x01</code>, one of the 16 valid padding format.</p>
 <p><figure>
-<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729175108696.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729175108696.png loading=lazy alt=image-20210729175108696>
+<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729175108696.png><img src=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729175108696.png loading=lazy alt=image-20210729175108696>
 </a>
 <figcaption>image-20210729175108696</figcaption>
 </figure></p>
@@ -160,22 +157,19 @@ CTF
 <p>To achieve this goal, we need to combine bit flip attack with the padding oracle attack. Bit flip attack enables us to change the plaintext into what we want, and the padding oracle attack functions as a decryption oracle to help us decrypt any ciphertext.</p>
 <p>Say the ciphertext <code>IV || c1 || c2 || c3</code> decrypts into <code>p1 || p2 || p3</code>, and we want to get the ciphertext of <code>p1' || p2' || p3</code>.</p>
 <p><figure>
-<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181535279.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181535279.png loading=lazy alt=image-20210729181535279>
+<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181535279.png><img src=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181535279.png loading=lazy alt=image-20210729181535279>
 </a>
 <figcaption>image-20210729181535279</figcaption>
 </figure></p>
 <p>We first XOR <code>c1</code> with <code>p2 XOR p2'</code> to get <code>c1'</code>. In this way, <code>IV || c1' || c2 || c3 </code> will be decrypted into <code>junk || p2' || p3</code>.</p>
 <p><figure>
-<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181301243.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181301243.png loading=lazy alt=image-20210729181301243>
+<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181301243.png><img src=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181301243.png loading=lazy alt=image-20210729181301243>
 </a>
 <figcaption>image-20210729181301243</figcaption>
 </figure></p>
 <p>The nasty junk block consists of random byte values, which is unknown to us, and the decryption result cannot be parsed correctly by <code>JSON.parse()</code>. What we can do with it? Remember the padding oracle attack to recover the last plaintext block? Yes, we can reuse the padding oracle attack to recover the junk block. After that, we XOR <code>IV</code> with <code>junk XOR p1'</code> to get a new <code>IV'</code>. In this way, <code>IV' || c1' || c2 || c3</code> will be decrypted into <code>p1' || p2' || p3</code>, which is exactly we want!</p>
 <p><figure>
-<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729182312222.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729182312222.png loading=lazy alt=image-20210729182312222>
+<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729182312222.png><img src=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729182312222.png loading=lazy alt=image-20210729182312222>
 </a>
 <figcaption>image-20210729182312222</figcaption>
 </figure></p>
@@ -207,14 +201,12 @@ PlainText:
 b'{&quot;name&quot;: &quot;0000000000000000000000000000000000000000&quot;, &quot;surname&quot;: &quot;1&quot;, &quot;middle&quot;: &quot;4&quot;, &quot;time&quot;: &quot;2021-07-26 13:37:00&quot;, &quot;dest&quot;: &quot;5&quot;, &quot;dep&quot;: &quot;3&quot;, &quot;flight&quot;: &quot;BLZH1337&quot;}'
 </code></pre><p>After we get the ciphertext, we need to change the plaintext of the ciphertext using padding oracle and bit flipping. And then use base64 and aztec code to encode the ciphertext and upload the aztec code. At last, XSS fires!
 <figure>
-<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_24c61b7c1528e0c2deba998c1f559546.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_24c61b7c1528e0c2deba998c1f559546.png loading=lazy>
+<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_24c61b7c1528e0c2deba998c1f559546.png><img src=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_24c61b7c1528e0c2deba998c1f559546.png loading=lazy>
 </a>
 </figure></p>
 <p>Now, we get the admin&rsquo;s cookie and the source code of the admin&rsquo;s page. After having used the cookie to visit the page as admin, we found the page only had a search function. I thought I needed to do SQL injection to get the flag. But at last, we just searched &lsquo;Flagger&rsquo; as described in the challenge and got the flag.</p>
 <p><figure>
-<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_3e9d0f71b91d84f0ce56a2fd51c8f38f.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_3e9d0f71b91d84f0ce56a2fd51c8f38f.png loading=lazy>
+<a href=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_3e9d0f71b91d84f0ce56a2fd51c8f38f.png><img src=https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_3e9d0f71b91d84f0ce56a2fd51c8f38f.png loading=lazy>
 </a>
 </figure></p>
 <p>Thanks for your reading. Hope you like the writeup! XD</p>

@@ -60,21 +60,18 @@ Sec
 <h1 id=tcp>TCP</h1>
 <p>TCP报文这里就不再细讲了，也不是重点，放一张TCP数据报文的图，具体可以去百度百科了解：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164642.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164642.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164642.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164642.png loading=lazy>
 </a>
 </figure></p>
 <p>TCP三次握手：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605163446.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605163446.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605163446.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605163446.png loading=lazy>
 </a>
 </figure></p>
 <h2 id=tcp-connect-scan>TCP CONNECT SCAN</h2>
 <p>原理很简单，与目标端口建立3次握手，如果成功建立则为<code>open</code>，收到<code>RST</code>则为<code>close</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165105.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165105.png loading=lazy alt="TCP CONNECT SCAN">
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165105.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165105.png loading=lazy alt="TCP CONNECT SCAN">
 </a>
 <figcaption>TCP CONNECT SCAN</figcaption>
 </figure></p>
@@ -82,8 +79,7 @@ Sec
 <p>MSF 模块：</p>
 <pre tabindex=0><code>use auxiliary/scanner/portscan/tcp
 </code></pre><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190608234213.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190608234213.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190608234213.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190608234213.png loading=lazy>
 </a>
 </figure></p>
 <p>Nmap 选项参数：</p>
@@ -91,8 +87,7 @@ Sec
 </code></pre><h2 id=tcp-syn-scan>TCP SYN SCAN</h2>
 <p>也称为TCP半连接扫描，只发送三次握手的第一次SYN报文段，如果收到<code>ACK+SYN</code>则为<code>open</code>，收到<code>RST</code>则为<code>close</code>，这种好处是不必等待三次握手完全完成，速度快且不容易被防火墙记录进日志。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165140.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165140.png loading=lazy alt="TCP SYN SCAN">
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165140.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165140.png loading=lazy alt="TCP SYN SCAN">
 </a>
 <figcaption>TCP SYN SCAN</figcaption>
 </figure></p>
@@ -127,8 +122,7 @@ Sec
 <p>MSF 模块：</p>
 <pre tabindex=0><code>use auxiliary/scanner/portscan/syn
 </code></pre><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609010618.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609010618.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609010618.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609010618.png loading=lazy>
 </a>
 </figure></p>
 <p>Nmap 参数</p>
@@ -143,8 +137,7 @@ Sec
 <p>​ 如果扫描系统遵循该RFC，当端口关闭时，任何不包含SYN，RST，或者ACK位的报文会导致 一个RST返回而当端口开放时，应该没有任何响应。只要不包含SYN，RST，或者ACK, 任何其它三种(FIN，PSH，and URG)的组合都行。</p>
 </blockquote>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165320.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165320.png loading=lazy alt="TCP XMAS TREE SCAN">
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165320.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165320.png loading=lazy alt="TCP XMAS TREE SCAN">
 </a>
 <figcaption>TCP XMAS TREE SCAN</figcaption>
 </figure></p>
@@ -175,8 +168,7 @@ Sec
 <p>MSF 模块：</p>
 <pre tabindex=0><code>use auxiliary/scanner/portscan/xmas
 </code></pre><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011211.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011211.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011211.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011211.png loading=lazy>
 </a>
 </figure></p>
 <p>Nmap 选项参数：</p>
@@ -194,8 +186,7 @@ Sets the FIN, PSH, and URG flags, lighting the packet up like a Christmas tree.
 </code></pre><h2 id=tcp-null-scan>TCP NULL SCAN</h2>
 <p>空扫描即<code>flag</code>位全 0 ，如果没有回复则为<code>open</code>，收到<code>RST</code>则为<code>close</code></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165511.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165511.png loading=lazy alt="TCP NULL SCAN">
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165511.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165511.png loading=lazy alt="TCP NULL SCAN">
 </a>
 <figcaption>TCP NULL SCAN</figcaption>
 </figure></p>
@@ -203,8 +194,7 @@ Sets the FIN, PSH, and URG flags, lighting the packet up like a Christmas tree.
 <p>使用TCP ACK扫描不能够确定端口的关闭或者开放，因为当发送给对方一个含有 ACK 表示的TCP报文的时候，都返回含有RST标志的报文，无论端口是开放或者关闭。所以，不能使用TCP ACK扫描来确定端口是否开放或者关闭。但是可以利用它来扫描防火墙的配置，用它来发现防火墙规则，确定它们是有状态的还是无状态的，哪些端口是被过滤的。</p>
 <p>向服务端发送一个带有 ACK 标识的数据包，如果收到带有 RST 标识的响应，则说明服务端没有过滤，不存在状态防火墙。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165649.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165649.png loading=lazy alt="TCP ACK SCAN">
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165649.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165649.png loading=lazy alt="TCP ACK SCAN">
 </a>
 <figcaption>TCP ACK SCAN</figcaption>
 </figure></p>
@@ -212,8 +202,7 @@ Sets the FIN, PSH, and URG flags, lighting the packet up like a Christmas tree.
 <p>可以使用 msf 的模块</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>use auxiliary/scanner/portscan/ack
 </code></pre></div><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011455.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011455.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011455.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011455.png loading=lazy>
 </a>
 </figure></p>
 <p>Nmap 可以用以下命令</p>
@@ -221,15 +210,13 @@ Sets the FIN, PSH, and URG flags, lighting the packet up like a Christmas tree.
 </code></pre></div><h2 id=tcp-window-scan>TCP WINDOW SCAN</h2>
 <p>TCP 窗口扫描的流程类似于 ACK 扫描，都是向服务端发送带有 ACK 标识的数据包，不同的在于 TCP 窗口扫描会检查收到的 RST 数据包中的窗口大小，如果 RST 数据包中的窗口大小不为零，则说明目标端口是开放的。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170017.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170017.jpg loading=lazy alt="TCP WINDOW SCAN">
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170017.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170017.jpg loading=lazy alt="TCP WINDOW SCAN">
 </a>
 <figcaption>TCP WINDOW SCAN</figcaption>
 </figure></p>
 <p>如果 RST 数据包中的窗口大小为零，则说明目标端口处于关闭状态。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170009.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170009.jpg loading=lazy alt="TCP WINDOW SCAN">
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170009.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170009.jpg loading=lazy alt="TCP WINDOW SCAN">
 </a>
 <figcaption>TCP WINDOW SCAN</figcaption>
 </figure></p>
@@ -290,20 +277,17 @@ Sets the FIN, PSH, and URG flags, lighting the packet up like a Christmas tree.
 <p>以下三张图大略可以说明端口被打开，关闭，过滤的情况。</p>
 <p>端口开放：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609152056.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609152056.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609152056.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609152056.png loading=lazy>
 </a>
 </figure></p>
 <p>端口关闭：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609155715.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609155715.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609155715.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609155715.png loading=lazy>
 </a>
 </figure></p>
 <p>端口被过滤：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609160207.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609160207.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609160207.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609160207.png loading=lazy>
 </a>
 </figure></p>
 <p>Idel Scan根本上来讲就是一个隐性扫描，Nmap提供了decoy scanning (-D)，帮助使用者保护自己的身份。如果不是使用的（类似Idel Scan扫描方式）仍然需要攻击者通过自身真实IP向目标发送数据包以获取扫描结果。Idel Scan扫描结果其中之一就有入侵检测系统通常会发送一个Zombie主机已经开始扫描的通知。所以它可以作为一个框架去扫描另外一个目标，当你查阅入侵检测系统（IDS）时，请记住这种可能性。</p>
@@ -377,8 +361,7 @@ Nmap <span class=k>done</span>: <span class=m>1</span> IP address <span class=o>
 <h2 id=udp-scan>UDP SCAN</h2>
 <p>UDP扫描比较简单，一般如果返回<code>ICMP port unreachable</code>说明端口是关闭的，而如果没有回应或有回应(有些UDP服务是有回应的但不常见)则认为是<code>open</code>，但由于UDP的不可靠性，无法判断报文段是丢了还是没有回应，所以一般扫描器会发送多次，然后根据结果再判断。这也是为什么UDP扫描这么慢的原因。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170208.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170208.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170208.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170208.png loading=lazy>
 </a>
 </figure></p>
 <p>虽然因特网上最流行的服务运行在TCP协议上，但UDP服务被广泛部署。 DNS，SNMP和DHCP（注册端口53,161 / 162和67/68）是最常见的三种。 由于UDP扫描通常比TCP更慢且更困难，因此某些安全审核员会忽略这些端口。 这是一个错误，因为可利用的UDP服务非常普遍，攻击者肯定不会忽略整个协议。</p>
@@ -417,8 +400,7 @@ Nmap <span class=k>done</span>: <span class=m>1</span> IP address <span class=o>
 <h1 id=icmp>ICMP</h1>
 <p>ICMP 格式：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170742.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170742.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170742.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170742.png loading=lazy>
 </a>
 </figure></p>
 <blockquote>
@@ -426,16 +408,14 @@ Nmap <span class=k>done</span>: <span class=m>1</span> IP address <span class=o>
 </blockquote>
 <p>ICMP 相关类型解释：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164952.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164952.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164952.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164952.png loading=lazy>
 </a>
 </figure></p>
 <p>一般如果数据包被防火墙过滤的话，会收到一个 ICMP 数据包，其中类型为3，代码为1，2，3，9，10或13。</p>
 <h2 id=icmp-scan>ICMP SCAN</h2>
 <p>常见的利用：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170934.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170934.png loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170934.png><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170934.png loading=lazy>
 </a>
 </figure></p>
 <h1 id=sctp>SCTP</h1>
@@ -450,8 +430,7 @@ Nmap <span class=k>done</span>: <span class=m>1</span> IP address <span class=o>
 <p>简而言之，SCTP是TCP和UDP协议的一种相对较新的替代方案，它结合了TCP和UDP的大多数特性，还增加了多宿主和多流等新功能。它主要用于SS7 / SIGTRAN相关服务，但也有可能用于其他应用程序。</p>
 <p>下图是 TCP 与 SCTP 建立连接的对比图：</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609005059.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609005059.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609005059.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609005059.jpg loading=lazy>
 </a>
 </figure></p>
 <h2 id=sctp-init-scan>SCTP INIT scan</h2>

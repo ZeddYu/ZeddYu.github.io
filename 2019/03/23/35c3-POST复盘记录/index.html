@@ -93,8 +93,7 @@ Task Completed
 </code></pre><p>uploads 处发现了两处 403 的地方，而且服务器是 Nginx，而且拿其他一些扫描器也报了目录列举的洞</p>
 <p>可以参考<a class=link href=https://www.freebuf.com/articles/web/149761.html target=_blank rel=noopener>Nginx不安全配置可能导致的安全漏洞</a>与<a class=link href=https://www.leavesongs.com/PENETRATION/nginx-insecure-configuration.html target=_blank rel=noopener>三个案例看Nginx配置安全</a></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008852.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008852.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008852.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008852.jpg loading=lazy>
 </a>
 </figure></p>
 <p>下载得到源码</p>
@@ -143,8 +142,7 @@ Task Completed
 </blockquote>
 <p>这是一个 php 的内部类，简单来说就是用来创建 soap 数据报文，与 wsdl 接口进行交互的。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001161.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001161.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001161.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001161.jpg loading=lazy>
 </a>
 </figure></p>
 <p>其中<code>__call</code>的魔术方法就比较有意思了</p>
@@ -168,8 +166,7 @@ Task Completed
 <span class=cp>?&gt;</span><span class=err>
 </span></code></pre></div><p>当我们直接运行这段代码的时候，就因为调用了一个<code>SoapClient</code>不存在的方法<code>hack()</code>导致直接调用了<code>__call()</code>魔术方法</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005272.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005272.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005272.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005272.jpg loading=lazy>
 </a>
 </figure></p>
 <p>详细可以参考<a class=link href=https://xz.aliyun.com/t/2148 target=_blank rel=noopener>N1CTF Easy&&Hard Php Writeup</a></p>
@@ -307,14 +304,12 @@ Task Completed
 <span class=k>echo</span> <span class=nx>base64_encode</span><span class=p>(</span><span class=nv>$aaa</span><span class=p>)</span><span class=o>.</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
 </code></pre></div><p>利用反序列化的特点，我们可以直接定义私有变量的值，但是字符串中会有不可见字符，实验如下</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005682.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005682.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005682.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005682.jpg loading=lazy>
 </a>
 </figure></p>
 <p>所以我们需要用<code>base64_encode</code>进行编码，把编码得到的字符串再在 burp 里面进行解码构造请求。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008851.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008851.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008851.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008851.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=soapclient-ssrf>SoapClient SSRF</h4>
@@ -343,8 +338,7 @@ Task Completed
 }
 </code></pre><p>当我们请求 8080 的时候，请求的是 miniProxy，但是只能用 GET 请求，而我们之前可以发现<code>SoapClient</code>只能发 POST 请求</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg loading=lazy>
 </a>
 </figure></p>
 <p>这里大概思路也比较清晰了，就是利用 miniProxy 使用 gopher 协议去访问 mssql 数据库拿到 flag ，但是怎么处理让<code>SoapClient</code>发送 GET 请求呢？</p>
@@ -358,15 +352,13 @@ Task Completed
 </blockquote>
 <p>而且在 header 里 <code>User-Agent</code> 在 <code>Content-Type</code> 前面，这里我们可以使用 CRLF 进行分隔请求，构造 GET 请求。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005475.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005475.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005475.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005475.jpg loading=lazy>
 </a>
 </figure></p>
 <h4 id=miniproxy-url-scheme-bypass>miniProxy URL scheme bypass</h4>
 <p>我们自己本地看看 MiniProxy 怎么用。</p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003617.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003617.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003617.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003617.jpg loading=lazy>
 </a>
 </figure></p>
 <p>随便测一个<code>file:///etc/passwd</code>，返回</p>
@@ -454,13 +446,11 @@ Task Completed
 <p>这个可以用来干嘛呢？当然是用来注入了啦，直接在自己的 post 中获取相关的信息</p>
 <pre tabindex=0><code class=language-mssql data-lang=mssql>insert into posts (userid, title, content, attachment) values ({}, &quot;foobar&quot;, (select flag from flag.flag), &quot;foobar&quot;);
 </code></pre><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007735.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007735.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007735.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007735.jpg loading=lazy>
 </a>
 </figure></p>
 <p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000709.jpg>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000709.jpg loading=lazy>
+<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000709.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000709.jpg loading=lazy>
 </a>
 </figure></p>
 <h3 id=conclusion>Conclusion</h3>

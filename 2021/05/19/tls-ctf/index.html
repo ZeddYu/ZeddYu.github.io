@@ -67,16 +67,14 @@ CTF
 <p>客户端必须先使用 TLS Client Hello 消息向 FTPS 服务器进行握手来创建加密连接，如果 FTPS 服务器未收到此类消息，则服务器应断开连接。 为了保持与现有的非 FTPS 感知客户端的兼容性，隐式 FTPS 默认在 IANA 规定的端口 990/TCP 上监听 FTPS 控制通道，并在端口 989/TCP 上监听 FTPS 数据通道。这使得管理员可以保留端口(控制通道 21/TCP 与数据通道 20/TCP )以兼容原始的FTP。</p>
 <p>虽然我没有查找到隐式 FTPS 的相关历史，但是我个人觉得他更像在 SSL 时代应运而生的产物，更符合了 FTP over SSL 的意思，也就是一开始使用 TLS/SSL 进行会话创建，再进行数据加密传输。但 RFC 4217 中未定义隐式模式，因此它也被认为是FTP协商TLS/SSL中过时的早期方法。</p>
 <p><figure>
-<a href=https://www.sftpplus.de/static/images/4608-ImplicitFTPS.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://www.sftpplus.de/static/images/4608-ImplicitFTPS.png loading=lazy>
+<a href=https://www.sftpplus.de/static/images/4608-ImplicitFTPS.png><img src=https://www.sftpplus.de/static/images/4608-ImplicitFTPS.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=explicit-mode>Explicit Mode</h3>
 <p>在显式模式（也称为FTPES）下，FTPS 客户端先与服务器创建明文连接，然后从控制通道明确请求服务端升级为加密连接（命令为: AUTH TLS）。控制通道与数据通道默认端口与原始 FTP 一样也是 21 端口。控制通道始终加密，而数据通道是否加密则为可选项。 同时若服务器未限制明文连接，也可以使用未加密的原始 FTP 进行连接，也就是说服务器在相同的端口上同时提供 FTP 与 FTPS 服务。</p>
 <p>与FTP协商认证和安全的机制是在 RFC 2228 下增加的，其中包括新的 FTP 命令 AUTH 。虽然该 RFC 没有明确定义任何所需的安全机制，如 SSL 或 TLS ，但它确实要求 FTPS 客户端用一个双方都知道的机制挑战 FTPS 服务器。如果 FTPS 客户端用一个未知的安全机制挑战 FTPS 服务器， FTPS 服务器将以错误代码 504（不支持）响应 AUTH 命令。客户可以通过使用 FEAT 命令查询 FTPS 服务器来确定支持哪些机制，尽管服务器不一定需要诚实地披露它们支持哪些安全级别。调用 FTPS 安全的常见方法包括 AUTH TLS 和 AUTH SSL 。显式方法在 RFC 4217 中定义后，FTPS的合规性要求客户端始终使用 AUTH TLS 方法进行协商。</p>
 <p><figure>
-<a href=https://www.sftpplus.de/static/images/4608-ExplicitFTPS.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://www.sftpplus.de/static/images/4608-ExplicitFTPS.png loading=lazy>
+<a href=https://www.sftpplus.de/static/images/4608-ExplicitFTPS.png><img src=https://www.sftpplus.de/static/images/4608-ExplicitFTPS.png loading=lazy>
 </a>
 </figure></p>
 <p>我们可以在 RFC 4217 中找到显式 FTPS 建立连接方式：</p>
@@ -188,8 +186,7 @@ CTF
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>curl --ftp-ssl --user name:passwd ftp://ftp.host.com/
 </code></pre></div><p>如果需要用户验证就加上<code>--user</code>选项即可，不需要的话就不用，结果如图所示：</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000343.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000343.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000343.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000343.png loading=lazy>
 </a>
 </figure></p>
 <p>我们可以清楚的看到在显式 FTPS 在使用<code>AUTH SSL</code>命令之后才与服务器建立的 TLS 连接，并在<code>LIST</code>之后我们可以看到重新使用了 TLS Session 。</p>
@@ -197,8 +194,7 @@ CTF
 <p>让我们看之前发生了什么，客户端使用了<code>EPSV</code>命令表示使用 FTP 被动模式，FTP 服务器以<code>(||||32949)</code>对该命令进行了回复。</p>
 <p>这里我们简单回顾一下 FTP 的被动模式：在被动模式的 FTP 中，客户端启动到服务器的两个连接，<strong>解决了防火墙阻止从服务器到客户端的传入数据端口连接的问题</strong>。FTP 连接建立后，客户端在本地打开两个随机的非系统端口 N 和 N + 1(N > 1023)。第一个端口连接服务器上的 21 端口，但是客户端这次将会发出 PASV 命令，也就是不允许服务器连接回其数据端口。这样，服务器随后会打开一个随机的非系统端口 P (P > 1023)，并将 P 发送给客户端作为 PASV 命令的响应。然后客户端启动从端口 N+1 到端口 P 的连接来传输数据。其中<code>EPSV</code>命令为<code>PASV</code>的更新版本，主要为了兼容 IPv6 而在 RFC 2428 中定义的。</p>
 <p><figure>
-<a href=https://miro.medium.com/max/1926/1*yyyR4y2MDi3O7_NeUmiGjw.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://miro.medium.com/max/1926/1*yyyR4y2MDi3O7_NeUmiGjw.png loading=lazy>
+<a href=https://miro.medium.com/max/1926/1*yyyR4y2MDi3O7_NeUmiGjw.png><img src=https://miro.medium.com/max/1926/1*yyyR4y2MDi3O7_NeUmiGjw.png loading=lazy>
 </a>
 </figure></p>
 <p>所以在被动模式中，我们可以借由上图清楚的明白，在数据传输阶段，客户端需要与服务端重新建立一次连接！而在显式 FTPS 当中，重新建立连接就可以重新使用 TLS 会话，也就意味着可能被 TLS Poison 攻击！</p>
@@ -249,8 +245,7 @@ implicit_ssl=YES
 </code></pre><p>这里我另外增加了<code>--tls-max 1.2</code>选项，因为在 TLS 1.3 当中， Session ID 传输在加密过程中，不便观察，而 TLS 1.2 可以在 Server Hello 消息中看到 TLS Server 设置的 Session ID，所以这里我们使用<code>--tls-max 1.2</code>迫使 curl 最大使用 TLS 1.2 版本。</p>
 <p>我们就可以观察到如下图所示现象：</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510123202.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510123202.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510123202.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510123202.png loading=lazy>
 </a>
 </figure></p>
 <p>可以看到也是在使用<code>PASV</code>命令之后，也就是数据传输阶段时，重新使用了 Session ID 进行建立 TLS 会话。</p>
@@ -351,8 +346,7 @@ implicit_ssl=YES
 </ul>
 <p>整个代码流程如下图所示：</p>
 <p><figure>
-<a href=https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/good_workflow.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/good_workflow.png loading=lazy>
+<a href=https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/good_workflow.png><img src=https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/good_workflow.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=solution-1>Solution 1</h3>
@@ -360,8 +354,7 @@ implicit_ssl=YES
 <p>我们先来看看第一种解法，这也是 perfect guesser 他们使用的类似解法，通过 HTTPS 来进行解题。</p>
 <p>题目唯一一处可以让我们直接执行命令的地方就是<code>exec</code>处了，所以如果没有其他校验验证的话，我们可以直接使用命令注入进行 RCE ，例如传入<code>url=;/readflag</code>，这样题目执行顺序如下流程图所示：</p>
 <p><figure>
-<a href=https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/bad_workflow.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/bad_workflow.png loading=lazy>
+<a href=https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/bad_workflow.png><img src=https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/bad_workflow.png loading=lazy>
 </a>
 </figure></p>
 <p>这样题目在执行我们的命令时，就也会把回显显示给我们了，也就拿到 FLAG 了。</p>
@@ -375,8 +368,7 @@ implicit_ssl=YES
 <p>我们再来看看如果真是使用 TLS Poison 攻击的话，使用 HTTPS 是不是就可以满足以上两个限制的条件了呢？确实如此，<code>https://</code>并没有使用其他禁止的字符，并且我们可以通过 HTTPS 让题目的<code>file_get_contents</code>得到任意内容，包括满足他所需要的<code>001e# service=git-upload-pack\n</code>这个条件。</p>
 <p>所以似乎看起来 TLS Poison 正是这个题目的关键！如果是这样的话，接下来我们就需要确定，我们应该使用 <code>file_get_contents</code>还是 git 来进行操作呢？也就是说哪一个支持 TLS 会话重用这个特性呢？我们知道<code>file_get_contents</code>并没有依赖 libcurl ，我们如果直接查看 PHP 源代码有点麻烦，不如直接通过让其访问我们 TLS Poison Demo 来测试，如果能有支持 TLS 会话重用，在 302 时，也就是第二次访问我们 TLS Server 即会带上 Session ID ，这个我们可以直接用wireshark 本地抓包即可看到了。但是经过测试其实我们可以看到<code>file_get_contents</code>并没有在第二次 TLS 会话时重用 Session ID，如图所示：</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000326.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000326.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000326.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000326.png loading=lazy>
 </a>
 </figure></p>
 <p>所以接下来我们就只能寄希望于 git 了，那么 git 是否支持 TLS 重用会话？怎么确定 git 是否支持 TLS 会话重用呢？我们能不能确定 git 使用的是什么网络请求资源依赖库呢？比如 libcurl ？如果是 libcurl ，我们就好办了，因为明确知道 libcurl 对于 HTTPS 的支持是可以支持会话重用的，至少对于 OpenSSL 或者 GnuTLS 来说，都是支持此项特性的。</p>
@@ -396,8 +388,7 @@ fatal: unable to access <span class=s1>&#39;http://localhost/302.php/&#39;</span
 </ol>
 <p>具体流程图如下：</p>
 <p><figure>
-<a href=https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/tls_poison.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/tls_poison.png loading=lazy>
+<a href=https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/tls_poison.png><img src=https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/tls_poison.png loading=lazy>
 </a>
 </figure></p>
 <p>其中我们可以使用双 A 记录的方法来优化 DNS Rebinding 方式，具体关于 TLS Poison 详细解释见：<a class=link href=https://blog.zeddyu.info/2021/04/20/tls-poison/ target=_blank rel=noopener>一篇文章带你读懂 TLS Poison 攻击</a></p>
@@ -427,8 +418,7 @@ fatal: unable to access <span class=s1>&#39;http://localhost/302.php/&#39;</span
 </code></pre></div><p>这里因为题目设置了 sandbox ，占用了 10 字节，而 TLS 1.2 中的 SessionID 局限于 32 字节，所以我们没办法直接使用<code>;/readflag</code>，否则会超出长度，直接使用<code>;/r*</code>也可以执行读取 flag 命令。最后打包整理的 Exp 放在：https://github.com/ZeddYu/TLS-poison/tree/master/Practice1-hxp2020/solution1</p>
 <p>在自己的服务器上搭建好 TLS 服务器之后，最后用 exp.py 自动发包就能拿到 flag 了：</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510212104.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510212104.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510212104.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510212104.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=solution-2>Solution 2</h3>
@@ -449,8 +439,7 @@ fatal: unable to access <span class=s1>&#39;http://localhost/302.php/&#39;</span
 <p>天知道这个坑了我多久&mldr;当时死活都不能复现，问作者 0xbb 也不知道什么情况，又是排 curl 版本，又是排 git 版本，又是排 OpenSSL ，又是排 GnuTLS ，反正各种排 bug ，万念俱灰，最后才找到这个地方&mldr;简直</p>
 <p>这里我自己编译了一个存在<code>pasv</code>漏洞的 curl 调试，访问我们的 ftps 服务器之后就会对我们 127.0.0.1:11211 进行 TLS 会话重用，就会将我们的 payload 发送到 11211 端口了：</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510214036.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510214036.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510214036.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510214036.png loading=lazy>
 </a>
 </figure></p>
 <p>写入之后基本上就没有什么问题了。</p>
@@ -489,8 +478,7 @@ fatal: unable to access <span class=s1>&#39;http://localhost/302.php/&#39;</span
 </ul>
 <p>至此，完成这个题目的 FTPS 解法。exp 效果图如下：</p>
 <p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210515015923.png>
-<img src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210515015923.png loading=lazy>
+<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210515015923.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210515015923.png loading=lazy>
 </a>
 </figure></p>
 <h3 id=something-else>Something else</h3>

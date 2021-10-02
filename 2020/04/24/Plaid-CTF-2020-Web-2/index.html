@@ -123,7 +123,7 @@ CTF
 <p>uBlock Origin (or uBlock₀) is not an <em>ad blocker</em>; it&rsquo;s a general-purpose blocker. uBlock Origin blocks ads through its support of the <a class=link href=https://adblockplus.org/en/filters target=_blank rel=noopener>Adblock Plus filter syntax</a>. uBlock Origin <a class=link href=https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions target=_blank rel=noopener>extends</a> the syntax and is designed to work with custom rules and filters. Furthermore, advanced mode allows uBlock Origin to work in <a class=link href=https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-default-deny target=_blank rel=noopener>default-deny mode</a>, which mode will cause <a class=link href=https://requestpolicycontinued.github.io/#what-are-cross-site-requests target=_blank rel=noopener>all 3rd-party network requests</a> to be blocked by default, unless allowed by the user.</p>
 </blockquote>
 <p>简单来说，uBlock 是一个通用的 blocker ，通过各种自定义规则来配合过滤页面元素，更多的可以到 <a class=link href=https://github.com/gorhill/uBlock target=_blank rel=noopener>uBlock</a> 仓库查看。</p>
-<p>个人也并没有非常理解作者在此处引入 uBlock 的点，以及配合 User Activation 的出题意图，虽然作者解释了他的出题意图：</p>
+<p><del>个人也并没有非常理解作者在此处引入 uBlock 的点，以及配合 User Activation 的出题意图，虽然作者解释了他的出题意图</del>：</p>
 <blockquote>
 <p>Hint 1 + inclusion of uBlock: admin clicks on a link which gives a user activation to the active frame, uBlock sends a postMessage to its extension iframe, which duplicates the user activation. Whenever a page loads, the frontend gets a postMessage from the uBlock frame, and thus duplicates the activation back again.</p>
 </blockquote>
@@ -254,12 +254,12 @@ CTF
 <blockquote>
 <p>The following subsections restrict the feature to mitigate the expected attack vectors. In summary, the text fragment directives are invoked only on full (non-same-page) navigations that are the result of a user activation. Additionally, navigations originating from a different origin than the destination will require the navigation to take place in a &ldquo;noopener&rdquo; context, such that the destination page is known to be sufficiently isolated.</p>
 </blockquote>
-<p>我们可以注意到其中非常关键的一句话： **In summary, the text fragment directives are invoked only on full navigations that are the result of a user activation. **</p>
+<p>我们可以注意到其中非常关键的一句话： <em>**In summary, the text fragment directives are invoked only on full navigations that are the result of a user activation. **</em></p>
 <p>也就是说 Text Fragments 功能仅在由于 User Activation 产生的完整导向上才能生效，没有 User Activation 是无法使用该功能的！在其他地方我们也可以看到 Google 对于 **User Activation ** 做了很多的强调：</p>
 <blockquote>
 <p>The examples above illustrate that in specific circumstances, it may be possible for an attacker to extract 1 bit of information about content on the page. However, care must be taken so that such opportunities cannot be exploited to extract arbitrary content from the page by repeating the attack. For this reason, restrictions based on user activation and browsing context isolation are very important and must be implemented.</p>
 </blockquote>
-<p><strong>For this reason, restrictions based on user activation and browsing context isolation are very important and must be implemented.</strong></p>
+<p><em><strong>For this reason, restrictions based on user activation and browsing context isolation are very important and must be implemented.</strong></em></p>
 <p>因此，基于 User Activation 和浏览上下文隔离的限制非常重要，必须予以实施。</p>
 <p>至于 Chrome 如何实现限制该功能的，具体可以参考文档 <a class=link href=https://wicg.github.io/ScrollToTextFragment/#restricting-the-text-fragment target=_blank rel=noopener>Restricting the Text Fragment</a> ，这里就不详述了。</p>
 <p>从以上来看，出题人的题图就很明显了：</p>

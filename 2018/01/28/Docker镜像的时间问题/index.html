@@ -99,8 +99,8 @@ Dev
 </header>
 <section class=article-content>
 <p>今天刚刚开始做PA0，发现自己对Docker的研究也不是很深，也就是在赛宁的那段日子，算是一个契机吧，让我们用<code>Docker</code>搭比赛环境，那个时候开始接触的Docker，然后也跟Rex请教了有关Docker的一些知识。还以为算是比较了解Docker了吧，今天发现自己还是菜的呀。</p>
-<p>首先今天吧，把Debian镜像给弄好了，然后装上了<code>oh my zsh</code>，然后发现一个显示时间比较方便的主题，我的<code>Mac</code>是agnoster的主题，还是比较好看的。但是用久了也想在docker上换换新的来用用。也通过这次课正式地研究一下Docker吧。</p>
-<p>于是在用ys这个主题的时候，发现时间是不对的。这个又不是服务器，所以我觉得还是有问题的，保持着研究问题的态度看了一下。</p>
+<p>首先今天吧，把Debian镜像给弄好了，然后装上了<code>oh my zsh</code>，然后发现一个显示时间比较方便的主题，我的<code>Mac</code>是<a href=https://github.com/robbyrussell/oh-my-zsh/wiki/Themes#agnoster>agnoster</a>的主题，还是比较好看的。但是用久了也想在docker上换换新的来用用。也通过这次课正式地研究一下Docker吧。</p>
+<p>于是在用<a href=https://github.com/robbyrussell/oh-my-zsh/wiki/Themes#ys>ys</a>这个主题的时候，发现时间是不对的。这个又不是服务器，所以我觉得还是有问题的，保持着研究问题的态度看了一下。</p>
 <p><code>Docker Debian</code>里用<code>date</code>命令看一下</p>
 <pre tabindex=0><code># zedd @ c7c452f36fc4 in ~ [16:24:36]
 $ date
@@ -108,7 +108,7 @@ Sat Jan 27 16:25:00 UTC 2018
 </code></pre><p>然后查了一下，很快就找到了原来是时区的问题。我的Mac上<code>date</code>是</p>
 <pre tabindex=0><code>zedd@ZedddeMac / date
 2018年 1月28日 星期日 00时43分52秒 CST
-</code></pre><p>哈，只要改改时区应该就可以了。不过网上给的答案好像都比较麻烦，我<code>Google</code>到的第一条，修改<code>Dockerfile</code>个人认为是一个在创建的时候用的，还有其他的方法可能部分人看不懂，而且格式不太一样。我感觉应该还是有直接修改时区的办法的，毕竟在GUI下还是可以修改时区时间的。</p>
+</code></pre><p>哈，只要改改时区应该就可以了。不过网上给的答案好像都比较麻烦，我<code>Google</code>到的<a href=http://www.cnblogs.com/zhangmingcheng/p/6233527.html>第一条</a>，修改<code>Dockerfile</code>个人认为是一个在创建的时候用的，还有其他的方法可能部分人看不懂，而且格式不太一样。我感觉应该还是有直接修改时区的办法的，毕竟在GUI下还是可以修改时区时间的。</p>
 <p>下面给出直接的解决方案（操作在Debian 9下）:
 直接用</p>
 <pre tabindex=0><code>dpkg-reconfigure tzdata
@@ -171,6 +171,13 @@ http://www.51testing.com/html/74/248074-209865.html
 <div class=related-contents>
 <div class="flex article-list--tile">
 <article>
+<a href=/2021/09/30/2021-09-30-FromHexoToHugo/>
+<div class=article-details>
+<h2 class=article-title>从 Hexo 搬迁至 Hugo</h2>
+</div>
+</a>
+</article>
+<article>
 <a href=/2019/02/27/Hexo-issue/>
 <div class=article-details>
 <h2 class=article-title>Hexo Template render error 解决方案</h2>
@@ -195,13 +202,6 @@ http://www.51testing.com/html/74/248074-209865.html
 <a href=/2018/03/13/%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%8A%E4%B8%80%E4%BA%9B%E5%9D%91/>
 <div class=article-details>
 <h2 class=article-title>博客自动化及一些坑</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2018/03/04/MacOS-X-%E4%B8%8B%E9%85%8D%E7%BD%AENginx-amp-PHP/>
-<div class=article-details>
-<h2 class=article-title>MacOS X 下配置Nginx &amp;amp; PHP</h2>
 </div>
 </a>
 </article>

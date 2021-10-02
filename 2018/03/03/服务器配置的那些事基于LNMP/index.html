@@ -78,7 +78,7 @@ baseurl=http://nginx.org/packages/mainline/OS/OSRELEASE/$basearch/
 gpgcheck=0
 enabled=1
 </code></pre>
-<p>按照官方文档来修改</p>
+<p>按照<a href=https://nginx.org/en/linux_packages.html>官方文档</a>来修改</p>
 <h3 id=2开始安装nginx>2.开始安装Nginx</h3>
 <p>在你的CentOS 7 服务器中使用<code>yum</code>命令从Nginx源服务器中获取来安装Nginx：</p>
 <pre><code>sudo yum install -y nginx
@@ -151,7 +151,7 @@ enabled=1
 </code></pre>
 <h2 id=0x3>0x3</h2>
 <p>再装php</p>
-<p>Vultr有比较详细的安装教程,我就贴出来了。这里装的是php7.1</p>
+<p><a href=https://www.vultr.com/docs/how-to-install-php-7-x-on-centos-7>Vultr</a>有比较详细的安装教程,我就贴出来了。这里装的是php7.1</p>
 <p>然后再安装个php-fpm</p>
 <pre><code>yum install php71w-fpm
 </code></pre>
@@ -186,7 +186,7 @@ enabled=1
 <p>然后就是安装typecho的坑了。</p>
 <h2 id=0x4>0x4</h2>
 <h3 id=这里就简单提提typecho的坑>这里就简单提提typecho的坑。</h3>
-<p>第一个就是与nginx的配置，这个还好有文档，但是只能解决我的</p>
+<p>第一个就是与nginx的配置，这个还好有<a href=http://docs.typecho.org/servers>文档</a>，但是只能解决我的</p>
 <pre><code>无法登录后台，点击前台链接或者后台登录时出现&quot;404, not found&quot;
 </code></pre>
 <p>这个问题</p>
@@ -198,7 +198,7 @@ enabled=1
 <pre><code>/** 开启HTTPS */
 define('__TYPECHO_SECURE__',true);
 </code></pre>
-<p>具体可以参照一下这篇文章</p>
+<p>具体可以参照一下这篇<a href=https://faq.xiaoz.me/archives/64.html>文章</a></p>
 <p>还有typecho点击评论确无法评论的问题，只要在typecho管理员控制台中在永久链接中把自定义文章路径</p>
 <p>默认是</p>
 <pre><code>默认风格 /archives/{cid}/
@@ -229,6 +229,13 @@ define('__TYPECHO_SECURE__',true);
 <div class=related-contents>
 <div class="flex article-list--tile">
 <article>
+<a href=/2021/09/30/2021-09-30-FromHexoToHugo/>
+<div class=article-details>
+<h2 class=article-title>从 Hexo 搬迁至 Hugo</h2>
+</div>
+</a>
+</article>
+<article>
 <a href=/2019/02/27/Hexo-issue/>
 <div class=article-details>
 <h2 class=article-title>Hexo Template render error 解决方案</h2>
@@ -253,13 +260,6 @@ define('__TYPECHO_SECURE__',true);
 <a href=/2018/03/13/%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%8A%E4%B8%80%E4%BA%9B%E5%9D%91/>
 <div class=article-details>
 <h2 class=article-title>博客自动化及一些坑</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2018/03/04/MacOS-X-%E4%B8%8B%E9%85%8D%E7%BD%AENginx-amp-PHP/>
-<div class=article-details>
-<h2 class=article-title>MacOS X 下配置Nginx &amp;amp; PHP</h2>
 </div>
 </a>
 </article>

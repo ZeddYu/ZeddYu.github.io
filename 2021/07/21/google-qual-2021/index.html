@@ -245,7 +245,7 @@ CTF
 </ul>
 </li>
 </ul>
-<p>We don&rsquo;t know how to solve the challenge, so we ask our boss to get a pretty rich eth address and buy the flag in the end.</p>
+<p><del>We don&rsquo;t know how to solve the challenge, so we ask our boss to get a pretty rich eth address and buy the flag in the end.</del></p>
 <p>Although there are many proxies in the challenge, we could use URLEncode to bypass the &lsquo;checkout&rsquo; limitation, and the backend will not get the &lsquo;X-Wallet&rsquo; header. The GPU shop will get a pretty rich eth address because of the code used in gpushop.</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=k>function</span> <span class=nf>format_addr</span><span class=p>(</span><span class=nv>$addr</span><span class=p>)</span> <span class=p>{</span>
 	<span class=k>return</span> <span class=s1>&#39;0x&#39;</span><span class=o>.</span><span class=nx>str_pad</span><span class=p>(</span><span class=nv>$addr</span><span class=p>,</span> <span class=mi>40</span><span class=p>,</span> <span class=s1>&#39;0&#39;</span><span class=p>,</span> <span class=nx>STR_PAD_LEFT</span><span class=p>);</span>

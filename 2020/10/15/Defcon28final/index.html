@@ -162,7 +162,7 @@ CTF
   <span class=kd>let</span> <span class=nx>data</span> <span class=o>=</span> <span class=nx>fs</span><span class=p>.</span><span class=nx>readFileSync</span><span class=p>(</span><span class=nx>p</span><span class=p>).</span><span class=nx>toString</span><span class=p>()</span>
   <span class=k>try</span> <span class=p>{</span>
     <span class=nx>data</span> <span class=o>=</span> <span class=nx>JSON</span><span class=p>.</span><span class=nx>parse</span><span class=p>(</span><span class=nx>data</span><span class=p>)</span>
-    <span class=k>if</span> <span class=p>(</span><span class=mi>_</span><span class=p>.</span><span class=nx>isEqual</span><span class=p>(</span><span class=nx>req</span><span class=p>.</span><span class=nx>body</span><span class=p>,</span> <span class=nx>data</span><span class=p>))</span>
+    <span class=k>if</span> <span class=p>(</span><span class=nx>_</span><span class=p>.</span><span class=nx>isEqual</span><span class=p>(</span><span class=nx>req</span><span class=p>.</span><span class=nx>body</span><span class=p>,</span> <span class=nx>data</span><span class=p>))</span>
       <span class=nx>res</span><span class=p>.</span><span class=nx>json</span><span class=p>(</span><span class=nx>data</span><span class=p>)</span>
     <span class=k>else</span>
     <span class=nx>res</span><span class=p>.</span><span class=nx>send</span><span class=p>({</span> <span class=s2>&#34;validator&#34;</span><span class=o>:</span> <span class=nx>valid</span><span class=p>,</span> <span class=s2>&#34;data&#34;</span><span class=o>:</span><span class=nx>data</span><span class=p>,</span> <span class=s2>&#34;msg&#34;</span><span class=o>:</span> <span class=s2>&#34;data is corrupted&#34;</span><span class=p>})</span>
@@ -414,7 +414,7 @@ Expecting <span class=ni>&amp;#39;</span>STRING<span class=ni>&amp;#39;</span>, 
     <span class=p>}</span>
     <span class=k>return</span> <span class=kc>null</span><span class=p>;</span>
   <span class=p>}</span>
-  <span class=k>if</span> <span class=p>(</span><span class=mi>_</span><span class=nx>changing</span> <span class=o>&amp;&amp;</span> <span class=nx>schema</span><span class=p>.</span><span class=nx>readonly</span><span class=p>)</span> <span class=p>{</span>
+  <span class=k>if</span> <span class=p>(</span><span class=nx>_changing</span> <span class=o>&amp;&amp;</span> <span class=nx>schema</span><span class=p>.</span><span class=nx>readonly</span><span class=p>)</span> <span class=p>{</span>
     <span class=nx>addError</span><span class=p>(</span><span class=s2>&#34;is a readonly field, it can not be changed&#34;</span><span class=p>);</span>
   <span class=p>}</span>
   <span class=k>if</span> <span class=p>(</span><span class=nx>schema</span><span class=p>[</span><span class=s1>&#39;extends&#39;</span><span class=p>])</span> <span class=p>{</span> <span class=c1>// if it extends another schema, it must pass that schema as well
@@ -569,7 +569,7 @@ Expecting <span class=ni>&amp;#39;</span>STRING<span class=ni>&amp;#39;</span>, 
       <span class=p>}</span>
       <span class=nx>checkProp</span><span class=p>(</span><span class=nx>value</span><span class=p>,</span> <span class=nx>additionalProp</span><span class=p>,</span> <span class=nx>path</span><span class=p>,</span> <span class=nx>i</span><span class=p>);</span>
     <span class=p>}</span>
-    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=mi>_</span><span class=nx>changing</span> <span class=o>&amp;&amp;</span> <span class=nx>value</span> <span class=o>&amp;&amp;</span> <span class=nx>value</span><span class=p>.</span><span class=nx>$schema</span><span class=p>)</span> <span class=p>{</span>
+    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>_changing</span> <span class=o>&amp;&amp;</span> <span class=nx>value</span> <span class=o>&amp;&amp;</span> <span class=nx>value</span><span class=p>.</span><span class=nx>$schema</span><span class=p>)</span> <span class=p>{</span>
       <span class=nx>errors</span> <span class=o>=</span> <span class=nx>errors</span><span class=p>.</span><span class=nx>concat</span><span class=p>(</span><span class=nx>checkProp</span><span class=p>(</span><span class=nx>value</span><span class=p>,</span> <span class=nx>value</span><span class=p>.</span><span class=nx>$schema</span><span class=p>,</span> <span class=nx>path</span><span class=p>,</span> <span class=nx>i</span><span class=p>));</span>
     <span class=p>}</span>
   <span class=p>}</span>
@@ -714,6 +714,13 @@ Expecting <span class=ni>&amp;#39;</span>STRING<span class=ni>&amp;#39;</span>, 
 <div class=related-contents>
 <div class="flex article-list--tile">
 <article>
+<a href=/2021/12/20/2021-12-20-ANewNovelLFI/>
+<div class=article-details>
+<h2 class=article-title>hxp CTF 2021 - A New Novel LFI</h2>
+</div>
+</a>
+</article>
+<article>
 <a href=/2021/08/02/cybrics-checkin-2021/>
 <div class=article-details>
 <h2 class=article-title>Writeup for Web-Checkin in CyBRICS CTF 2021 (Mirror)</h2>
@@ -738,13 +745,6 @@ Expecting <span class=ni>&amp;#39;</span>STRING<span class=ni>&amp;#39;</span>, 
 <a href=/2020/04/24/Plaid-CTF-2020-Web-2/>
 <div class=article-details>
 <h2 class=article-title>Plaid CTF 2020 Catalog</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2020/04/20/Plaid-CTF-2020-Web-1/>
-<div class=article-details>
-<h2 class=article-title>Plaid CTF 2020 Contrived Web Problem Write Up</h2>
 </div>
 </a>
 </article>

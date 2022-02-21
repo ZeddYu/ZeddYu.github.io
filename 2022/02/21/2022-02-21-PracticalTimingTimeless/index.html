@@ -1,18 +1,18 @@
 <!doctype html><html lang=en-us>
 <head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<link rel=manifest href=/manifest.json><meta name=description content="本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，以下是本题的出题 writeup 以及一些出题过程记录。
+<link rel=manifest href=/manifest.json><meta name=description content="本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，通过该种攻击可以在一定网络波动内探测极小时间（1ms甚至更小）差异内的信息泄漏，以下是本题的出题 writeup 以及一些出题过程记录。
 "><title>Writeup for A More Secure Pastebin - Practical Timing Timeless in Browser</title>
 <link rel=canonical href=https://blog.zeddyu.info/2022/02/21/2022-02-21-PracticalTimingTimeless/>
 <link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Writeup for A More Secure Pastebin - Practical Timing Timeless in Browser">
-<meta property="og:description" content="本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，以下是本题的出题 writeup 以及一些出题过程记录。
+<meta property="og:description" content="本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，通过该种攻击可以在一定网络波动内探测极小时间（1ms甚至更小）差异内的信息泄漏，以下是本题的出题 writeup 以及一些出题过程记录。
 ">
 <meta property="og:url" content="https://blog.zeddyu.info/2022/02/21/2022-02-21-PracticalTimingTimeless/">
 <meta property="og:site_name" content="Zeddy's Blog">
 <meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="CTF"><meta property="article:published_time" content="2022-02-21T18:09:57+08:00"><meta property="article:modified_time" content="2022-02-21T18:09:57+08:00">
 <meta name=twitter:site content="@ZeddYu_Lu">
 <meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="Writeup for A More Secure Pastebin - Practical Timing Timeless in Browser">
-<meta name=twitter:description content="本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，以下是本题的出题 writeup 以及一些出题过程记录。
+<meta name=twitter:description content="本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，通过该种攻击可以在一定网络波动内探测极小时间（1ms甚至更小）差异内的信息泄漏，以下是本题的出题 writeup 以及一些出题过程记录。
 ">
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-112937997-1','auto'),ga('send','pageview'))</script>
 </head>
@@ -50,7 +50,7 @@ CTF
 </div>
 </header>
 <section class=article-content>
-<p>本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，以下是本题的出题 writeup 以及一些出题过程记录。</p>
+<p>本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，通过该种攻击可以在一定网络波动内探测极小时间（1ms甚至更小）差异内的信息泄漏，以下是本题的出题 writeup 以及一些出题过程记录。</p>
 <h2 id=tldr>TL;DR</h2>
 <p>这个题目的考点：</p>
 <ul>
@@ -68,9 +68,9 @@ CTF
 </li>
 </ul>
 <p>理论基础：HTTP/2 并发流可以在一个流内组装多个 HTTP 报文；TCP Nagle 拥塞控制算法；在 TCP 产生拥堵时，浏览器会将多个报文放入到一个 TCP 报文当中。</p>
-<p>实践题解：Post 一个 body 过大的报文让 TCP 产生拥堵，使得浏览器将多个 HTTP/2 报文放在一个 TCP 报文当中，通过 admin 搜索 flag 产生时间差异，使用 Timing Timeless 攻击完成 XS-Leaks</p>
+<p>实践题解：Post 一个 body 过大的报文让 TCP 产生拥堵，使得浏览器将多个 HTTP/2 报文放在一个 TCP 报文当中，通过 admin 搜索 flag 产生时间差异，使用 Timing Timeless 攻击完成 XS-Leaks 。</p>
 <p>其实这个题目主要改变来自 <a class=link href=https://hackerone.com/reports/493176 target=_blank rel=noopener>#493176 Partial report contents leakage - via HTTP/2 concurrent stream handling (hackerone.com)</a> 这份 HackerOne 报告，场景根据这份报告改编而来。如果要讲通整篇内容还是比较多的，但是作为 Writeup 我尽量挑重点的来说，有些部分需要选手自行探索。</p>
-<p>视频解释：<a class=link href=https://youtu.be/4CNEgTDXI-U target=_blank rel=noopener>$2,500 Leaking parts of private Hackerone reports - timeless cross-site leaks</a></p>
+<p>推荐视频解释：<a class=link href=https://youtu.be/4CNEgTDXI-U target=_blank rel=noopener>$2,500 Leaking parts of private Hackerone reports - timeless cross-site leaks</a></p>
 <h2 id=challenge>Challenge</h2>
 <p>题目主要有两个对象：</p>
 <ul>

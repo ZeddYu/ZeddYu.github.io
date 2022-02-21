@@ -161,6 +161,7 @@ Sec
 <p>俗的说，就是原来我们进行XSS攻击等都是针对Web应用本身，是因为Web应用本身存在漏洞才能被我们利用攻击；而UXSS不同的是通过浏览器或者浏览器扩展的漏洞来"制作XSS漏洞"，然后剩下的我们就可以像普通XSS那样利用攻击了。</p>
 <p>详细参考<a class=link href=http://www.fooying.com/uxss/ target=_blank rel=noopener>通用跨站脚本攻击(UXSS)</a></p>
 <h2 id=payload>Payload</h2>
+<p><strong>PS: 某些 Payload 已经被时间淘汰，以下任何 payload 不代表一定成功，请注意甄别</strong></p>
 <h3 id=img>img</h3>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>img</span> <span class=na>src</span><span class=o>=</span><span class=s>javascript:alert(&#34;xss&#34;)</span><span class=p>&gt;</span>
 <span class=p>&lt;</span><span class=nt>IMG</span> <span class=na>SRC</span><span class=o>=</span><span class=s>javascript:alert(String.formCharCode(88,83,83))</span><span class=p>&gt;</span>

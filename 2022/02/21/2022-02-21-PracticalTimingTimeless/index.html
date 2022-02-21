@@ -2,16 +2,16 @@
 <head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <link rel=manifest href=/manifest.json><meta name=description content="本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，通过该种攻击可以在一定网络波动内探测极小时间（1ms甚至更小）差异内的信息泄漏，以下是本题的出题 writeup 以及一些出题过程记录。
-"><title>Writeup for A More Secure Pastebin - Practical Timing Timeless in Browser</title>
+"><title>Writeup for A More Secure Pastebin - Practical Timeless Timing in Browser</title>
 <link rel=canonical href=https://blog.zeddyu.info/2022/02/21/2022-02-21-PracticalTimingTimeless/>
-<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Writeup for A More Secure Pastebin - Practical Timing Timeless in Browser">
+<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Writeup for A More Secure Pastebin - Practical Timeless Timing in Browser">
 <meta property="og:description" content="本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，通过该种攻击可以在一定网络波动内探测极小时间（1ms甚至更小）差异内的信息泄漏，以下是本题的出题 writeup 以及一些出题过程记录。
 ">
 <meta property="og:url" content="https://blog.zeddyu.info/2022/02/21/2022-02-21-PracticalTimingTimeless/">
 <meta property="og:site_name" content="Zeddy's Blog">
 <meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="CTF"><meta property="article:published_time" content="2022-02-21T18:09:57+08:00"><meta property="article:modified_time" content="2022-02-21T18:09:57+08:00">
 <meta name=twitter:site content="@ZeddYu_Lu">
-<meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="Writeup for A More Secure Pastebin - Practical Timing Timeless in Browser">
+<meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="Writeup for A More Secure Pastebin - Practical Timeless Timing in Browser">
 <meta name=twitter:description content="本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，通过该种攻击可以在一定网络波动内探测极小时间（1ms甚至更小）差异内的信息泄漏，以下是本题的出题 writeup 以及一些出题过程记录。
 ">
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-112937997-1','auto'),ga('send','pageview'))</script>
@@ -35,7 +35,7 @@ CTF
 </a>
 </header>
 <h2 class=article-title>
-<a href=/2022/02/21/2022-02-21-PracticalTimingTimeless/>Writeup for A More Secure Pastebin - Practical Timing Timeless in Browser</a>
+<a href=/2022/02/21/2022-02-21-PracticalTimingTimeless/>Writeup for A More Secure Pastebin - Practical Timeless Timing in Browser</a>
 </h2>
 <footer class=article-time>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
@@ -58,7 +58,7 @@ CTF
 <p>XS-Leaks</p>
 </li>
 <li>
-<p>Timing Timeless</p>
+<p>Timeless Timing</p>
 </li>
 <li>
 <p>HTTP/2 Concurrent Stream</p>
@@ -68,7 +68,7 @@ CTF
 </li>
 </ul>
 <p>理论基础：HTTP/2 并发流可以在一个流内组装多个 HTTP 报文；TCP Nagle 拥塞控制算法；在 TCP 产生拥堵时，浏览器会将多个报文放入到一个 TCP 报文当中。</p>
-<p>实践题解：Post 一个 body 过大的报文让 TCP 产生拥堵，使得浏览器将多个 HTTP/2 报文放在一个 TCP 报文当中，通过 admin 搜索 flag 产生时间差异，使用 Timing Timeless 攻击完成 XS-Leaks 。</p>
+<p>实践题解：Post 一个 body 过大的报文让 TCP 产生拥堵，使得浏览器将多个 HTTP/2 报文放在一个 TCP 报文当中，通过 admin 搜索 flag 产生时间差异，使用 Timeless Timing 攻击完成 XS-Leaks 。</p>
 <p>其实这个题目主要改变来自 <a class=link href=https://hackerone.com/reports/493176 target=_blank rel=noopener>#493176 Partial report contents leakage - via HTTP/2 concurrent stream handling (hackerone.com)</a> 这份 HackerOne 报告，场景根据这份报告改编而来。如果要讲通整篇内容还是比较多的，但是作为 Writeup 我尽量挑重点的来说，有些部分需要选手自行探索。</p>
 <p>推荐视频解释：<a class=link href=https://youtu.be/4CNEgTDXI-U target=_blank rel=noopener>$2,500 Leaking parts of private Hackerone reports - timeless cross-site leaks</a></p>
 <h2 id=challenge>Challenge</h2>
@@ -146,7 +146,7 @@ CTF
 </a>
 </figure></p>
 <p>那如何降低或者避免这些通信过程中网络设备带来的影响呢？在 29th usenix 上的这篇论文给了我们答案：<a class=link href=https://www.usenix.org/system/files/sec20-van_goethem.pdf target=_blank rel=noopener>Timeless Timing Attacks: Exploiting Concurrency to Leak Secrets over Remote Connections</a></p>
-<h3 id=timing-timeless>Timing Timeless</h3>
+<h3 id=timeless-timing>Timeless Timing</h3>
 <p>根据论文，传统的基于时间的攻击主要受到以下一些因素影响：</p>
 <ul>
 <li>基于攻击者与服务器间的网络因素
@@ -187,16 +187,16 @@ CTF
 </ul>
 </li>
 </ul>
-<p>举个简单的例子，如果我们可以满足同时发出两个报文 AB 并且他们也同时到达，Timing Timeless 攻击需要做的就是重复多组发送报文的操作，并统计他们返回的先后顺序，如果服务器处理两个报文后没有产生延迟的现象，那么这两个报文会被立即返回，因为返回顺序不受我们控制，并且可能受到<strong>返程</strong>通信过程中的网络影响，所以返回的先后顺序概率为 50% 及 50% ；如果服务器在处理 B 报文时会差生延迟现象，诸如比 A 要多进行一遍解密、查询等耗时的操作，那么 B 会比 A 要稍晚才能返回，这样一来，尽管响应报文在通信过程中仍然会受到一些影响，但是我们可以多次测量来统计这个概率，此时 B 比 A 先返回的概率回明显小于 50% ，于是我们可以通过这个概率来判断两个请求是否在服务器处理时产生了延迟。</p>
-<p>并且论文当中也对比了传统时间攻击与 Timing Timeless 攻击之间的各自区分一定时间延迟所需要的请求</p>
+<p>举个简单的例子，如果我们可以满足同时发出两个报文 AB 并且他们也同时到达，Timeless Timing 攻击需要做的就是重复多组发送报文的操作，并统计他们返回的先后顺序，如果服务器处理两个报文后没有产生延迟的现象，那么这两个报文会被立即返回，因为返回顺序不受我们控制，并且可能受到<strong>返程</strong>通信过程中的网络影响，所以返回的先后顺序概率为 50% 及 50% ；如果服务器在处理 B 报文时会差生延迟现象，诸如比 A 要多进行一遍解密、查询等耗时的操作，那么 B 会比 A 要稍晚才能返回，这样一来，尽管响应报文在通信过程中仍然会受到一些影响，但是我们可以多次测量来统计这个概率，此时 B 比 A 先返回的概率回明显小于 50% ，于是我们可以通过这个概率来判断两个请求是否在服务器处理时产生了延迟。</p>
+<p>并且论文当中也对比了传统时间攻击与 Timeless Timing 攻击之间的各自区分一定时间延迟所需要的请求</p>
 <p><figure>
 <a href=https://s4.ax1x.com/2022/02/20/HOuIOK.png><img src=https://s4.ax1x.com/2022/02/20/HOuIOK.png loading=lazy>
 </a>
 </figure></p>
 <h2 id=intended-solution---practice-section>Intended Solution - Practice Section</h2>
-<p>参考以上理论，我们回到题目中来，可以看到 admin 的搜索接口其实就比较符合这个背景。因为 admin 搜索接口在搜索到相关内容时，会进一步去查询 MongoDB 当中的用户信息，如果搜不到就会立马返回响应，这里就是 Timing Timeless 所需要测量的时间差值。并且我们知道 flag 就在 admin 的文章当中，所以我们只需要让 admin 查自己的文章是否包含我们查询的字符串，比如 <code>flag{a</code> 就能通过是否有时间延迟来测量出来了。</p>
-<p>综上所述，我们可以尝试根据以上来慢慢实现这些个理论想法。相信参加过 WCTF 2020 的 Web 同学应该都知道 <a class=link href=https://github.com/ConnorNelson/spaceless-spacing target=_blank rel=noopener>GitHub - ConnorNelson/spaceless-spacing: CTF Challenge</a> 这个题目，不知道也没关系，现在也可以去回顾一下。这个题目也是基于 Timing Timeless 攻击出的一个题目，但是这个背景是你可以构造并同时发出 HTTP/2 报文，从而使得尽量满足同时发出同时到达的条件。</p>
-<p>但是此时我们所处的背景环境是在浏览器当中，我们无法直接控制到报文的生成发送，这是进行 Timing Timeless 比较困难的地方。没办法控制报文同时发送就会让发出去的请求会因为各种网络抖动因素导致时间侧信道失效，并且我们所需要的时间差值本地测试我们可以知道只有大概 3ms 左右，以及题目本身使用了<code>tc</code>进行模拟网络延迟，基本上是不能够通过一般的 XS-Leaks 时间测量出来的。所以怎么在浏览器的背景下利用 Timing Timeless 成了我们这个题目的最大的难点。</p>
+<p>参考以上理论，我们回到题目中来，可以看到 admin 的搜索接口其实就比较符合这个背景。因为 admin 搜索接口在搜索到相关内容时，会进一步去查询 MongoDB 当中的用户信息，如果搜不到就会立马返回响应，这里就是 Timeless Timing 所需要测量的时间差值。并且我们知道 flag 就在 admin 的文章当中，所以我们只需要让 admin 查自己的文章是否包含我们查询的字符串，比如 <code>flag{a</code> 就能通过是否有时间延迟来测量出来了。</p>
+<p>综上所述，我们可以尝试根据以上来慢慢实现这些个理论想法。相信参加过 WCTF 2020 的 Web 同学应该都知道 <a class=link href=https://github.com/ConnorNelson/spaceless-spacing target=_blank rel=noopener>GitHub - ConnorNelson/spaceless-spacing: CTF Challenge</a> 这个题目，不知道也没关系，现在也可以去回顾一下。这个题目也是基于 Timeless Timing 攻击出的一个题目，但是这个背景是你可以构造并同时发出 HTTP/2 报文，从而使得尽量满足同时发出同时到达的条件。</p>
+<p>但是此时我们所处的背景环境是在浏览器当中，我们无法直接控制到报文的生成发送，这是进行 Timeless Timing 比较困难的地方。没办法控制报文同时发送就会让发出去的请求会因为各种网络抖动因素导致时间侧信道失效，并且我们所需要的时间差值本地测试我们可以知道只有大概 3ms 左右，以及题目本身使用了<code>tc</code>进行模拟网络延迟，基本上是不能够通过一般的 XS-Leaks 时间测量出来的。所以怎么在浏览器的背景下利用 Timeless Timing 成了我们这个题目的最大的难点。</p>
 <p>当然我们可以尝试直接进行连续多次次 <code>fetch</code> 配合 wireshark 来看：（这里假设要搜索的 flag 为<code>flag{abc}</code>，只有搜索匹配的关键字才会产生延迟）</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=c1>// 伪代码
 </span><span class=c1></span><span class=k>for</span> <span class=p>(</span><span class=kd>let</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;</span> <span class=mi>10</span><span class=p>;</span> <span class=nx>i</span> <span class=o>+=</span> <span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
@@ -212,7 +212,7 @@ CTF
 <a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211817607.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211817607.png loading=lazy>
 </a>
 </figure></p>
-<p>从图中我们可以看到，这些我们要比较的请求都是通过一个个单独的 HTTP/2 的报文都是分别发送的，没有满足 Timing Timeless 攻击的要求；尽管这两个请求的报文几近同时发送出去，但是按照先去先回的顺序，在左图的计数当中，数字 N 代表我们通过代码测试 <code>flag{aa</code> 要比 <code>flag{ab</code> 先返回的次数为 N ，例如第一个数字 8 就是前者要先比后者先返回的次数为 8 次，而我们的预期结果应该是两者返回顺序概率均为 50% 左右，从结果以及流量来看，直接顺序执行 fetch 顺序并没有让两个请求满足尽量同时发出的条件。</p>
+<p>从图中我们可以看到，这些我们要比较的请求都是通过一个个单独的 HTTP/2 的报文都是分别发送的，没有满足 Timeless Timing 攻击的要求；尽管这两个请求的报文几近同时发送出去，但是按照先去先回的顺序，在左图的计数当中，数字 N 代表我们通过代码测试 <code>flag{aa</code> 要比 <code>flag{ab</code> 先返回的次数为 N ，例如第一个数字 8 就是前者要先比后者先返回的次数为 8 次，而我们的预期结果应该是两者返回顺序概率均为 50% 左右，从结果以及流量来看，直接顺序执行 fetch 顺序并没有让两个请求满足尽量同时发出的条件。</p>
 <p>好在我们作者其实为我们指明了方向：</p>
 <p><figure>
 <a href=https://s4.ax1x.com/2022/02/21/HXk18f.png><img src=https://s4.ax1x.com/2022/02/21/HXk18f.png loading=lazy>
@@ -284,7 +284,7 @@ CTF
 <span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
 </code></pre></div><h2 id=others>Others</h2>
 <h3 id=another-solutions>Another Solutions</h3>
-<p>比赛过程中，我觉得我放的 hint 已经非常明显了，只要以 XS-Leaks 以及 Timing Timeless 作为关键词进行搜索，非常容易就能找到本题的 idea 来源，并且我们只需要通过看视频、看论文等任何你喜欢的形式，理论上我认为都应该能 Get 到这个题目的关键点（然而有同学拿我的 HInt 去进行翻译然后说没看懂）。</p>
+<p>比赛过程中，我觉得我放的 hint 已经非常明显了，只要以 XS-Leaks 以及 Timeless Timing 作为关键词进行搜索，非常容易就能找到本题的 idea 来源，并且我们只需要通过看视频、看论文等任何你喜欢的形式，理论上我认为都应该能 Get 到这个题目的关键点（然而有同学拿我的 HInt 去进行翻译然后说没看懂）。</p>
 <p>在第二天比赛下午，我看 bot log 的时候发现终于有选手提交了比较预期的解法，来自 @pkucc 的 @xmcp 同学的 exp 应该是最符合预期的。</p>
 <p>因为当时 admin 的 website 属性已经被塞满了字符，环境已经被破坏掉了，所以该位并没有使用 TCP 阻塞也可以通过 HTTP/2 得到一个令人相对满意的结果，以下是其 exp 当中的一部分：</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=kr>const</span> <span class=nx>SEARCH_URL</span> <span class=o>=</span> <span class=s1>&#39;https://proxy:443/admin/searchword?word=&#39;</span><span class=p>;</span>
@@ -453,7 +453,7 @@ Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=
 <li><a href=#intended-solution---theory-section>Intended Solution - Theory Section</a>
 <ol>
 <li><a href=#traditional-time-based-leak>Traditional Time-based Leak</a></li>
-<li><a href=#timing-timeless>Timing Timeless</a></li>
+<li><a href=#timeless-timing>Timeless Timing</a></li>
 </ol>
 </li>
 <li><a href=#intended-solution---practice-section>Intended Solution - Practice Section</a></li>

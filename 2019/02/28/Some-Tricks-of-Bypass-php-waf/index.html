@@ -1,350 +1,56 @@
-<!doctype html><html lang=en-us>
-<head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<link rel=manifest href=/manifest.json><meta name=description content="起因是年前看了一篇How To Exploit PHP Remotely To Bypass Filters &amp;amp; WAF Rules，现在搜了一下发现已经有翻译了。感觉升华也没什么好扩展的，也不太好拿去投稿了，思考了一下，感觉还是当作学习笔记来写算了。
-"><title>Some Tricks of Bypass php waf</title>
-<link rel=canonical href=https://blog.zeddyu.info/2019/02/28/Some-Tricks-of-Bypass-php-waf/>
-<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Some Tricks of Bypass php waf">
-<meta property="og:description" content="起因是年前看了一篇How To Exploit PHP Remotely To Bypass Filters &amp;amp; WAF Rules，现在搜了一下发现已经有翻译了。感觉升华也没什么好扩展的，也不太好拿去投稿了，思考了一下，感觉还是当作学习笔记来写算了。
-">
-<meta property="og:url" content="https://blog.zeddyu.info/2019/02/28/Some-Tricks-of-Bypass-php-waf/">
-<meta property="og:site_name" content="Zeddy's Blog">
-<meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="Sec"><meta property="article:tag" content="php"><meta property="article:published_time" content="2019-02-28T17:53:59+00:00"><meta property="article:modified_time" content="2019-02-28T17:53:59+00:00">
-<meta name=twitter:site content="@ZeddYu_Lu">
-<meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="Some Tricks of Bypass php waf">
-<meta name=twitter:description content="起因是年前看了一篇How To Exploit PHP Remotely To Bypass Filters &amp;amp; WAF Rules，现在搜了一下发现已经有翻译了。感觉升华也没什么好扩展的，也不太好拿去投稿了，思考了一下，感觉还是当作学习笔记来写算了。
-">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDESKL57LT"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PDESKL57LT',{anonymize_ip:!1})}</script>
-</head>
-<body class="article-page has-toc">
-<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
-<div class="container main-container flex
-extended">
-<div id=article-toolbar>
-<a href=https://blog.zeddyu.info class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg>
-<span>Back</span>
-</a>
-</div>
-<main class="main full-width">
-<article class=main-article>
-<header class=article-header>
-<div class=article-details>
-<header class=article-category>
-<a href=/categories/Sec/ style=background-color:#0b0;color:#fff>
-Sec
-</a>
-</header>
-<h2 class=article-title>
-<a href=/2019/02/28/Some-Tricks-of-Bypass-php-waf/>Some Tricks of Bypass php waf</a>
-</h2>
-<footer class=article-time>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Feb 28, 2019</time>
-</div>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<time class=article-time--reading>
-4 minute read
-</time>
-</div>
-</footer>
-</div>
-</header>
-<section class=article-content>
-<p>起因是年前看了一篇<a class=link href=https://www.secjuice.com/php-rce-bypass-filters-sanitization-waf/ target=_blank rel=noopener>How To Exploit PHP Remotely To Bypass Filters & WAF Rules</a>，现在搜了一下发现已经有翻译了。感觉升华也没什么好扩展的，也不太好拿去投稿了，思考了一下，感觉还是当作学习笔记来写算了。</p>
-<p>以下实现环境均在 php 7.0.31 版本上，并且把 waf 因素考虑在内。</p>
-<h3 id=引入>引入</h3>
-<p>首先来看一段 php 代码:</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span>
-<span class=k>if</span><span class=p>(</span><span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/system|exec|passthru/&#39;</span><span class=p>,</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;code&#39;</span><span class=p>])){</span>
-    <span class=k>echo</span> <span class=s1>&#39;invalid syntax&#39;</span><span class=p>;</span>
-<span class=p>}</span>
-<span class=k>else</span> <span class=p>{</span>
-    <span class=k>eval</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;code&#39;</span><span class=p>]);</span>
-<span class=p>}</span>
-</code></pre></div><p>执行命令不只这几个函数，还有很多，这里就拿这几个来举例。毫无疑问，这里肯定是可以执行命令。</p>
-<p>那我们先直接尝试读取<code>/etc/passwd</code>，显然，这里还没到代码层面就直接被 waf 了。</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007415.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007415.jpg loading=lazy>
-</a>
-</figure></p>
-<p>原因可能是因为<code>/etc/passwd</code>的敏感原因</p>
-<h3 id=绕过-waf>绕过 waf</h3>
-<p>那我们接下来先尝试绕过 waf ，可以尝试使用<code>/etc/pas\swd</code>绕过，也可以使用其他空变量，当然方法很多</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002257.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002257.jpg loading=lazy>
-</a>
-</figure></p>
-<p>可以发现，我们是成功绕过 waf ，来到了代码层面，接下来我们就需要考虑怎么绕过命令执行函数了</p>
-<h3 id=php-转义序列>PHP 转义序列</h3>
-<p>在谈绕过函数过滤前，我们先了解一下 PHP 的<a class=link href=http://php.net/manual/zh/regexp.reference.escape.php target=_blank rel=noopener>转义序列</a>，简单来说就是使用反斜线转义各种字符形成特定的意义。比如说：</p>
-<ul>
-<li><em>\040</em> 空格的另外一种用法</li>
-<li>以八进制表示的<code>\[0–7]{1,3}</code>转义字符会自动适配二进制字符（如<code>\377</code>，八进制377是10进制255， 因此代表一个全1的字符）</li>
-<li><code>\x[0–9A-Fa-f]{1,2}</code> 表示十六进制转义字符表示法（如<code>\x41</code>）</li>
-<li>以Unicode表示的<code>\u{[0–9A-Fa-f]+}</code>字符，会输出为UTF-8字符串</li>
-</ul>
-<p>虽然看起来很普通，但是我们可以使用各种语法来表示字符串，再配合 php 可变函数来绕过各种防御</p>
-<h3 id=php-可变函数>php 可变函数</h3>
-<blockquote>
-<p>​ PHP 支持可变函数的概念。这意味着如果一个变量名后有圆括号，PHP 将寻找与变量的值同名的函数，并且尝试执行它。可变函数可以用来实现包括回调函数，函数表在内的一些用途。</p>
-<p>可变函数不能用于例如 <a class=link href=http://php.net/manual/zh/function.echo.php target=_blank rel=noopener>echo</a>，<a class=link href=http://php.net/manual/zh/function.print.php target=_blank rel=noopener>print</a>，<a class=link href=http://php.net/manual/zh/function.unset.php target=_blank rel=noopener>unset()</a>，<a class=link href=http://php.net/manual/zh/function.isset.php target=_blank rel=noopener>isset()</a>，<a class=link href=http://php.net/manual/zh/function.empty.php target=_blank rel=noopener>empty()</a>，<a class=link href=http://php.net/manual/zh/function.include.php target=_blank rel=noopener>include</a>，<a class=link href=http://php.net/manual/zh/function.require.php target=_blank rel=noopener>require</a> 以及类似的语言结构。需要使用自己的包装函数来将这些结构用作可变函数。</p>
-</blockquote>
-<p>看一下官方示例</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span>
-<span class=k>function</span> <span class=nf>foo</span><span class=p>()</span> <span class=p>{</span>
-    <span class=k>echo</span> <span class=s2>&#34;In foo()&lt;br /&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=p>}</span>
-
-<span class=k>function</span> <span class=nf>bar</span><span class=p>(</span><span class=nv>$arg</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span><span class=p>)</span> <span class=p>{</span>
-    <span class=k>echo</span> <span class=s2>&#34;In bar(); argument was &#39;</span><span class=si>$arg</span><span class=s2>&#39;.&lt;br /&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
-<span class=p>}</span>
-
-<span class=c1>// 使用 echo 的包装函数
-</span><span class=c1></span><span class=k>function</span> <span class=nf>echoit</span><span class=p>(</span><span class=nv>$string</span><span class=p>)</span>
-<span class=p>{</span>
-    <span class=k>echo</span> <span class=nv>$string</span><span class=p>;</span>
-<span class=p>}</span>
-
-<span class=nv>$func</span> <span class=o>=</span> <span class=s1>&#39;foo&#39;</span><span class=p>;</span>
-<span class=nv>$func</span><span class=p>();</span>        <span class=c1>// This calls foo()
-</span><span class=c1></span>
-<span class=nv>$func</span> <span class=o>=</span> <span class=s1>&#39;bar&#39;</span><span class=p>;</span>
-<span class=nv>$func</span><span class=p>(</span><span class=s1>&#39;test&#39;</span><span class=p>);</span>  <span class=c1>// This calls bar()
-</span><span class=c1></span>
-<span class=nv>$func</span> <span class=o>=</span> <span class=s1>&#39;echoit&#39;</span><span class=p>;</span>
-<span class=nv>$func</span><span class=p>(</span><span class=s1>&#39;test&#39;</span><span class=p>);</span>  <span class=c1>// This calls echoit()
-</span><span class=c1></span><span class=cp>?&gt;</span><span class=err>
-</span></code></pre></div><p>也就是说<code>$var(args)</code>跟<code>“string”(args);</code>是与<code>function(args)</code>等效的。于是我们可以有</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000584.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000584.jpg loading=lazy>
-</a>
-</figure></p>
-<p>尝试<code>"\x73\x79\x73\x74\x65\x6d"("whoami")</code></p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003062.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003062.jpg loading=lazy>
-</a>
-</figure></p>
-<p>确实可以执行无误，然后我们就可以利用这个特性绕过对<code>system</code>的检测了</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009239.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009239.jpg loading=lazy>
-</a>
-</figure></p>
-<h3 id=改进输入检测>改进输入检测</h3>
-<p>上述我们的 payload 中还是用到了双引号，而大多数的时候 waf 不会允许使用双引号的，我们将 php 文件内容修改为</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span>
-<span class=k>if</span><span class=p>(</span><span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/system|exec|passthru|[\&#34;\&#39;]/&#39;</span><span class=p>,</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;code&#39;</span><span class=p>])){</span>
-    <span class=k>echo</span> <span class=s1>&#39;invalid syntax&#39;</span><span class=p>;</span>
-<span class=p>}</span>
-<span class=k>else</span> <span class=p>{</span>
-    <span class=k>eval</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;code&#39;</span><span class=p>]);</span>
-<span class=p>}</span>
-</code></pre></div><p>增加了对单引号与双引号的检测，这时候应该怎么办呢</p>
-<p>让我们再来看一个特性</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003524.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003524.jpg loading=lazy>
-</a>
-</figure></p>
-<p>也就是说在 PHP 中，字符串表达可以有以上这几种方法，于是我们可以用以上的方式尝试替代双引号。第一种是类似<code>(system)(whoami);</code>，然而在 php 中我们可以用<code>.</code>来拼接字符串，于是也可以有<code>(sys.(te).m)(whoami);</code></p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006608.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006608.jpg loading=lazy>
-</a>
-</figure></p>
-<p>也可以使用<code>/?a=system&b=ls&code=$_GET[a]($_GET[b]);</code>的解析方法来绕过</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004860.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004860.jpg loading=lazy>
-</a>
-</figure></p>
-<p>这里我们还可以使用其他技巧，比如我们可以在函数名和参数内插入注释（这种方法在绕过某些WAF规则集方面非常有用，这些规则集会拦截特定的PHP函数名</p>
-<pre tabindex=0><code>php -r &quot;echo/*this is a comment*/(foo);&quot;
-php -r &quot;system/*this is a comment*/(whoami);&quot;
-php -r &quot;system/*this is a comment*/(wh./*foo*/(oa)/*bar*/.mi);&quot;
-php -r &quot;(s/*foo*/.(ys)./*bar*/tem)/*this is a comment*/(wh./*foo*/(oa)/*bar*/.mi);&quot;
-</code></pre><p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009365.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009365.jpg loading=lazy>
-</a>
-</figure></p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001559.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001559.jpg loading=lazy>
-</a>
-</figure></p>
-<h3 id=get_defined_functions>get_defined_functions</h3>
-<blockquote>
-<p>​ (PHP 4 >= 4.0.4, PHP 5, PHP 7)</p>
-<p>​ get_defined_functions — 返回所有已定义函数的数组</p>
-<p>​ get_defined_functions ([ bool <code>$exclude_disabled</code> = <strong>FALSE</strong> ] ) : array</p>
-<p>​ 获取所有已定义函数的数组。</p>
-</blockquote>
-<p>这个函数是可将用户定义的和内置函数均返回的。获取内置函数可以使用<code>$arr[“internal”]</code>，获取用户定义的函数可以使用<code>$arr[“user”]</code>。</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005250.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005250.jpg loading=lazy>
-</a>
-</figure></p>
-<p>所以我们可以尝试找到<code>system</code>函数</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008754.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008754.jpg loading=lazy>
-</a>
-</figure></p>
-<p>配合前面的方法，效果拔群，不过<code>system</code>函数不一定都是 1077 ，使用的时候最好可以<code>grep</code>查找一下<code>system</code>函数的下标</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003939.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003939.jpg loading=lazy>
-</a>
-</figure></p>
-<h3 id=字符数组>字符数组</h3>
-<p>我们可以将PHP中的每个字符串当成一组字符来使用（基本上与 Python 相同），并且我们可以使用<code>$string[2]</code>或者<code>$string[-3]</code>语法来引用单个字符。这种方法也有可能绕过基于PHP函数名的防护规则。比如，我们可以使用<code>$a="eimstdy";</code>这个字符串构造出<code>system("id");</code>语句。需要空格的话就在<code>$a</code>中加入空格就好了。</p>
-<p>也可以使用一些内置变量，不再赘述，如下图所示</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006073.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006073.jpg loading=lazy>
-</a>
-</figure></p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003486.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003486.jpg loading=lazy>
-</a>
-</figure></p>
-<h3 id=参考>参考</h3>
-<p><a class=link href=https://www.secjuice.com/php-rce-bypass-filters-sanitization-waf/ target=_blank rel=noopener>How To Exploit PHP Remotely To Bypass Filters & WAF Rules</a></p>
-</section>
-<footer class=article-footer>
-<section class=article-tags>
-<a href=/tags/Sec/>Sec</a>
-<a href=/tags/php/>php</a>
-</section>
-<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
-<span>Licensed under CC BY-NC-SA 4.0</span>
-</section>
-<div class="notice notice-tip">
-<div class=notice-title><svg xmlns="http://www.w3.org/2000/svg" class="icon notice-icon" viewBox="0 0 512 512"><path d="M504 256A248 248 0 118 256a248 248 0 01496 0zM227 387l184-184c7-6 7-16 0-22l-22-23c-7-6-17-6-23 0L216 308l-70-70c-6-6-16-6-23 0l-22 23c-7 6-7 16 0 22l104 104c6 7 16 7 22 0z"/></svg></div>
-<p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><br>
-<p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://blog.zeddyu.info/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p><br>
-</div>
-</footer>
-</article>
-<aside class=related-contents--wrapper>
-<h2 class=section-title>Related contents</h2>
-<div class=related-contents>
-<div class="flex article-list--tile">
-<article>
-<a href=/2021/04/20/tls-poison/>
-<div class=article-details>
-<h2 class=article-title>一篇文章带你读懂 TLS Poison 攻击</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2019/12/08/HTTP-Smuggling-en/>
-<div class=article-details>
-<h2 class=article-title>Help you understand HTTP Smuggling in one article</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2019/12/05/HTTP-Smuggling/>
-<div class=article-details>
-<h2 class=article-title>一篇文章带你读懂 HTTP Smuggling 攻击</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2019/06/12/Scanner/>
-<div class=article-details>
-<h2 class=article-title>浅谈端口扫描技术</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2019/06/07/LFI2RCE/>
-<div class=article-details>
-<h2 class=article-title>LFI2RCE</h2>
-</div>
-</a>
-</article>
-</div>
-</div>
-</aside>
-<div class=disqus-container>
-<div id=disqus_thread></div>
-<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//ZeddYu.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
-<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div>
-<style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style>
-<script>window.addEventListener('onColorSchemeChange',a=>{DISQUS&&DISQUS.reset({reload:!0})})</script>
-<footer class=site-footer>
-<section class=copyright>
-&copy;
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=manifest href=/manifest.json><meta name=description content="起因是年前看了一篇How To Exploit PHP Remotely To Bypass Filters &amp;amp; WAF Rules，现在搜了一下发现已经有翻译了。感觉升华也没什么好扩展的，也不太好拿去投稿了，思考了一下，感觉还是当作学习笔记来写算了。
+"><title>Some Tricks of Bypass php waf</title><link rel=canonical href=https://blog.zeddyu.info/2019/02/28/Some-Tricks-of-Bypass-php-waf/><link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Some Tricks of Bypass php waf"><meta property="og:description" content="起因是年前看了一篇How To Exploit PHP Remotely To Bypass Filters &amp;amp; WAF Rules，现在搜了一下发现已经有翻译了。感觉升华也没什么好扩展的，也不太好拿去投稿了，思考了一下，感觉还是当作学习笔记来写算了。
+"><meta property="og:url" content="https://blog.zeddyu.info/2019/02/28/Some-Tricks-of-Bypass-php-waf/"><meta property="og:site_name" content="Zeddy's Blog"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="Sec"><meta property="article:tag" content="php"><meta property="article:published_time" content="2019-02-28T17:53:59+00:00"><meta property="article:modified_time" content="2019-02-28T17:53:59+00:00"><meta name=twitter:site content="@ZeddYu_Lu"><meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="Some Tricks of Bypass php waf"><meta name=twitter:description content="起因是年前看了一篇How To Exploit PHP Remotely To Bypass Filters &amp;amp; WAF Rules，现在搜了一下发现已经有翻译了。感觉升华也没什么好扩展的，也不太好拿去投稿了，思考了一下，感觉还是当作学习笔记来写算了。
+"><script async src="https://www.googletagmanager.com/gtag/js?id=G-PDESKL57LT"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-PDESKL57LT",{anonymize_ip:!1})}</script></head><body class="article-page has-toc"><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex
+extended"><div id=article-toolbar><a href=https://blog.zeddyu.info class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg><span>Back</span></a></div><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/Sec/ style=background-color:#0b0;color:#fff>Sec</a></header><h2 class=article-title><a href=/2019/02/28/Some-Tricks-of-Bypass-php-waf/>Some Tricks of Bypass php waf</a></h2><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Feb 28, 2019</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>4 minute read</time></div></footer></div></header><section class=article-content><p>起因是年前看了一篇<a class=link href=https://www.secjuice.com/php-rce-bypass-filters-sanitization-waf/ target=_blank rel=noopener>How To Exploit PHP Remotely To Bypass Filters & WAF Rules</a>，现在搜了一下发现已经有翻译了。感觉升华也没什么好扩展的，也不太好拿去投稿了，思考了一下，感觉还是当作学习笔记来写算了。</p><p>以下实现环境均在 php 7.0.31 版本上，并且把 waf 因素考虑在内。</p><h3 id=引入>引入</h3><p>首先来看一段 php 代码:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=k>if</span><span class=p>(</span><span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/system|exec|passthru/&#39;</span><span class=p>,</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;code&#39;</span><span class=p>])){</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=s1>&#39;invalid syntax&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>eval</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;code&#39;</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>执行命令不只这几个函数，还有很多，这里就拿这几个来举例。毫无疑问，这里肯定是可以执行命令。</p><p>那我们先直接尝试读取<code>/etc/passwd</code>，显然，这里还没到代码层面就直接被 waf 了。</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007415.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007415.jpg loading=lazy></a></figure></p><p>原因可能是因为<code>/etc/passwd</code>的敏感原因</p><h3 id=绕过-waf>绕过 waf</h3><p>那我们接下来先尝试绕过 waf ，可以尝试使用<code>/etc/pas\swd</code>绕过，也可以使用其他空变量，当然方法很多</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002257.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002257.jpg loading=lazy></a></figure></p><p>可以发现，我们是成功绕过 waf ，来到了代码层面，接下来我们就需要考虑怎么绕过命令执行函数了</p><h3 id=php-转义序列>PHP 转义序列</h3><p>在谈绕过函数过滤前，我们先了解一下 PHP 的<a class=link href=http://php.net/manual/zh/regexp.reference.escape.php target=_blank rel=noopener>转义序列</a>，简单来说就是使用反斜线转义各种字符形成特定的意义。比如说：</p><ul><li><em>\040</em> 空格的另外一种用法</li><li>以八进制表示的<code>\[0–7]{1,3}</code>转义字符会自动适配二进制字符（如<code>\377</code>，八进制377是10进制255， 因此代表一个全1的字符）</li><li><code>\x[0–9A-Fa-f]{1,2}</code> 表示十六进制转义字符表示法（如<code>\x41</code>）</li><li>以Unicode表示的<code>\u{[0–9A-Fa-f]+}</code>字符，会输出为UTF-8字符串</li></ul><p>虽然看起来很普通，但是我们可以使用各种语法来表示字符串，再配合 php 可变函数来绕过各种防御</p><h3 id=php-可变函数>php 可变函数</h3><blockquote><p>​ PHP 支持可变函数的概念。这意味着如果一个变量名后有圆括号，PHP 将寻找与变量的值同名的函数，并且尝试执行它。可变函数可以用来实现包括回调函数，函数表在内的一些用途。</p><p>可变函数不能用于例如 <a class=link href=http://php.net/manual/zh/function.echo.php target=_blank rel=noopener>echo</a>，<a class=link href=http://php.net/manual/zh/function.print.php target=_blank rel=noopener>print</a>，<a class=link href=http://php.net/manual/zh/function.unset.php target=_blank rel=noopener>unset()</a>，<a class=link href=http://php.net/manual/zh/function.isset.php target=_blank rel=noopener>isset()</a>，<a class=link href=http://php.net/manual/zh/function.empty.php target=_blank rel=noopener>empty()</a>，<a class=link href=http://php.net/manual/zh/function.include.php target=_blank rel=noopener>include</a>，<a class=link href=http://php.net/manual/zh/function.require.php target=_blank rel=noopener>require</a> 以及类似的语言结构。需要使用自己的包装函数来将这些结构用作可变函数。</p></blockquote><p>看一下官方示例</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=k>function</span> <span class=nf>foo</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=s2>&#34;In foo()&lt;br /&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>function</span> <span class=nf>bar</span><span class=p>(</span><span class=nv>$arg</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=s2>&#34;In bar(); argument was &#39;</span><span class=si>$arg</span><span class=s2>&#39;.&lt;br /&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 使用 echo 的包装函数
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>function</span> <span class=nf>echoit</span><span class=p>(</span><span class=nv>$string</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nv>$string</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$func</span> <span class=o>=</span> <span class=s1>&#39;foo&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$func</span><span class=p>();</span>        <span class=c1>// This calls foo()
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=nv>$func</span> <span class=o>=</span> <span class=s1>&#39;bar&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$func</span><span class=p>(</span><span class=s1>&#39;test&#39;</span><span class=p>);</span>  <span class=c1>// This calls bar()
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=nv>$func</span> <span class=o>=</span> <span class=s1>&#39;echoit&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$func</span><span class=p>(</span><span class=s1>&#39;test&#39;</span><span class=p>);</span>  <span class=c1>// This calls echoit()
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>?&gt;</span><span class=err>
+</span></span></span></code></pre></div><p>也就是说<code>$var(args)</code>跟<code>“string”(args);</code>是与<code>function(args)</code>等效的。于是我们可以有</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000584.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000584.jpg loading=lazy></a></figure></p><p>尝试<code>"\x73\x79\x73\x74\x65\x6d"("whoami")</code></p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003062.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003062.jpg loading=lazy></a></figure></p><p>确实可以执行无误，然后我们就可以利用这个特性绕过对<code>system</code>的检测了</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009239.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009239.jpg loading=lazy></a></figure></p><h3 id=改进输入检测>改进输入检测</h3><p>上述我们的 payload 中还是用到了双引号，而大多数的时候 waf 不会允许使用双引号的，我们将 php 文件内容修改为</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=k>if</span><span class=p>(</span><span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/system|exec|passthru|[\&#34;\&#39;]/&#39;</span><span class=p>,</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;code&#39;</span><span class=p>])){</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=s1>&#39;invalid syntax&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>eval</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;code&#39;</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>增加了对单引号与双引号的检测，这时候应该怎么办呢</p><p>让我们再来看一个特性</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003524.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003524.jpg loading=lazy></a></figure></p><p>也就是说在 PHP 中，字符串表达可以有以上这几种方法，于是我们可以用以上的方式尝试替代双引号。第一种是类似<code>(system)(whoami);</code>，然而在 php 中我们可以用<code>.</code>来拼接字符串，于是也可以有<code>(sys.(te).m)(whoami);</code></p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006608.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006608.jpg loading=lazy></a></figure></p><p>也可以使用<code>/?a=system&b=ls&code=$_GET[a]($_GET[b]);</code>的解析方法来绕过</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004860.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004860.jpg loading=lazy></a></figure></p><p>这里我们还可以使用其他技巧，比如我们可以在函数名和参数内插入注释（这种方法在绕过某些WAF规则集方面非常有用，这些规则集会拦截特定的PHP函数名</p><pre tabindex=0><code>php -r &#34;echo/*this is a comment*/(foo);&#34;
+php -r &#34;system/*this is a comment*/(whoami);&#34;
+php -r &#34;system/*this is a comment*/(wh./*foo*/(oa)/*bar*/.mi);&#34;
+php -r &#34;(s/*foo*/.(ys)./*bar*/tem)/*this is a comment*/(wh./*foo*/(oa)/*bar*/.mi);&#34;
+</code></pre><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009365.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009365.jpg loading=lazy></a></figure></p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001559.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001559.jpg loading=lazy></a></figure></p><h3 id=get_defined_functions>get_defined_functions</h3><blockquote><p>​ (PHP 4 >= 4.0.4, PHP 5, PHP 7)</p><p>​ get_defined_functions — 返回所有已定义函数的数组</p><p>​ get_defined_functions ([ bool <code>$exclude_disabled</code> = <strong>FALSE</strong> ] ) : array</p><p>​ 获取所有已定义函数的数组。</p></blockquote><p>这个函数是可将用户定义的和内置函数均返回的。获取内置函数可以使用<code>$arr[“internal”]</code>，获取用户定义的函数可以使用<code>$arr[“user”]</code>。</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005250.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005250.jpg loading=lazy></a></figure></p><p>所以我们可以尝试找到<code>system</code>函数</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008754.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008754.jpg loading=lazy></a></figure></p><p>配合前面的方法，效果拔群，不过<code>system</code>函数不一定都是 1077 ，使用的时候最好可以<code>grep</code>查找一下<code>system</code>函数的下标</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003939.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003939.jpg loading=lazy></a></figure></p><h3 id=字符数组>字符数组</h3><p>我们可以将PHP中的每个字符串当成一组字符来使用（基本上与 Python 相同），并且我们可以使用<code>$string[2]</code>或者<code>$string[-3]</code>语法来引用单个字符。这种方法也有可能绕过基于PHP函数名的防护规则。比如，我们可以使用<code>$a="eimstdy";</code>这个字符串构造出<code>system("id");</code>语句。需要空格的话就在<code>$a</code>中加入空格就好了。</p><p>也可以使用一些内置变量，不再赘述，如下图所示</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006073.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006073.jpg loading=lazy></a></figure></p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003486.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003486.jpg loading=lazy></a></figure></p><h3 id=参考>参考</h3><p><a class=link href=https://www.secjuice.com/php-rce-bypass-filters-sanitization-waf/ target=_blank rel=noopener>How To Exploit PHP Remotely To Bypass Filters & WAF Rules</a></p></section><footer class=article-footer><section class=article-tags><a href=/tags/Sec/>Sec</a>
+<a href=/tags/php/>php</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section><div class="notice notice-tip"><div class=notice-title><svg xmlns="http://www.w3.org/2000/svg" class="icon notice-icon" viewBox="0 0 512 512"><path d="M504 256A248 248 0 118 256a248 248 0 01496 0zM227 387l184-184c7-6 7-16 0-22l-22-23c-7-6-17-6-23 0L216 308l-70-70c-6-6-16-6-23 0l-22 23c-7 6-7 16 0 22l104 104c6 7 16 7 22 0z"/></svg></div><p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><br><p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://blog.zeddyu.info/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p><br></div></footer></article><aside class=related-contents--wrapper><h2 class=section-title>Related contents</h2><div class=related-contents><div class="flex article-list--tile"><article><a href=/2021/04/20/tls-poison/><div class=article-details><h2 class=article-title>一篇文章带你读懂 TLS Poison 攻击</h2></div></a></article><article><a href=/2019/12/08/HTTP-Smuggling-en/><div class=article-details><h2 class=article-title>Help you understand HTTP Smuggling in one article</h2></div></a></article><article><a href=/2019/12/05/HTTP-Smuggling/><div class=article-details><h2 class=article-title>一篇文章带你读懂 HTTP Smuggling 攻击</h2></div></a></article><article><a href=/2019/06/12/Scanner/><div class=article-details><h2 class=article-title>浅谈端口扫描技术</h2></div></a></article><article><a href=/2019/06/07/LFI2RCE/><div class=article-details><h2 class=article-title>LFI2RCE</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//ZeddYu.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{DISQUS&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
 2018 -
-2022 Zeddy's Blog
-</section>
-<section class=powerby>
-Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
-Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
-</section>
-</footer>
-<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
-<div class=pswp__bg></div>
-<div class=pswp__scroll-wrap>
-<div class=pswp__container>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-</div>
-<div class="pswp__ui pswp__ui--hidden">
-<div class=pswp__top-bar>
-<div class=pswp__counter></div>
-<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+2022 Zeddy's Blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 <button class="pswp__button pswp__button--share" title=Share></button>
 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-<div class=pswp__preloader>
-<div class=pswp__preloader__icn>
-<div class=pswp__preloader__cut>
-<div class=pswp__preloader__donut></div>
-</div>
-</div>
-</div>
-</div>
-<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-<div class=pswp__share-tooltip></div>
-</div>
-<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-</button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-</button>
-<div class=pswp__caption>
-<div class=pswp__caption__center></div>
-</div>
-</div>
-</div>
-</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
-</main>
-<aside class="sidebar right-sidebar sticky">
-<section class="widget archives">
-<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
-</div>
-<h2 class="widget-title section-title">Table of contents</h2>
-<div class=widget--toc>
-<nav id=TableOfContents>
-<ol>
-<li>
-<ol>
-<li><a href=#引入>引入</a></li>
-<li><a href=#绕过-waf>绕过 waf</a></li>
-<li><a href=#php-转义序列>PHP 转义序列</a></li>
-<li><a href=#php-可变函数>php 可变函数</a></li>
-<li><a href=#改进输入检测>改进输入检测</a></li>
-<li><a href=#get_defined_functions>get_defined_functions</a></li>
-<li><a href=#字符数组>字符数组</a></li>
-<li><a href=#参考>参考</a></li>
-</ol>
-</li>
-</ol>
-</nav>
-</div>
-</section>
-</aside>
-</div>
-<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js defer></script>
-<script>'serviceWorker'in navigator&&window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')})</script>
-<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
-</body>
-</html>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><ol><li><a href=#引入>引入</a></li><li><a href=#绕过-waf>绕过 waf</a></li><li><a href=#php-转义序列>PHP 转义序列</a></li><li><a href=#php-可变函数>php 可变函数</a></li><li><a href=#改进输入检测>改进输入检测</a></li><li><a href=#get_defined_functions>get_defined_functions</a></li><li><a href=#字符数组>字符数组</a></li><li><a href=#参考>参考</a></li></ol></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js defer></script>
+<script>"serviceWorker"in navigator&&window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js")})</script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

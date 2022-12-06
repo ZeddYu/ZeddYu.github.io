@@ -312,7 +312,7 @@ Flag格式：<code>DDCTF{.....}</code>，也就是请手动包裹上<code>DDCTF{
 </span></span><span class=line><span class=cl>    <span class=n>session</span><span class=o>.</span><span class=n>modified</span> <span class=o>=</span> <span class=kc>True</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>resp</span>
 </span></span><span class=line><span class=cl>    
-</span></span><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>route</span><span class=p>(</span><span class=n>url_prefix</span><span class=o>+</span><span class=s1>&#39;/&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nd>@app.route</span><span class=p>(</span><span class=n>url_prefix</span><span class=o>+</span><span class=s1>&#39;/&#39;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>entry_point</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>    <span class=n>querystring</span> <span class=o>=</span> <span class=n>urllib</span><span class=o>.</span><span class=n>unquote</span><span class=p>(</span><span class=n>request</span><span class=o>.</span><span class=n>query_string</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>    <span class=n>request</span><span class=o>.</span><span class=n>event_queue</span> <span class=o>=</span> <span class=p>[]</span>

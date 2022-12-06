@@ -219,13 +219,13 @@ extended"><div id=article-toolbar><a href=https://blog.zeddyu.info class=back-ho
 </span></span><span class=line><span class=cl>							  <span class=n>zend_string</span> <span class=o>**</span><span class=n>opened_path</span><span class=p>,</span> <span class=n>php_stream_context</span> <span class=o>*</span><span class=n>context</span> <span class=n>STREAMS_DC</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=p>{</span>
 </span></span><span class=line><span class=cl>	<span class=p>...</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>(</span><span class=n>strncasecmp</span><span class=p>(</span><span class=s>&#34;compress.zlib://&#34;</span><span class=p>,</span> <span class=n>path</span><span class=p>,</span> <span class=mi>16</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>(</span><span class=nf>strncasecmp</span><span class=p>(</span><span class=s>&#34;compress.zlib://&#34;</span><span class=p>,</span> <span class=n>path</span><span class=p>,</span> <span class=mi>16</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>		<span class=n>path</span> <span class=o>+=</span> <span class=mi>16</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=n>strncasecmp</span><span class=p>(</span><span class=s>&#34;zlib:&#34;</span><span class=p>,</span> <span class=n>path</span><span class=p>,</span> <span class=mi>5</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nf>strncasecmp</span><span class=p>(</span><span class=s>&#34;zlib:&#34;</span><span class=p>,</span> <span class=n>path</span><span class=p>,</span> <span class=mi>5</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>		<span class=n>path</span> <span class=o>+=</span> <span class=mi>5</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>	<span class=p>}</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=n>innerstream</span> <span class=o>=</span> <span class=n>php_stream_open_wrapper_ex</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=n>mode</span><span class=p>,</span> <span class=n>STREAM_MUST_SEEK</span> <span class=o>|</span> <span class=n>options</span> <span class=o>|</span> <span class=n>STREAM_WILL_CAST</span><span class=p>,</span> <span class=n>opened_path</span><span class=p>,</span> <span class=n>context</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>	<span class=n>innerstream</span> <span class=o>=</span> <span class=nf>php_stream_open_wrapper_ex</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=n>mode</span><span class=p>,</span> <span class=n>STREAM_MUST_SEEK</span> <span class=o>|</span> <span class=n>options</span> <span class=o>|</span> <span class=n>STREAM_WILL_CAST</span><span class=p>,</span> <span class=n>opened_path</span><span class=p>,</span> <span class=n>context</span><span class=p>);</span>
 </span></span><span class=line><span class=cl>	<span class=p>...</span>
 </span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nb>NULL</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
@@ -244,7 +244,7 @@ extended"><div id=article-toolbar><a href=https://blog.zeddyu.info class=back-ho
 </span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>if</span> <span class=p>(</span><span class=n>stream</span> <span class=o>!=</span> <span class=nb>NULL</span> <span class=o>&amp;&amp;</span> <span class=p>(</span><span class=n>options</span> <span class=o>&amp;</span> <span class=n>STREAM_MUST_SEEK</span><span class=p>))</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>		<span class=n>php_stream</span> <span class=o>*</span><span class=n>newstream</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>		<span class=k>switch</span><span class=p>(</span><span class=n>php_stream_make_seekable_rel</span><span class=p>(</span><span class=n>stream</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>newstream</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=k>switch</span><span class=p>(</span><span class=nf>php_stream_make_seekable_rel</span><span class=p>(</span><span class=n>stream</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>newstream</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>					<span class=p>(</span><span class=n>options</span> <span class=o>&amp;</span> <span class=n>STREAM_WILL_CAST</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>						<span class=o>?</span> <span class=nl>PHP_STREAM_PREFER_STDIO</span> <span class=p>:</span> <span class=n>PHP_STREAM_NO_PREFERENCE</span><span class=p>))</span>
 </span></span><span class=line><span class=cl>  <span class=c1>//...
@@ -267,9 +267,9 @@ extended"><div id=article-toolbar><a href=https://blog.zeddyu.info class=back-ho
 </span></span><span class=line><span class=cl>	<span class=cm>/* Use a tmpfile and copy the old streams contents into it */</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>(</span><span class=n>flags</span> <span class=o>&amp;</span> <span class=n>PHP_STREAM_PREFER_STDIO</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=n>php_stream_fopen_tmpfile</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>		<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=nf>php_stream_fopen_tmpfile</span><span class=p>();</span>
 </span></span><span class=line><span class=cl>	<span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=n>php_stream_temp_new</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>		<span class=o>*</span><span class=n>newstream</span> <span class=o>=</span> <span class=nf>php_stream_temp_new</span><span class=p>();</span>
 </span></span><span class=line><span class=cl>	<span class=p>}</span>
 </span></span><span class=line><span class=cl>	<span class=c1>//...
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>

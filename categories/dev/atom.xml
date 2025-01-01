@@ -1,0 +1,1668 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on Zeddy's Blog</title><link>https://zeddyu.github.io/categories/dev/</link><description>Recent content in Dev on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 30 Sep 2021 01:15:01 +0800</lastBuildDate><atom:link href="https://zeddyu.github.io/categories/dev/atom.xml" rel="self" type="application/rss+xml"/><item><title>从 Hexo 搬迁至 Hugo</title><link>https://zeddyu.github.io/p/%E4%BB%8E-hexo-%E6%90%AC%E8%BF%81%E8%87%B3-hugo/</link><pubDate>Thu, 30 Sep 2021 01:15:01 +0800</pubDate><guid>https://zeddyu.github.io/p/%E4%BB%8E-hexo-%E6%90%AC%E8%BF%81%E8%87%B3-hugo/</guid><description>&lt;p>由于之前突发奇想，看到某些同学的博客确实好看，心血来潮便花了大概几个晚上把博客生成工具从原来的 Hexo 迁移到了 Hugo 上，便有了这次搬迁记录，也算是给其他想迁移小伙伴一个参考。&lt;/p>
+&lt;h2 id="hugo-vs-hexo">Hugo VS Hexo
+&lt;/h2>&lt;p>根据一些文章 &lt;sup>&lt;a class="link" href="#ref01" >[1]&lt;/a>&lt;/sup>&lt;sup>&lt;a class="link" href="#ref02" >[2]&lt;/a>&lt;/sup>已经给出的对比，Hugo 拥有着比较不错的渲染速度，（这里贴个实测渲染数据），对于我这个目前所有 Posts 比较多，又有比较多图片的用户来说，在渲染速度方面确实也有一定需求。而且最近自己也在学习 Golang ，对于使用 Golang 的工具我还是比较有好感的。我进行了一个小对比，虽然 Hexo 插件用的有些多，但是在满足我个人需求下，使用两个工具对相同文章数量生成静态页面的对比效果如下图所示：&lt;/p>
+&lt;p>&lt;img src="https://z3.ax1x.com/2021/10/01/4TU45F.png"
+loading="lazy"
+alt="左为 Hexo 生成速度 VS 右为 Hugo 生成速度"
+>&lt;/p>
+&lt;p>当然在稍微使用了一下后，也能感受到 Hugo 的缺点，目前 Hugo 并不是特别完美，因为没有 NPM 那么方便地使用拓展，很多都是使用了 Hugo 自己本身支持的内容，没有良好的拓展性，所以导致很多东西都得自己动手，比如一些小插件；但是好在由于 Hugo 目前来说已经比较成熟，不需要自己动手做太多的定制化东西，文档也还尚可。&lt;/p>
+&lt;p>况且自己目前使用的 Hexo 主题，原作者已经不再继续开发了，并且主题也并不是很符合我的预期。所以综合起自身需求来看，我还是更需要一个比较高效的框架，也正好换一个满意的主题。&lt;/p>
+&lt;h2 id="select-a-theme">Select A Theme
+&lt;/h2>&lt;p>这里先整理了一下自己心目中理想的主题风格：&lt;/p>
+&lt;ul>
+&lt;li>简洁。
+&lt;ul>
+&lt;li>主页 posts 展示不需要配图展示，因为我比较懒，每次写完文章都懒得去找配图的人，而且配图跟文章还要很搭配，这样照起来比较费劲，而且还会增加自己仓库图片数量（因为我文章用图片很多），基本没有必要。&lt;/li>
+&lt;li>不需要太艳丽的配色，我一开始也很喜欢各种 Material 风格的主题，但是后面撞主题的实在太多了，看着我都审美疲劳了&amp;hellip;所以我也开始厌恶那种花花绿绿、五颜六色的主题了，后面使用了 &lt;a class="link" href="https://github.com/ppoffice/hexo-theme-minos" target="_blank" rel="noopener"
+>Minos&lt;/a> 这款非常简洁的主题，深得我心。不过可惜的是该主题油画并不是很好，使用 &lt;a class="link" href="https://developers.google.com/speed/pagespeed/insights/" target="_blank" rel="noopener"
+>pagespeed&lt;/a> 对博客测速在即使上了 CDN 的情况下评分十分不理想，况且原作者已经不怎么开发这个主题了，自己也没有很多精力来优化这个主题，尝试了多次优化只能说收效甚微，这也是促使我更换架构的原因之一。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>大方。因为我不需要其他七七八八的东西，竟可能展示页面内容就行，所以我觉得内容展示需要尽量宽屏，不要弄的窄窄的，尤其是 PC 端，有些主题我是很不明白 PC 端显示内容宽度只占了整个屏幕的 20-30% ，其他也没有利用，不知道这么设计是为了啥，比较懒去适配响应式设计？&lt;/li>
+&lt;li>侧边目录。这个功能在 2021 年我觉得是非常必要的，并且我博客有好几篇非常长的文章，没有侧边目录，阅读起来简直受罪，我也不知道在这时代侧边目录竟然还不是现在博客的标配。之前优化 Minos 主题时想给他加个侧边栏来着，但是奈何确实太菜了，也没啥精力，只能做到在文章开头加入目录。&lt;/li>
+&lt;li>功能性实用。这里的功能性指的是可以支持各种的小插件，比如：嵌入式推文，这样就显得很 Modern 了；颜色不一样的注释样式，这样可以在文章中使用这些不同颜色的注释样式来达到不同的提示效果。&lt;/li>
+&lt;/ul>
+&lt;p>我在 Github 上查询 Hugo Theme 话题，找了一些最近一年内有活动的 Repo 进行筛选，也有一些是直接从 Hugo 官网的主题页面找的：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/varkai/hugo-theme-zozo" target="_blank" rel="noopener"
+>https://github.com/varkai/hugo-theme-zozo&lt;/a>&lt;/p>
+&lt;p>非常简洁，界面比较喜欢，但是没有侧边目录，功能性较差，我觉得比较适合中文站点。PASS&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/wayjam/hugo-theme-fluency" target="_blank" rel="noopener"
+>https://github.com/wayjam/hugo-theme-fluency&lt;/a>
+界面比较一般，功能性没怎么介绍，看起来也比较差。PASS&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/ThemeTony/hugo-theme-tony" target="_blank" rel="noopener"
+>https://github.com/ThemeTony/hugo-theme-tony&lt;/a>
+勉强过得去，但是中间内容不知道为什么要放那么窄，功能性一般。PASS&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener"
+>https://github.com/ahonn/hexo-theme-even&lt;/a>
+功能性一般，配色有点呆板。PASS&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/nanxiaobei/hugo-paper" target="_blank" rel="noopener"
+>https://github.com/nanxiaobei/hugo-paper&lt;/a>
+设计比较喜欢，但是为什么 PC 端内容宽度还这么窄，功能性略差。PASS&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/reuixiy/hugo-theme-meme" target="_blank" rel="noopener"
+>https://github.com/reuixiy/hugo-theme-meme&lt;/a>
+又是一个 PC 端内容宽度极窄的主题，不是很懂为啥。PASS&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/nodejh/hugo-theme-mini" target="_blank" rel="noopener"
+>https://github.com/nodejh/hugo-theme-mini&lt;/a>
+简约，只能说过于简约了，目录也没有。PASS&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/wangchucheng/hugo-eureka" target="_blank" rel="noopener"
+>https://github.com/wangchucheng/hugo-eureka&lt;/a>
+界面美观，功能性还行，在考虑范围之内。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener"
+>https://github.com/CaiJimmy/hugo-theme-stack&lt;/a>
+考虑之一&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>还有几个同一些列看起来挺棒的主题，但是由于某些原因最终没有选用：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener"
+>https://github.com/dillonzq/LoveIt&lt;/a>
+比较喜欢的主题之一，但是目前看起来作者不继续维护了，比较可惜。当时也是看到别人主题用这个比较漂亮，也才有想入坑 Hugo 的想法&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener"
+>https://github.com/khusika/FeelIt&lt;/a>
+从 LoveIt 衍生出来的主题之一，Demo Site 看过去我并不喜欢主页的卡片设计，比较喜欢原来 LoveIt 的主页样式。宽屏的样式改的也很好，但是就是主页这个。。因为我的文章缩略可能都比较长而且不喜欢放主页图，就会很丑，PASS&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://themes.gohugo.io/themes/ublogger/" target="_blank" rel="noopener"
+>https://themes.gohugo.io/themes/ublogger/&lt;/a>
+也是从 LoveIt 衍生出来的主题之一，主页同样是卡片设计，跟 FeelIt 一样找了一下配置，但是看起来没办法配置主页的显示样式，PASS&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>最终在 eureka 跟 stack 中进行最终选择：&lt;/p>
+&lt;ul>
+&lt;li>eureka 整体比较符合我的预期，但是用的人也确实贼多，随便打开几个 hugo 的网站，不少人用的都是 eureka，拿 eureka 的 Demo Stie 在 pagespeed 测试，只有 32 分&lt;/li>
+&lt;li>stack 看起来并没有 eureka 那么好，主要是对于我来说主页设置还是有点太拥挤了，不够落落大方，也没有支持多彩的注释，看起来比较的一般，但是其 Demo Site 相对于 eureka 的 Demo Site 来说，pagespeed 得分可以拿到近乎满分的成绩，优化相当不错。&lt;/li>
+&lt;/ul>
+&lt;p>所以，在综合考虑了两者的优劣对比之后，我最终选择了 stack ，尽管其功能性并不是特别完美，但是我觉得优化是一件比较复杂的事，从各自的 Demo Site 来看，stack 的优化效果要远远由于 eureka 的，尽管 stack 功能性上比 eureka 稍弱一些，但是我可以在其基础上去增加、修改功能，而不需要在对主题进行整体优化了，这是最主要的一点。&lt;/p>
+&lt;h2 id="configuration">Configuration
+&lt;/h2>&lt;p>首先肯定是得先参考 &lt;a class="link" href="https://docs.stack.jimmycai.com/zh/" target="_blank" rel="noopener"
+>stack 主题文档&lt;/a>，跟着文档，把该配置的配置好了，该复制的复制好了，再进一步进行修改其他的操作。&lt;/p>
+&lt;h3 id="url-path">URL Path
+&lt;/h3>&lt;p>对于个人博客的迁移而言，保证文章链接不变是最重要的。&lt;/p>
+&lt;p>因为对于一般站长自建的站点来说，如果一些文章被其他站点引用了，那么肯定就是静态链接了，如果迁移后改变了原文的 URL 链接地址，会对原来其他站点的导向非常不友好，所以我们基本得要确保旧文章链接最好不要进行改动。&lt;/p>
+&lt;p>这里主要参考该文章&lt;sup>&lt;a class="link" href="#ref02" >[2]&lt;/a>&lt;/sup>的迁移修改部分，我之前 Hexo 的站点链接为：&lt;code>/:year/:month/:day/:filename/&lt;/code>，所以我们也要在 Hugo 这里将生成的页面链接改成这种样子，我们需要在配置文件中增加如下配置：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">permalinks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">posts&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">/:year/:month/:day/:filename/&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>我这里选用了 yaml 格式， toml 格式的同学可以根据以上自行修改。&lt;/p>
+&lt;h3 id="rss">RSS
+&lt;/h3>&lt;p>默认 Hugo 生成的 RSS 链接为 &lt;code>/index.xml&lt;/code> ，而我之前用的是 atom.xml，可以通过如下配置修改：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">outputFormats&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">RSS&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">mediatype&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;application/rss&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">baseName&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;atom&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>并不需要修改主题文件夹下的 rss.xml ，Hugo 会自动根据我们的配置在站点目录下生成 atom.xml 。并且，在 stack 主题下我们还可以通过在主题配置文件中配置&lt;code>rssFullContent&lt;/code>选项来决定是否在 rss 文件中输出全文，像我的文章会比较长就使用了&lt;code>false&lt;/code>表示不输出全文。&lt;/p>
+&lt;h3 id="tags-链接">Tags 链接
+&lt;/h3>&lt;blockquote>
+&lt;p>​ Hugo 中默认会把链接中的字母变成小写，比如标签 &lt;code>Go&lt;/code> ，在之前对应地址 &lt;code>/tags/Go&lt;/code> ，换成 Hugo 后则是 &lt;code>/tags/go&lt;/code> ，可以通过下面的配置关闭这个转化。&lt;/p>
+&lt;/blockquote>
+&lt;p>其实我认为这个保留选项并不重要，所以我并没有特别修改这个选项，保持了原样，如果有同学建议，可以参考上述文章&lt;sup>&lt;a class="link" href="#ref02" >[2]&lt;/a>&lt;/sup>&lt;/p>
+&lt;h2 id="edit-the-theme">Edit The Theme
+&lt;/h2>&lt;p>接下里就是优化主题时间了，对比原主题，我在其基础上做了一定的修改，主要有如下几个点。（因为我对 Hugo 主题开发并不是很熟，基本就是对着文档改，以及包括对着其他有我需要的特性的主题代码参考来进行修改的，所以代码可能改的比较垃圾）&lt;/p>
+&lt;h3 id="sidebar">Sidebar
+&lt;/h3>&lt;p>去除了首页左侧 Sidebar 的网站描述，改成了社交链接。&lt;/p>
+&lt;p>图标使用的是主题配套的 &lt;a class="link" href="https://tablericons.com/" target="_blank" rel="noopener"
+>Tabler Icons&lt;/a> ，还是比较好用的，把你想要的 svg 放到 assets/icons 目录下。接着为了保持与主题整体色调一致，需要修改这个 svg 文件中的&lt;code>stroke&lt;/code>属性，改成&lt;code>stroke=&amp;quot;currentColor&amp;quot;&lt;/code>。这样我们就可以在其他地方引用到这个图标了。&lt;/p>
+&lt;p>接着直接搜&lt;code>site-description&lt;/code>，在 themes/stack/layouts/partials/sidebar/left.html 定位到侧边栏的代码，删掉原来的代码，将其修改为以下代码：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;site-description&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ if (.Site.Params.social.github) }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">title&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;GitHub&amp;#34;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{.Site.Params.social.github}}&amp;#34;&lt;/span> &lt;span class="na">target&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;_blank&amp;#34;&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;noopener&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ partial &amp;#34;helper/icon&amp;#34; &amp;#34;github&amp;#34; }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ end }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ if (.Site.Params.social.twitter) }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">title&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;Twitter&amp;#34;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{.Site.Params.social.twitter}}&amp;#34;&lt;/span> &lt;span class="na">target&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;_blank&amp;#34;&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;noopener&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ partial &amp;#34;helper/icon&amp;#34; &amp;#34;twitter&amp;#34; }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ end }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ if (.Site.Params.social.rss) }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">title&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;RSS&amp;#34;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{.Site.Params.social.rss}}&amp;#34;&lt;/span> &lt;span class="na">target&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;_blank&amp;#34;&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;noopener&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ partial &amp;#34;helper/icon&amp;#34; &amp;#34;rss&amp;#34; }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ end }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>稍微解释一下，&lt;code>.Site.Params&lt;/code>可以获取到主题配置文件中的&lt;code>params&lt;/code>配置选项，后面对应的就是相应的层级关系了。所以我们需要在配置文件中增加如下选项：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">params&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="c">#...&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">social&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">github&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.com/ZeddYu&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">twitter&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://twitter.com/ZeddYu_Lu&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">rss&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://zeddyu.github.io/atom.xml&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>而&lt;code>{{ partial &amp;quot;helper/icon&amp;quot; &amp;quot;rss&amp;quot; }}&lt;/code>就可以帮助我们去获取上述添加的 svg 文件作为我们的图标，比如这里对应的就是 assets/icons/rss.svg 文件。&lt;/p>
+&lt;p>这里我只增加了三个自己常用的社交链接，如果想要增加其他链接，都是类似的操作；这里最优解当然是通过循环读取 social 配置，然后自动配置，但是自己比较懒，也没什么其他要添加的，就静态写了三个自己常用的社交链接。&lt;/p>
+&lt;h3 id="summary-of-articles">Summary Of Articles
+&lt;/h3>&lt;p>原主题在展示主页文章的时候，对于文章内容的获取并非是读取摘要，这里的摘要就是读取文章开头至&lt;code>&amp;lt;!--more--&amp;gt;&lt;/code>之间的内容，而是读取文章的 description 字段，而对于我来说，我更喜欢使用摘要的形式，并且自己的文章之前也没有写过 description 字段，给每篇文章增加该字段会很麻烦。&lt;/p>
+&lt;p>所以我修改了原主题主页展示文章内容的形式，改成了显示摘要的形式。通过定位&lt;code>article-subtitle&lt;/code>找到对应文件 themes/stack/layouts/partials/article/components/details.html ，但是并不是很好改，因为这个文件被主页页面所使用，也被文章详情内容所使用，也就是说如果我们直接将其简单替换为之摘要内容的话，虽然主页展示了文章摘要，但是文章详情内容也会展示内容摘要，而且同时显示文章全部内容，就会有两段重复的内容了。&lt;/p>
+&lt;p>所以我们只能分别处理，也就是说增加一个文件，让主页引用，文章详情内容页面不引用就不会出现这种问题了。&lt;/p>
+&lt;p>最终修改：&lt;/p>
+&lt;p>删除了 themes/stack/layouts/partials/article/components/details.html 页面中的&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-diff" data-lang="diff">&lt;span class="line">&lt;span class="cl">&lt;span class="gd">- {{ with .Params.description }}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">- &amp;lt;h3 class=&amp;#34;article-subtitle&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">- {{ . }}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">- &amp;lt;/h3&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">- {{ end }}
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在 themes/stack/layouts/partials/article/components 增加了一个新文件为 article-intro.html ，文件内容与删除上述内容前的 details.html 文件略有不同：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-diff" data-lang="diff">&lt;span class="line">&lt;span class="cl">&lt;span class="gu">@@ -15,11 +15,11 @@
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gu">&lt;/span> &amp;lt;/a&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;/h2&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">- {{ with .Params.description }}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">- &amp;lt;h3 class=&amp;#34;article-subtitle&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">&lt;/span>&lt;span class="gi">+ {{ with .Summary }}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ &amp;lt;div class=&amp;#34;article-subtitle&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">&lt;/span> {{ . | safeHTML}}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">- &amp;lt;/h3&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">- {{ end }} --&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">&lt;/span>&lt;span class="gi">+ &amp;lt;/div&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ {{ end }}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ if or (not .Date.IsZero) (.Site.Params.article.readingTime) }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;footer class=&amp;#34;article-time&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gu">@@ -40,6 +40,9 @@
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gu">&lt;/span> &amp;lt;/time&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;/div&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ end }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ &amp;lt;div&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ &amp;lt;a href=&amp;#34;{{ .RelPermalink }}&amp;#34;&amp;gt;Read More…&amp;lt;/a&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ &amp;lt;/div&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">&lt;/span> &amp;lt;/footer&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ end }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;/div&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里使用了 Hugo 提供的&lt;code>.Summary&lt;/code>获取文章摘要，替换掉了原来文章描述的位置，并增加了“阅读更多”的入口。接着我们还需要增加一个 themes/stack/layouts/partials/article/components/header-intro.html 文件，文件内容与 header.html 区别如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-diff" data-lang="diff">&lt;span class="line">&lt;span class="cl">&lt;span class="gu">@@ -31,5 +31,5 @@
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gu">&lt;/span> &amp;lt;/div&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{ end }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">- {{ partialCached &amp;#34;article/components/details&amp;#34; . .RelPermalink }}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">&lt;/span>&lt;span class="gi">+ {{ partialCached &amp;#34;article/components/article-intro&amp;#34; . .RelPermalink }}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">&lt;/span> &amp;lt;/header&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里只需要将我们所更改的 artile-intro 代替之前的 details 引入即可。&lt;/p>
+&lt;h3 id="shortcodes">ShortCodes
+&lt;/h3>&lt;style type="text/css">
+.notice {
+--title-color: #fff;
+--title-background-color: #6be;
+--content-color: #444;
+--content-background-color: #e7f2fa;
+}
+.notice.info {
+--title-background-color: #fb7;
+--content-background-color: #fec;
+}
+.notice.tip {
+--title-background-color: #5a5;
+--content-background-color: #efe;
+}
+.notice.warning {
+--title-background-color: #c33;
+--content-background-color: #fee;
+}
+@media (prefers-color-scheme:dark) {
+.notice {
+--title-color: #fff;
+--title-background-color: #069;
+--content-color: #ddd;
+--content-background-color: #023;
+}
+.notice.info {
+--title-background-color: #a50;
+--content-background-color: #420;
+}
+.notice.tip {
+--title-background-color: #363;
+--content-background-color: #121;
+}
+.notice.warning {
+--title-background-color: #800;
+--content-background-color: #400;
+}
+}
+body.dark .notice {
+--title-color: #fff;
+--title-background-color: #069;
+--content-color: #ddd;
+--content-background-color: #023;
+}
+body.dark .notice.info {
+--title-background-color: #a50;
+--content-background-color: #420;
+}
+body.dark .notice.tip {
+--title-background-color: #363;
+--content-background-color: #121;
+}
+body.dark .notice.warning {
+--title-background-color: #800;
+--content-background-color: #400;
+}
+.notice {
+padding: 18px;
+line-height: 24px;
+margin-bottom: 24px;
+border-radius: 4px;
+color: var(--content-color);
+background: var(--content-background-color);
+}
+.notice p:last-child {
+margin-bottom: 0
+}
+.notice-title {
+margin: -18px -18px 12px;
+padding: 4px 18px;
+border-radius: 4px 4px 0 0;
+font-weight: 700;
+color: var(--title-color);
+background: var(--title-background-color);
+}
+.icon-notice {
+display: inline-flex;
+align-self: center;
+margin-right: 8px;
+}
+.icon-notice img,
+.icon-notice svg {
+height: 1em;
+width: 1em;
+fill: currentColor;
+}
+.icon-notice img,
+.icon-notice.baseline svg {
+top: .125em;
+position: relative;
+}
+&lt;/style>&lt;div class="notice info" >
+&lt;p class="notice-title">
+&lt;span class="icon-notice baseline">
+&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="92 59.5 300 300">
+&lt;path d="M292 303.25V272c0-3.516-2.734-6.25-6.25-6.25H267v-100c0-3.516-2.734-6.25-6.25-6.25h-62.5c-3.516 0-6.25 2.734-6.25 6.25V197c0 3.516 2.734 6.25 6.25 6.25H217v62.5h-18.75c-3.516 0-6.25 2.734-6.25 6.25v31.25c0 3.516 2.734 6.25 6.25 6.25h87.5c3.516 0 6.25-2.734 6.25-6.25Zm-25-175V97c0-3.516-2.734-6.25-6.25-6.25h-37.5c-3.516 0-6.25 2.734-6.25 6.25v31.25c0 3.516 2.734 6.25 6.25 6.25h37.5c3.516 0 6.25-2.734 6.25-6.25Zm125 81.25c0 82.813-67.188 150-150 150-82.813 0-150-67.188-150-150 0-82.813 67.188-150 150-150 82.813 0 150 67.188 150 150Z"/>
+&lt;/svg>
+&lt;/span>Info&lt;/p>&lt;p>Updates Dec 28, 2024:&lt;/p>
+&lt;p>现在已经有现成的插件了，详细请使用请参考：https://github.com/martignoni/hugo-notice ，以下不再适用！&lt;/p>&lt;/div>
+&lt;p>&lt;del>这里主要参考的文章是：&lt;a class="link" href="https://guanqr.com/tech/website/hugo-shortcodes-customization/" target="_blank" rel="noopener"
+>自定义 Hugo Shortcodes 简码&lt;/a> 当中的 notice 部分，除了自己做了一定的字体、颜色定制调整，其他基本上一摸一样，所以这里不再赘述。&lt;/del>&lt;/p>
+&lt;p>&lt;strong>并且这里简单提个醒，对于 Hugo 来说，既是你是在代码段里面写 ShortCodes ，Hugo 也会直接对其进行渲染，并不会将其视为字符串处理。&lt;/strong>~~&lt;/p>
+&lt;p>所以当时我在渲染以上 Shortcodes 的时候就遇到了这个问题，我们得在不需要渲染的 ShortCodes 代码加注释才能使得 Hugo 认为这是一段字符串，也就是如下这个样子：
+&lt;img src="https://i.loli.net/2021/10/02/OS6zmrgE5biZyjA.png"
+loading="lazy"
+alt="carbon.png"
+>&lt;/p>
+&lt;h3 id="cdn-for-img">CDN For IMG
+&lt;/h3>&lt;p>因为 Stack 主题推荐在文章内插入图片使用 Hugo 的 &lt;a class="link" href="https://gohugo.io/content-management/page-bundles/" target="_blank" rel="noopener"
+>Page Bundleopen&lt;/a> 功能&lt;sup>&lt;a class="link" href="#ref03" >[3]&lt;/a>&lt;/sup>，而外层我使用的是 CloudFlare 做 CDN ，尽管使用了一些压缩处理尝试尽可能优化图片加载速度，但是 CloudFlare 对于国内“加速”效果属实难以苟同，好在 jsdelivr 提供了基于 Github 仓库资源的加速服务，并且在国内加速效果还不错，所以我还针对链接到本地的图片资源在生成图片链接时自动加上了 jsdelivr 链接。&lt;/p>
+&lt;p>思路非常简单，因为生成图片链接是使用的相对路径，所以我们只需要对这些相对路径的图片进行处理即可，加上 jsdelivr 到自己的 Github Page 博客仓库开头即可。例如，我的博客仓库为 &lt;a class="link" href="https://github.com/ZeddYu/ZeddYu.github.io" target="_blank" rel="noopener"
+>https://github.com/ZeddYu/ZeddYu.github.io&lt;/a> ，分支为 master 分支，对应的 jsdelivr 加速链接为 &lt;a class="link" href="https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/" target="_blank" rel="noopener"
+>https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/&lt;/a> 。&lt;/p>
+&lt;p>找到主题对于本地图片生成处理的地方，为 themes/stack/layouts/_default/_markup/render-image.html 文件，&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">{{- if $image -}}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;img src=&amp;#34;https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/{{ $Permalink| relURL }}&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{{- else -}}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;img src=&amp;#34;{{ $Permalink }}&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{{- end -}}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>将 img 对应的链接手动加上 jsdelivr 的链接，但是需要手动加上判断，这个&lt;code>$image&lt;/code>是上文给的判断是否为本地图片的变量；对于外链我们不需要使用 jsdelivr 链接前缀进行加速，所以这里只需要对本地图片 jsdelivr 加速即可。&lt;/p>
+&lt;h3 id="github-action">Github Action
+&lt;/h3>&lt;p>最后配置 .github/workflows/gh-pages.yml 使用 Github Action 自动化部署，这里我的配置为私有的博客源代码仓库，博客静态代码仓库为公开仓库，所以需要使用到 Github 的个人 Access Token ，其余的不再赘述。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">github pages&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">push&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branches&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">master &lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Set a branch to deploy&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">pull_request&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">jobs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">deploy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">runs-on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ubuntu-20.04&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">steps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/checkout@v2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">submodules&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Fetch Hugo themes (true OR recursive)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">fetch-depth&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Fetch all history for .GitInfo and .Lastmod&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Setup Hugo&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">peaceiris/actions-hugo@v2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">hugo-version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;latest&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">extended&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Build&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">hugo --minify&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Deploy&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">peaceiris/actions-gh-pages@v3&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">external_repository&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ZeddYu/ZeddYu.github.io # 发布到哪个 repo&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">personal_token&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">${{ secrets.HUGO_TOKEN }} # 发布到其他 repo 需要提供上面生成的 personal access token&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">publish_dir&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">./public # 注意这里指的是要发布哪个文件夹的内容，而不是指发布到目的仓库的什么位置，因为 hugo 默认生成静态网页到 public 文件夹，所以这里发布 public 文件夹里的内容&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">publish_branch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">master # 发布到哪个 branch&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="workbox-for-dark-theme">Workbox For Dark Theme
+&lt;/h3>&lt;p>虽然本地测试的时候看起来十分顺畅，但是在使用部署到远程后，可能由于 CloudFlare 对国内的减速作用，以及主题对于黑暗模式的实现使用的是 javascript 覆盖实现，而应用黑暗模式 js 文件加载速度较慢的情况下，会导致在黑暗模式在切换页面的时候，会在加载其他的时候会恢复到白色的背景，导致“闪屏”效应。这对用户肯定是非常不友好的体验，所以经过一些尝试，虽然无法完美解决掉这个问题，但是在一定程度上有效减缓了这个问题的发生。&lt;/p>
+&lt;p>这里也问了一下前端大师 &lt;a class="link" href="https://www.rexskz.info/" target="_blank" rel="noopener"
+>@rex&lt;/a> ，他一开始给我的方案是让我使用 &lt;em>PWA&lt;/em>（Progressive Web Apps，渐进式Web 应用），尝试使用 &lt;a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/Manifest" target="_blank" rel="noopener"
+>Web App Manifest&lt;/a> ，可以在 static 文件夹下增加 manifest.json 来预加载背景颜色。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;display&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;standalone&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;background_color&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;#303030&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;theme_color&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;#303030&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>主题黑暗模式的背景颜色为&lt;code>#303030&lt;/code> ，虽然理论上可能会影响到日间模式的切换，但是实际上既没有影响到日间模式，对“闪屏”效应也没有实质性的。&lt;/p>
+&lt;p>跟 @rex 再次讨论了一下，目前最优的夜间模式的实现方式应该是在服务器端存储用户设置的模式信息，当用户请求的时候，根据 Cookie 或者其他信息返回不同的样式，这样就能完美避开“闪屏”这个问题了，并且对于自适应模式还可以通过媒体查询来实现；其次实现方式才有可能使用 js 覆盖的形式，通过 localstorage 或者本地浏览器的存储介质等获取用户存储的主题设置，再对页面进行颜色覆盖，但是这个方案比较依靠网络速度，因为如果网络不佳，对于 js 文件加载缓慢的话就会导致先出现默认主题颜色，再出现用户设置的主题颜色，就会产生“闪屏”现象。&lt;/p>
+&lt;p>所以通过分析，我们目前大概知道“闪屏”最好的解决方案是根据用户设置返回不同的样式文件，但是对于静态页面 Github Pages ，并没有什么办法直接识别用户，即使是部署了 CloudFlare ，目前 CloudFlare workers 也没有什么办法能够实现类似效果。在不改变静态页面的架构下，只能通过尝试解决网络加载速度来减缓这个问题。&lt;/p>
+&lt;p>于是我想到了 Service Worker ，如果我们能通过 SW 将静态文件缓存到用户本地，就可能可以尽量避免网络问题了。于是在经过一番探索，发现了 &lt;a class="link" href="https://developers.google.com/web/tools/workbox" target="_blank" rel="noopener"
+>Workbox&lt;/a> 这个比较完善的解决方案。Workbox 是 Google Chrome 团队推出的一套 PWA 的解决方案，这套解决方案当中包含了核心库和构建工具，我们可以利用 Workbox 实现 Service Worker 的快速开发。&lt;/p>
+&lt;p>Workbox 说到底还是 SW ，其注册使用与 SW 并没有什么不同，所以我们肯定得在主题注册 SW 文件。这里我选择在 themes/stack/layouts/partials/footer/components/script.html 文件中注册 sw 文件&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;serviceWorker&amp;#39;&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="nx">navigator&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">addEventListener&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;load&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">navigator&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">serviceWorker&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">register&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/sw.js&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>根目录下的 sw.js 文件就需要在 static 目录下放置文件&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">importScripts&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;https://cdn.jsdelivr.net/npm/workbox-cdn/workbox/workbox-sw.js&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">workbox&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sb">`Yay! Workbox is loaded 🎉`&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">routing&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">registerRoute&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="sr">/\.(?:js|css)$/&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">new&lt;/span> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">strategies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">StaleWhileRevalidate&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">cacheName&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;static-resources&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">routing&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">registerRoute&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">new&lt;/span> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">strategies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">StaleWhileRevalidate&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">cacheName&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;static-resources&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">routing&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">registerRoute&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="sr">/\.(?:png|jpg|jpeg|svg|gif)$/&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">new&lt;/span> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">strategies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">CacheFirst&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">cacheName&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;image-cache&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">plugins&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">new&lt;/span> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">expiration&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ExpirationPlugin&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">maxEntries&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">20&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">maxAgeSeconds&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">7&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">24&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">60&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">60&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">routing&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">registerRoute&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="sr">/^https:\/\/fonts\.googleapis\.com/&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">new&lt;/span> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">strategies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">StaleWhileRevalidate&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">cacheName&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;google-fonts-stylesheets&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">routing&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">registerRoute&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="sr">/^https:\/\/fonts\.gstatic\.com/&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">new&lt;/span> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">strategies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">CacheFirst&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">cacheName&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;google-fonts-webfonts&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">plugins&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">new&lt;/span> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">cacheableResponse&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">CacheableResponsePlugin&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">statuses&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">200&lt;/span>&lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">new&lt;/span> &lt;span class="nx">workbox&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">expiration&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ExpirationPlugin&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">maxAgeSeconds&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">60&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">60&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">24&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">365&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">maxEntries&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">30&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sb">`Boo! Workbox didn&amp;#39;t load 😬`&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>以上对图片等一些静态资源都做了缓存，当然最主要的还是缓存操作覆盖主题的 main.js 文件，为了加快这个文件获取，我还特地给该文件使用了 jsdelivr 进行加速。这里值得注意的就是，Service Worker 默认只缓存本站链接的静态文件，如果需要加载其他站点的文件，就需要通过&lt;code>registerRoute&lt;/code>来注册该文件。&lt;/p>
+&lt;p>再经过一番折腾后，在使用了 jsdelivr CDN 加速 js 文件、Service Worker 缓存静态文件双加持下，基本可以做到无痛切换页面了。（尽管看起来还是可能会有 25ms 的瞬间白屏&amp;hellip;但是应该可以说是很大程度上缓减了这个问题，当然得等以后看看还有没有什么新的技术可以来改善这个问题了。&lt;/p>
+&lt;p>&lt;img src="https://i.loli.net/2021/10/02/xAnh9mHa4ts5qG7.png"
+loading="lazy"
+alt="Snipaste_2021-10-02_14-10-17.png"
+>&lt;/p>
+&lt;h2 id="issues">Issues
+&lt;/h2>&lt;p>以下是在迁移过程中遇到的一些报错错误&lt;/p>
+&lt;h3 id="failed-to-render-pages">Failed to render pages
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Failed to render pages: render of &amp;#34;page&amp;#34; failed: execute of template failed: template: posts/single.html:277:98: executing &amp;#34;no-content&amp;#34; at &amp;lt;partial &amp;#34;function/content.html&amp;#34;&amp;gt;: error calling partial: &amp;#34;/Users/zedd/Desktop/demo/quickstart/themes/uBlogger/layouts/partials/function/content.html:12:15&amp;#34;: execute of template failed: template: partials/function/content.html:12:15: executing &amp;#34;partials/function/content.html&amp;#34; at &amp;lt;partial &amp;#34;function/checkbox.html&amp;#34; $content&amp;gt;: error calling partial: partial that returns a value needs a non-zero argument.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Total in 19 ms
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>引起这个报错的可能原因就是文章当中有一些不规范的 Markdown 语法，例如我找出来的就是复制一些链接时候有一些不规范的语法：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[https://baidu.com](&amp;lt;[https://baidu.com](https://baidu.com)&amp;gt;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>诸如此类，只要把这些引起错误的语法修正成规范的链接语法即可。&lt;/p>
+&lt;h3 id="rss-error-on-line-pcdata-invalid-char-value-x">rss error on line PCDATA invalid Char value X
+&lt;/h3>&lt;p>在生成 RSS 文件的时候可能引起如下报错：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">This page contains the following errors:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error on line 455 at column 40: PCDATA invalid Char value 8
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这个报错可能原因就是生成的 RSS 文件当中包含有不可见字符，比如以上例子就是存在 \x08 字符，可以根据报错定位一下位置，然后去 markdown 文件当中进行删除&lt;/p>
+&lt;h2 id="references">References
+&lt;/h2>&lt;ol>
+&lt;li>&lt;a id="ref01">&lt;a class="link" href="https://sspai.com/post/59904" target="_blank" rel="noopener"
+>浅谈我为什么从 HEXO 迁移到 HUGO&lt;/a>&lt;/a>&lt;/li>
+&lt;li>&lt;a id="ref02">&lt;a class="link" href="https://liujiacai.net/blog/2020/12/05/hexo-to-hugo/" target="_blank" rel="noopener"
+>博客系统迁移：Hexo 到 Hugo&lt;/a>&lt;/a>&lt;/li>
+&lt;li>&lt;a id="ref03">&lt;a class="link" href="https://docs.stack.jimmycai.com/zh" target="_blank" rel="noopener"
+>Hugo Stack 主题文档&lt;/a>&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>Hexo Template render error 解决方案</title><link>https://zeddyu.github.io/p/hexo-template-render-error-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link><pubDate>Wed, 27 Feb 2019 23:39:54 +0000</pubDate><guid>https://zeddyu.github.io/p/hexo-template-render-error-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid><description>&lt;p>前几天写 writeup ，在用&lt;code>hexo g&lt;/code>的时候，碰到了&lt;code>Template render error&lt;/code>的错误在这记录一下&lt;/p>
+&lt;h3 id="问题描述">问题描述
+&lt;/h3>&lt;p>使用&lt;code>hexo g&lt;/code>的时候，碰到了&lt;code>Template render error&lt;/code>的错误&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007984.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>人肉源代码&lt;code>review&lt;/code>，并没有什么特殊的字符，也没有什么没有闭合的&lt;code>markdown&lt;/code>符号啥的，而官方给的&lt;a class="link" href="https://hexo.io/docs/troubleshooting.html#Template-render-error" target="_blank" rel="noopener"
+>solution&lt;/a>完全没有用，因为我把这篇文章从&lt;code>source/_post&lt;/code>中移除，就完美没有错误了，排除了&lt;code>_config.yml&lt;/code>的错误。&lt;/p>
+&lt;h3 id="发现问题">发现问题
+&lt;/h3>&lt;p>当文章中有&lt;code>}}&lt;/code>时,且这两个括号未被代码块包含，解析会出问题。但是有时候解析并没有出问题，就比较奇怪，没有深究，遇到该问题的可以按照这种方法排除一下&lt;/p>
+&lt;h3 id="解决方法">解决方法
+&lt;/h3>&lt;p>把&lt;code>/{{config}}&lt;/code>包含在代码块中，如&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">{% raw %}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 含有双大括号的内容
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{% endraw %}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="参考">参考
+&lt;/h3>&lt;p>&lt;a class="link" href="https://www.jianshu.com/p/738ebe02029b" target="_blank" rel="noopener"
+>Hexo的一个小BUG(Template render error)&lt;/a>&lt;/p></description></item><item><title>Flutter packages get 424问题解决方法</title><link>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</link><pubDate>Mon, 25 Feb 2019 10:25:35 +0000</pubDate><guid>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</guid><description>&lt;p>在我一个项目当中使用&lt;code>flutter packages get &lt;/code>遇到了 HTTP 424 的错误，找了很多方法都没有解决方法，个人解决了之后就此记录下来。&lt;/p>
+&lt;h3 id="问题描述">问题描述
+&lt;/h3>&lt;p>使用&lt;code>flutter packages get -v&lt;/code>打印出步骤错误&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002591.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>发现 404 错误&lt;/p>
+&lt;h3 id="发现问题">发现问题
+&lt;/h3>&lt;p>按照提示，使用&lt;code>pub --trace --verbosity=warning --verbose get --no-precompile&lt;/code>打印出更详细的步骤&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005957.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>发现老是在获取&lt;code>path_provideer 0.5.0+1&lt;/code>这里报出了 424 的错误，一开始以为是不是镜像并没有这个包，自己也去&lt;code>pub.flutter-io.cn&lt;/code>找了一下，确实有&lt;code>path_provideer 0.5.0+1&lt;/code>这个版本的包。&lt;/p>
+&lt;p>而 HTTP 424 代表什么呢&lt;/p>
+&lt;blockquote>
+&lt;p>​ 424 Failed Dependency (WebDAV; &lt;a class="link" href="https://tools.ietf.org/html/rfc4918" target="_blank" rel="noopener"
+>RFC 4918&lt;/a>)&lt;/p>
+&lt;p>​ The request failed because it depended on another request and that request failed (e.g., a PROPPATCH).[&lt;a class="link" href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#cite_note-RFC_4918-16" target="_blank" rel="noopener"
+>15]&lt;/a>&lt;/p>
+&lt;p>​ —From &lt;a class="link" href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank" rel="noopener"
+>List of HTTP status codes&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>这里就是字面意思了，也就是说本次请求失败的原因是上次的请求失败了。然而搜索了相关知识，都没有找到方法。&lt;/p>
+&lt;h3 id="解决方案">解决方案
+&lt;/h3>&lt;p>由于毕竟是 HTTP 出了问题，那肯定是网络的问题&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>尝试切换代理(It works nothing for me)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>尝试更换镜像源，由于自己之前设定的是&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">PUB_HOSTED_URL&lt;/span>&lt;span class="o">=&lt;/span>https://pub.flutter-io.cn
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">FLUTTER_STORAGE_BASE_URL&lt;/span>&lt;span class="o">=&lt;/span>https://storage.flutter-io.cn
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>由于现在在学校，自己所处的网络环境发生了改变，毕竟教育网络内部之间的通信比较好，于是切换到交大的镜像源，问题得到解决&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">PUB_HOSTED_URL&lt;/span>&lt;span class="o">=&lt;/span>https://dart-pub.mirrors.sjtug.sjtu.edu.cn/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">FLUTTER_STORAGE_BASE_URL&lt;/span>&lt;span class="o">=&lt;/span>https://mirrors.sjtug.sjtu.edu.cn/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;/ol></description></item><item><title>Mac idea 启动tomcat端口占用奇异问题</title><link>https://zeddyu.github.io/p/mac-idea-%E5%90%AF%E5%8A%A8tomcat%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E5%A5%87%E5%BC%82%E9%97%AE%E9%A2%98/</link><pubDate>Sun, 26 Aug 2018 20:02:10 +0000</pubDate><guid>https://zeddyu.github.io/p/mac-idea-%E5%90%AF%E5%8A%A8tomcat%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E5%A5%87%E5%BC%82%E9%97%AE%E9%A2%98/</guid><description>&lt;p>很久不用idea了，突然用idea启动一个tomcat的&lt;code>java web&lt;/code>项目，结果一直提示&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Address localhost:1099 already in use
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>自己通过&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">lsof -i :1099
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>并没有发现端口占用，重装了idea、tomcat都不行，换了一个已经确认是没有占用的端口也还是不行。&lt;/p>
+&lt;p>经过各种搜索途径找到的都是检查端口占用，再把占用端口的进程关掉即可；或者又是换另一个端口。&lt;/p>
+&lt;p>对于我这种情况都是无济于事。最后解决方案参考了&lt;a class="link" href="https://www.jianshu.com/p/354451c3412c" target="_blank" rel="noopener"
+>记一次Mac IntelliJ中Tomcat崩溃的怪异现象（分析与解读）&lt;/a>&lt;/p>
+&lt;p>这里直接提解决方法，就是在&lt;code>/etc/hosts&lt;/code>下编辑增加&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">127.0.0.1 localhost
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这个问题就可以得到解决&lt;/p>
+&lt;p>如果还有提示&lt;code>cannot run program '/path/to/tomcat/bin/catalina.sh' error=13 permission denied&lt;/code>的错误，检查相关文件的权限，这里我是因为重新下载了&lt;code>tomcat&lt;/code>导致&lt;code>catalina.sh&lt;/code>没有运行的权限，加上以后即可成功运行。&lt;/p></description></item><item><title>博客自动化及一些坑</title><link>https://zeddyu.github.io/p/%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%8A%E4%B8%80%E4%BA%9B%E5%9D%91/</link><pubDate>Tue, 13 Mar 2018 09:29:00 +0000</pubDate><guid>https://zeddyu.github.io/p/%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%8A%E4%B8%80%E4%BA%9B%E5%9D%91/</guid><description>&lt;p>迁了一下服务器，顺便弄了一下Git hook，把两个仓库给实现本地修改触发git hook实现服务器自动部署。&lt;/p>
+&lt;!-- more -->
+&lt;h2 id="什么是git-hooks">什么是git hooks
+&lt;/h2>&lt;p>在git上是这么介绍的：&lt;/p>
+&lt;blockquote>
+&lt;p>和其它版本控制系统一样，Git能在特定的重要动作发生时触发自定义脚本。有两组这样的钩子：客户端的和服务器端的。客户端钩子由诸如提交和合并这样的操作所调用，而服务器端钩子作用于诸如接收被推送的提交这样的联网操作。 你可以随心所欲地运用这些钩子。&lt;/p>
+&lt;/blockquote>
+&lt;p>个人理解的git hook其实就像一个触发器吧，当远程服务器收到本地的命令之后就执行某些操作。&lt;/p>
+&lt;h2 id="git-hooks的种类">git hooks的种类
+&lt;/h2>&lt;p>git中，有两种类型的钩子：客户端的和服务器端的。&lt;/p>
+&lt;p>客户端的钩子有：&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>pre-commit&lt;/code> 钩子在键入提交信息前运行。&lt;/li>
+&lt;li>&lt;code>prepare-commit-msg&lt;/code> 钩子在启动提交信息编辑器之前，默认信息被创建之后运行。&lt;/li>
+&lt;li>&lt;code>post-commit&lt;/code> 钩子在整个提交过程完成后运行。&lt;/li>
+&lt;li>&lt;code>applypatch-msg&lt;/code> 你可以用该脚本来确保提交信息符合格式，或直接用脚本修正格式错误。&lt;/li>
+&lt;li>&lt;code>pre-applypatch&lt;/code> 在 &lt;code>git am&lt;/code> 运行期间被调用&lt;/li>
+&lt;li>&lt;code>post-applypatch&lt;/code> 运行于提交产生之后，是在 &lt;code>git am&lt;/code> 运行期间最后被调用的钩子。&lt;/li>
+&lt;li>&lt;code>pre-rebase&lt;/code> 钩子运行于变基之前，以非零值退出可以中止变基的过程。&lt;/li>
+&lt;li>&lt;code>post-rewrite&lt;/code> 钩子被那些会替换提交记录的命令调用。&lt;/li>
+&lt;li>&lt;code>post-checkout&lt;/code> 在 &lt;code>git checkout&lt;/code> 成功运行后调用。&lt;/li>
+&lt;li>&lt;code>post-merge&lt;/code> 在 &lt;code>git merge&lt;/code> 成功运行后调用。&lt;/li>
+&lt;li>&lt;code>pre-push&lt;/code> 在 &lt;code>git push&lt;/code> 运行期间， 更新了远程引用但尚未传送对象时被调用。&lt;/li>
+&lt;li>&lt;code>pre-auto-gc&lt;/code> 会在垃圾回收开始之前被调用，可以用它来提醒你现在要回收垃圾了，或者依情形判断是否要中断回收。&lt;/li>
+&lt;/ol>
+&lt;p>服务器端的钩子有：&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>pre-receive&lt;/code> 处理来自客户端的推送操作时最先被调用。&lt;/li>
+&lt;li>&lt;code>update&lt;/code> 它会为每一个准备更新的分支各运行一次。&lt;/li>
+&lt;li>&lt;code>post-receive&lt;/code> 在整个过程完结以后运行，可以用来更新其他系统服务或者通知用户。&lt;/li>
+&lt;/ol>
+&lt;h2 id="如何使用git-hooks">如何使用git hooks
+&lt;/h2>&lt;p>所有的钩子脚本都存放在 .git/hooks 文件夹中。当使用 &lt;code>git init&lt;/code> 初始化一个新版本库时，Git 默认会在这个目录中放置一些示例脚本。这些示例的名字都是以 .sample 结尾，如果你想启用它们，得先移除这个后缀。&lt;/p>
+&lt;h2 id="简单的自动部署">简单的自动部署
+&lt;/h2>&lt;p>既然要在服务器上进行操作，肯定得登录服务器了咯。&lt;/p>
+&lt;h3 id="服务器登录">服务器登录
+&lt;/h3>&lt;p>要实现ssh免密码登录，大家也可以具体参考一下&lt;a class="link" href="https://my.oschina.net/aiguozhe/blog/33994" target="_blank" rel="noopener"
+>这篇文章&lt;/a>&lt;/p>
+&lt;blockquote>
+&lt;p>A为本地主机(即用于控制其他主机的机器) ;
+B为远程主机(即被控制的机器Server), 假如ip为172.24.253.2 ;
+A和B的系统都是Linux&lt;/p>
+&lt;p>在A上的命令:&lt;/p>
+&lt;p>$ ssh-keygen -t rsa (连续三次回车,即在本地生成了公钥和私钥,不设置密码)&lt;/p>
+&lt;p>$ ssh &lt;a class="link" href="mailto:root@172.24.253.2" >root@172.24.253.2&lt;/a> &amp;ldquo;mkdir .ssh;chmod 0700 .ssh&amp;rdquo; (需要输入密码， 注:必须将.ssh的权限设为700)&lt;/p>
+&lt;p>$ scp ~/.ssh/id_rsa.pub &lt;a class="link" href="mailto:root@172.24.253.2" >root@172.24.253.2&lt;/a>:.ssh/id_rsa.pub (需要输入密码)&lt;/p>
+&lt;p>在B上的命令:
+$ touch /root/.ssh/authorized_keys (如果已经存在这个文件, 跳过这条)&lt;/p>
+&lt;p>$ chmod 600 &lt;del>/.ssh/authorized_keys (# 注意： 必须将&lt;/del>/.ssh/authorized_keys的权限改为600, 该文件用于保存ssh客户端生成的公钥，可以修改服务器的ssh服务端配置文件/etc/ssh/sshd_config来指定其他文件名）&lt;/p>
+&lt;p>$ cat /root/.ssh/id_rsa.pub &amp;raquo; /root/.ssh/authorized_keys (将id_rsa.pub的内容追加到 authorized_keys 中, 注意不要用 &amp;gt; ，否则会清空原有的内容，使其他人无法使用原有的密钥登录)&lt;/p>
+&lt;p>回到A机器:&lt;/p>
+&lt;p>$ ssh &lt;a class="link" href="mailto:root@172.24.253.2" >root@172.24.253.2&lt;/a> (不需要密码, 登录成功)&lt;/p>
+&lt;/blockquote>
+&lt;p>这样就轻松实现了ssh免密登录&lt;/p>
+&lt;h3 id="初始化">初始化
+&lt;/h3>&lt;h4 id="git-init-和-git-init---bare-的区别">git init 和 git init &amp;ndash;bare 的区别
+&lt;/h4>&lt;p>初始化出来的仓库是不一样的，前者初始化的是一个普通的仓库，其中 .git 文件夹是隐藏的，并且能看见该仓库下所有的源码。而后者初始化出来的仓库中的文件，就是 .git 中的文件夹，但不能像前者那样直接浏览或修改仓库中的代码。&lt;/p>
+&lt;p>&lt;/p>
+&lt;h4 id="使用-git-init---bare-初始化一个远程仓库">使用 &lt;code>git init --bare&lt;/code> 初始化一个远程仓库
+&lt;/h4>&lt;p>该仓库是用于项目部署的。在我们本地开发完成后，将项目push至该仓库后，将自动部署网站。&lt;/p>
+&lt;p>这里就拿nginx来举个例子，按照nginx默认目录来进行操作
+建立一个xxx-bare.git（bare repository）和一个xxx（repository）目录，Git远程库的命名一般使用.git和其他目录区分，但并非强制。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">cd&lt;/span> /usr/share/nginx/html
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ git init --bare xxx-bare.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">cd&lt;/span> /usr/share/nginx/html
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ git clone xxx-bare.git xxx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="配置git-hook">配置Git Hook
+&lt;/h3>&lt;p>将目录切换至 &lt;code>/usr/share/nginx/html/xxx-bare.git/hooks&lt;/code>，如果目录下没有&lt;code>post-receive&lt;/code>这个文件，可以使用&lt;code>touch post-receive&lt;/code>直接创建，当仓库收到push请求后，就会自动执行该钩子中的脚本。根据自身需求编辑脚本内容：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">unset&lt;/span> GIT_DIR
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> /var/www/html/project
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git pull origin master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>编辑完成后，给该脚本添加可执行权限&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ chmod +x post-receive
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="测试及使用">测试及使用
+&lt;/h3>&lt;h4 id="为开发的本地仓库添加remote源">为开发的本地仓库添加remote源
+&lt;/h4>&lt;p>这个客户端本地仓库，即开发的机子的本地仓库，添加remote源，以后往这个remote push代码时，就会自动触发上面的脚本。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ git remote add deploy user@ip:/gitrepo_dir
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ git push deploy master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>gitrepo_dir&lt;/code>就是服务器上的xxx-bare.git的文件夹位置&lt;/p>
+&lt;p>以后就可以通过&lt;code>git push deploy master&lt;/code>来自动更新服务器上的代码咯。&lt;/p>
+&lt;h4 id="最后再写一个typecho的小坑">最后再写一个typecho的小坑
+&lt;/h4>&lt;p>博客上传图片失败的问题，要把typecho里的usr文件权限修改为777，就可以了。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo chmod -R &lt;span class="m">777&lt;/span> usr
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后可以上传本地图片了。&lt;/p>
+&lt;h2 id="happy-coding">Happy Coding!
+&lt;/h2></description></item><item><title>MacOS X 下配置Nginx &amp;amp; PHP</title><link>https://zeddyu.github.io/p/macos-x-%E4%B8%8B%E9%85%8D%E7%BD%AEnginx-amp-php/</link><pubDate>Sun, 04 Mar 2018 02:22:00 +0000</pubDate><guid>https://zeddyu.github.io/p/macos-x-%E4%B8%8B%E9%85%8D%E7%BD%AEnginx-amp-php/</guid><description>&lt;p>也有一段时间没写博客了，说好的技术博主呢，hhhhh。其实一些小错误感觉没什么好写的。但是配置环境的坑我踩了好久了。趁这次重装了Mac，刚好记录记录配置Nginx，虽然前面写过一篇配置，但是Mac上还是有比较多的坑的。也不知道啥时候Mac才自带Nginx呀。个人喜欢Homebrew，没用Macport，所以下文都是采用的Homebrew。&lt;/p>
+&lt;!-- more -->
+&lt;h2 id="0x1-nginx安装">0x1 Nginx安装
+&lt;/h2>&lt;p>通过Homebrew安装&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ brew search nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ brew install nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后通过&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ brew info nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>你可以看到关于nginx的各种信息&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">Docroot&lt;/span> &lt;span class="n">is&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">www&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Nginx&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">conf&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">etc&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">nginx&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">nginx&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">conf&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Log&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">nginx&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>通过&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>即可启动nginx，访问localhost:8080便可看到Nginx欢迎界面&lt;/p>
+&lt;h2 id="0x2-php">0x2 PHP
+&lt;/h2>&lt;p>采用了系统的php&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ php -v
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">PHP 5.6.30 (cli) (built: Oct 29 2017 20:30:32)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Copyright (c) 1997-2016 The PHP Group
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>想用php7也可以通过brew进行安装使用&lt;/p>
+&lt;h2 id="0x3-php-fpm">0x3 php-fpm
+&lt;/h2>&lt;p>按照上面流程走的话，如果在Nginx网站目录下创建一个index.php，内容为phpinfo，会发现访问index.php会出现直接下载，那便是因为还没有启动php-fpm以及配置nginx.conf的原因。&lt;/p>
+&lt;p>Mac自带php-fpm，但是这里还是有比较多坑的。
+参考来自: &lt;a class="link" href="https://github.com/musicode/test/issues/5" target="_blank" rel="noopener"
+>Mac 配置 php-fpm&lt;/a>&lt;/p>
+&lt;p>直接运行&lt;code>php-fpm&lt;/code>启动php-fpm&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">$&lt;/span> &lt;span class="n">php&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">fpm&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="mi">04&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">Mar&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">2018&lt;/span> &lt;span class="mi">00&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">35&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">04&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="n">ERROR&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">failed&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">open&lt;/span> &lt;span class="n">configuration&lt;/span> &lt;span class="n">file&lt;/span> &lt;span class="s1">&amp;#39;/private/etc/php-fpm.conf&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">No&lt;/span> &lt;span class="n">such&lt;/span> &lt;span class="n">file&lt;/span> &lt;span class="ow">or&lt;/span> &lt;span class="n">directory&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="mi">04&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">Mar&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">2018&lt;/span> &lt;span class="mi">00&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">35&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">04&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="n">ERROR&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">failed&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="nb">load&lt;/span> &lt;span class="n">configuration&lt;/span> &lt;span class="n">file&lt;/span> &lt;span class="s1">&amp;#39;/private/etc/php-fpm.conf&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>错误信息显示，不能打开配置文件，&lt;code>cd /private/etc&lt;/code>，发现没有 &lt;code>php-fpm.conf&lt;/code>文件，但是有&lt;code>php-fpm.conf.default&lt;/code>文件。这个文件是默认配置，我们可以复制一份，改名为&lt;code>php-fpm.conf&lt;/code>，然后再根据需要改动配置。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ sudo cp /private/etc/php-fpm.conf.default /private/etc/php-fpm.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>再执行&lt;code>php-fpm&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">$&lt;/span> &lt;span class="n">php&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">fpm&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ERROR&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">failed&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">open&lt;/span> &lt;span class="n">error_log&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">php&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">fpm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">log&lt;/span>&lt;span class="p">):&lt;/span> &lt;span class="n">No&lt;/span> &lt;span class="n">such&lt;/span> &lt;span class="n">file&lt;/span> &lt;span class="ow">or&lt;/span> &lt;span class="n">directory&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ERROR&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">failed&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">post&lt;/span> &lt;span class="n">process&lt;/span> &lt;span class="n">the&lt;/span> &lt;span class="n">configuration&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ERROR&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">FPM&lt;/span> &lt;span class="n">initialization&lt;/span> &lt;span class="n">failed&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>错误信息显示，不能打开错误日志文件。&lt;code>cd /usr/var/log&lt;/code>发现根本没有这个目录，甚至连&lt;code>var&lt;/code>目录都没有，加上为了避免权限问题，干脆配置到 &lt;code>/usr/local/var/log&lt;/code>目录。&lt;/p>
+&lt;p>修改&lt;code>php-fpm.conf&lt;/code>中&lt;code>error_log&lt;/code> 配置为 &lt;code>/usr/local/var/log/php-fpm.log&lt;/code>，并把 user 和 group 改为和当前用户一样。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="p">;&lt;/span> &lt;span class="n">Error&lt;/span> &lt;span class="nb">log&lt;/span> &lt;span class="n">file&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">;&lt;/span> &lt;span class="n">If&lt;/span> &lt;span class="n">it&lt;/span>&lt;span class="s1">&amp;#39;s set to &amp;#34;syslog&amp;#34;, log is sent to syslogd instead of being written&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">;&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="n">local&lt;/span> &lt;span class="n">file&lt;/span>&lt;span class="o">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">;&lt;/span> &lt;span class="n">Note&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">the&lt;/span> &lt;span class="n">default&lt;/span> &lt;span class="n">prefix&lt;/span> &lt;span class="n">is&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">;&lt;/span> &lt;span class="n">Default&lt;/span> &lt;span class="n">Value&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">php&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">fpm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">log&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">error_log&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">php&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">fpm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">log&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">;&lt;/span> &lt;span class="n">Unix&lt;/span> &lt;span class="n">user&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">group&lt;/span> &lt;span class="n">of&lt;/span> &lt;span class="n">processes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">;&lt;/span> &lt;span class="n">Note&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">The&lt;/span> &lt;span class="n">user&lt;/span> &lt;span class="n">is&lt;/span> &lt;span class="n">mandatory&lt;/span>&lt;span class="o">.&lt;/span> &lt;span class="n">If&lt;/span> &lt;span class="n">the&lt;/span> &lt;span class="n">group&lt;/span> &lt;span class="n">is&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">set&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">the&lt;/span> &lt;span class="n">default&lt;/span> &lt;span class="n">user&lt;/span>&lt;span class="s1">&amp;#39;s group&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">;&lt;/span> &lt;span class="n">will&lt;/span> &lt;span class="n">be&lt;/span> &lt;span class="n">used&lt;/span>&lt;span class="o">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">user&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">xxx&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="err">当前用户&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">group&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">xxx&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="err">当前用户组&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>怎么查看当前用户以及所属组呢？&lt;a class="link" href="http://www.cnblogs.com/520zijuan/archive/2013/02/03/2890851.html" target="_blank" rel="noopener"
+>参考链接&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ who //查看当前登陆的用户
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ finger //用于查找并显示用户信息
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ finger xxx //查看用户的信息
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ groups xxx //查看用户所属组别
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>执行 php-fpm，再次报错：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ php-fpm
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NOTICE: [pool www] &amp;#39;user&amp;#39; directive is ignored when FPM is not running as root
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NOTICE: [pool www] &amp;#39;group&amp;#39; directive is ignored when FPM is not running as root
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>于是用&lt;code>sudo php-fpm&lt;/code>，再次报错：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ sudo php-fpm
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ERROR: unable to bind listening socket for address &amp;#39;127.0.0.1:9000&amp;#39;: Address already in use (48)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ERROR: FPM initialization failed
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>编辑&lt;code>php-fpm.conf&lt;/code>，修改&lt;code>listen&lt;/code>为&lt;code>127.0.0.1:9999&lt;/code>。
+具体也可以参考&lt;a class="link" href="http://www.cnblogs.com/kaiye/archive/2013/05/25/3099393.html" target="_blank" rel="noopener"
+>Mac如何查看端口占用&lt;/a>&lt;/p>
+&lt;p>其实后来通过检查端口，发现当时占用的也是php-fpm，也有点疑惑。&lt;/p>
+&lt;p>可以用过&lt;code>sudo pkill php-fpm&lt;/code>关闭php-fpm&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ sudo pkill php-fpm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>最后&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">php-fpm -t
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[04-Mar-2018 01:56:01] NOTICE: configuration file /private/etc/php-fpm.conf test is successful
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="0x4-配置nginxconf">0x4 配置Nginx.conf
+&lt;/h2>&lt;p>nginx.conf的配置还是相当重要的，毕竟是nginx的配置文件&lt;/p>
+&lt;p>网上也挺多&lt;a class="link" href="https://www.jianshu.com/p/31c9d412585a" target="_blank" rel="noopener"
+>参考链接&lt;/a>&lt;/p>
+&lt;p>首先，找到&lt;code>server&lt;/code>的&lt;code>location&lt;/code>配置，给&lt;code>index&lt;/code>加一个&lt;code>index.php&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">location / {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> root html;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> index index.html index.htm index.php;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后配置端口，我改成了80端口，但是每次启动都需要sudo&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">server {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> listen 80;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> server_name localhost;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>接着去掉php相关的注释，并修改 fastcgi_param 参数&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">- fastcgi_param SCRIPT_FILENAME /scripts$fastcgi_script_name;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+ fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>所以完整php配置为&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">#
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">location ~ \.php$ {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> root html;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> fastcgi_pass 127.0.0.1:9000;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> fastcgi_index index.php;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> include fastcgi_params;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>重启Nginx&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">$&lt;/span> &lt;span class="n">sudo&lt;/span> &lt;span class="n">nginx&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="n">reload&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="0x5-brbrbr">0x5 BrBrBr
+&lt;/h2>&lt;p>好啦，可以开心地进行开发啦！&lt;/p></description></item><item><title>服务器配置的那些事--基于LNMP</title><link>https://zeddyu.github.io/p/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B--%E5%9F%BA%E4%BA%8Elnmp/</link><pubDate>Sat, 03 Mar 2018 01:09:00 +0000</pubDate><guid>https://zeddyu.github.io/p/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B--%E5%9F%BA%E4%BA%8Elnmp/</guid><description>&lt;p>感觉还是自己搭个服务器比较好。之前是大一下学期就想搭了的，只是当时好像已经开始实行了域名备案措施，江苏备案还要暂住证，就没去弄了，感觉自己用ip弄博客太傻了，所以还是一直用之前在某个博客系统上的博客。那个博客也有很多自己写的东西，而且有些还见不得人的东西-&amp;gt;_-&amp;gt;&lt;/p>
+&lt;p>所以这篇就用来记录一下就搭建服务器的一些坑&lt;/p>
+&lt;p>服务器用的是的vultr提供的，域名godaddy。系统centos 7.2&lt;/p>
+&lt;!-- more -->
+&lt;h2 id="0x0">0x0
+&lt;/h2>&lt;p>一开始Vultr选好服务器以后，会有个&lt;code>Startup Script&lt;/code>的选项，这个选项是可以执行一些服务器建好以后运行的脚本&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># NOTE: This is an example that sets up SSH authorization. To use it, you&amp;#39;d need to replace &amp;#34;ssh-rsa AA... youremail@example.com&amp;#34; with your SSH public.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># You can replace this entire script with anything you&amp;#39;d like, there is no need to keep it&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir -p /root/.ssh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chmod &lt;span class="m">600&lt;/span> /root/.ssh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> ssh-rsa AA... youremail@example.com &amp;gt; /root/.ssh/authorized_keys
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chmod &lt;span class="m">700&lt;/span> /root/.ssh/authorized_keys
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这是Vultr给的示例脚本示例。这样子的话，每次建服务器只需要你写好脚本就可以配置好一些通用的组件了，例如Nginx、php等。&lt;/p>
+&lt;p>我自己写的脚本不是很好，就不放出来了。&lt;/p>
+&lt;h2 id="0x1">0x1
+&lt;/h2>&lt;p>然后就是先开始配置nginx了&lt;/p>
+&lt;h3 id="1添加nginx到yum源">1.添加Nginx到YUM源
+&lt;/h3>&lt;p>添加CentOS 7 Nginx yum资源库,打开终端,使用以下命令:&lt;/p>
+&lt;pre>&lt;code>sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+&lt;/code>&lt;/pre>
+&lt;p>然后为了是最新稳定的Nginx，又特地去修改了yum的nginx.repo&lt;/p>
+&lt;pre>&lt;code>[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/mainline/OS/OSRELEASE/$basearch/
+gpgcheck=0
+enabled=1
+&lt;/code>&lt;/pre>
+&lt;p>按照&lt;a href="https://nginx.org/en/linux_packages.html">官方文档&lt;/a>来修改&lt;/p>
+&lt;h3 id="2开始安装nginx">2.开始安装Nginx
+&lt;/h3>&lt;p>在你的CentOS 7 服务器中使用&lt;code>yum&lt;/code>命令从Nginx源服务器中获取来安装Nginx：&lt;/p>
+&lt;pre>&lt;code>sudo yum install -y nginx
+&lt;/code>&lt;/pre>
+&lt;h3 id="3启动nginx">3.启动Nginx
+&lt;/h3>&lt;p>刚安装的Nginx不会自行启动。运行Nginx:&lt;/p>
+&lt;pre>&lt;code>sudo systemctl start nginx.service
+&lt;/code>&lt;/pre>
+&lt;p>然后可以通过&lt;/p>
+&lt;pre>&lt;code>curl localshost
+&lt;/code>&lt;/pre>
+&lt;p>来查看Nginx是否启动成功&lt;/p>
+&lt;h3 id="4centos-7-开机启动nginx">4.CentOS 7 开机启动Nginx
+&lt;/h3>&lt;pre>&lt;code>sudo systemctl enable nginx.service
+&lt;/code>&lt;/pre>
+&lt;h3 id="5一些nginx的常用目录">5.一些Nginx的常用目录
+&lt;/h3>&lt;p>网站文件存放默认目录:&lt;/p>
+&lt;pre>&lt;code>/usr/share/nginx/html
+&lt;/code>&lt;/pre>
+&lt;p>网站默认站点配置:&lt;/p>
+&lt;pre>&lt;code>/etc/nginx/conf.d/default.conf
+&lt;/code>&lt;/pre>
+&lt;p>自定义Nginx站点配置文件存放目录:&lt;/p>
+&lt;pre>&lt;code>/etc/nginx/conf.d/
+&lt;/code>&lt;/pre>
+&lt;p>Nginx全局配置&lt;/p>
+&lt;pre>&lt;code>/etc/nginx/nginx.conf
+&lt;/code>&lt;/pre>
+&lt;h3 id="6注意事项">6.注意事项
+&lt;/h3>&lt;p>比较坑的是一开始我只想配个Nginx然后配域名试试能不能访问，结果配好Nginx之后直接访问ip发现无法访问。然后考虑ip被墙了，但是吧,ping了ip还是能ping通的，但是无论挂不挂代理都还是不能访问。这就比较郁闷了。&lt;/p>
+&lt;p>后来经过提醒，用 &lt;code>ss -tan&lt;/code> 查看了一下端口，发现80已经是处于监听状态了，这就比较奇怪了，再去扫了一下服务器的端口，这时候发现80端口是关闭的。&lt;/p>
+&lt;p>百思不得其解，难道Vultr也有阿里云的那种安全防护，得手动打开？&lt;/p>
+&lt;p>然后问了一下大佬，就可能是防火墙的问题了。&lt;/p>
+&lt;p>Centos是自带的&lt;code>firewall&lt;/code>,&lt;code>iptables&lt;/code>,但是&lt;code>iptables&lt;/code>还得配置，我们就不用&lt;code>iptables&lt;/code>了，就用自带的&lt;code>firewalld&lt;/code>了&lt;/p>
+&lt;p>开始排查防火墙&lt;/p>
+&lt;p>先看看80是否开启&lt;/p>
+&lt;pre>&lt;code>firewall-cmd --query-port=80/tcp
+&lt;/code>&lt;/pre>
+&lt;p>显示&lt;/p>
+&lt;pre>&lt;code>no
+&lt;/code>&lt;/pre>
+&lt;p>果然是因为防火墙屏蔽了80端口，然后我们通过&lt;/p>
+&lt;pre>&lt;code>firewall-cmd --zone=public --add-port=80/tcp --permanent
+&lt;/code>&lt;/pre>
+&lt;p>打开80端口，
+显示&lt;/p>
+&lt;pre>&lt;code>success
+&lt;/code>&lt;/pre>
+&lt;p>即可开启80端口，然后重启防火墙&lt;/p>
+&lt;pre>&lt;code>systemctl [start|stop|restart] firewalld.service
+&lt;/code>&lt;/pre>
+&lt;p>终于可以看到熟悉的Nginx界面了。
+&lt;/p>
+&lt;h2 id="0x2">0x2
+&lt;/h2>&lt;p>接着就是MariaDB&lt;/p>
+&lt;h3 id="1安装">1.安装:
+&lt;/h3>&lt;pre>&lt;code>yum install mariadb mariadb-server
+&lt;/code>&lt;/pre>
+&lt;h3 id="2启动">2.启动
+&lt;/h3>&lt;pre>&lt;code>systemctl start mariadb
+&lt;/code>&lt;/pre>
+&lt;h3 id="3开机启动">3.开机启动
+&lt;/h3>&lt;pre>&lt;code>systemctl enable mariadb
+&lt;/code>&lt;/pre>
+&lt;h3 id="4配置mariadb">4.配置MariaDB
+&lt;/h3>&lt;pre>&lt;code>mysql_secure_installation
+&lt;/code>&lt;/pre>
+&lt;h3 id="5测试">5.测试
+&lt;/h3>&lt;pre>&lt;code>mysql -u root -p
+&lt;/code>&lt;/pre>
+&lt;h2 id="0x3">0x3
+&lt;/h2>&lt;p>再装php&lt;/p>
+&lt;p>&lt;a href="https://www.vultr.com/docs/how-to-install-php-7-x-on-centos-7">Vultr&lt;/a>有比较详细的安装教程,我就贴出来了。这里装的是php7.1&lt;/p>
+&lt;p>然后再安装个php-fpm&lt;/p>
+&lt;pre>&lt;code>yum install php71w-fpm
+&lt;/code>&lt;/pre>
+&lt;p>这里注意的是php7.1是php71w的前缀&lt;/p>
+&lt;p>接下来进入Nginx的目录配置nginx.conf或者是/conf.d/default.d，一般目录是在&lt;code>/etc/nginx/&lt;/code>,把下面这段注释取消就好了。&lt;/p>
+&lt;pre>&lt;code>location ~ \.php$ {
+root html;
+fastcgi_pass 127.0.0.1:9000;
+fastcgi_index index.php;
+fastcgi_param SCRIPT_FILENAME /scripts$fastcgi_script_name;
+include fastcgi_params;
+}
+&lt;/code>&lt;/pre>
+&lt;p>值得一提的是，我在配阿里云都没出现在过什么问题，但是就是配Vultr就出现了一些坑&lt;/p>
+&lt;p>首先是出现了&lt;/p>
+&lt;pre>&lt;code>connect() failed (111: Connection refused) while connecting to upstream, server: localhost, request: &amp;quot;GET /xxx.php HTTP/1.1&amp;quot;, upstream: &amp;quot;fastcgi://127.0.0.1:9000&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>这个就是php-fpm忘记开了&lt;/p>
+&lt;p>然后又碰到了&lt;code>File Not Found&lt;/code>的错误,&lt;code>cat&lt;/code>了&lt;code>error.log&lt;/code>看一下:&lt;/p>
+&lt;pre>&lt;code>FastCGI sent in stderr: &amp;quot;Primary script unknown&amp;quot; while reading response header from upstream, server: localhost, request: &amp;quot;GET /test.php HTTP/1.1&amp;quot;, upstream: &amp;quot;fastcgi://127.0.0.1:9000&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>这就比较郁闷了，不过Google还是能找到的，反正就是说&lt;code>File Not Found&lt;/code>，看了一下原来是location的&lt;code>root&lt;/code>配置问题，&lt;/p>
+&lt;pre>&lt;code>location ~ \.php$ {
+root /usr/share/nginx/html;
+fastcgi_pass 127.0.0.1:9000;
+fastcgi_index index.php;
+fastcgi_param SCRIPT_FILENAME /$document_root$fastcgi_script_name;
+include fastcgi_params;
+}
+&lt;/code>&lt;/pre>
+&lt;p>特别要注意root指向的位置，这又是比较坑的东西。&lt;/p>
+&lt;p>然后就是安装typecho的坑了。&lt;/p>
+&lt;h2 id="0x4">0x4
+&lt;/h2>&lt;h3 id="这里就简单提提typecho的坑">这里就简单提提typecho的坑。
+&lt;/h3>&lt;p>第一个就是与nginx的配置，这个还好有&lt;a href="http://docs.typecho.org/servers">文档&lt;/a>，但是只能解决我的&lt;/p>
+&lt;pre>&lt;code>无法登录后台，点击前台链接或者后台登录时出现&amp;quot;404, not found&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>这个问题&lt;/p>
+&lt;p>还有出现的一个问题就是typecho的登录302的问题。&lt;/p>
+&lt;p>还好有大佬直接给了我解决方案:&lt;/p>
+&lt;pre>&lt;code>在config.inc.php加入define('__TYPECHO_SECURE__',1);
+&lt;/code>&lt;/pre>
+&lt;p>后来查了一下发现这个是用来开启https访问typecho的设置&lt;/p>
+&lt;pre>&lt;code>/** 开启HTTPS */
+define('__TYPECHO_SECURE__',true);
+&lt;/code>&lt;/pre>
+&lt;p>具体可以参照一下这篇&lt;a href="https://faq.xiaoz.me/archives/64.html">文章&lt;/a>&lt;/p>
+&lt;p>还有typecho点击评论确无法评论的问题，只要在typecho管理员控制台中在永久链接中把自定义文章路径&lt;/p>
+&lt;p>默认是&lt;/p>
+&lt;pre>&lt;code>默认风格 /archives/{cid}/
+&lt;/code>&lt;/pre>
+&lt;p>改成&lt;/p>
+&lt;pre>&lt;code>wordpress风格 /archives/{slug}.html
+&lt;/code>&lt;/pre>
+&lt;p>具体原因没查，我猜也是nginx与typecho的pathinfo问题&lt;/p>
+&lt;h2 id="0x5">0x5
+&lt;/h2>&lt;p>这篇文章主要就到这吧，后续会增加一些自己以后遇到的问题&lt;/p></description></item><item><title>Docker镜像的时间问题</title><link>https://zeddyu.github.io/p/docker%E9%95%9C%E5%83%8F%E7%9A%84%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98/</link><pubDate>Sun, 28 Jan 2018 01:01:00 +0000</pubDate><guid>https://zeddyu.github.io/p/docker%E9%95%9C%E5%83%8F%E7%9A%84%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98/</guid><description>&lt;p>今天刚刚开始做PA0，发现自己对Docker的研究也不是很深，也就是在赛宁的那段日子，算是一个契机吧，让我们用&lt;code>Docker&lt;/code>搭比赛环境，那个时候开始接触的Docker，然后也跟Rex请教了有关Docker的一些知识。还以为算是比较了解Docker了吧，今天发现自己还是菜的呀。&lt;/p>
+&lt;!-- more -->
+&lt;p>首先今天吧，把Debian镜像给弄好了，然后装上了&lt;code>oh my zsh&lt;/code>，然后发现一个显示时间比较方便的主题，我的&lt;code>Mac&lt;/code>是&lt;a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Themes#agnoster">agnoster&lt;/a>的主题，还是比较好看的。但是用久了也想在docker上换换新的来用用。也通过这次课正式地研究一下Docker吧。&lt;/p>
+&lt;p>于是在用&lt;a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Themes#ys">ys&lt;/a>这个主题的时候，发现时间是不对的。这个又不是服务器，所以我觉得还是有问题的，保持着研究问题的态度看了一下。&lt;/p>
+&lt;p>&lt;code>Docker Debian&lt;/code>里用&lt;code>date&lt;/code>命令看一下&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># zedd @ c7c452f36fc4 in ~ [16:24:36]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ date
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Sat Jan 27 16:25:00 UTC 2018
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后查了一下，很快就找到了原来是时区的问题。我的Mac上&lt;code>date&lt;/code>是&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">zedd@ZedddeMac / date
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2018年 1月28日 星期日 00时43分52秒 CST
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>哈，只要改改时区应该就可以了。不过网上给的答案好像都比较麻烦，我&lt;code>Google&lt;/code>到的&lt;a href="http://www.cnblogs.com/zhangmingcheng/p/6233527.html">第一条&lt;/a>，修改&lt;code>Dockerfile&lt;/code>个人认为是一个在创建的时候用的，还有其他的方法可能部分人看不懂，而且格式不太一样。我感觉应该还是有直接修改时区的办法的，毕竟在GUI下还是可以修改时区时间的。&lt;/p>
+&lt;p>下面给出直接的解决方案（操作在Debian 9下）:
+直接用&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">dpkg-reconfigure tzdata
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>若&lt;code>command not found&lt;/code>，可以&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">cd /usr/sbin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo ./dpkg-reconfigure tzdata
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后选择相应的时区与时间，这里我选择了&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">6. Asia
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">69. Shanghai
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>再用&lt;code>date&lt;/code>一看，哈，好了&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># zedd @ c7c452f36fc4 in /usr/sbin [0:55:52]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ date
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Sun Jan 28 00:56:14 CST 2018
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>顺便说一下，&lt;code>ys&lt;/code>主题上的时间是你上次操作结束的时间。（主题用起来还是不错的，值得推荐。&lt;/p>
+&lt;p>最后再科普一波&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">世界协调时间UTC
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 多数的两地时间表都以GMT来表示，但也有些两地时间表上看不到GMT字样，出现的反而是UTC这3个英文字母，究竟何谓UTC？事实上，UTC指的是Coordinated Universal Time－ 世界协调时间（又称世界标准时间、世界统一时间），是经过平均太阳时(以格林威治时间GMT为准)、地轴运动修正后的新时标以及以「秒」为单位的国际原子时所综合精算而成的时间，计算过程相当严谨精密，因此若以「世界标准时间」的角度来说，UTC比GMT来得更加精准。其误差值必须保持在0.9秒以内，若大于0.9秒则由位于巴黎的国际地球自转事务中央局发布闰秒，使UTC与地球自转周期一致。所以基本上UTC的本质强调的是比GMT更为精确的世界时间标准，不过对于现行表款来说，GMT与UTC的功能与精确度是没有差别的。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">夏日节约时间DST
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 所谓「夏日节约时间」Daylight Saving Time（简称D.S.T.），是指在夏天太阳升起的比较早时，将时钟拨快一小时，以提早日光的使用，在英国则称为夏令时间(Summer Time)。这个构想于1784年由美国班杰明·富兰克林提出来，1915年德国成为第一个正式实施夏令日光节约时间的国家，以削减灯光照明和耗电开支。自此以后，全球以欧洲和北美为主的约70个国家都引用这个做法。目前被划分成两个时区的印度也正在商讨是否全国该统一实行夏令日光节约时间。欧洲手机上也有很多GSM系统的基地台，除了会传送当地时间外也包括夏令日光节约时间，做为手机的时间标准，使用者可以自行决定要开启或关闭。值得注意的是，某些国家有实施「夏日节约时间」的制度，出国时别忘了跟随当地习惯在表上调整一下，这可是机械表没有的功能设计哦！
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CST时间
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CST却同时可以代表如下 4 个不同的时区：
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Central Standard Time (USA) UT-6:00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Central Standard Time (Australia) UT+9:30
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">China Standard Time UT+8:00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Cuba Standard Time UT-4:00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">可见，CST可以同时表示美国，澳大利亚，中国，古巴四个国家的标准时间。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---------------------------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">部分来自CSDN博客，转载请标明出处：
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">http://www.51testing.com/html/74/248074-209865.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Bootstrap-select碰到的一些问题</title><link>https://zeddyu.github.io/p/bootstrap-select%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/</link><pubDate>Sat, 27 Jan 2018 00:38:00 +0000</pubDate><guid>https://zeddyu.github.io/p/bootstrap-select%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/</guid><description>&lt;p>项目中需要用到的是多选下拉框，由于项目用的是bootstrap，我便找到了bootstrap-select这个可以提供多选下拉框的库。&lt;/p>
+&lt;!-- more -->
+&lt;p>因为这个项目是用ajax获取数据然后把数据放入select中的，而原生的select multiple又实在是太僵硬&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">&amp;lt;select multiple&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;option&amp;gt;没错&amp;lt;/option&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;option&amp;gt;就是&amp;lt;/option&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;option&amp;gt;这么&amp;lt;/option&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;option&amp;gt;僵硬&amp;lt;/option&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;/select&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>查了一下w3c&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">定义和用法
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">multiple 属性规定可同时选择多个选项。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">在不同操作系统中，选择多个选项的差异：
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">对于 windows：按住 Ctrl 按钮来选择多个选项
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">对于 Mac：按住 command 按钮来选择多个选项
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">由于上述差异的存在，同时由于需要告知用户可以使用多项选择，对用户更友好的方式是使用复选框。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">提示：可以把 multiple 属性与 size 属性配合使用，来定义可见选项的数目
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>僵硬的不行。感觉自己写的话，一方面自己能力不足吧，另一方面是应该会有一大堆的库，自己写感觉太浪费时间，所以自己就去网上随便搜了一下，就发现了Bootstrap-select这个库，看起来很符合要求！那就决定是它啦！&lt;/p>
+&lt;p>然后发现的一个问题是因为项目用到的数据是通过ajax来获取的，而且我们还用的是jquery拼接的形式，所以是html是&lt;code>&amp;lt;select ...&amp;gt;&amp;lt;/select&amp;gt;&lt;/code>,js文件拼接是&lt;code>&amp;lt;option&amp;gt;...&amp;lt;/option&amp;gt;&lt;/code>,但是就是这样出现了问题，并没有显示出我们想要的效果，没有显示出有数据的下拉框。当时感觉比较奇怪，感觉是框架的问题，又重新试了几次，发现只有在html文件里写&lt;code>option&lt;/code>标签才能正常显示下拉框效果，就比较郁闷。&lt;/p>
+&lt;p>接着之后就又去找另一个库，然后发现了&lt;code>Amaze&lt;/code>这个前端框架，有多选，又好看，只不过如果要改，改的成本会很大，页面基本都得改。当时觉得为了这个多选，一方面是Bootstrap 3已经用烂了，不怎么好看，一方面也是为了多选，说换就换。然后基本把几个页面重构了。结果发现很累，而且出现了无法获取&lt;code>Amaze select&lt;/code>选中的&lt;code>option&lt;/code>的值，就比较烦，原本功能完好的页面被这么一折腾，基本功能都不好了。后来因为一些事有一段时间没理这个问题了。&lt;/p>
+&lt;p>好不容易有时间抽出空来，当时已经忘了之前做过什么了，就感觉&lt;code>Amaze&lt;/code>这个解决不了，就又去找多选的下拉框架，这样又找回了&lt;code>Bootstrap-select&lt;/code>这个库，然后用，至少能拯救基本功能，所以又放弃了重构到40%左右的&lt;code>Amaze&lt;/code>框架，刚好那时候&lt;code>Bootstrap 4&lt;/code>官方文档出来了，已经是正式版了，就换上了4，结果&lt;code>Bootstrap-select&lt;/code>这个库官网的版本还没有支持&lt;code>Bootstrap 4&lt;/code>，可是项目我又改了挺多的改成了4，这样改来改去不是问题啊。&lt;/p>
+&lt;p>于是我想起了之前某位高人跟我说解决问题的方法，如果遇到问题只是换框架，不去追究怎么解决，那始终是个sdk搬运工。&lt;/p>
+&lt;p>一方面感觉自己这样下去不是办法，另一方面是自己也并不想只做个搬运工，至少得是个高级搬运工吧:)&lt;/p>
+&lt;p>然后静下来，一个个问题去搜，基本也都有，比如因为&lt;code>Bootstrap 4&lt;/code>正式版刚出来，&lt;code>select&lt;/code>库还没有官网地上线支持，但是在他的&lt;code>github&lt;/code>上已经有issue了，也提供了最新的支持版本。&lt;/p>
+&lt;p>接着，解决ajax的问题，个人当初觉得是因为数据发送在页面渲染之后，导致页面没有及时的把组件渲染出来，当时是搁置了一天左右，也懒得去找答案，后来随便一搜又搜到了该问题。附上&lt;a href="http://insekkei.com/blogs/bootstrap/js/2015/08/25/bootstrap-select-with-ajax-data.html">原链接&lt;/a>，然后又是多选框的选中&lt;code>option&lt;/code>的值的获取问题，只要搜一搜就能&lt;a href="https://github.com/silviomoreto/bootstrap-select/issues/1769">找到&lt;/a>了。&lt;/p>
+&lt;p>其实吧，这次碰到的问题都很简单，但是自己处理起来感觉极其xx，而且繁琐，最主要的是文档很重要，就比如&lt;code>Bootstrap-select&lt;/code>文档明明就写有很多&lt;code>method&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">.selectpicker(&amp;#39;render&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">You can force a re-render of the bootstrap-select ui with the render method. This is useful if you programatically change any underlying values that affect the layout of the element.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$(&amp;#39;.selectpicker&amp;#39;).selectpicker(&amp;#39;render&amp;#39;);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">.selectpicker(&amp;#39;refresh&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">To programmatically update a select with JavaScript, first manipulate the select, then use the refresh method to update the UI to match the new state. This is necessary when removing or adding options, or when disabling/enabling a select via JavaScript.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$(&amp;#39;.selectpicker&amp;#39;).selectpicker(&amp;#39;refresh&amp;#39;);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>反而自己舍近求远，弄的相当复杂，同时如果有github，github的issue也是一个非常重要的解决方法的途径。&lt;/p>
+&lt;p>本文就想记述一下自己解决问题时候的方法，问题有很多，方法也可以有很多，也可以有很快的方法，希望通过这次能提高一下自己解决问题的能力，不再是一个sdk搬运工:)&lt;/p></description></item></channel></rss>

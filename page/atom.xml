@@ -1,307 +1,246 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on Zeddy's Blog</title><link>https://zeddyu.github.io/page/</link><description>Recent content in Pages on Zeddy's Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Tue, 28 May 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/page/atom.xml" rel="self" type="application/rss+xml"/><item><title>Archives</title><link>https://zeddyu.github.io/page/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><guid>https://zeddyu.github.io/page/archives/</guid><description/></item><item><title>About</title><link>https://zeddyu.github.io/page/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zeddyu.github.io/page/about/</guid><description>&lt;p>Some useless but interesting CVE ID which I found.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on Zeddy's Blog</title><link>https://zeddyu.github.io/page/</link><description>Recent content in Pages on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 30 Dec 2024 16:47:28 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/page/atom.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://zeddyu.github.io/about/</link><pubDate>Mon, 30 Dec 2024 00:00:00 +0000</pubDate><guid>https://zeddyu.github.io/about/</guid><description>&lt;p>Some useless but interesting CVE IDs that I found.&lt;/p>
 &lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th>Name&lt;/th>
- &lt;th>CVE ID&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td>Apache Commons Net&lt;/td>
- &lt;td>CVE-2021-37533&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Apache HTTP Server&lt;/td>
- &lt;td>CVE-2022-36760&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Apache Tomcat&lt;/td>
- &lt;td>CVE-2019-17569/CVE-2020-1935&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Apache Traffic Server&lt;/td>
- &lt;td>CVE-2020-1944&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Ktor&lt;/td>
- &lt;td>CVE-2020-26129/CVE-2021-25762&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Hyper&lt;/td>
- &lt;td>CVE-2021-21299&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Inetutils&lt;/td>
- &lt;td>CVE-2021-40491&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Microsoft IIS Server&lt;/td>
- &lt;td>CVE-2020-0645&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Mysqljs&lt;/td>
- &lt;td>CVE-2019-14939(Actually Not)&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Netty&lt;/td>
- &lt;td>CVE-2019-20444/CVE-2019-20445&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Oracle Weblogic Server&lt;/td>
- &lt;td>CVE-2020-2867/CVE-2020-14588/CVE-2020-14589&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Puma&lt;/td>
- &lt;td>CVE-2020-11076/CVE-2020-11077&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Red Hat undertow&lt;/td>
- &lt;td>CVE-2020-10719&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Twisted&lt;/td>
- &lt;td>CVE-2020-10108/CVE-2020-10109&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Waitress&lt;/td>
- &lt;td>CVE-2019-16789&lt;/td>
- &lt;/tr>
- &lt;/tbody>
+&lt;thead>
+&lt;tr>
+&lt;th>Name&lt;/th>
+&lt;th>CVE ID&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Apache Commons Net&lt;/td>
+&lt;td>CVE-2021-37533&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Apache HTTP Server&lt;/td>
+&lt;td>CVE-2022-36760&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Apache Tomcat&lt;/td>
+&lt;td>CVE-2019-17569/CVE-2020-1935&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Apache Traffic Server&lt;/td>
+&lt;td>CVE-2020-1944&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ktor&lt;/td>
+&lt;td>CVE-2020-26129/CVE-2021-25762&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Hyper&lt;/td>
+&lt;td>CVE-2021-21299&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Inetutils&lt;/td>
+&lt;td>CVE-2021-40491&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Microsoft IIS Server&lt;/td>
+&lt;td>CVE-2020-0645&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mysqljs&lt;/td>
+&lt;td>CVE-2019-14939(Actually Not)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Netty&lt;/td>
+&lt;td>CVE-2019-20444/CVE-2019-20445&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Oracle Weblogic Server&lt;/td>
+&lt;td>CVE-2020-2867/CVE-2020-14588/CVE-2020-14589&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Puma&lt;/td>
+&lt;td>CVE-2020-11076/CVE-2020-11077&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Red Hat undertow&lt;/td>
+&lt;td>CVE-2020-10719&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Twisted&lt;/td>
+&lt;td>CVE-2020-10108/CVE-2020-10109&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Waitress&lt;/td>
+&lt;td>CVE-2019-16789&lt;/td>
+&lt;/tr>
+&lt;/tbody>
 &lt;/table>
 &lt;p>Publications:&lt;/p>
 &lt;ul>
 &lt;li>&lt;a class="link" href="https://shenkaiwen.com/publication/2022-hdiff/" target="_blank" rel="noopener"
- >HDiff: A Semi-automatic Framework for Discovering Semantic Gap Attack in HTTP Implementations&lt;/a>. In &lt;a class="link" href="https://dsn2022.github.io/" target="_blank" rel="noopener"
- >&lt;em>DSN&lt;/em>&lt;/a>, Best Paper Runner-Up, 2022.&lt;/li>
+>HDiff: A Semi-automatic Framework for Discovering Semantic Gap Attack in HTTP Implementations&lt;/a>. In &lt;a class="link" href="https://dsn2022.github.io/" target="_blank" rel="noopener"
+>&lt;em>DSN&lt;/em>&lt;/a>, Best Paper Runner-Up, 2022.&lt;/li>
 &lt;li>&lt;a class="link" href="https://lixiang521.com/publication/sigmetrics23/" target="_blank" rel="noopener"
- >DareShark: Detecting and Measuring Security Risks of Hosting-Based Dangling Domains&lt;/a>. In &lt;a class="link" href="https://www.sigmetrics.org/sigmetrics2023/" target="_blank" rel="noopener"
- >&lt;em>2023 ACM SIGMETRICS&lt;/em>&lt;/a>. 2023.&lt;/li>
+>DareShark: Detecting and Measuring Security Risks of Hosting-Based Dangling Domains&lt;/a>. In &lt;a class="link" href="https://www.sigmetrics.org/sigmetrics2023/" target="_blank" rel="noopener"
+>&lt;em>2023 ACM SIGMETRICS&lt;/em>&lt;/a>. 2023.&lt;/li>
 &lt;/ul>
-&lt;p>Contact:&lt;/p></description></item><item><title>Friends</title><link>https://zeddyu.github.io/page/friends/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zeddyu.github.io/page/friends/</guid><description>&lt;p>无序，大部分为单方向友链，方便自己膜拜大师傅们的博客。&lt;/p>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th>Group&lt;/th>
- &lt;th>Name&lt;/th>
- &lt;th>Link&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td>Develop&lt;/td>
- &lt;td>Rex&lt;/td>
- &lt;td>&lt;a class="link" href="https://www.rexskz.info/" target="_blank" rel="noopener"
- >https://www.rexskz.info/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>AddOneG&lt;/td>
- &lt;td>&lt;a class="link" href="http://www.addoneg.com/" target="_blank" rel="noopener"
- >http://www.addoneg.com/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Ninjiacoder&lt;/td>
- &lt;td>&lt;a class="link" href="http://rayzhao98.top/" target="_blank" rel="noopener"
- >http://rayzhao98.top/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>板&lt;/td>
- &lt;td>&lt;a class="link" href="https://yuwenjie.cc/" target="_blank" rel="noopener"
- >https://yuwenjie.cc/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Team&lt;/td>
- &lt;td>A2OS&lt;/td>
- &lt;td>&lt;a class="link" href="https://a2os.club/" target="_blank" rel="noopener"
- >https://a2os.club/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Asuri&lt;/td>
- &lt;td>&lt;a class="link" href="https://www.asuri.org" target="_blank" rel="noopener"
- >https://www.asuri.org&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Security&lt;/td>
- &lt;td>白师傅&lt;/td>
- &lt;td>&lt;a class="link" href="https://www.summershrimp.com/" target="_blank" rel="noopener"
- >https://www.summershrimp.com/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>hac425&lt;/td>
- &lt;td>&lt;a class="link" href="https://www.cnblogs.com/hac425/" target="_blank" rel="noopener"
- >https://www.cnblogs.com/hac425/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>耗几锅锅&lt;/td>
- &lt;td>&lt;a class="link" href="http://showlinkroom.me/" target="_blank" rel="noopener"
- >http://showlinkroom.me/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>DoubleMice&lt;/td>
- &lt;td>&lt;a class="link" href="https://doublemice.github.io/" target="_blank" rel="noopener"
- >https://doublemice.github.io/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Imagemlt&lt;/td>
- &lt;td>&lt;a class="link" href="http://hexo.imagemlt.xyz/" target="_blank" rel="noopener"
- >http://hexo.imagemlt.xyz/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>P牛&lt;/td>
- &lt;td>&lt;a class="link" href="https://www.leavesongs.com/" target="_blank" rel="noopener"
- >https://www.leavesongs.com/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>梅子酒&lt;/td>
- &lt;td>&lt;a class="link" href="https://meizjm3i.github.io/" target="_blank" rel="noopener"
- >https://meizjm3i.github.io/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>默小西&lt;/td>
- &lt;td>&lt;a class="link" href="http://moxiaoxi.info/" target="_blank" rel="noopener"
- >http://moxiaoxi.info/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>CHYbeta&lt;/td>
- &lt;td>&lt;a class="link" href="https://chybeta.github.io" target="_blank" rel="noopener"
- >https://chybeta.github.io&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>LoRexxar&lt;/td>
- &lt;td>&lt;a class="link" href="http://lorexxar.cn" target="_blank" rel="noopener"
- >http://lorexxar.cn&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>K0rz3n&lt;/td>
- &lt;td>&lt;a class="link" href="http://www.k0rz3n.com" target="_blank" rel="noopener"
- >http://www.k0rz3n.com&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Venenof7&lt;/td>
- &lt;td>&lt;a class="link" href="http://www.venenof.com/" target="_blank" rel="noopener"
- >http://www.venenof.com/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>4uuu Nya&lt;/td>
- &lt;td>&lt;a class="link" href="https://qvq.im/" target="_blank" rel="noopener"
- >https://qvq.im/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>一叶飘零&lt;/td>
- &lt;td>&lt;a class="link" href="http://skysec.top/" target="_blank" rel="noopener"
- >http://skysec.top/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Tom4t0&lt;/td>
- &lt;td>&lt;a class="link" href="https://bl4ck.in/" target="_blank" rel="noopener"
- >https://bl4ck.in/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Virink&lt;/td>
- &lt;td>&lt;a class="link" href="https://www.virzz.com/" target="_blank" rel="noopener"
- >https://www.virzz.com/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>zsx&lt;/td>
- &lt;td>&lt;a class="link" href="https://blog.zsxsoft.com" target="_blank" rel="noopener"
- >https://blog.zsxsoft.com&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Decade&lt;/td>
- &lt;td>&lt;a class="link" href="https://wulidecade.cn/" target="_blank" rel="noopener"
- >https://wulidecade.cn/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>RRR&lt;/td>
- &lt;td>http://120.79.211.91/&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Rmb122&lt;/td>
- &lt;td>&lt;a class="link" href="https://rmb122.com/" target="_blank" rel="noopener"
- >https://rmb122.com/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>RR&lt;/td>
- &lt;td>&lt;a class="link" href="https://ricterz.me/" target="_blank" rel="noopener"
- >https://ricterz.me/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>evoA&lt;/td>
- &lt;td>&lt;a class="link" href="https://evoa.me/" target="_blank" rel="noopener"
- >https://evoa.me/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Hpdoger&lt;/td>
- &lt;td>&lt;a class="link" href="https://hpdoger.cn/" target="_blank" rel="noopener"
- >https://hpdoger.cn/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>wonderkun&lt;/td>
- &lt;td>&lt;a class="link" href="https://wonderkun.cc/" target="_blank" rel="noopener"
- >https://wonderkun.cc/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>MiaoTony&lt;/td>
- &lt;td>&lt;a class="link" href="https://miaotony.xyz" target="_blank" rel="noopener"
- >https://miaotony.xyz&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Y1ng&lt;/td>
- &lt;td>&lt;a class="link" href="https://gem-love.com/" target="_blank" rel="noopener"
- >https://gem-love.com/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>gml&lt;/td>
- &lt;td>&lt;a class="link" href="https://igml.top/" target="_blank" rel="noopener"
- >https://igml.top/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>LFY&lt;/td>
- &lt;td>&lt;a class="link" href="https://lfysec.top/" target="_blank" rel="noopener"
- >https://lfysec.top/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>rebirth&lt;/td>
- &lt;td>&lt;a class="link" href="https://blog.rebirthwyw.top/" target="_blank" rel="noopener"
- >https://blog.rebirthwyw.top/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>&lt;/td>
- &lt;td>Yihang&lt;/td>
- &lt;td>&lt;a class="link" href="https://overflow.host/" target="_blank" rel="noopener"
- >https://overflow.host/&lt;/a>&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table></description></item><item><title>Search</title><link>https://zeddyu.github.io/page/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zeddyu.github.io/page/search/</guid><description/></item></channel></rss>
+&lt;p>Contact:&lt;/p>
+&lt;ul>
+&lt;li>Mail: &lt;code>echo emVkZHl1Lmx1QGdtYWlsLmNvbQ== | base64 --decode&lt;/code>&lt;/li>
+&lt;li>Follow me on twitter: &lt;a class="link" href="https://twitter.com/ZeddYu_Lu" target="_blank" rel="noopener"
+>Zeddy&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Links</title><link>https://zeddyu.github.io/links/</link><pubDate>Mon, 10 May 2021 10:40:54 +0000</pubDate><guid>https://zeddyu.github.io/links/</guid><description>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Group&lt;/th>
+&lt;th>Name&lt;/th>
+&lt;th>Link&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Developer&lt;/td>
+&lt;td>Rex&lt;/td>
+&lt;td>&lt;a class="link" href="https://www.rexskz.info/" target="_blank" rel="noopener"
+>https://www.rexskz.info/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>板&lt;/td>
+&lt;td>&lt;a class="link" href="https://yuwenjie.cc/" target="_blank" rel="noopener"
+>https://yuwenjie.cc/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Team&lt;/td>
+&lt;td>Asuri&lt;/td>
+&lt;td>&lt;a class="link" href="https://www.asuri.org" target="_blank" rel="noopener"
+>https://www.asuri.org&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>Water Paddler&lt;/td>
+&lt;td>&lt;a class="link" href="https://waterpaddler.team/" target="_blank" rel="noopener"
+>https://waterpaddler.team/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Security&lt;/td>
+&lt;td>白师傅&lt;/td>
+&lt;td>&lt;a class="link" href="https://www.summershrimp.com/" target="_blank" rel="noopener"
+>https://www.summershrimp.com/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>hac425&lt;/td>
+&lt;td>&lt;a class="link" href="https://www.cnblogs.com/hac425/" target="_blank" rel="noopener"
+>https://www.cnblogs.com/hac425/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>耗几锅锅&lt;/td>
+&lt;td>&lt;a class="link" href="http://showlinkroom.me/" target="_blank" rel="noopener"
+>http://showlinkroom.me/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>DoubleMice&lt;/td>
+&lt;td>&lt;a class="link" href="https://doublemice.github.io/" target="_blank" rel="noopener"
+>https://doublemice.github.io/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>P牛&lt;/td>
+&lt;td>&lt;a class="link" href="https://www.leavesongs.com/" target="_blank" rel="noopener"
+>https://www.leavesongs.com/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>梅子酒&lt;/td>
+&lt;td>&lt;a class="link" href="https://meizjm3i.github.io/" target="_blank" rel="noopener"
+>https://meizjm3i.github.io/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>默小西&lt;/td>
+&lt;td>&lt;a class="link" href="https://shenkaiwen.com/" target="_blank" rel="noopener"
+>https://shenkaiwen.com/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>LoRexxar&lt;/td>
+&lt;td>&lt;a class="link" href="http://lorexxar.cn" target="_blank" rel="noopener"
+>http://lorexxar.cn&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>K0rz3n&lt;/td>
+&lt;td>&lt;a class="link" href="http://www.k0rz3n.com" target="_blank" rel="noopener"
+>http://www.k0rz3n.com&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>Venenof7&lt;/td>
+&lt;td>&lt;a class="link" href="http://www.venenof.com/" target="_blank" rel="noopener"
+>http://www.venenof.com/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>4uuu Nya&lt;/td>
+&lt;td>&lt;a class="link" href="https://qvq.im/" target="_blank" rel="noopener"
+>https://qvq.im/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>zsx&lt;/td>
+&lt;td>&lt;a class="link" href="https://blog.zsxsoft.com" target="_blank" rel="noopener"
+>https://blog.zsxsoft.com&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>Rmb122&lt;/td>
+&lt;td>&lt;a class="link" href="https://rmb122.com/" target="_blank" rel="noopener"
+>https://rmb122.com/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>RR&lt;/td>
+&lt;td>&lt;a class="link" href="https://ricterz.me/" target="_blank" rel="noopener"
+>https://ricterz.me/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>Hpdoger&lt;/td>
+&lt;td>&lt;a class="link" href="https://hpdoger.cn/" target="_blank" rel="noopener"
+>https://hpdoger.cn/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>wonderkun&lt;/td>
+&lt;td>&lt;a class="link" href="https://wonderkun.cc/" target="_blank" rel="noopener"
+>https://wonderkun.cc/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>MiaoTony&lt;/td>
+&lt;td>&lt;a class="link" href="https://miaotony.xyz" target="_blank" rel="noopener"
+>https://miaotony.xyz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>gml&lt;/td>
+&lt;td>&lt;a class="link" href="https://igml.top/" target="_blank" rel="noopener"
+>https://igml.top/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>LFY&lt;/td>
+&lt;td>&lt;a class="link" href="https://lfysec.top/" target="_blank" rel="noopener"
+>https://lfysec.top/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>rebirth&lt;/td>
+&lt;td>&lt;a class="link" href="https://blog.rebirthwyw.top/" target="_blank" rel="noopener"
+>https://blog.rebirthwyw.top/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>Yihang&lt;/td>
+&lt;td>&lt;a class="link" href="https://overflow.host/" target="_blank" rel="noopener"
+>https://overflow.host/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Archives</title><link>https://zeddyu.github.io/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><guid>https://zeddyu.github.io/archives/</guid><description/></item><item><title>Search</title><link>https://zeddyu.github.io/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zeddyu.github.io/search/</guid><description/></item></channel></rss>

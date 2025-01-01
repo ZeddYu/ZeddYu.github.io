@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Php Reflect on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/php-reflect/</link><description>Recent content in Php Reflect on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 09 May 2019 22:49:10 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/php-reflect/atom.xml" rel="self" type="application/rss+xml"/><item><title>2019 CISCN RefSpace</title><link>https://zeddyu.github.io/p/2019-ciscn-refspace/</link><pubDate>Thu, 09 May 2019 22:49:10 +0000</pubDate><guid>https://zeddyu.github.io/p/2019-ciscn-refspace/</guid><description>&lt;p>国赛中 RefSpace 那道题的 wp 与研究。&lt;/p>
+&lt;p>[TOC]
+国赛 day2 出现了一道比较有意思的题，最后貌似只有5人能解出。赛时我尝试通过覆写函数来实现直接 getFlag ，最后发现自己还是太年轻了，预期解应该就是通过 php 反射类来覆写 namespace 中的&lt;code>sha1()&lt;/code>函数来达到 getFlag。&lt;/p>
+&lt;p>所以整个题解题思路大致是：&lt;/p>
+&lt;ul>
+&lt;li>通过 phar/zip 协议，绕过上传点拿到 webshell&lt;/li>
+&lt;li>通过 php 反射类覆写 &lt;code>sha1&lt;/code> 函数 getFlag
+让我们首先来了解一下 php 反射&lt;/li>
+&lt;/ul>
+&lt;h1 id="reflection">Reflection
+&lt;/h1>&lt;p>{% colorquote success %}&lt;/p>
+&lt;p>PHP 5 具有完整的反射 API，添加了对类、接口、函数、方法和扩展进行&lt;em>反向工程&lt;/em>的能力。 此外，反射 API 提供了方法来取出函数、类和方法中的文档注释。&lt;/p>
+&lt;p>请注意部分内部 API 丢失了反射扩展工作所需的代码。 例如，一个内置的 PHP 类可能丢失了反射属性的数据。这些少数的情况被认为是错误，不过， 正因为如此，它们应该被发现和修复。&lt;/p>
+&lt;p>{% endcolorquote %}&lt;/p>
+&lt;p>反射，直观理解就是根据到达地找到出发地和来源。比如，一个光秃秃的对象，我们可以仅仅通过这个对象就能知道它所属的类、拥有哪些方法。&lt;/p>
+&lt;h2 id="get">GET
+&lt;/h2>&lt;p>在&lt;a class="link" href="https://www.php.net/manual/zh/class.reflectionclass.php" target="_blank" rel="noopener"
+>Reflection Class&lt;/a>中我们可以看到很多比较有趣的 api ，例如 &lt;a class="link" href="https://www.php.net/manual/zh/reflectionclass.getproperties.php" target="_blank" rel="noopener"
+>getProperties&lt;/a>&lt;/p>
+&lt;p>官方文档也给出了例子：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Foo&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="nv">$foo&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">protected&lt;/span> &lt;span class="nv">$bar&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="nv">$baz&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$foo&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Foo&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflect&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionClass&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$foo&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$props&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$reflect&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">getProperties&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">ReflectionProperty&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="na">IS_PUBLIC&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nx">ReflectionProperty&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="na">IS_PROTECTED&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">foreach&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$props&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="nv">$prop&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">print&lt;/span> &lt;span class="nv">$prop&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">getName&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">var_dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$props&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>OutPut:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">foo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">bar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">=&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">object&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">ReflectionProperty&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="c1">#3 (2) {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">=&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="s2">&amp;#34;foo&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;class&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">=&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="s2">&amp;#34;Foo&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">=&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">object&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">ReflectionProperty&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="c1">#4 (2) {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">=&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="s2">&amp;#34;bar&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;class&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">=&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="s2">&amp;#34;Foo&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="读取私有成员变量">读取私有成员变量
+&lt;/h3>&lt;p>如果想要输出私有变量，就加上&lt;code>ReflectionProperty::IS_PRIVATE&lt;/code>即可。&lt;/p>
+&lt;h3 id="执行私有函数">执行私有函数
+&lt;/h3>&lt;p>既然可以拿到类成员的值，那么函数返回值能不能拿到呢？&lt;/p>
+&lt;p>当然是可以的&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Foo&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="nf">showFlag&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s1">&amp;#39;This is not flag&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Foo&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;showFlag&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">setAccessible&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">true&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">echo&lt;/span> &lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="nx">Foo&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>OutPut:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">This is not flag
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="set">SET
+&lt;/h2>&lt;h3 id="修改类的成员变量">修改类的成员变量
+&lt;/h3>&lt;p>利用&lt;code>ReflectionProperty::setValue&lt;/code>可以修改成员变量，可以参考&lt;a class="link" href="https://www.php.net/manual/zh/reflectionproperty.setvalue.php" target="_blank" rel="noopener"
+>官方文档&lt;/a>给出示例，这里也给一个例子，修改 private 或者 protected 类型的变量也要加上&lt;code>setAccessible(true)&lt;/code>，否则会报错&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Foo&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="nv">$foo&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">protected&lt;/span> &lt;span class="nv">$bar&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="nv">$baz&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$foo&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Foo&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflect&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionClass&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$foo&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//change foo fron 1 to 5
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nv">$reflect&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">getProperty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;foo&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">setValue&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$foo&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;5&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//change baz from 3 to 4
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nv">$baz&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$reflect&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">getProperty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;baz&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$baz&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">setAccessible&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">true&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$baz&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">setValue&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$foo&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;4&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//Output
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nv">$props&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$reflect&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">getProperties&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">ReflectionProperty&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="na">IS_PUBLIC&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nx">ReflectionProperty&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="na">IS_PROTECTED&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nx">ReflectionProperty&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="na">IS_PRIVATE&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">foreach&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$props&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="nv">$prop&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$prop&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">setAccessible&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">true&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">print&lt;/span> &lt;span class="nv">$prop&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">getName&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">print&lt;/span> &lt;span class="nv">$prop&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">getValue&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$foo&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Output:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">foo 5 bar 2 baz 4
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="修改函数返回值">修改函数返回值
+&lt;/h3>&lt;p>并不能直接修改函数返回值&lt;/p>
+&lt;h2 id="namespace">Namespace
+&lt;/h2>&lt;p>这里简单提一下 php 中的 namespace 命名空间，简单来说 php 命名空间为了解决的就是覆写 php 内部函数的问题，详细可以&lt;a class="link" href="https://www.php.net/manual/zh/language.namespaces.rationale.php#language.namespaces.rationale" target="_blank" rel="noopener"
+>参考命名空间概述&lt;/a>。&lt;/p>
+&lt;p>举个例子：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="k">namespace&lt;/span> &lt;span class="nx">Foo&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">sha1&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$key&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s2">&amp;#34;This is Foo sha1&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">var_dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">sha1&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;1&amp;#39;&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">var_dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">\sha1&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;1&amp;#39;&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Output:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">/&lt;/span>&lt;span class="nx">test&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nx">php&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="mi">6&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="nx">string&lt;/span> &lt;span class="s1">&amp;#39;This is Foo sha1&amp;#39;&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">length&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">18&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">/&lt;/span>&lt;span class="nx">test&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nx">php&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="mi">7&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="nx">string&lt;/span> &lt;span class="s1">&amp;#39;356a192b7913b04c54574d18c28d46e6395428ab&amp;#39;&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">length&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">40&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="refspace">RefSpace
+&lt;/h2>&lt;p>接着我们来看看这个题，首先通过一系列操作 getshell ，参考 &lt;a class="link" href="https://bl4ck.in/tricks/2015/06/10/zip%E6%88%96phar%E5%8D%8F%E8%AE%AE%E5%8C%85%E5%90%AB%E6%96%87%E4%BB%B6.html" target="_blank" rel="noopener"
+>zip或phar协议包含文件&lt;/a>，这里就略过了，都是重复性简单的操作，得到以下源码&lt;/p>
+&lt;p>app/index&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nx">defined&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;LFI&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;Include me!&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">exit&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;head&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;/head&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> Hi CTFer,&amp;lt;br /&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> 这是一个非常非常简单的SDK服务，它的任务是给各位大佬&amp;lt;!--鼠--&amp;gt;提供flag&amp;lt;br /&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> Powered by Aoisystem&amp;lt;br /&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;!-- error_reporting(E_ALL); --&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;/body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;/html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>app/Up10aD&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nx">defined&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;LFI&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;Include me!&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">exit&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">isset&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;file&amp;#34;&lt;/span>&lt;span class="p">]))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$filename&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;file&amp;#34;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s2">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$fileext&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;.gif&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">switch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;file&amp;#34;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s2">&amp;#34;type&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">case&lt;/span> &lt;span class="s1">&amp;#39;image/gif&amp;#39;&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$fileext&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;.gif&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">case&lt;/span> &lt;span class="s1">&amp;#39;image/jpeg&amp;#39;&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$fileext&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;.jpg&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">default&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;Only gif/jpg allowed&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">exit&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$dst&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;upload/&amp;#34;&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;file&amp;#34;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s2">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nv">$fileext&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">move_uploaded_file&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_FILES&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;file&amp;#34;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="s2">&amp;#34;tmp_name&amp;#34;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="nv">$dst&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;文件保存位置: &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="nv">$dst&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;lt;br /&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;head&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;/head&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> 我们不能让选手轻而易举的搜索到上传接口。&amp;lt;br /&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> 即便是运气好的人碰巧遇到了，我相信我们的过滤是万无一失的(才怪
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;form method=&amp;#34;post&amp;#34; enctype=&amp;#34;multipart/form-data&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;label for=&amp;#34;file&amp;#34;&amp;gt;来选择你的文件吧:&amp;lt;/label&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;input type=&amp;#34;file&amp;#34; name=&amp;#34;file&amp;#34; id=&amp;#34;file&amp;#34; /&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;br /&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;input type=&amp;#34;submit&amp;#34; name=&amp;#34;submit&amp;#34; value=&amp;#34;Submit&amp;#34; /&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;/form&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;/body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;/html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>index.php&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">error_reporting&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">E_ALL&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">define&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;LFI&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;LFI&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$lfi&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;route&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">??&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nv">$lfi&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">header&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;location: ?route=app/index&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">exit&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">include&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="nv">$lfi&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">.php&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//Good job, you know how to use LFI, don&amp;#39;t you?
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//But You are still far from flag
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//hint: ?router=app/flag
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>app/flag&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nx">defined&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;LFI&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;Include me!&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">exit&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">use&lt;/span> &lt;span class="nx">interesting\FlagSDK&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$sdk&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">FlagSDK&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$key&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;key&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">??&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nv">$key&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;Please provide access key&amp;lt;br \&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s1">&amp;#39;$_GET[&amp;#34;key&amp;#34;];&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">exit&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$flag&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$sdk&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">verify&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$key&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$flag&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="nv">$flag&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;Wrong Key&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">exit&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//Do you want to know more about this SDK?
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//we &amp;#39;accidentally&amp;#39; save a backup.zip for more information
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>sdk 开发文档.txt:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">我们的SDK通过如下SHA1算法验证key是否正确&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="nf">verify&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$key&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">sha1&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$key&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">getHash&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s2">&amp;#34;too{young-too-simple}&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">如果正确的话，我们的SDK会返回flag。&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">PS&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">为了节省各位大佬的时间，特注明&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">1.&lt;/span>&lt;span class="nx">此处函数return值并不是真正的flag，和真正的flag没有关系。&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">2.&lt;/span>&lt;span class="nx">此处调用的sha1函数为PHP语言内建的hash函数。&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">http&lt;/span>&lt;span class="o">://&lt;/span>&lt;span class="nx">php&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nx">net&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">manual&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">zh&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">function&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nx">sha1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nx">php&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">3.&lt;/span>&lt;span class="nx">您无须尝试本地解码或本地运行sdk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nx">php，它被预期在指定服务器环境上运行。&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">4.&lt;/span>&lt;span class="nx">几乎大部分源码内都有一定的hint，如果您是通过扫描目录发现本文件的，您可能还有很长的路要走。&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>所以这里重点就是 flag.php 了，之前我们提到过可以在命名空间覆写函数，可是即使可以覆写，那要怎么绕过&lt;code>verify&lt;/code>这个函数呢？&lt;/p>
+&lt;h3 id="invoke">Invoke
+&lt;/h3>&lt;p>我们可以发现在&lt;code>verify&lt;/code>函数中，&lt;code>getHash()&lt;/code>函数并没有传参，很有可能就是直接返回了一个固定值或者随机值什么的，那我们是不是可以利用反射类来执行&lt;code>getHash()&lt;/code>函数，覆写&lt;code>sha1()&lt;/code>函数绕过&lt;code>verify&lt;/code>判断呢？&lt;/p>
+&lt;p>于是我们可以操作一波&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">namespace&lt;/span> &lt;span class="nx">interesting&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">FlagSDK&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="nf">getHash&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">\sha1&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;test&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="nf">verify&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$key&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">sha1&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$key&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">getHash&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s2">&amp;#34;flag{xxx}&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$sdk&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">FlagSDK&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">sha1&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$key&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$reflectionMethod&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">\ReflectionMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;interesting\FlagSDK&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;getHash&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">setAccessible&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">true&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="nx">FlagSDK&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$flag&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$sdk&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">verify&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;1&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$flag&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="nv">$flag&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;Wrong Key&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">exit&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>基本构造如上，由于环境已经关了，只能本地实现以下，思路就是以上说的通过反射类来覆写 namespace 的&lt;code>sha1&lt;/code>函数来达到绕过效果&lt;/p>
+&lt;p>做题的时候 flag.php 是有写权限的，所以我们只要把&lt;code>sha1&lt;/code>代码写入 flag.php 就可以了&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">sha1&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$key&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$reflectionMethod&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">\ReflectionMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;interesting\FlagSDK&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;getHash&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">setAccessible&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">true&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="nx">FlagSDK&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>当然，也可以像 @zsx 师傅一样手撕加密 orz &amp;hellip;&lt;/p>
+&lt;h1 id="reference">Reference
+&lt;/h1>&lt;p>&lt;a class="link" href="https://museljh.github.io/2019/04/24/ctf%E4%B8%AD%E7%9A%84php%E5%8F%8D%E5%B0%84/" target="_blank" rel="noopener"
+>ctf中的php反射&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://xz.aliyun.com/t/4906#toc-10" target="_blank" rel="noopener"
+>ROIS CISCN 全国大学生信息安全竞赛线上赛 Writeup&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://xz.aliyun.com/t/4904#toc-3" target="_blank" rel="noopener"
+>第12届全国大学生信息安全竞赛Web题解&lt;/a>&lt;/p></description></item></channel></rss>

@@ -1,0 +1,399 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="由于之前突发奇想，看到某些同学的博客确实好看，心血来潮便花了大概几个晚上把博客生成工具从原来的 Hexo 迁移到了 Hugo 上，便有了这次搬迁记录，也算是给其他想迁移小伙伴一个参考。\n"><title>从 Hexo 搬迁至 Hugo</title>
+<link rel=canonical href=https://zeddyu.github.io/p/%E4%BB%8E-hexo-%E6%90%AC%E8%BF%81%E8%87%B3-hugo/><link rel=stylesheet href=https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///scss/style.min.10c221bc47e4e94f27ea1e7ab28b3ebe2133ce2020a73c833b3276d59450e687.css integrity="sha256-EMIhvEfk6U8n6h56sos+viEzziAgpzyDOzJ21ZRQ5oc=" crossorigin=anonymous><meta property='og:title' content="从 Hexo 搬迁至 Hugo"><meta property='og:description' content="由于之前突发奇想，看到某些同学的博客确实好看，心血来潮便花了大概几个晚上把博客生成工具从原来的 Hexo 迁移到了 Hugo 上，便有了这次搬迁记录，也算是给其他想迁移小伙伴一个参考。\n"><meta property='og:url' content='https://zeddyu.github.io/p/%E4%BB%8E-hexo-%E6%90%AC%E8%BF%81%E8%87%B3-hugo/'><meta property='og:site_name' content="Zeddy's Blog"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Dev'><meta property='article:published_time' content='2021-09-30T01:15:01+08:00'><meta property='article:modified_time' content='2021-09-30T01:15:01+08:00'><meta name=twitter:title content="从 Hexo 搬迁至 Hugo"><meta name=twitter:description content="由于之前突发奇想，看到某些同学的博客确实好看，心血来潮便花了大概几个晚上把博客生成工具从原来的 Hexo 迁移到了 Hugo 上，便有了这次搬迁记录，也算是给其他想迁移小伙伴一个参考。\n"><link rel="shortcut icon" href=/favicon.ico><style>body:has(.article-content){.article-readmore { display: none; }}</style><script>enScroll=!1,enFdl=!1,extCurrent=void 0,filename=void 0,targetText=void 0,splitOrigin=void 0;const lStor=localStorage,sStor=sessionStorage,doc=document,docEl=document.documentElement,docBody=document.body,docLoc=document.location,w=window,s=screen,nav=navigator||{},extensions=["pdf","xls","xlsx","doc","docx","txt","rtf","csv","exe","key","pps","ppt","pptx","7z","pkg","rar","gz","zip","avi","mov","mp4","mpe","mpeg","wmv","mid","midi","mp3","wav","wma"];function a(e,t,n,o){const j="G-PDESKL57LT",r=()=>Math.floor(Math.random()*1e9)+1,c=()=>Math.floor(Date.now()/1e3),F=()=>(sStor._p||(sStor._p=r()),sStor._p),E=()=>r()+"."+c(),_=()=>(lStor.cid_v4||(lStor.cid_v4=E()),lStor.cid_v4),m=lStor.getItem("cid_v4"),v=()=>m?void 0:enScroll==!0?void 0:"1",p=()=>(sStor.sid||(sStor.sid=c()),sStor.sid),O=()=>{if(!sStor._ss)return sStor._ss="1",sStor._ss;if(sStor.getItem("_ss")=="1")return void 0},a="1",g=()=>{if(sStor.sct)if(enScroll==!0)return sStor.sct;else x=+sStor.getItem("sct")+ +a,sStor.sct=x;else sStor.sct=a;return sStor.sct},i=docLoc.search,b=new URLSearchParams(i),h=["q","s","search","query","keyword"],y=h.some(e=>i.includes("&"+e+"=")||i.includes("?"+e+"=")),u=()=>y==!0?"view_search_results":enScroll==!0?"scroll":enFdl==!0?"file_download":"page_view",f=()=>enScroll==!0?"90":void 0,C=()=>{if(u()=="view_search_results"){for(let e of b)if(h.includes(e[0]))return e[1]}else return void 0},d=encodeURIComponent,k=e=>{let t=[];for(let n in e)e.hasOwnProperty(n)&&e[n]!==void 0&&t.push(d(n)+"="+d(e[n]));return t.join("&")},A=!1,S="https://ga.zeddyu-lu.workers.dev/collect_path",M=k({v:"2",tid:j,_p:F(),sr:(s.width*w.devicePixelRatio+"x"+s.height*w.devicePixelRatio).toString(),ul:(nav.language||void 0).toLowerCase(),cid:_(),_fv:v(),_s:"1",dl:docLoc.origin+docLoc.pathname+i,dt:doc.title||void 0,dr:doc.referrer||void 0,sid:p(),sct:g(),seg:"1",en:u(),"epn.percent_scrolled":f(),"ep.search_term":C(),"ep.file_extension":e||void 0,"ep.file_name":t||void 0,"ep.link_text":n||void 0,"ep.link_url":o||void 0,_ss:O(),_dbg:A?1:void 0}),l=S+"?"+M;if(nav.sendBeacon)nav.sendBeacon(l);else{let e=new XMLHttpRequest;e.open("POST",l,!0)}}a();function sPr(){return(docEl.scrollTop||docBody.scrollTop)/((docEl.scrollHeight||docBody.scrollHeight)-docEl.clientHeight)*100}doc.addEventListener("scroll",sEv,{passive:!0});function sEv(){const e=sPr();if(e<90)return;enScroll=!0,a(),doc.removeEventListener("scroll",sEv,{passive:!0}),enScroll=!1}document.addEventListener("DOMContentLoaded",function(){let e=document.getElementsByTagName("a");for(let t=0;t<e.length;t++)if(e[t].getAttribute("href")!=null){const n=e[t].getAttribute("href"),s=n.substring(n.lastIndexOf("/")+1),o=s.split(".").pop();(e[t].hasAttribute("download")||extensions.includes(o))&&e[t].addEventListener("click",fDl,{passive:!0})}});function fDl(e){enFdl=!0;const t=e.currentTarget.getAttribute("href"),n=t.substring(t.lastIndexOf("/")+1),s=n.split(".").pop(),o=n.replace("."+s,""),i=e.currentTarget.text,r=t.replace(docLoc.origin,"");a(s,o,i,r),enFdl=!1}</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky compact"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu15151579442685596205.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Zeddy's Blog</a></h1><h2 class=site-description></h2></div></header><ol class=menu-social><li><a href=https://github.com/ZeddYu target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://zeddyu.github.io/atom.xml target=_blank title=Rss rel=me><svg class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="5" cy="19" r="1"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg></a></li><li><a href=https://x.com/ZeddYu_Lu target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/ads/><svg class="icon icon-tabler icon-tabler-ad" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15v-4a2 2 0 014 0v4"/><line x1="7" y1="13" x2="11" y2="13"/><path d="M17 9v6h-1.5a1.5 1.5.0 111.5-1.5"/></svg>
+<span>Advertisement</span></a></li><li><a href=/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#hugo-vs-hexo>Hugo VS Hexo</a></li><li><a href=#select-a-theme>Select A Theme</a></li><li><a href=#configuration>Configuration</a><ol><li><a href=#url-path>URL Path</a></li><li><a href=#rss>RSS</a></li><li><a href=#tags-链接>Tags 链接</a></li></ol></li><li><a href=#edit-the-theme>Edit The Theme</a><ol><li><a href=#sidebar>Sidebar</a></li><li><a href=#summary-of-articles>Summary Of Articles</a></li><li><a href=#shortcodes>ShortCodes</a></li><li><a href=#cdn-for-img>CDN For IMG</a></li><li><a href=#github-action>Github Action</a></li><li><a href=#workbox-for-dark-theme>Workbox For Dark Theme</a></li></ol></li><li><a href=#issues>Issues</a><ol><li><a href=#failed-to-render-pages>Failed to render pages</a></li><li><a href=#rss-error-on-line-pcdata-invalid-char-value-x>rss error on line PCDATA invalid Char value X</a></li></ol></li><li><a href=#references>References</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/dev/ style=background-color:#06c;color:#fff>Dev</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/%E4%BB%8E-hexo-%E6%90%AC%E8%BF%81%E8%87%B3-hugo/>从 Hexo 搬迁至 Hugo</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Sep 30, 2021</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>14 minute read</time></div><div class=article-readmore><a href=/p/%E4%BB%8E-hexo-%E6%90%AC%E8%BF%81%E8%87%B3-hugo/>Read More…</a></div></footer></div></header><section class=article-content><p>由于之前突发奇想，看到某些同学的博客确实好看，心血来潮便花了大概几个晚上把博客生成工具从原来的 Hexo 迁移到了 Hugo 上，便有了这次搬迁记录，也算是给其他想迁移小伙伴一个参考。</p><h2 id=hugo-vs-hexo>Hugo VS Hexo</h2><p>根据一些文章 <sup><a class=link href=#ref01>[1]</a></sup><sup><a class=link href=#ref02>[2]</a></sup>已经给出的对比，Hugo 拥有着比较不错的渲染速度，（这里贴个实测渲染数据），对于我这个目前所有 Posts 比较多，又有比较多图片的用户来说，在渲染速度方面确实也有一定需求。而且最近自己也在学习 Golang ，对于使用 Golang 的工具我还是比较有好感的。我进行了一个小对比，虽然 Hexo 插件用的有些多，但是在满足我个人需求下，使用两个工具对相同文章数量生成静态页面的对比效果如下图所示：</p><p><img src=https://z3.ax1x.com/2021/10/01/4TU45F.png loading=lazy alt="左为 Hexo 生成速度 VS 右为 Hugo 生成速度"></p><p>当然在稍微使用了一下后，也能感受到 Hugo 的缺点，目前 Hugo 并不是特别完美，因为没有 NPM 那么方便地使用拓展，很多都是使用了 Hugo 自己本身支持的内容，没有良好的拓展性，所以导致很多东西都得自己动手，比如一些小插件；但是好在由于 Hugo 目前来说已经比较成熟，不需要自己动手做太多的定制化东西，文档也还尚可。</p><p>况且自己目前使用的 Hexo 主题，原作者已经不再继续开发了，并且主题也并不是很符合我的预期。所以综合起自身需求来看，我还是更需要一个比较高效的框架，也正好换一个满意的主题。</p><h2 id=select-a-theme>Select A Theme</h2><p>这里先整理了一下自己心目中理想的主题风格：</p><ul><li>简洁。<ul><li>主页 posts 展示不需要配图展示，因为我比较懒，每次写完文章都懒得去找配图的人，而且配图跟文章还要很搭配，这样照起来比较费劲，而且还会增加自己仓库图片数量（因为我文章用图片很多），基本没有必要。</li><li>不需要太艳丽的配色，我一开始也很喜欢各种 Material 风格的主题，但是后面撞主题的实在太多了，看着我都审美疲劳了&mldr;所以我也开始厌恶那种花花绿绿、五颜六色的主题了，后面使用了 <a class=link href=https://github.com/ppoffice/hexo-theme-minos target=_blank rel=noopener>Minos</a> 这款非常简洁的主题，深得我心。不过可惜的是该主题油画并不是很好，使用 <a class=link href=https://developers.google.com/speed/pagespeed/insights/ target=_blank rel=noopener>pagespeed</a> 对博客测速在即使上了 CDN 的情况下评分十分不理想，况且原作者已经不怎么开发这个主题了，自己也没有很多精力来优化这个主题，尝试了多次优化只能说收效甚微，这也是促使我更换架构的原因之一。</li></ul></li><li>大方。因为我不需要其他七七八八的东西，竟可能展示页面内容就行，所以我觉得内容展示需要尽量宽屏，不要弄的窄窄的，尤其是 PC 端，有些主题我是很不明白 PC 端显示内容宽度只占了整个屏幕的 20-30% ，其他也没有利用，不知道这么设计是为了啥，比较懒去适配响应式设计？</li><li>侧边目录。这个功能在 2021 年我觉得是非常必要的，并且我博客有好几篇非常长的文章，没有侧边目录，阅读起来简直受罪，我也不知道在这时代侧边目录竟然还不是现在博客的标配。之前优化 Minos 主题时想给他加个侧边栏来着，但是奈何确实太菜了，也没啥精力，只能做到在文章开头加入目录。</li><li>功能性实用。这里的功能性指的是可以支持各种的小插件，比如：嵌入式推文，这样就显得很 Modern 了；颜色不一样的注释样式，这样可以在文章中使用这些不同颜色的注释样式来达到不同的提示效果。</li></ul><p>我在 Github 上查询 Hugo Theme 话题，找了一些最近一年内有活动的 Repo 进行筛选，也有一些是直接从 Hugo 官网的主题页面找的：</p><ul><li><p><a class=link href=https://github.com/varkai/hugo-theme-zozo target=_blank rel=noopener>https://github.com/varkai/hugo-theme-zozo</a></p><p>非常简洁，界面比较喜欢，但是没有侧边目录，功能性较差，我觉得比较适合中文站点。PASS</p></li><li><p><a class=link href=https://github.com/wayjam/hugo-theme-fluency target=_blank rel=noopener>https://github.com/wayjam/hugo-theme-fluency</a>
+界面比较一般，功能性没怎么介绍，看起来也比较差。PASS</p></li><li><p><a class=link href=https://github.com/ThemeTony/hugo-theme-tony target=_blank rel=noopener>https://github.com/ThemeTony/hugo-theme-tony</a>
+勉强过得去，但是中间内容不知道为什么要放那么窄，功能性一般。PASS</p></li><li><p><a class=link href=https://github.com/ahonn/hexo-theme-even target=_blank rel=noopener>https://github.com/ahonn/hexo-theme-even</a>
+功能性一般，配色有点呆板。PASS</p></li><li><p><a class=link href=https://github.com/nanxiaobei/hugo-paper target=_blank rel=noopener>https://github.com/nanxiaobei/hugo-paper</a>
+设计比较喜欢，但是为什么 PC 端内容宽度还这么窄，功能性略差。PASS</p></li><li><p><a class=link href=https://github.com/reuixiy/hugo-theme-meme target=_blank rel=noopener>https://github.com/reuixiy/hugo-theme-meme</a>
+又是一个 PC 端内容宽度极窄的主题，不是很懂为啥。PASS</p></li><li><p><a class=link href=https://github.com/nodejh/hugo-theme-mini target=_blank rel=noopener>https://github.com/nodejh/hugo-theme-mini</a>
+简约，只能说过于简约了，目录也没有。PASS</p></li><li><p><a class=link href=https://github.com/wangchucheng/hugo-eureka target=_blank rel=noopener>https://github.com/wangchucheng/hugo-eureka</a>
+界面美观，功能性还行，在考虑范围之内。</p></li><li><p><a class=link href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener>https://github.com/CaiJimmy/hugo-theme-stack</a>
+考虑之一</p></li></ul><p>还有几个同一些列看起来挺棒的主题，但是由于某些原因最终没有选用：</p><ul><li><p><a class=link href=https://github.com/dillonzq/LoveIt target=_blank rel=noopener>https://github.com/dillonzq/LoveIt</a>
+比较喜欢的主题之一，但是目前看起来作者不继续维护了，比较可惜。当时也是看到别人主题用这个比较漂亮，也才有想入坑 Hugo 的想法</p></li><li><p><a class=link href=https://github.com/khusika/FeelIt target=_blank rel=noopener>https://github.com/khusika/FeelIt</a>
+从 LoveIt 衍生出来的主题之一，Demo Site 看过去我并不喜欢主页的卡片设计，比较喜欢原来 LoveIt 的主页样式。宽屏的样式改的也很好，但是就是主页这个。。因为我的文章缩略可能都比较长而且不喜欢放主页图，就会很丑，PASS</p></li><li><p><a class=link href=https://themes.gohugo.io/themes/ublogger/ target=_blank rel=noopener>https://themes.gohugo.io/themes/ublogger/</a>
+也是从 LoveIt 衍生出来的主题之一，主页同样是卡片设计，跟 FeelIt 一样找了一下配置，但是看起来没办法配置主页的显示样式，PASS</p></li></ul><p>最终在 eureka 跟 stack 中进行最终选择：</p><ul><li>eureka 整体比较符合我的预期，但是用的人也确实贼多，随便打开几个 hugo 的网站，不少人用的都是 eureka，拿 eureka 的 Demo Stie 在 pagespeed 测试，只有 32 分</li><li>stack 看起来并没有 eureka 那么好，主要是对于我来说主页设置还是有点太拥挤了，不够落落大方，也没有支持多彩的注释，看起来比较的一般，但是其 Demo Site 相对于 eureka 的 Demo Site 来说，pagespeed 得分可以拿到近乎满分的成绩，优化相当不错。</li></ul><p>所以，在综合考虑了两者的优劣对比之后，我最终选择了 stack ，尽管其功能性并不是特别完美，但是我觉得优化是一件比较复杂的事，从各自的 Demo Site 来看，stack 的优化效果要远远由于 eureka 的，尽管 stack 功能性上比 eureka 稍弱一些，但是我可以在其基础上去增加、修改功能，而不需要在对主题进行整体优化了，这是最主要的一点。</p><h2 id=configuration>Configuration</h2><p>首先肯定是得先参考 <a class=link href=https://docs.stack.jimmycai.com/zh/ target=_blank rel=noopener>stack 主题文档</a>，跟着文档，把该配置的配置好了，该复制的复制好了，再进一步进行修改其他的操作。</p><h3 id=url-path>URL Path</h3><p>对于个人博客的迁移而言，保证文章链接不变是最重要的。</p><p>因为对于一般站长自建的站点来说，如果一些文章被其他站点引用了，那么肯定就是静态链接了，如果迁移后改变了原文的 URL 链接地址，会对原来其他站点的导向非常不友好，所以我们基本得要确保旧文章链接最好不要进行改动。</p><p>这里主要参考该文章<sup><a class=link href=#ref02>[2]</a></sup>的迁移修改部分，我之前 Hexo 的站点链接为：<code>/:year/:month/:day/:filename/</code>，所以我们也要在 Hugo 这里将生成的页面链接改成这种样子，我们需要在配置文件中增加如下配置：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>permalinks</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>posts</span><span class=p>:</span><span class=w> </span><span class=l>/:year/:month/:day/:filename/</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>我这里选用了 yaml 格式， toml 格式的同学可以根据以上自行修改。</p><h3 id=rss>RSS</h3><p>默认 Hugo 生成的 RSS 链接为 <code>/index.xml</code> ，而我之前用的是 atom.xml，可以通过如下配置修改：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>outputFormats</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>RSS</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>mediatype</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;application/rss&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>baseName</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;atom&#34;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>并不需要修改主题文件夹下的 rss.xml ，Hugo 会自动根据我们的配置在站点目录下生成 atom.xml 。并且，在 stack 主题下我们还可以通过在主题配置文件中配置<code>rssFullContent</code>选项来决定是否在 rss 文件中输出全文，像我的文章会比较长就使用了<code>false</code>表示不输出全文。</p><h3 id=tags-链接>Tags 链接</h3><blockquote><p>​ Hugo 中默认会把链接中的字母变成小写，比如标签 <code>Go</code> ，在之前对应地址 <code>/tags/Go</code> ，换成 Hugo 后则是 <code>/tags/go</code> ，可以通过下面的配置关闭这个转化。</p></blockquote><p>其实我认为这个保留选项并不重要，所以我并没有特别修改这个选项，保持了原样，如果有同学建议，可以参考上述文章<sup><a class=link href=#ref02>[2]</a></sup></p><h2 id=edit-the-theme>Edit The Theme</h2><p>接下里就是优化主题时间了，对比原主题，我在其基础上做了一定的修改，主要有如下几个点。（因为我对 Hugo 主题开发并不是很熟，基本就是对着文档改，以及包括对着其他有我需要的特性的主题代码参考来进行修改的，所以代码可能改的比较垃圾）</p><h3 id=sidebar>Sidebar</h3><p>去除了首页左侧 Sidebar 的网站描述，改成了社交链接。</p><p>图标使用的是主题配套的 <a class=link href=https://tablericons.com/ target=_blank rel=noopener>Tabler Icons</a> ，还是比较好用的，把你想要的 svg 放到 assets/icons 目录下。接着为了保持与主题整体色调一致，需要修改这个 svg 文件中的<code>stroke</code>属性，改成<code>stroke="currentColor"</code>。这样我们就可以在其他地方引用到这个图标了。</p><p>接着直接搜<code>site-description</code>，在 themes/stack/layouts/partials/sidebar/left.html 定位到侧边栏的代码，删掉原来的代码，将其修改为以下代码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;site-description&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  {{ if (.Site.Params.social.github) }}
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>a</span> <span class=na>title</span><span class=o>=</span><span class=s>&#34;GitHub&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;{{.Site.Params.social.github}}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noopener&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    {{ partial &#34;helper/icon&#34; &#34;github&#34; }}
+</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  {{ end }}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  {{ if (.Site.Params.social.twitter) }}
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>a</span> <span class=na>title</span><span class=o>=</span><span class=s>&#34;Twitter&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;{{.Site.Params.social.twitter}}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noopener&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    {{ partial &#34;helper/icon&#34; &#34;twitter&#34; }}
+</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  {{ end }}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  {{ if (.Site.Params.social.rss) }}
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>a</span> <span class=na>title</span><span class=o>=</span><span class=s>&#34;RSS&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;{{.Site.Params.social.rss}}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noopener&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    {{ partial &#34;helper/icon&#34; &#34;rss&#34; }}
+</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  {{ end }}
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>稍微解释一下，<code>.Site.Params</code>可以获取到主题配置文件中的<code>params</code>配置选项，后面对应的就是相应的层级关系了。所以我们需要在配置文件中增加如下选项：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>params</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=c>#...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>social</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>github</span><span class=p>:</span><span class=w> </span><span class=l>https://github.com/ZeddYu</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>twitter</span><span class=p>:</span><span class=w> </span><span class=l>https://twitter.com/ZeddYu_Lu</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>rss</span><span class=p>:</span><span class=w> </span><span class=l>https://zeddyu.github.io/atom.xml</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>而<code>{{ partial "helper/icon" "rss" }}</code>就可以帮助我们去获取上述添加的 svg 文件作为我们的图标，比如这里对应的就是 assets/icons/rss.svg 文件。</p><p>这里我只增加了三个自己常用的社交链接，如果想要增加其他链接，都是类似的操作；这里最优解当然是通过循环读取 social 配置，然后自动配置，但是自己比较懒，也没什么其他要添加的，就静态写了三个自己常用的社交链接。</p><h3 id=summary-of-articles>Summary Of Articles</h3><p>原主题在展示主页文章的时候，对于文章内容的获取并非是读取摘要，这里的摘要就是读取文章开头至<code>&lt;!--more--></code>之间的内容，而是读取文章的 description 字段，而对于我来说，我更喜欢使用摘要的形式，并且自己的文章之前也没有写过 description 字段，给每篇文章增加该字段会很麻烦。</p><p>所以我修改了原主题主页展示文章内容的形式，改成了显示摘要的形式。通过定位<code>article-subtitle</code>找到对应文件 themes/stack/layouts/partials/article/components/details.html ，但是并不是很好改，因为这个文件被主页页面所使用，也被文章详情内容所使用，也就是说如果我们直接将其简单替换为之摘要内容的话，虽然主页展示了文章摘要，但是文章详情内容也会展示内容摘要，而且同时显示文章全部内容，就会有两段重复的内容了。</p><p>所以我们只能分别处理，也就是说增加一个文件，让主页引用，文章详情内容页面不引用就不会出现这种问题了。</p><p>最终修改：</p><p>删除了 themes/stack/layouts/partials/article/components/details.html 页面中的</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-diff data-lang=diff><span class=line><span class=cl><span class=gd>-    {{ with .Params.description }}
+</span></span></span><span class=line><span class=cl><span class=gd>-    &lt;h3 class=&#34;article-subtitle&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=gd>-        {{ . }}
+</span></span></span><span class=line><span class=cl><span class=gd>-    &lt;/h3&gt;
+</span></span></span><span class=line><span class=cl><span class=gd>-    {{ end }}
+</span></span></span></code></pre></td></tr></table></div></div><p>在 themes/stack/layouts/partials/article/components 增加了一个新文件为 article-intro.html ，文件内容与删除上述内容前的 details.html 文件略有不同：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-diff data-lang=diff><span class=line><span class=cl><span class=gu>@@ -15,11 +15,11 @@
+</span></span></span><span class=line><span class=cl><span class=gu></span>         &lt;/a&gt;
+</span></span><span class=line><span class=cl>     &lt;/h2&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gd>-    {{ with .Params.description }}
+</span></span></span><span class=line><span class=cl><span class=gd>-    &lt;h3 class=&#34;article-subtitle&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=gd></span><span class=gi>+    {{ with .Summary }}
+</span></span></span><span class=line><span class=cl><span class=gi>+    &lt;div class=&#34;article-subtitle&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=gi></span>         {{ . | safeHTML}}
+</span></span><span class=line><span class=cl><span class=gd>-    &lt;/h3&gt;
+</span></span></span><span class=line><span class=cl><span class=gd>-    {{ end }} --&gt;
+</span></span></span><span class=line><span class=cl><span class=gd></span><span class=gi>+    &lt;/div&gt;
+</span></span></span><span class=line><span class=cl><span class=gi>+    {{ end }}
+</span></span></span><span class=line><span class=cl><span class=gi></span>
+</span></span><span class=line><span class=cl>     {{ if or (not .Date.IsZero) (.Site.Params.article.readingTime) }}
+</span></span><span class=line><span class=cl>     &lt;footer class=&#34;article-time&#34;&gt;
+</span></span><span class=line><span class=cl><span class=gu>@@ -40,6 +40,9 @@
+</span></span></span><span class=line><span class=cl><span class=gu></span>                 &lt;/time&gt;
+</span></span><span class=line><span class=cl>             &lt;/div&gt;
+</span></span><span class=line><span class=cl>         {{ end }}
+</span></span><span class=line><span class=cl><span class=gi>+        &lt;div&gt;
+</span></span></span><span class=line><span class=cl><span class=gi>+            &lt;a href=&#34;{{ .RelPermalink }}&#34;&gt;Read More…&lt;/a&gt;
+</span></span></span><span class=line><span class=cl><span class=gi>+        &lt;/div&gt;
+</span></span></span><span class=line><span class=cl><span class=gi></span>     &lt;/footer&gt;
+</span></span><span class=line><span class=cl>     {{ end }}
+</span></span><span class=line><span class=cl> &lt;/div&gt;
+</span></span></code></pre></td></tr></table></div></div><p>这里使用了 Hugo 提供的<code>.Summary</code>获取文章摘要，替换掉了原来文章描述的位置，并增加了“阅读更多”的入口。接着我们还需要增加一个 themes/stack/layouts/partials/article/components/header-intro.html 文件，文件内容与 header.html 区别如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-diff data-lang=diff><span class=line><span class=cl><span class=gu>@@ -31,5 +31,5 @@
+</span></span></span><span class=line><span class=cl><span class=gu></span>         &lt;/div&gt;
+</span></span><span class=line><span class=cl>     {{ end }}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gd>-    {{ partialCached &#34;article/components/details&#34; . .RelPermalink }}
+</span></span></span><span class=line><span class=cl><span class=gd></span><span class=gi>+    {{ partialCached &#34;article/components/article-intro&#34; . .RelPermalink }}
+</span></span></span><span class=line><span class=cl><span class=gi></span> &lt;/header&gt;
+</span></span></code></pre></td></tr></table></div></div><p>这里只需要将我们所更改的 artile-intro 代替之前的 details 引入即可。</p><h3 id=shortcodes>ShortCodes</h3><style type=text/css>.notice{--title-color:#fff;--title-background-color:#6be;--content-color:#444;--content-background-color:#e7f2fa}.notice.info{--title-background-color:#fb7;--content-background-color:#fec}.notice.tip{--title-background-color:#5a5;--content-background-color:#efe}.notice.warning{--title-background-color:#c33;--content-background-color:#fee}@media(prefers-color-scheme:dark){.notice{--title-color:#fff;--title-background-color:#069;--content-color:#ddd;--content-background-color:#023}.notice.info{--title-background-color:#a50;--content-background-color:#420}.notice.tip{--title-background-color:#363;--content-background-color:#121}.notice.warning{--title-background-color:#800;--content-background-color:#400}}body.dark .notice{--title-color:#fff;--title-background-color:#069;--content-color:#ddd;--content-background-color:#023}body.dark .notice.info{--title-background-color:#a50;--content-background-color:#420}body.dark .notice.tip{--title-background-color:#363;--content-background-color:#121}body.dark .notice.warning{--title-background-color:#800;--content-background-color:#400}.notice{padding:18px;line-height:24px;margin-bottom:24px;border-radius:4px;color:var(--content-color);background:var(--content-background-color)}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:var(--title-color);background:var(--title-background-color)}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:currentColor}.icon-notice img,.icon-notice.baseline svg{top:.125em;position:relative}</style><div class="notice info"><p class=notice-title><span class="icon-notice baseline"><svg viewBox="92 59.5 300 300"><path d="M292 303.25V272c0-3.516-2.734-6.25-6.25-6.25H267v-1e2c0-3.516-2.734-6.25-6.25-6.25h-62.5c-3.516.0-6.25 2.734-6.25 6.25V197c0 3.516 2.734 6.25 6.25 6.25H217v62.5h-18.75c-3.516.0-6.25 2.734-6.25 6.25v31.25c0 3.516 2.734 6.25 6.25 6.25h87.5c3.516.0 6.25-2.734 6.25-6.25zm-25-175V97c0-3.516-2.734-6.25-6.25-6.25h-37.5c-3.516.0-6.25 2.734-6.25 6.25v31.25c0 3.516 2.734 6.25 6.25 6.25h37.5c3.516.0 6.25-2.734 6.25-6.25zm125 81.25c0 82.813-67.188 150-150 150-82.813.0-150-67.188-150-150 0-82.813 67.188-150 150-150 82.813.0 150 67.188 150 150z"/></svg>
+</span>Info</p><p>Updates Dec 28, 2024:</p><p>现在已经有现成的插件了，详细请使用请参考：https://github.com/martignoni/hugo-notice ，以下不再适用！</p></div><p><del>这里主要参考的文章是：<a class=link href=https://guanqr.com/tech/website/hugo-shortcodes-customization/ target=_blank rel=noopener>自定义 Hugo Shortcodes 简码</a> 当中的 notice 部分，除了自己做了一定的字体、颜色定制调整，其他基本上一摸一样，所以这里不再赘述。</del></p><p><strong>并且这里简单提个醒，对于 Hugo 来说，既是你是在代码段里面写 ShortCodes ，Hugo 也会直接对其进行渲染，并不会将其视为字符串处理。</strong>~~</p><p>所以当时我在渲染以上 Shortcodes 的时候就遇到了这个问题，我们得在不需要渲染的 ShortCodes 代码加注释才能使得 Hugo 认为这是一段字符串，也就是如下这个样子：
+<img src=https://i.loli.net/2021/10/02/OS6zmrgE5biZyjA.png loading=lazy alt=carbon.png></p><h3 id=cdn-for-img>CDN For IMG</h3><p>因为 Stack 主题推荐在文章内插入图片使用 Hugo 的 <a class=link href=https://gohugo.io/content-management/page-bundles/ target=_blank rel=noopener>Page Bundleopen</a> 功能<sup><a class=link href=#ref03>[3]</a></sup>，而外层我使用的是 CloudFlare 做 CDN ，尽管使用了一些压缩处理尝试尽可能优化图片加载速度，但是 CloudFlare 对于国内“加速”效果属实难以苟同，好在 jsdelivr 提供了基于 Github 仓库资源的加速服务，并且在国内加速效果还不错，所以我还针对链接到本地的图片资源在生成图片链接时自动加上了 jsdelivr 链接。</p><p>思路非常简单，因为生成图片链接是使用的相对路径，所以我们只需要对这些相对路径的图片进行处理即可，加上 jsdelivr 到自己的 Github Page 博客仓库开头即可。例如，我的博客仓库为 <a class=link href=https://github.com/ZeddYu/ZeddYu.github.io target=_blank rel=noopener>https://github.com/ZeddYu/ZeddYu.github.io</a> ，分支为 master 分支，对应的 jsdelivr 加速链接为 <a class=link href=https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/ target=_blank rel=noopener>https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/</a> 。</p><p>找到主题对于本地图片生成处理的地方，为 themes/stack/layouts/_default/_markup/render-image.html 文件，</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>{{- if $image -}}
+</span></span><span class=line><span class=cl>&lt;img src=&#34;https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master/{{ $Permalink| relURL }}&#34;
+</span></span><span class=line><span class=cl>{{- else -}}
+</span></span><span class=line><span class=cl>&lt;img src=&#34;{{ $Permalink }}&#34;
+</span></span><span class=line><span class=cl>{{- end -}}
+</span></span></code></pre></td></tr></table></div></div><p>将 img 对应的链接手动加上 jsdelivr 的链接，但是需要手动加上判断，这个<code>$image</code>是上文给的判断是否为本地图片的变量；对于外链我们不需要使用 jsdelivr 链接前缀进行加速，所以这里只需要对本地图片 jsdelivr 加速即可。</p><h3 id=github-action>Github Action</h3><p>最后配置 .github/workflows/gh-pages.yml 使用 Github Action 自动化部署，这里我的配置为私有的博客源代码仓库，博客静态代码仓库为公开仓库，所以需要使用到 Github 的个人 Access Token ，其余的不再赘述。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>github pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>master </span><span class=w> </span><span class=c># Set a branch to deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>pull_request</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-20.04</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>submodules</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>  </span><span class=c># Fetch Hugo themes (true OR recursive)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>fetch-depth</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>    </span><span class=c># Fetch all history for .GitInfo and .Lastmod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Setup Hugo</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-hugo@v2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>hugo-version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;latest&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>extended</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>hugo --minify</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-gh-pages@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>external_repository</span><span class=p>:</span><span class=w> </span><span class=l>ZeddYu/ZeddYu.github.io	# 发布到哪个 repo</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>personal_token</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.HUGO_TOKEN }}	# 发布到其他 repo 需要提供上面生成的 personal access token</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_dir</span><span class=p>:</span><span class=w> </span><span class=l>./public	# 注意这里指的是要发布哪个文件夹的内容，而不是指发布到目的仓库的什么位置，因为 hugo 默认生成静态网页到 public 文件夹，所以这里发布 public 文件夹里的内容</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_branch</span><span class=p>:</span><span class=w> </span><span class=l>master	# 发布到哪个 branch</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=workbox-for-dark-theme>Workbox For Dark Theme</h3><p>虽然本地测试的时候看起来十分顺畅，但是在使用部署到远程后，可能由于 CloudFlare 对国内的减速作用，以及主题对于黑暗模式的实现使用的是 javascript 覆盖实现，而应用黑暗模式 js 文件加载速度较慢的情况下，会导致在黑暗模式在切换页面的时候，会在加载其他的时候会恢复到白色的背景，导致“闪屏”效应。这对用户肯定是非常不友好的体验，所以经过一些尝试，虽然无法完美解决掉这个问题，但是在一定程度上有效减缓了这个问题的发生。</p><p>这里也问了一下前端大师 <a class=link href=https://www.rexskz.info/ target=_blank rel=noopener>@rex</a> ，他一开始给我的方案是让我使用 <em>PWA</em>（Progressive Web Apps，渐进式Web 应用），尝试使用 <a class=link href=https://developer.mozilla.org/zh-CN/docs/Web/Manifest target=_blank rel=noopener>Web App Manifest</a> ，可以在 static 文件夹下增加 manifest.json 来预加载背景颜色。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;name&#34;</span><span class=p>:</span> <span class=s2>&#34;&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;display&#34;</span><span class=p>:</span> <span class=s2>&#34;standalone&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;background_color&#34;</span><span class=p>:</span> <span class=s2>&#34;#303030&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;theme_color&#34;</span><span class=p>:</span> <span class=s2>&#34;#303030&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>主题黑暗模式的背景颜色为<code>#303030</code> ，虽然理论上可能会影响到日间模式的切换，但是实际上既没有影响到日间模式，对“闪屏”效应也没有实质性的。</p><p>跟 @rex 再次讨论了一下，目前最优的夜间模式的实现方式应该是在服务器端存储用户设置的模式信息，当用户请求的时候，根据 Cookie 或者其他信息返回不同的样式，这样就能完美避开“闪屏”这个问题了，并且对于自适应模式还可以通过媒体查询来实现；其次实现方式才有可能使用 js 覆盖的形式，通过 localstorage 或者本地浏览器的存储介质等获取用户存储的主题设置，再对页面进行颜色覆盖，但是这个方案比较依靠网络速度，因为如果网络不佳，对于 js 文件加载缓慢的话就会导致先出现默认主题颜色，再出现用户设置的主题颜色，就会产生“闪屏”现象。</p><p>所以通过分析，我们目前大概知道“闪屏”最好的解决方案是根据用户设置返回不同的样式文件，但是对于静态页面 Github Pages ，并没有什么办法直接识别用户，即使是部署了 CloudFlare ，目前 CloudFlare workers 也没有什么办法能够实现类似效果。在不改变静态页面的架构下，只能通过尝试解决网络加载速度来减缓这个问题。</p><p>于是我想到了 Service Worker ，如果我们能通过 SW 将静态文件缓存到用户本地，就可能可以尽量避免网络问题了。于是在经过一番探索，发现了 <a class=link href=https://developers.google.com/web/tools/workbox target=_blank rel=noopener>Workbox</a> 这个比较完善的解决方案。Workbox 是 Google Chrome 团队推出的一套 PWA 的解决方案，这套解决方案当中包含了核心库和构建工具，我们可以利用 Workbox 实现 Service Worker 的快速开发。</p><p>Workbox 说到底还是 SW ，其注册使用与 SW 并没有什么不同，所以我们肯定得在主题注册 SW 文件。这里我选择在 themes/stack/layouts/partials/footer/components/script.html 文件中注册 sw 文件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=s1>&#39;serviceWorker&#39;</span> <span class=k>in</span> <span class=nx>navigator</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nb>window</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;load&#39;</span><span class=p>,</span> <span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>navigator</span><span class=p>.</span><span class=nx>serviceWorker</span><span class=p>.</span><span class=nx>register</span><span class=p>(</span><span class=s1>&#39;/sw.js&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>根目录下的 sw.js 文件就需要在 static 目录下放置文件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=nx>importScripts</span><span class=p>(</span><span class=s2>&#34;https://cdn.jsdelivr.net/npm/workbox-cdn/workbox/workbox-sw.js&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=nx>workbox</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=sb>`Yay! Workbox is loaded 🎉`</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>workbox</span><span class=p>.</span><span class=nx>routing</span><span class=p>.</span><span class=nx>registerRoute</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>		<span class=sr>/\.(?:js|css)$/</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=k>new</span> <span class=nx>workbox</span><span class=p>.</span><span class=nx>strategies</span><span class=p>.</span><span class=nx>StaleWhileRevalidate</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>			<span class=nx>cacheName</span><span class=o>:</span> <span class=s2>&#34;static-resources&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=p>})</span>
+</span></span><span class=line><span class=cl>	<span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>workbox</span><span class=p>.</span><span class=nx>routing</span><span class=p>.</span><span class=nx>registerRoute</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>		<span class=s2>&#34;https://cdn.jsdelivr.net/gh/ZeddYu/ZeddYu.github.io@master//ts/main.js&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=k>new</span> <span class=nx>workbox</span><span class=p>.</span><span class=nx>strategies</span><span class=p>.</span><span class=nx>StaleWhileRevalidate</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>			<span class=nx>cacheName</span><span class=o>:</span> <span class=s2>&#34;static-resources&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=p>})</span>
+</span></span><span class=line><span class=cl>	<span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>workbox</span><span class=p>.</span><span class=nx>routing</span><span class=p>.</span><span class=nx>registerRoute</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>		<span class=sr>/\.(?:png|jpg|jpeg|svg|gif)$/</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=k>new</span> <span class=nx>workbox</span><span class=p>.</span><span class=nx>strategies</span><span class=p>.</span><span class=nx>CacheFirst</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>			<span class=nx>cacheName</span><span class=o>:</span> <span class=s2>&#34;image-cache&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>			<span class=nx>plugins</span><span class=o>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>				<span class=k>new</span> <span class=nx>workbox</span><span class=p>.</span><span class=nx>expiration</span><span class=p>.</span><span class=nx>ExpirationPlugin</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>					<span class=nx>maxEntries</span><span class=o>:</span> <span class=mi>20</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>					<span class=nx>maxAgeSeconds</span><span class=o>:</span> <span class=mi>7</span> <span class=o>*</span> <span class=mi>24</span> <span class=o>*</span> <span class=mi>60</span> <span class=o>*</span> <span class=mi>60</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>				<span class=p>}),</span>
+</span></span><span class=line><span class=cl>			<span class=p>],</span>
+</span></span><span class=line><span class=cl>		<span class=p>})</span>
+</span></span><span class=line><span class=cl>	<span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>workbox</span><span class=p>.</span><span class=nx>routing</span><span class=p>.</span><span class=nx>registerRoute</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>		<span class=sr>/^https:\/\/fonts\.googleapis\.com/</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=k>new</span> <span class=nx>workbox</span><span class=p>.</span><span class=nx>strategies</span><span class=p>.</span><span class=nx>StaleWhileRevalidate</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>			<span class=nx>cacheName</span><span class=o>:</span> <span class=s2>&#34;google-fonts-stylesheets&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=p>})</span>
+</span></span><span class=line><span class=cl>	<span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>workbox</span><span class=p>.</span><span class=nx>routing</span><span class=p>.</span><span class=nx>registerRoute</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>		<span class=sr>/^https:\/\/fonts\.gstatic\.com/</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=k>new</span> <span class=nx>workbox</span><span class=p>.</span><span class=nx>strategies</span><span class=p>.</span><span class=nx>CacheFirst</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>			<span class=nx>cacheName</span><span class=o>:</span> <span class=s2>&#34;google-fonts-webfonts&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>			<span class=nx>plugins</span><span class=o>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>				<span class=k>new</span> <span class=nx>workbox</span><span class=p>.</span><span class=nx>cacheableResponse</span><span class=p>.</span><span class=nx>CacheableResponsePlugin</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>					<span class=nx>statuses</span><span class=o>:</span> <span class=p>[</span><span class=mi>0</span><span class=p>,</span> <span class=mi>200</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>				<span class=p>}),</span>
+</span></span><span class=line><span class=cl>				<span class=k>new</span> <span class=nx>workbox</span><span class=p>.</span><span class=nx>expiration</span><span class=p>.</span><span class=nx>ExpirationPlugin</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>					<span class=nx>maxAgeSeconds</span><span class=o>:</span> <span class=mi>60</span> <span class=o>*</span> <span class=mi>60</span> <span class=o>*</span> <span class=mi>24</span> <span class=o>*</span> <span class=mi>365</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>					<span class=nx>maxEntries</span><span class=o>:</span> <span class=mi>30</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>				<span class=p>}),</span>
+</span></span><span class=line><span class=cl>			<span class=p>],</span>
+</span></span><span class=line><span class=cl>		<span class=p>})</span>
+</span></span><span class=line><span class=cl>	<span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=sb>`Boo! Workbox didn&#39;t load 😬`</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>以上对图片等一些静态资源都做了缓存，当然最主要的还是缓存操作覆盖主题的 main.js 文件，为了加快这个文件获取，我还特地给该文件使用了 jsdelivr 进行加速。这里值得注意的就是，Service Worker 默认只缓存本站链接的静态文件，如果需要加载其他站点的文件，就需要通过<code>registerRoute</code>来注册该文件。</p><p>再经过一番折腾后，在使用了 jsdelivr CDN 加速 js 文件、Service Worker 缓存静态文件双加持下，基本可以做到无痛切换页面了。（尽管看起来还是可能会有 25ms 的瞬间白屏&mldr;但是应该可以说是很大程度上缓减了这个问题，当然得等以后看看还有没有什么新的技术可以来改善这个问题了。</p><p><img src=https://i.loli.net/2021/10/02/xAnh9mHa4ts5qG7.png loading=lazy alt=Snipaste_2021-10-02_14-10-17.png></p><h2 id=issues>Issues</h2><p>以下是在迁移过程中遇到的一些报错错误</p><h3 id=failed-to-render-pages>Failed to render pages</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Failed to render pages: render of &#34;page&#34; failed: execute of template failed: template: posts/single.html:277:98: executing &#34;no-content&#34; at &lt;partial &#34;function/content.html&#34;&gt;: error calling partial: &#34;/Users/zedd/Desktop/demo/quickstart/themes/uBlogger/layouts/partials/function/content.html:12:15&#34;: execute of template failed: template: partials/function/content.html:12:15: executing &#34;partials/function/content.html&#34; at &lt;partial &#34;function/checkbox.html&#34; $content&gt;: error calling partial: partial that returns a value needs a non-zero argument.
+</span></span><span class=line><span class=cl>Total in 19 ms
+</span></span></code></pre></td></tr></table></div></div><p>引起这个报错的可能原因就是文章当中有一些不规范的 Markdown 语法，例如我找出来的就是复制一些链接时候有一些不规范的语法：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[https://baidu.com](&lt;[https://baidu.com](https://baidu.com)&gt;)
+</span></span></code></pre></td></tr></table></div></div><p>诸如此类，只要把这些引起错误的语法修正成规范的链接语法即可。</p><h3 id=rss-error-on-line-pcdata-invalid-char-value-x>rss error on line PCDATA invalid Char value X</h3><p>在生成 RSS 文件的时候可能引起如下报错：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>This page contains the following errors:
+</span></span><span class=line><span class=cl>error on line 455 at column 40: PCDATA invalid Char value 8
+</span></span></code></pre></td></tr></table></div></div><p>这个报错可能原因就是生成的 RSS 文件当中包含有不可见字符，比如以上例子就是存在 \x08 字符，可以根据报错定位一下位置，然后去 markdown 文件当中进行删除</p><h2 id=references>References</h2><ol><li><a id=ref01><a class=link href=https://sspai.com/post/59904 target=_blank rel=noopener>浅谈我为什么从 HEXO 迁移到 HUGO</a></a></li><li><a id=ref02><a class=link href=https://liujiacai.net/blog/2020/12/05/hexo-to-hugo/ target=_blank rel=noopener>博客系统迁移：Hexo 到 Hugo</a></a></li><li><a id=ref03><a class=link href=https://docs.stack.jimmycai.com/zh target=_blank rel=noopener>Hugo Stack 主题文档</a></a></li></ol></section><footer class=article-footer><section class=article-tags><a href=/tags/dev/>Dev</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section><br><div class="notice tip"><p class=notice-title><span class="icon-notice baseline"><svg viewBox="300.5 134 300 300"><path d="M551.281 252.36c0-3.32-1.172-6.641-3.515-8.985l-17.774-17.578c-2.344-2.344-5.469-3.711-8.789-3.711-3.32.0-6.445 1.367-8.789 3.71l-79.687 79.493-44.141-44.14c-2.344-2.344-5.469-3.712-8.79-3.712-3.32.0-6.444 1.368-8.788 3.711l-17.774 17.579c-2.343 2.343-3.515 5.664-3.515 8.984s1.172 6.445 3.515 8.789l70.704 70.703c2.343 2.344 5.664 3.711 8.789 3.711 3.32.0 6.64-1.367 8.984-3.71l106.055-106.056c2.343-2.343 3.515-5.468 3.515-8.789zM600.5 284c0 82.813-67.188 150-150 150-82.813.0-150-67.188-150-150 0-82.813 67.188-150 150-150 82.813.0 150 67.188 150 150z"/></svg>
+</span>Tip</p><p>I am looking for some guys who have a strong interest in CTFs to build a team focused on international CTFs that are on the ctftime.org, if anyone is interested in this idea you can take a look at here: <a class=link href=https://zeddyu.github.io/advertisement/#international-ctf-team target=_blank rel=noopener>Advertisements</a></p><p>想了解更多有意思的国际赛 CTF 中 Web 知识技巧，欢迎加入我的 <a class=link href=https://zeddyu.github.io/advertisement/#%e7%9f%a5%e8%af%86%e6%98%9f%e7%90%83 target=_blank rel=noopener>知识星球</a> ; 另外我正在召集一群小伙伴组建一支专注国际 CTF 的队伍，如果有感兴趣的小伙伴也可在 <a class=link href=https://zeddyu.github.io/advertisement/#international-ctf-team target=_blank rel=noopener>International CTF Team</a> 查看详情</p></div></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/hexo-template-render-error-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/><div class=article-details><h2 class=article-title>Hexo Template render error 解决方案</h2></div></a></article><article><a href=/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/><div class=article-details><h2 class=article-title>Flutter packages get 424问题解决方法</h2></div></a></article><article><a href=/p/mac-idea-%E5%90%AF%E5%8A%A8tomcat%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E5%A5%87%E5%BC%82%E9%97%AE%E9%A2%98/><div class=article-details><h2 class=article-title>Mac idea 启动tomcat端口占用奇异问题</h2></div></a></article><article><a href=/p/%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%8A%E4%B8%80%E4%BA%9B%E5%9D%91/><div class=article-details><h2 class=article-title>博客自动化及一些坑</h2></div></a></article><article><a href=/p/macos-x-%E4%B8%8B%E9%85%8D%E7%BD%AEnginx-amp-php/><div class=article-details><h2 class=article-title>MacOS X 下配置Nginx &amp;amp; PHP</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//ZeddYu.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 Zeddy's Blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.29.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer integrity="sha256-Hpo7r9hGztTDRdCEs1X7jHuudXAcM4+KH4qCx4ATeCY=" crossorigin=anonymous></script><script>(function(){const e=document.createElement("link");e.href="https://googlefonts.zeddyu-lu.workers.dev/fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script><script>"serviceWorker"in navigator&&window.addEventListener("load",function(){navigator.serviceWorker.register("https://zeddyu.github.io/sw.min.3e39d12263b24e3c46a8d580c9ff2781500296e154ca0809820b5be9b9135220.js").then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)})})</script></body></html>

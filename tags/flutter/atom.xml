@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Flutter on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/flutter/</link><description>Recent content in Flutter on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 25 Feb 2019 10:25:35 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/flutter/atom.xml" rel="self" type="application/rss+xml"/><item><title>Flutter packages get 424问题解决方法</title><link>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</link><pubDate>Mon, 25 Feb 2019 10:25:35 +0000</pubDate><guid>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</guid><description>&lt;p>在我一个项目当中使用&lt;code>flutter packages get &lt;/code>遇到了 HTTP 424 的错误，找了很多方法都没有解决方法，个人解决了之后就此记录下来。&lt;/p>
+&lt;h3 id="问题描述">问题描述
+&lt;/h3>&lt;p>使用&lt;code>flutter packages get -v&lt;/code>打印出步骤错误&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002591.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>发现 404 错误&lt;/p>
+&lt;h3 id="发现问题">发现问题
+&lt;/h3>&lt;p>按照提示，使用&lt;code>pub --trace --verbosity=warning --verbose get --no-precompile&lt;/code>打印出更详细的步骤&lt;/p>
+&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005957.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>发现老是在获取&lt;code>path_provideer 0.5.0+1&lt;/code>这里报出了 424 的错误，一开始以为是不是镜像并没有这个包，自己也去&lt;code>pub.flutter-io.cn&lt;/code>找了一下，确实有&lt;code>path_provideer 0.5.0+1&lt;/code>这个版本的包。&lt;/p>
+&lt;p>而 HTTP 424 代表什么呢&lt;/p>
+&lt;blockquote>
+&lt;p>​ 424 Failed Dependency (WebDAV; &lt;a class="link" href="https://tools.ietf.org/html/rfc4918" target="_blank" rel="noopener"
+>RFC 4918&lt;/a>)&lt;/p>
+&lt;p>​ The request failed because it depended on another request and that request failed (e.g., a PROPPATCH).[&lt;a class="link" href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#cite_note-RFC_4918-16" target="_blank" rel="noopener"
+>15]&lt;/a>&lt;/p>
+&lt;p>​ —From &lt;a class="link" href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank" rel="noopener"
+>List of HTTP status codes&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>这里就是字面意思了，也就是说本次请求失败的原因是上次的请求失败了。然而搜索了相关知识，都没有找到方法。&lt;/p>
+&lt;h3 id="解决方案">解决方案
+&lt;/h3>&lt;p>由于毕竟是 HTTP 出了问题，那肯定是网络的问题&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>尝试切换代理(It works nothing for me)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>尝试更换镜像源，由于自己之前设定的是&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">PUB_HOSTED_URL&lt;/span>&lt;span class="o">=&lt;/span>https://pub.flutter-io.cn
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">FLUTTER_STORAGE_BASE_URL&lt;/span>&lt;span class="o">=&lt;/span>https://storage.flutter-io.cn
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>由于现在在学校，自己所处的网络环境发生了改变，毕竟教育网络内部之间的通信比较好，于是切换到交大的镜像源，问题得到解决&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">PUB_HOSTED_URL&lt;/span>&lt;span class="o">=&lt;/span>https://dart-pub.mirrors.sjtug.sjtu.edu.cn/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">FLUTTER_STORAGE_BASE_URL&lt;/span>&lt;span class="o">=&lt;/span>https://mirrors.sjtug.sjtu.edu.cn/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;/ol></description></item></channel></rss>

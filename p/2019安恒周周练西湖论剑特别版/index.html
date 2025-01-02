@@ -24,7 +24,7 @@
 </span></span><span class=line><span class=cl><span class=o>/</span><span class=k>var</span><span class=o>/</span><span class=nb>log</span><span class=o>/</span><span class=n>apache</span><span class=o>/</span><span class=n>access</span><span class=o>.</span><span class=n>log</span>
 </span></span><span class=line><span class=cl><span class=o>/</span><span class=k>var</span><span class=o>/</span><span class=nb>log</span><span class=o>/</span><span class=n>apache2</span><span class=o>/</span><span class=n>access</span><span class=o>.</span><span class=n>log</span>
 </span></span><span class=line><span class=cl><span class=o>/</span><span class=k>var</span><span class=o>/</span><span class=nb>log</span><span class=o>/</span><span class=n>httpd</span><span class=o>/</span><span class=n>access</span><span class=o>.</span><span class=n>log</span>
-</span></span></code></pre></td></tr></table></div></div><p>然而后来想想，题目应该是用的<code>file_get_content()</code>函数，而不是<code>include</code>的操作，即使有 php 代码，也应该无法解析。</p><p>然后瞎看配置文件的时候，发现 flag &mldr;</p><p><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008191.jpg loading=lazy></p><h2 id=web-2-刀塔>Web 2 刀塔</h2><h3 id=description-1>Description</h3><p>{% colorquote info %}
+</span></span></code></pre></td></tr></table></div></div><p>然而后来想想，题目应该是用的<code>file_get_content()</code>函数，而不是<code>include</code>的操作，即使有 php 代码，也应该无法解析。</p><p>然后瞎看配置文件的时候，发现 flag &mldr;</p><p><img src=https://blogpic.zdy.one/img/20190610008191.jpg loading=lazy></p><h2 id=web-2-刀塔>Web 2 刀塔</h2><h3 id=description-1>Description</h3><p>{% colorquote info %}
 无论你喜欢打Dota还是LOL，都进网站里学习一下吧！
 {% endcolorquote %}</p><p>题目地址：http://101.71.29.5:10010</p><h3 id=hacking-1>Hacking</h3><h4 id=非预期>非预期</h4><p>扫目录得到 www.zip ，打开在 flag.php 找到 flag</p><h4 id=正常解>正常解</h4><p>在 index.php 中可以看到</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
@@ -66,7 +66,7 @@
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>  <span class=p>}</span>
 </span></span><span class=line><span class=cl>  <span class=k>break</span><span class=p>;</span>
-</span></span></code></pre></td></tr></table></div></div><p>可以看到这里用了<code>system</code>，正则只允许用字母，这里我们可以直接用通配符绕过就行了。直接<code>head</code>上级目录<code>act=news&amp;nid=../*</code></p><p><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg loading=lazy></p><h2 id=web-3-美男子>Web 3 美男子</h2><h3 id=description-2>Description</h3><p>{% colorquote info %}
+</span></span></code></pre></td></tr></table></div></div><p>可以看到这里用了<code>system</code>，正则只允许用字母，这里我们可以直接用通配符绕过就行了。直接<code>head</code>上级目录<code>act=news&amp;nid=../*</code></p><p><img src=https://blogpic.zdy.one/img/20190610005778.jpg loading=lazy></p><h2 id=web-3-美男子>Web 3 美男子</h2><h3 id=description-2>Description</h3><p>{% colorquote info %}
 我还是想安静的做一个美男子！
 {% endcolorquote %}</p><p>题目地址：http://101.71.29.5:10011</p><h3 id=hacking-2>Hacking</h3><p>源代码得到<code>index.phps</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
@@ -186,7 +186,7 @@
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=mi>1</span><span class=w> </span><span class=k>row</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=k>set</span><span class=w> </span><span class=p>(</span><span class=mi>0</span><span class=p>.</span><span class=mi>000</span><span class=w> </span><span class=n>sec</span><span class=p>)</span><span class=w>
 </span></span></span></code></pre></td></tr></table></div></div><p>所以这里我们只需要让 key2 为空就行了。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>key1=&#39; or 1=1 GROUP BY key2 WITH ROLLUP LIMIT 1 OFFSET 1;#&amp;key2=
-</span></span></code></pre></td></tr></table></div></div><p><img src=https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005931.jpg loading=lazy></p><h2 id=web-4-easy-login>Web 4 Easy Login</h2><h3 id=description-3>Description</h3><p>{% colorquote info %}
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://blogpic.zdy.one/img/20190610005931.jpg loading=lazy></p><h2 id=web-4-easy-login>Web 4 Easy Login</h2><h3 id=description-3>Description</h3><p>{% colorquote info %}
 Easy Login&mldr;So Easy&mldr;
 {% endcolorquote %}</p><p>题目地址：http://101.71.29.5:10017</p><p>然而题目没开&mldr;</p><h2 id=web-5-be-allowed>Web 5 Be Allowed?</h2><h3 id=description-4>Description</h3><p>{% colorquote info %}
 小黑终于闯进了内网，找到了目标Web主机，但是却被做了限制！

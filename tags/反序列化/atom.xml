@@ -129,18 +129,18 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;code>flag&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003356.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003356.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web2-ezweb2">Web2 ezweb2
 &lt;/h2>&lt;p>发现&lt;code>Cookie&lt;/code>里有&lt;code>user=dXNlcg%3D%3D&lt;/code>，base64解码得到&lt;code>user=user&lt;/code>，尝试改为&lt;code>admin&lt;/code>，直接进入到了&lt;code>admin.php&lt;/code>的后台。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000735.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000735.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>随便试了一下，发现是个命令执行。命令执行可以参考我上篇文章，&lt;a class="link" href="https://zeddyu.github.io/2019/01/17/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" target="_blank" rel="noopener"
 >巧用命令注入的N种方式&lt;/a>。&lt;/p>
 &lt;p>&lt;code>ls&lt;/code>可以得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005581.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005581.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>随便&lt;code>fuzz&lt;/code>了一下，发现可以用&lt;code>cat&amp;lt;&amp;gt;config.php&lt;/code>直接读取文件，文件内容如下。&lt;/p>
@@ -254,11 +254,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>找了几个目录都找不到&lt;code>flag&lt;/code>，看来应该要到列目录才可以，但是又过滤了空格，就没办法用&lt;code>ls ..&lt;/code>这样，但是绕过空格的方法很多，我们这里直接用&lt;code>ls$IFS/&lt;/code>绕过空格。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002011.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002011.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看到&lt;code>flag&lt;/code>文件名字，直接读就好了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006422.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006422.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="总结">总结

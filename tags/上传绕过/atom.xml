@@ -320,7 +320,7 @@
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这样只要一次访问成功该 php 文件，即可拿到 shell&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008080.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008080.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="pass-18">Pass-18
@@ -560,7 +560,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里需要注意的是，&lt;code>save_name[0]&lt;/code>放&lt;code>jpg&lt;/code>就好了，否则&lt;code>$ext&lt;/code>拿到的是&lt;code>upload-20.jpg&lt;/code>，这样整个字符串就会进入&lt;code>!in_array($ext, $allow_suffix)&lt;/code>这个判断里面了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006384.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006384.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="conclusion">Conclusion

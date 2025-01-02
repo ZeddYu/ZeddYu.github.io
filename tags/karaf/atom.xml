@@ -7,7 +7,7 @@
 &lt;h2 id="hacking">Hacking
 &lt;/h2>&lt;p>由于环境关掉了，这里就不放图了。说一下几个解法。&lt;/p>
 &lt;p>首先通过弱口令 karaf/karaf 进行认证，进入发现是 jetty 的中间件，然后思路一直走偏在这个中间件上，直到有师傅跟我说 ghost pepper 指的是 Jolokia…nb&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009331.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009331.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后又参考了几篇腾讯云鼎的相关文章：&lt;/p>
@@ -92,13 +92,13 @@ Let&amp;rsquo;s try to execute &lt;code>/readflag&lt;/code> to get the flag.
 Open basedir: /var/www/html:/tmp/7833d7f27adcba46bdfd6c9c31c89904
 Hint: eval($_POST[&amp;ldquo;backdoor&amp;rdquo;]);&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008570.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008570.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="the-first-way-to-hack">The first way to Hack
 &lt;/h2>&lt;p>一看题目意图也比较明显，需要我们利用&lt;code>Imagick&lt;/code>这个模块去进行 rce&lt;/p>
 &lt;p>我们先直接看看&lt;code>phpinfo()&lt;/code>，发现果然是能执行命令的基本都被 disable 掉了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002789.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002789.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们还可以调用&lt;code>readfile()&lt;/code>来查看题目源代码&lt;/p>
@@ -146,7 +146,7 @@ loading="lazy"
 &lt;p>open_basedir 将 php 所能打开的文件限制在指定的目录树中，包括文件本身。当程序要使用例如&lt;code>fopen()&lt;/code>或&lt;code>file_get_contents()&lt;/code>打开一个文件时，这个文件的位置将会被检查。当文件在指定的目录树之外，程序将拒绝打开。&lt;/p>
 &lt;p>{% endcolorquote %}&lt;/p>
 &lt;p>例如就像这样，设置了&lt;code>ini_set('open_basedir','/var/www/html');&lt;/code>之后，我们只能在&lt;code>/var/www/html&lt;/code>进行操作，即&lt;code>open_basedir&lt;/code>是用来限制访问目录的&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006126.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006126.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="bypass-open_basedir">Bypass Open_Basedir
@@ -168,7 +168,7 @@ loading="lazy"
 >LD_PRELOAD的偷梁换柱之能&lt;/a>&lt;/p>
 &lt;h3 id="劫持攻击">劫持攻击
 &lt;/h3>&lt;p>参考的绕过文章使用了&lt;code>mail()&lt;/code>函数，我们可以看看&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004191.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004191.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里确实开启了子进程，那我们再试试引入&lt;code>putenv()&lt;/code>的效果，配合动态链接库尝试劫持，代码来自&lt;a class="link" href="https://github.com/TarlogicSecurity/Chankro" target="_blank" rel="noopener"
@@ -269,11 +269,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004080.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004080.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到已经执行了&lt;code>ls&lt;/code>命令并成功输出了&lt;code>hacked&lt;/code>，使用&lt;code>strace&lt;/code>看看我们可以发现执行顺序。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008064.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008064.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然还有另一种劫持，直接选择一个函数进行劫持，例如我们通过&lt;code>strace php test.php&lt;/code>发现调用了&lt;code>geteuid()&lt;/code>以及&lt;code>getpid()&lt;/code>函数，我们可以在&lt;code>hack.c&lt;/code>中这么写&lt;/p>
@@ -318,12 +318,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这样也可以完成劫持&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002758.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002758.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="getflag">GetFlag
 &lt;/h3>&lt;p>所以我们需要找到一个可以启动子进程的函数，以实现我们劫持函数做到 RCE 的目的，然后这里我本地调通了但是远程不知道怎么没打通&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009740.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009740.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我直接用&lt;code>new&lt;/code>了一个&lt;code>.jpg&lt;/code>也可以调用子进程，但是服务器却没有触发&amp;hellip;&lt;/p>
@@ -400,7 +400,7 @@ loading="lazy"
 &lt;/div>&lt;h3 id="the-other-way">The other way
 &lt;/h3>&lt;p>也可以利用&lt;a class="link" href="https://www.php.net/manual/zh/function.error-log.php" target="_blank" rel="noopener"
 >error_log&lt;/a>这个方法，这个方法也开启了子进程调用了&lt;code>sendmail&lt;/code>方法。按照之前的思路进行就可以了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007064.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007064.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="参考">参考
@@ -421,12 +421,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里参考了其他师傅的 wp ，主要是利用了&lt;code>@BPGDecodeDelegate&lt;/code>对于后缀&lt;code>.bpg&lt;/code>的解析，它会去 PATH 中寻找相关的&lt;code>bpgenc&lt;/code>文件&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009100.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009100.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们只需要设置一个恶意的 PATH ，并在这个文件夹下放入我们的可执行文件。&lt;/p>
 &lt;p>只要找到函数要执行的文件我们就可以进行操作了。例如下面用了&lt;code>Imagick-&amp;gt;readImage()&lt;/code>的方法&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002391.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002391.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="conclusion">Conclusion

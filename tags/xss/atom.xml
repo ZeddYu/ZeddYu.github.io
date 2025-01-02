@@ -3316,11 +3316,11 @@ loading="lazy"
 &lt;/div>&lt;p>CSP 目前有两版, [CSP1][] 和 [CSP2][]. 两版的支持状态可以在 &lt;a class="link" href="http://caniuse.com/#search=csp" target="_blank" rel="noopener"
 >http://caniuse.com/#search=csp&lt;/a> 中查到. 如下:&lt;/p>
 &lt;p>CSP 1.0:&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007189.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007189.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>CSP 2.0:&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001204.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001204.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="x-frame-options">X-Frame-Options
@@ -3908,7 +3908,7 @@ alt="http"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当前目录下随便放置一个文件提供引入即可，然后我们可以发现&lt;code>iframe&lt;/code>当中其实就是个 html 页面&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009928.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009928.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后我们尝试对其进行修改&lt;/p>
@@ -3920,11 +3920,11 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">frames&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">head&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;hasaki!&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003468.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003468.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们就可以在&lt;code>iframe&lt;/code>的页面中发现&lt;code>&amp;lt;head&amp;gt;&lt;/code>标签内容已经被我们改成了&lt;code>hasaki!&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000023.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000023.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>做到这里，我们基本可以想到，如果我们引用的是一个没有 CSP 策略的地址含有恶意的 js 代码会怎么样呢？我们可以试一下&lt;/p>
@@ -3990,7 +3990,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以发现执行了 javascript 代码&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004313.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004313.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2">Example 2
@@ -4374,7 +4374,7 @@ Jsonp 正是利用这种特性来实现跨域的：在页面中引入要跨域�
 &lt;h3 id="mxss-attacks">MXSS Attacks
 &lt;/h3>&lt;h4 id="介绍-3">介绍
 &lt;/h4>&lt;p>不论是服务器端或客户端的XSS过滤器，都认定过滤后的HTML源代码应该与浏览器所渲染后的HTML代码保持一致，至少不会出现很大的出入。然而，如果用户所提供的富文本内容通过 javascript 代码进属性后，一些意外的变化会使得这个认定不再成立：一串看似没有任何危害的HTML代码，将逃过XSS过滤器的检测，最终进入某个DOM节点中，浏览器的渲染引擎会将本来没有任何危害的HTML代码渲染成具有潜在危险的XSS攻击代码。随后，该段攻击代码，可能会被JS代码中的其它一些流程输出到DOM中或是其它方式被再次渲染，从而导致XSS的执行。 这种由于HTML内容进后发生意外变化（mutation，突变，来自遗传学的一个单词，大家都知道的基因突变，gene mutation），而最终导致XSS的攻击流程，被称为突变XSS（mXSS, Mutation-based Cross-Site-Scripting）。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000864.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000864.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="常见注入点-2">常见注入点
@@ -4943,7 +4943,7 @@ be decoded either&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里强烈建议使用 FireFox + Cookie Manager 来完成，因为感觉这个 session 控制写的不是很好，不带 cookie 访问的话，它会强制重置你的 cookie ，然后就会变成每次都需要 burp 抓包来修改 cookie ，十分麻烦&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009559.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009559.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="sql-injection">SQL Injection
@@ -4966,7 +4966,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>继续 fuzz ，在&lt;code>1 union select 1,2,3,4%23&lt;/code>的时候回显正常，猜测有4列&lt;/p>
 &lt;p>通过&lt;code>id=1 union select 1,2,@@version,4 limit 1,1%23&lt;/code>，得到了在文本编辑框中的版本号，也通过&lt;code>user()&lt;/code>发现是&lt;code>root@localhost&lt;/code>的权限，想要拿到 shell ，自然先想怎么去写入 webshell&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004962.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004962.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="getshell">GetShell
@@ -4980,7 +4980,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>发现为空，那就说明可以为所欲为了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000440.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000440.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>通过&lt;/p>
@@ -5040,7 +5040,7 @@ loading="lazy"
 &lt;p>[TOC]&lt;/p>
 &lt;h2 id="pre">Pre
 &lt;/h2>&lt;p>下载得到一个 iso 后直接用 vmware 装起来，&lt;code>ifconfig&lt;/code>得到 ip ，访问就可以看到主页了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000990.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000990.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="hacking">Hacking
@@ -5413,7 +5413,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005160.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -5913,7 +5913,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003780.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -5946,7 +5946,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008506.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -6024,7 +6024,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008206.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>

@@ -138,7 +138,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>但是因为 PHP session 会话机制的关系，仅仅一次包含得到的&lt;code>sess_a&lt;/code>文件为空，所以我们需要竞争包含，使用 burp intruder 等形式都可以。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190606203219.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190606203219.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>大概30次可以成功7次左右，可以看到包含文件回显，但是看不到具体的文件内容，因为有部分 php 代码被解析了，所以我们可以使用&lt;code>tail -f&lt;/code>监测&lt;code>sess_a&lt;/code>的文件变化查看文件内容，可以看到内容如下：&lt;/p>
@@ -153,12 +153,12 @@ loading="lazy"
 &lt;/div>&lt;p>可以发现其中有 php 代码，所以当我们使用&lt;code>include&lt;/code>包含该文件的时候会执行该文件当中的 php 代码，让其执行。&lt;/p>
 &lt;h2 id="tmp">tmp
 &lt;/h2>&lt;p>条件：tmp 文件路径已知&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190606210821.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190606210821.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>php中上传文件，会创建临时文件。一般默认 php tmp 目录在 linux 下使用 /tmp 目录，而在 windows 下使用 c:\winsdows\temp 目录。在临时文件被删除之前，利用竞争即可包含该临时文件。&lt;/p>
 &lt;p>如果存在&lt;code>phpinfo()&lt;/code>界面即可配合&lt;code>phpinfo()&lt;/code>界面的回显来利用，例如向&lt;code>phpinfo()&lt;/code>界面上传一个文件，可以得到文件名的回显，再利用一些方法阻塞服务器的操作就可以进行包含了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190606213614.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190606213614.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>具体流程如下：&lt;/p>
@@ -233,7 +233,7 @@ loading="lazy"
 &lt;p>[TOC]&lt;/p>
 &lt;h2 id="pre">Pre
 &lt;/h2>&lt;p>下载得到一个 iso 后直接用 vmware 装起来，&lt;code>ifconfig&lt;/code>得到 ip ，访问就可以看到主页了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000990.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000990.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="hacking">Hacking
@@ -606,7 +606,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005160.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -1106,7 +1106,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003780.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -1139,7 +1139,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008506.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -1217,7 +1217,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008206.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>

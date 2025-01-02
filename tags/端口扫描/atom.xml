@@ -7,16 +7,16 @@
 &lt;p>以及现在还有通过在 TCP/IP 模型中的网络层 ICMP 协议来探测端口的扫描技术。&lt;/p>
 &lt;h1 id="tcp">TCP
 &lt;/h1>&lt;p>TCP报文这里就不再细讲了，也不是重点，放一张TCP数据报文的图，具体可以去百度百科了解：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164642.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605164642.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>TCP三次握手：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605163446.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605163446.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="tcp-connect-scan">TCP CONNECT SCAN
 &lt;/h2>&lt;p>原理很简单，与目标端口建立3次握手，如果成功建立则为&lt;code>open&lt;/code>，收到&lt;code>RST&lt;/code>则为&lt;code>close&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165105.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605165105.png"
 loading="lazy"
 alt="TCP CONNECT SCAN"
 >&lt;/p>
@@ -30,7 +30,7 @@ alt="TCP CONNECT SCAN"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">use auxiliary/scanner/portscan/tcp
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190608234213.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190608234213.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Nmap 选项参数：&lt;/p>
@@ -44,7 +44,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h2 id="tcp-syn-scan">TCP SYN SCAN
 &lt;/h2>&lt;p>也称为TCP半连接扫描，只发送三次握手的第一次SYN报文段，如果收到&lt;code>ACK+SYN&lt;/code>则为&lt;code>open&lt;/code>，收到&lt;code>RST&lt;/code>则为&lt;code>close&lt;/code>，这种好处是不必等待三次握手完全完成，速度快且不容易被防火墙记录进日志。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165140.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605165140.png"
 loading="lazy"
 alt="TCP SYN SCAN"
 >&lt;/p>
@@ -85,7 +85,7 @@ alt="TCP SYN SCAN"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">use auxiliary/scanner/portscan/syn
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609010618.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609010618.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Nmap 参数&lt;/p>
@@ -106,7 +106,7 @@ loading="lazy"
 &lt;blockquote>
 &lt;p>​ 如果扫描系统遵循该RFC，当端口关闭时，任何不包含SYN，RST，或者ACK位的报文会导致 一个RST返回而当端口开放时，应该没有任何响应。只要不包含SYN，RST，或者ACK, 任何其它三种(FIN，PSH，and URG)的组合都行。&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165320.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605165320.png"
 loading="lazy"
 alt="TCP XMAS TREE SCAN"
 >&lt;/p>
@@ -143,7 +143,7 @@ alt="TCP XMAS TREE SCAN"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">use auxiliary/scanner/portscan/xmas
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011211.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609011211.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Nmap 选项参数：&lt;/p>
@@ -177,14 +177,14 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h2 id="tcp-null-scan">TCP NULL SCAN
 &lt;/h2>&lt;p>空扫描即&lt;code>flag&lt;/code>位全 0 ，如果没有回复则为&lt;code>open&lt;/code>，收到&lt;code>RST&lt;/code>则为&lt;code>close&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165511.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605165511.png"
 loading="lazy"
 alt="TCP NULL SCAN"
 >&lt;/p>
 &lt;h2 id="tcp-ack-scan">TCP ACK SCAN
 &lt;/h2>&lt;p>使用TCP ACK扫描不能够确定端口的关闭或者开放，因为当发送给对方一个含有 ACK 表示的TCP报文的时候，都返回含有RST标志的报文，无论端口是开放或者关闭。所以，不能使用TCP ACK扫描来确定端口是否开放或者关闭。但是可以利用它来扫描防火墙的配置，用它来发现防火墙规则，确定它们是有状态的还是无状态的，哪些端口是被过滤的。&lt;/p>
 &lt;p>向服务端发送一个带有 ACK 标识的数据包，如果收到带有 RST 标识的响应，则说明服务端没有过滤，不存在状态防火墙。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605165649.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605165649.png"
 loading="lazy"
 alt="TCP ACK SCAN"
 >&lt;/p>
@@ -198,7 +198,7 @@ alt="TCP ACK SCAN"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">use auxiliary/scanner/portscan/ack
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609011455.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609011455.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Nmap 可以用以下命令&lt;/p>
@@ -212,12 +212,12 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h2 id="tcp-window-scan">TCP WINDOW SCAN
 &lt;/h2>&lt;p>TCP 窗口扫描的流程类似于 ACK 扫描，都是向服务端发送带有 ACK 标识的数据包，不同的在于 TCP 窗口扫描会检查收到的 RST 数据包中的窗口大小，如果 RST 数据包中的窗口大小不为零，则说明目标端口是开放的。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170017.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605170017.jpg"
 loading="lazy"
 alt="TCP WINDOW SCAN"
 >&lt;/p>
 &lt;p>如果 RST 数据包中的窗口大小为零，则说明目标端口处于关闭状态。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170009.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605170009.jpg"
 loading="lazy"
 alt="TCP WINDOW SCAN"
 >&lt;/p>
@@ -284,15 +284,15 @@ alt="TCP WINDOW SCAN"
 &lt;p>虽然关闭了端口和被过滤的端口会发生的事情稍微有点点不同，但是攻击者处理的方法都一样，IPID都只是增加1。所以，在Idel Scan中无法区别端口到底是关闭的还是已经过滤了。当Nmap记录的IPID增加了1，也就被标记成了close丨filterred。&lt;/p>
 &lt;p>以下三张图大略可以说明端口被打开，关闭，过滤的情况。&lt;/p>
 &lt;p>端口开放：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609152056.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609152056.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>端口关闭：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609155715.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609155715.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>端口被过滤：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609160207.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609160207.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Idel Scan根本上来讲就是一个隐性扫描，Nmap提供了decoy scanning (-D)，帮助使用者保护自己的身份。如果不是使用的（类似Idel Scan扫描方式）仍然需要攻击者通过自身真实IP向目标发送数据包以获取扫描结果。Idel Scan扫描结果其中之一就有入侵检测系统通常会发送一个Zombie主机已经开始扫描的通知。所以它可以作为一个框架去扫描另外一个目标，当你查阅入侵检测系统（IDS）时，请记住这种可能性。&lt;/p>
@@ -403,7 +403,7 @@ loading="lazy"
 &lt;p>UDP适用于不需要或在程序中执行错误检查和纠正的应用，它避免了协议栈中此类处理的开销。对时间有较高要求的应用程序通常使用UDP，因为丢弃数据包比等待或重传导致延迟更可取。&lt;/p>
 &lt;h2 id="udp-scan">UDP SCAN
 &lt;/h2>&lt;p>UDP扫描比较简单，一般如果返回&lt;code>ICMP port unreachable&lt;/code>说明端口是关闭的，而如果没有回应或有回应(有些UDP服务是有回应的但不常见)则认为是&lt;code>open&lt;/code>，但由于UDP的不可靠性，无法判断报文段是丢了还是没有回应，所以一般扫描器会发送多次，然后根据结果再判断。这也是为什么UDP扫描这么慢的原因。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170208.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605170208.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>虽然因特网上最流行的服务运行在TCP协议上，但UDP服务被广泛部署。 DNS，SNMP和DHCP（注册端口53,161 / 162和67/68）是最常见的三种。 由于UDP扫描通常比TCP更慢且更困难，因此某些安全审核员会忽略这些端口。 这是一个错误，因为可利用的UDP服务非常普遍，攻击者肯定不会忽略整个协议。&lt;/p>
@@ -449,20 +449,20 @@ loading="lazy"
 >UDP Scan (-sU)&lt;/a>&lt;/p>
 &lt;h1 id="icmp">ICMP
 &lt;/h1>&lt;p>ICMP 格式：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170742.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605170742.png"
 loading="lazy"
 >&lt;/p>
 &lt;blockquote>
 &lt;p>​ 根据网络协议，如果按照协议出现了错误，那么接收端将产生一个icmp的错误报文。这些错误报文并不是主动发送的，而是由于错误，根据协议自动产生。&lt;/p>
 &lt;/blockquote>
 &lt;p>ICMP 相关类型解释：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605164952.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605164952.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>一般如果数据包被防火墙过滤的话，会收到一个 ICMP 数据包，其中类型为3，代码为1，2，3，9，10或13。&lt;/p>
 &lt;h2 id="icmp-scan">ICMP SCAN
 &lt;/h2>&lt;p>常见的利用：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190605170934.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190605170934.png"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="sctp">SCTP
@@ -476,7 +476,7 @@ loading="lazy"
 &lt;/blockquote>
 &lt;p>简而言之，SCTP是TCP和UDP协议的一种相对较新的替代方案，它结合了TCP和UDP的大多数特性，还增加了多宿主和多流等新功能。它主要用于SS7 / SIGTRAN相关服务，但也有可能用于其他应用程序。&lt;/p>
 &lt;p>下图是 TCP 与 SCTP 建立连接的对比图：&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190609005059.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190609005059.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="sctp-init-scan">SCTP INIT scan

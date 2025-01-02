@@ -24,11 +24,11 @@
 &lt;/h3>&lt;p>触发函数有了，那么接下里就是触发条件了。既然是与文件有关的函数均能触发 phar 反序列化，那么伪协议呢？&lt;/p>
 &lt;p>通过 @zsx 师傅的挖掘，发现基本上大多数 PHP stream 都可以通过 phar:// 来触发，但是就是没有提及 php:// 伪协议。&lt;/p>
 &lt;p>So，让我们用最常见的 &lt;code>php://filter/read=convert.base64-encode/resource=&lt;/code>试一下&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121822.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820121822.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>好的，那么再看看文件包含如何&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820121956.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820121956.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>一点也不意外，我们可以通过 php://filter 来绕过一些开头限制进行 phar 反序列化&lt;/p>
@@ -44,15 +44,15 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>禁用了外部实体，虽然题目给出的反射类确实可以反射，而且也可以进行 XXE，也有过相关的 CTF题 &lt;a class="link" href="https://www.anquanke.com/post/id/170299#h2-2" target="_blank" rel="noopener"
 >Annoying class&lt;/a>，虽然控制了 /flag 读取权限，可是为什么还要禁用外部实体呢？难不成 XXE 也可以反序列化？&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150125.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150125.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Test.xml 中的内容就是上面 &lt;code>$xml&lt;/code>的内容&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150346.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150346.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然 php://filter 在这里也适用&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820150839.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150839.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mysql">Mysql
@@ -102,7 +102,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>其实也就是 @LoRexxar&amp;rsquo; 在 Tsec 上进行的分享 &lt;a class="link" href="https://paper.seebug.org/998/" target="_blank" rel="noopener"
 >Comprehensive analysis of the mysql client attack chain&lt;/a> 的内容了，@zsx 文章中指出&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190820151817.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820151817.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>既然可以这么触发，那么 Rogue Mysql 的攻击当然适用于 phar 反序列化了。&lt;/p>
@@ -170,13 +170,13 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>执行命令不只这几个函数，还有很多，这里就拿这几个来举例。毫无疑问，这里肯定是可以执行命令。&lt;/p>
 &lt;p>那我们先直接尝试读取&lt;code>/etc/passwd&lt;/code>，显然，这里还没到代码层面就直接被 waf 了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007415.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007415.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>原因可能是因为&lt;code>/etc/passwd&lt;/code>的敏感原因&lt;/p>
 &lt;h3 id="绕过-waf">绕过 waf
 &lt;/h3>&lt;p>那我们接下来先尝试绕过 waf ，可以尝试使用&lt;code>/etc/pas\swd&lt;/code>绕过，也可以使用其他空变量，当然方法很多&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002257.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002257.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以发现，我们是成功绕过 waf ，来到了代码层面，接下来我们就需要考虑怎么绕过命令执行函数了&lt;/p>
@@ -258,15 +258,15 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>也就是说&lt;code>$var(args)&lt;/code>跟&lt;code>“string”(args);&lt;/code>是与&lt;code>function(args)&lt;/code>等效的。于是我们可以有&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000584.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000584.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试&lt;code>&amp;quot;\x73\x79\x73\x74\x65\x6d&amp;quot;(&amp;quot;whoami&amp;quot;)&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003062.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003062.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>确实可以执行无误，然后我们就可以利用这个特性绕过对&lt;code>system&lt;/code>的检测了&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009239.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009239.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="改进输入检测">改进输入检测
@@ -293,15 +293,15 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>增加了对单引号与双引号的检测，这时候应该怎么办呢&lt;/p>
 &lt;p>让我们再来看一个特性&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003524.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003524.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也就是说在 PHP 中，字符串表达可以有以上这几种方法，于是我们可以用以上的方式尝试替代双引号。第一种是类似&lt;code>(system)(whoami);&lt;/code>，然而在 php 中我们可以用&lt;code>.&lt;/code>来拼接字符串，于是也可以有&lt;code>(sys.(te).m)(whoami);&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006608.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006608.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也可以使用&lt;code>/?a=system&amp;amp;b=ls&amp;amp;code=$_GET[a]($_GET[b]);&lt;/code>的解析方法来绕过&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610004860.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004860.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我们还可以使用其他技巧，比如我们可以在函数名和参数内插入注释（这种方法在绕过某些WAF规则集方面非常有用，这些规则集会拦截特定的PHP函数名&lt;/p>
@@ -319,10 +319,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">php -r &amp;#34;(s/*foo*/.(ys)./*bar*/tem)/*this is a comment*/(wh./*foo*/(oa)/*bar*/.mi);&amp;#34;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009365.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009365.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001559.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001559.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="get_defined_functions">get_defined_functions
@@ -333,24 +333,24 @@ loading="lazy"
 &lt;p>​ 获取所有已定义函数的数组。&lt;/p>
 &lt;/blockquote>
 &lt;p>这个函数是可将用户定义的和内置函数均返回的。获取内置函数可以使用&lt;code>$arr[“internal”]&lt;/code>，获取用户定义的函数可以使用&lt;code>$arr[“user”]&lt;/code>。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005250.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005250.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们可以尝试找到&lt;code>system&lt;/code>函数&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008754.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008754.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>配合前面的方法，效果拔群，不过&lt;code>system&lt;/code>函数不一定都是 1077 ，使用的时候最好可以&lt;code>grep&lt;/code>查找一下&lt;code>system&lt;/code>函数的下标&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003939.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003939.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="字符数组">字符数组
 &lt;/h3>&lt;p>我们可以将PHP中的每个字符串当成一组字符来使用（基本上与 Python 相同），并且我们可以使用&lt;code>$string[2]&lt;/code>或者&lt;code>$string[-3]&lt;/code>语法来引用单个字符。这种方法也有可能绕过基于PHP函数名的防护规则。比如，我们可以使用&lt;code>$a=&amp;quot;eimstdy&amp;quot;;&lt;/code>这个字符串构造出&lt;code>system(&amp;quot;id&amp;quot;);&lt;/code>语句。需要空格的话就在&lt;code>$a&lt;/code>中加入空格就好了。&lt;/p>
 &lt;p>也可以使用一些内置变量，不再赘述，如下图所示&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006073.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006073.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003486.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003486.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="参考">参考

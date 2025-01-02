@@ -10,7 +10,7 @@
 &lt;/h3>&lt;blockquote>
 &lt;p>​ Run your javascript code inside this page and preview it because of hackers we have only limited functions&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003267.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003267.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>题目内容如上，比较简单的 javascript 代码运行，后台是 Node.js&lt;/p>
@@ -48,12 +48,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>然而当我们想直接反弹 shell （那当然是太天真了），就返回了&lt;code>not defined&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009658.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009658.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以没那么简单，那我们先从信息收集开始，使用&lt;code>Error().stack&lt;/code>可以收集使用的模块信息，而且题目设置是可以直接把内容输出出来的，所以我们不需要&lt;code>print&lt;/code>，可以直接输出信息。&lt;/p>
 &lt;p>我们首先先收集目标信息，使用&lt;code>js=Error().stack&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007444.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007444.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以得到题目设置的模块，如&lt;code>vm.js&lt;/code>，然后发现对应的&lt;a class="link" href="https://github.com/patriksimek/vm2" target="_blank" rel="noopener"
@@ -98,7 +98,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>直接作为 payload 使用，发现可以成功执行命令&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001558.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001558.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>接下来直接读 flag 就好了，得到&lt;/p>
@@ -114,33 +114,33 @@ loading="lazy"
 &lt;/h3>&lt;blockquote>
 &lt;p>​ Its just a blog&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008750.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008750.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>题目是一个 Node.js ，题目设置比较简单，就一个表单，提交之后参数会得到相应的页面&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003012.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003012.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>以及还有一个 admin 界面&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000941.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000941.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>index 界面输入什么就以 HTML 形式返回什么，也可以触发 XSS&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007194.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007194.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是这只是一个 self-xss ，这就显得又些鸡肋了，所以大概意思就是我们需要用 index 做 xss 或者其他一些操作去获取管理员权限&lt;/p>
 &lt;p>跟上题一样，既然都是 Node.js ，是不是也可以得到一些错误信息什么的。&lt;/p>
 &lt;p>在尝试了一些单引号、双引号等一些特殊符号，发现确实是全部都转换成 string 输出了，猜想是不是有类似&lt;code>toString()&lt;/code>的操作，换成数组测试，发现无回显，一直停留在 pending 状态中&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002458.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002458.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试直接访问 /edge 页面，得到错误信息&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000829.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000829.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是这都是用于前端效果的 js 库，并没有什么用，但是思路应该是没错的，继续 fuzz 就行了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007151.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007151.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>最终用&lt;code>title=1&amp;amp;description[a]=1&lt;/code>得到了比较有用的报错信息，得到了一个新的库 esi.js ，查看相关资料&lt;a class="link" href="https://www.npmjs.com/package/esi" target="_blank" rel="noopener"
@@ -180,7 +180,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">title&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">description&lt;/span>&lt;span class="o">=&amp;lt;&lt;/span>&lt;span class="n">esi&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">Ainclude&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">src&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">D&lt;/span>&lt;span class="s2">&amp;#34;http%3A&lt;/span>&lt;span class="si">%2F%2F&lt;/span>&lt;span class="s2">website.com&lt;/span>&lt;span class="si">%2F&lt;/span>&lt;span class="s2">admin&amp;#34;&lt;/span>&lt;span class="o">&amp;gt;&amp;lt;%&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="n">Fesi&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">Ainclude&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002608.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002608.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mime-checkr">mime checkr
@@ -188,15 +188,15 @@ loading="lazy"
 &lt;p>​ upload and check the mime type&lt;/p>
 &lt;p>Hint1: Do you think containers could speak like humans?&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009076.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009076.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>题目设置为有一个上传点，只允许上传 .jpeg 后缀的文件，尝试了一下其他截断，均不能上传其他文件&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006334.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006334.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>还有一个获取 MIME 格式的功能，需要传入路径，返回 MIME 格式&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001038.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001038.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>还有一个备份文件&lt;code>getmime.bak&lt;/code>&lt;/p>
@@ -385,18 +385,18 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>修改后缀名为 .jpeg ，通过访问&lt;code>phar://uploads/f68caba0b9.jpeg/test.txt&lt;/code>，成功获得了&lt;code>file:///etc/passwd&lt;/code>的内容。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003709.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003709.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610007837.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007837.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是我们如何找 flag 呢，这里其实是比较坑的一个点，其实基本漏洞利用点已经找到了，接下来其实感觉是有些多余的出题设置，通过试探一些常用的 flag 目录路径，都没有找到 flag ，而后在&lt;code>/etc/hosts&lt;/code>发现了同一个网段的另一台主机。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000059.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000059.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>如图中的&lt;code>192.168.32.2 7eaef799a0b8&lt;/code>，猜想是不是在 192.168.32.0/24 这个段上，或者比较靠前的机器上，当尝试到 192.168.32.3 时，发现有不寻常的返回。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006681.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006681.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看着有点像用 python 加密出来的东西，搜了一下发现是使用了一个叫&lt;code>ebcdic&lt;/code>的 python 库，用了&lt;code>cp1047&lt;/code>编码。&lt;/p>
@@ -414,11 +414,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;code>Hello /fetch~%[]^@)( me&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001714.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001714.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>感觉是个 url 之类的，再构造 phar 包，访问 &lt;code>http://192.168.32.3/fetch~%25%5B%5D%5E%40)(&lt;/code>，得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005654.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005654.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看起来是同样的加密，直接解密就可以了。&lt;/p>
@@ -435,7 +435,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>最后得到 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008048.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008048.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="credz">credz
@@ -457,11 +457,11 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="c">&amp;lt;!-- remember me all the time, credz is not what you need luke --&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005677.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005677.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试了一下 sql 注入，并没有注入点，在尝试弱密码的时候使用&lt;code>admin/admin&lt;/code>登录成功，但是页面提示&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610008681.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008681.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>很直接，让我们伪造 admin 的 cookie ，这就需要我们另寻突破口了，在主页面发现一个貌似用来设置 cookie 的 js 文件：&lt;/p>
@@ -1012,24 +1012,24 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>所以通过这些几个设置，我们就可以得到&lt;code>trackuser.php&lt;/code>中请求参数&lt;code>m&lt;/code>的值为 2656613544186699742 ，发包得到对应的 Cookie&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610002177.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002177.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>带着 Cookie 登录 &lt;code>admin/admin&lt;/code>，得到下一步&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001527.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001527.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>直接访问，发现是个目录列举。&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610000655.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000655.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>直接访问&lt;code>admin.php&lt;/code>，发现&lt;code>not_authorized&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610003830.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003830.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>而&lt;code>pack-9d392b4893d01af61c5712fdf5aafd8f24d06a10.pack&lt;/code>文件则可以直接下载，我们可以通过&lt;a class="link" href="http://du1abadd.org/2010/git-tips-%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA-pack-%E6%96%87%E4%BB%B6%E6%81%A2%E5%A4%8D%E6%95%B4%E4%B8%AA%E7%B3%BB%E7%BB%9F/" target="_blank" rel="noopener"
 >git tips 只有一个 pack 文件恢复整个系统&lt;/a>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005313.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005313.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到&lt;code>admin.php&lt;/code>文件&lt;/p>
@@ -1088,7 +1088,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>简单审计，获取路径后检查&lt;code>index.php&lt;/code>是否存在路径当中，我们用&lt;code>admin.php/index.php&lt;/code>就可以简单绕过得到 flag&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005096.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005096.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="proton">proton
@@ -1101,23 +1101,23 @@ loading="lazy"
 &lt;/ul>
 &lt;/blockquote>
 &lt;p>题目设置&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009953.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009953.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>访问&lt;code>/getPOST&lt;/code>又得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009992.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009992.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>添加&lt;code>id&lt;/code>参数访问&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610005714.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005714.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>单引号尝试注入，发现报错&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610006739.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006739.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>注入无果后，看了一下发现是个 Node.js 的站，尝试使用之前的 payload 检查错误信息&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610009819.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009819.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然而并没有发现什么可疑的js库，而且题目既然给出了不是 sql 注入的话，我们就需要得另找方向。&lt;/p>
@@ -1334,7 +1334,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>需要我们将&lt;code>const admin&lt;/code>的&lt;code>admin&lt;/code>属性设置为1，比较明显的一个 js 原型链污染，我们只需要让一个&lt;code>Object.prototype&lt;/code>设置为&lt;code>{&amp;quot;admin&amp;quot;:1}&lt;/code>即可，而我们还需要一个&lt;code>name&lt;/code>参数，所以我们大致可以这样构造：&lt;code>{&amp;quot;name&amp;quot;: &amp;quot;xxx&amp;quot;, &amp;quot;__proto__&amp;quot;:{&amp;quot;аdmin&amp;quot;:&amp;quot;1&amp;quot;}}&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic-1254145318.cos.ap-shanghai.myqcloud.com/20190610001862.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001862.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>在第二个for循环中，由于&lt;code>__proto__&lt;/code>是一个&lt;code>Object&lt;/code>，会递归进入&lt;code>merge()&lt;/code>，由于&lt;code>__proto__&lt;/code>有一对&lt;code>key-value&lt;/code>，所以会判断&lt;code>__proto__[&amp;quot;admin&amp;quot;]&lt;/code>是否是&lt;code>Object&lt;/code>，不是就进入&lt;code>else&lt;/code>，对原型&lt;code>__proto__[&amp;quot;admin&amp;quot;]&lt;/code>赋值为1，这就完成了原型链污染的操作。&lt;/p>

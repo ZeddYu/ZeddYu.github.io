@@ -41,7 +41,7 @@
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190911181803.png"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190911181803.png&lt;img src="https://blogpic.zdy.one/img/20190911181803.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以发现我们并没有触发 Windows Defender，即使字符串是 EICAR 测试样本，说明了字符串不受 EICAR 特征影响。&lt;/p>
@@ -56,7 +56,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190911181841.png"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190911181841.png&lt;img src="https://blogpic.zdy.one/img/20190911181841.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>没错，在保存的时候就立马触发了 Windows Defender ，足以验证当中有一个 Javascript Engine 进行了内容检测，而且即使没有完整的 Javascript 标签，也可以触发 Windows defender。&lt;/p>
@@ -76,7 +76,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912100623.png"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912100623.png&lt;img src="https://blogpic.zdy.one/img/20190912100623.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>非常棒，并没有被检测出恶意内容。&lt;/p>
@@ -97,7 +97,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912100640.png"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912100640.png&lt;img src="https://blogpic.zdy.one/img/20190912100640.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>也很棒，也没有检测出恶意内容。&lt;/p>
@@ -120,7 +120,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912100648.png"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912100648.png&lt;img src="https://blogpic.zdy.one/img/20190912100648.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Done! 触发了恶意内容检测。&lt;/p>
@@ -143,7 +143,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>a&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912103004.png"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912103004.png&lt;img src="https://blogpic.zdy.one/img/20190912103004.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我们获取的是&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签中的第一个字符，也就是&lt;code>a&lt;/code>，不构成 EICAR 测试样本，所以触发不了 Windows Defender 也很正常。&lt;/p>
@@ -166,7 +166,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>*&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912103146.png"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912103146.png&lt;img src="https://blogpic.zdy.one/img/20190912103146.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>很棒，意料之中地触发了 Windows Defender。&lt;/p>
@@ -293,7 +293,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span> &lt;span class="nx">num&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;*&amp;#39;&lt;/span> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912130704.png"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912130704.png&lt;img src="https://blogpic.zdy.one/img/20190912130704.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这样我们就可以通过“盲注”的方式获取&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签中的秘密数据了。&lt;/p>

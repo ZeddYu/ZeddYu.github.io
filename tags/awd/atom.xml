@@ -510,13 +510,13 @@
 &lt;p>以往的攻防比赛，选手对自己&lt;code>web&lt;/code>目录有读写的权力，这样造成了比赛中非常多的选手通过上通防，抓流量记录日志等技巧方式来防守或是攻击得分，并且很多选手通常通过一些“技巧”，通过对比赛&lt;code>check&lt;/code>的绕过，关闭一些关键的正常服务或者全部&lt;code>web&lt;/code>站点服务来在比赛中“苟”住。这样往往导致了很多AWD比赛中&lt;code>web&lt;/code>要么就是被打穿，要么就是“天衣无缝”的情况，&lt;code>web&lt;/code>选手的游戏体验在近期攻防比赛中每况愈下，以网鼎杯&lt;code>web&lt;/code>为例，半决赛跟决赛的&lt;code>check&lt;/code>只检查了&lt;code>index&lt;/code>主页的关键字，导致了很多队伍一开始就进行了删站，只留个&lt;code>index&lt;/code>主页来通过&lt;code>check&lt;/code>，严重破坏了比赛体验。&lt;/p>
 &lt;h3 id="改善">改善？
 &lt;/h3>&lt;p>简而言之就是，本次比赛在理想规则（为啥是理想规则？因为计划与现实完全是理想图与实物图的对比）改变了传统的&lt;code>web&lt;/code>类型的攻防模式，&lt;code>web&lt;/code>目录只读不可写，通过改变&lt;code>waf&lt;/code>正则防御规则来防御攻击，攻击点全靠代码审计来攻击；&lt;code>pwn&lt;/code>类型的与传统攻防相同。（以下三张图片来源于&lt;code>卧龙草堂&lt;/code>公众号）&lt;/p>
-&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvijd2c0g20pn06c1kx.gif"
+&lt;p>Permalink before if: https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvijd2c0g20pn06c1kx.gif&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvijd2c0g20pn06c1kx.gif"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvihrqiug20vz09kkjl.gif"
+&lt;p>Permalink before if: https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvihrqiug20vz09kkjl.gif&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvihrqiug20vz09kkjl.gif"
 loading="lazy"
 >&lt;/p>
-&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuuxv8ggkg20m20hwe81.gif"
+&lt;p>Permalink before if: https://ws1.sinaimg.cn/large/64ef14dcgy1fxuuxv8ggkg20m20hwe81.gif&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuuxv8ggkg20m20hwe81.gif"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="现实赛前">现实：赛前
@@ -560,7 +560,7 @@ loading="lazy"
 &lt;h1 id="dayn">Day N
 &lt;/h1>&lt;p>&lt;code>wordpress&lt;/code>版本是最新的&lt;code>4.9.8&lt;/code>，服务器&lt;code>IIS&lt;/code>，不过服务器版本号忘了。&lt;/p>
 &lt;p>对比之后差异一目了然&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009721.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>主要是两个一句话木马，以及4个插件。&lt;/p>
@@ -595,7 +595,7 @@ loading="lazy"
 &lt;/div>&lt;p>后来搜了一下发现竟然是&lt;code>php&lt;/code>版本过高的问题，因为在&lt;code>php7&lt;/code>中动态调用一些函数是被禁止的。详细参考&lt;a class="link" href="http://shuiboye.blogspot.com/2018/01/php200.html" target="_blank" rel="noopener"
 >菜刀连接php一句话木马返回200的原因及解决方法&lt;/a>&lt;/p>
 &lt;p>这里是个密码为-7的一句话。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002229.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002229.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002229.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="poc2">Poc 2
@@ -638,7 +638,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里就非常清楚了，是个密码为&lt;code>cmd&lt;/code>的一句话。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006974.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006974.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006974.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="plugin">Plugin
@@ -653,7 +653,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h3 id="site-editor">site-editor
 &lt;/h3>&lt;p>首先看&lt;code>site-editor&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004098.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004098.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004098.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以从图中看出，主要是个文件包含的漏洞。&lt;/p>
@@ -696,22 +696,22 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">http://localhost/wordpress-awd/wp-content/plugins/site-editor/editor/extensions/pagebuilder/includes/ajax_shortcode_pattern.php?ajax_path=..././..././..././..././..././..././..././wp-includes/pomo/tp.php
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009104.jpg"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009104.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009104.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="gift-voucher">gift-voucher
 &lt;/h3>&lt;p>另一个&lt;code>wpscan&lt;/code>扫到的插件是&lt;code>gift-voucher&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006248.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006248.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006248.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到这是个盲注的洞，详细参考&lt;a class="link" href="https://www.exploit-db.com/exploits/45255" target="_blank" rel="noopener"
 >WordPress Plugin Gift Voucher 1.0.5 - (Authenticated) &amp;rsquo;template_id&amp;rsquo; SQL Injection&lt;/a>&lt;/p>
 &lt;p>用&lt;code>sqlmap&lt;/code>扫了一下&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003081.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003081.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003081.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到&lt;code>admin&lt;/code>的密码，如果字典好的话，可以快一些。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005025.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005025.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005025.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="localize-my-post">Localize My Post
@@ -750,9 +750,6 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里跟上面那个文件包含类似，可以用&lt;code>...//&lt;/code>来访问上级目录&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001110.jpg"
-loading="lazy"
->&lt;/p>
 &lt;h3 id="plainview-activity-monitor">plainview-activity-monitor
 &lt;/h3>&lt;p>这个也是&lt;code>wpscan&lt;/code>没有扫出来的漏洞插件，而且是个RCE，但是利用条件是需要登录到后台才可以。详细参考&lt;a class="link" href="https://www.exploit-db.com/exploits/45274" target="_blank" rel="noopener"
 >WordPress Plugin Plainview Activity Monitor 20161228 - (Authenticated) Command Injection&lt;/a>&lt;/p>
@@ -1067,13 +1064,13 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ip=baidu.com%7C%20ls&amp;amp;lookup
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009426.jpg"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009426.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009426.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到执行结果。&lt;/p>
 &lt;h2 id="functionphp">Function.php
 &lt;/h2>&lt;p>回过头来，我们再看看还有没有跟官方文件其他不同的文件。除了MAC产生的&lt;code>.DS_Store&lt;/code>文件、&lt;code>._wp-config.php&lt;/code>编辑临时文件、&lt;code>wp-config.php&lt;/code>配置文件，剩下的就是&lt;code>function.php&lt;/code>了&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009721.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们对比得到比赛多出了这么一处代码:&lt;/p>

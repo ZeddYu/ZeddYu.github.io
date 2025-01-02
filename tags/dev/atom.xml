@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/dev/</link><description>Recent content in Dev on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 30 Sep 2021 01:15:01 +0800</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/dev/atom.xml" rel="self" type="application/rss+xml"/><item><title>从 Hexo 搬迁至 Hugo</title><link>https://zeddyu.github.io/p/%E4%BB%8E-hexo-%E6%90%AC%E8%BF%81%E8%87%B3-hugo/</link><pubDate>Thu, 30 Sep 2021 01:15:01 +0800</pubDate><guid>https://zeddyu.github.io/p/%E4%BB%8E-hexo-%E6%90%AC%E8%BF%81%E8%87%B3-hugo/</guid><description>&lt;p>由于之前突发奇想，看到某些同学的博客确实好看，心血来潮便花了大概几个晚上把博客生成工具从原来的 Hexo 迁移到了 Hugo 上，便有了这次搬迁记录，也算是给其他想迁移小伙伴一个参考。&lt;/p>
 &lt;h2 id="hugo-vs-hexo">Hugo VS Hexo
 &lt;/h2>&lt;p>根据一些文章 &lt;sup>&lt;a class="link" href="#ref01" >[1]&lt;/a>&lt;/sup>&lt;sup>&lt;a class="link" href="#ref02" >[2]&lt;/a>&lt;/sup>已经给出的对比，Hugo 拥有着比较不错的渲染速度，（这里贴个实测渲染数据），对于我这个目前所有 Posts 比较多，又有比较多图片的用户来说，在渲染速度方面确实也有一定需求。而且最近自己也在学习 Golang ，对于使用 Golang 的工具我还是比较有好感的。我进行了一个小对比，虽然 Hexo 插件用的有些多，但是在满足我个人需求下，使用两个工具对相同文章数量生成静态页面的对比效果如下图所示：&lt;/p>
-&lt;p>&lt;img src="https://z3.ax1x.com/2021/10/01/4TU45F.png"
+&lt;p>Permalink before if: https://z3.ax1x.com/2021/10/01/4TU45F.png&lt;img src="https://z3.ax1x.com/2021/10/01/4TU45F.png"
 loading="lazy"
 alt="左为 Hexo 生成速度 VS 右为 Hugo 生成速度"
 >&lt;/p>
@@ -414,7 +414,7 @@ position: relative;
 >自定义 Hugo Shortcodes 简码&lt;/a> 当中的 notice 部分，除了自己做了一定的字体、颜色定制调整，其他基本上一摸一样，所以这里不再赘述。&lt;/del>&lt;/p>
 &lt;p>&lt;strong>并且这里简单提个醒，对于 Hugo 来说，既是你是在代码段里面写 ShortCodes ，Hugo 也会直接对其进行渲染，并不会将其视为字符串处理。&lt;/strong>~~&lt;/p>
 &lt;p>所以当时我在渲染以上 Shortcodes 的时候就遇到了这个问题，我们得在不需要渲染的 ShortCodes 代码加注释才能使得 Hugo 认为这是一段字符串，也就是如下这个样子：
-&lt;img src="https://i.loli.net/2021/10/02/OS6zmrgE5biZyjA.png"
+Permalink before if: https://i.loli.net/2021/10/02/OS6zmrgE5biZyjA.png&lt;img src="https://i.loli.net/2021/10/02/OS6zmrgE5biZyjA.png"
 loading="lazy"
 alt="carbon.png"
 >&lt;/p>
@@ -688,7 +688,7 @@ alt="carbon.png"
 &lt;/div>
 &lt;/div>&lt;p>以上对图片等一些静态资源都做了缓存，当然最主要的还是缓存操作覆盖主题的 main.js 文件，为了加快这个文件获取，我还特地给该文件使用了 jsdelivr 进行加速。这里值得注意的就是，Service Worker 默认只缓存本站链接的静态文件，如果需要加载其他站点的文件，就需要通过&lt;code>registerRoute&lt;/code>来注册该文件。&lt;/p>
 &lt;p>再经过一番折腾后，在使用了 jsdelivr CDN 加速 js 文件、Service Worker 缓存静态文件双加持下，基本可以做到无痛切换页面了。（尽管看起来还是可能会有 25ms 的瞬间白屏&amp;hellip;但是应该可以说是很大程度上缓减了这个问题，当然得等以后看看还有没有什么新的技术可以来改善这个问题了。&lt;/p>
-&lt;p>&lt;img src="https://i.loli.net/2021/10/02/xAnh9mHa4ts5qG7.png"
+&lt;p>Permalink before if: https://i.loli.net/2021/10/02/xAnh9mHa4ts5qG7.png&lt;img src="https://i.loli.net/2021/10/02/xAnh9mHa4ts5qG7.png"
 loading="lazy"
 alt="Snipaste_2021-10-02_14-10-17.png"
 >&lt;/p>
@@ -736,42 +736,16 @@ alt="Snipaste_2021-10-02_14-10-17.png"
 >博客系统迁移：Hexo 到 Hugo&lt;/a>&lt;/a>&lt;/li>
 &lt;li>&lt;a id="ref03">&lt;a class="link" href="https://docs.stack.jimmycai.com/zh" target="_blank" rel="noopener"
 >Hugo Stack 主题文档&lt;/a>&lt;/a>&lt;/li>
-&lt;/ol></description></item><item><title>Hexo Template render error 解决方案</title><link>https://zeddyu.github.io/p/hexo-template-render-error-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link><pubDate>Wed, 27 Feb 2019 23:39:54 +0000</pubDate><guid>https://zeddyu.github.io/p/hexo-template-render-error-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid><description>&lt;p>前几天写 writeup ，在用&lt;code>hexo g&lt;/code>的时候，碰到了&lt;code>Template render error&lt;/code>的错误在这记录一下&lt;/p>
-&lt;h3 id="问题描述">问题描述
-&lt;/h3>&lt;p>使用&lt;code>hexo g&lt;/code>的时候，碰到了&lt;code>Template render error&lt;/code>的错误&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007984.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>人肉源代码&lt;code>review&lt;/code>，并没有什么特殊的字符，也没有什么没有闭合的&lt;code>markdown&lt;/code>符号啥的，而官方给的&lt;a class="link" href="https://hexo.io/docs/troubleshooting.html#Template-render-error" target="_blank" rel="noopener"
->solution&lt;/a>完全没有用，因为我把这篇文章从&lt;code>source/_post&lt;/code>中移除，就完美没有错误了，排除了&lt;code>_config.yml&lt;/code>的错误。&lt;/p>
-&lt;h3 id="发现问题">发现问题
-&lt;/h3>&lt;p>当文章中有&lt;code>}}&lt;/code>时,且这两个括号未被代码块包含，解析会出问题。但是有时候解析并没有出问题，就比较奇怪，没有深究，遇到该问题的可以按照这种方法排除一下&lt;/p>
-&lt;h3 id="解决方法">解决方法
-&lt;/h3>&lt;p>把&lt;code>/{{config}}&lt;/code>包含在代码块中，如&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">{% raw %}
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 含有双大括号的内容
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{% endraw %}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="参考">参考
-&lt;/h3>&lt;p>&lt;a class="link" href="https://www.jianshu.com/p/738ebe02029b" target="_blank" rel="noopener"
->Hexo的一个小BUG(Template render error)&lt;/a>&lt;/p></description></item><item><title>Flutter packages get 424问题解决方法</title><link>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</link><pubDate>Mon, 25 Feb 2019 10:25:35 +0000</pubDate><guid>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</guid><description>&lt;p>在我一个项目当中使用&lt;code>flutter packages get &lt;/code>遇到了 HTTP 424 的错误，找了很多方法都没有解决方法，个人解决了之后就此记录下来。&lt;/p>
+&lt;/ol></description></item><item><title>Flutter packages get 424问题解决方法</title><link>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</link><pubDate>Mon, 25 Feb 2019 10:25:35 +0000</pubDate><guid>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</guid><description>&lt;p>在我一个项目当中使用&lt;code>flutter packages get &lt;/code>遇到了 HTTP 424 的错误，找了很多方法都没有解决方法，个人解决了之后就此记录下来。&lt;/p>
 &lt;h3 id="问题描述">问题描述
 &lt;/h3>&lt;p>使用&lt;code>flutter packages get -v&lt;/code>打印出步骤错误&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002591.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002591.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002591.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现 404 错误&lt;/p>
 &lt;h3 id="发现问题">发现问题
 &lt;/h3>&lt;p>按照提示，使用&lt;code>pub --trace --verbosity=warning --verbose get --no-precompile&lt;/code>打印出更详细的步骤&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005957.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005957.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005957.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现老是在获取&lt;code>path_provideer 0.5.0+1&lt;/code>这里报出了 424 的错误，一开始以为是不是镜像并没有这个包，自己也去&lt;code>pub.flutter-io.cn&lt;/code>找了一下，确实有&lt;code>path_provideer 0.5.0+1&lt;/code>这个版本的包。&lt;/p>
@@ -820,30 +794,30 @@ loading="lazy"
 &lt;h2 id="数据">数据
 &lt;/h2>&lt;p>本次比赛由于最后放的调查问卷，而且收集到的调查问卷远远达到签到题得分人数，姑且用来做个大概的分析吧。&lt;/p>
 &lt;p>首先是本次参赛人数，注册人数达到了463个队，最后调查问卷填写人数为81个队。
-&lt;img src="https://s1.ax1x.com/2018/11/17/izikeH.md.png"
+Permalink before if: https://s1.ax1x.com/2018/11/17/izikeH.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/izikeH.md.png"
 loading="lazy"
 alt="izikeH.md.png"
 >
 五个学校的学校数据就不分析了，其中其他学校占到了242个队，基本变成了半公开赛&amp;hellip;但是由于还是想保护萌新，就没有变成完全的公开赛。否则我担心会被日穿&amp;hellip;&lt;/p>
 &lt;p>第一天开赛的情况，由于docker环境没配置好，导致有一题&lt;code>pwn&lt;/code>直接被打穿了，还被改了&lt;code>flag&lt;/code>，大师傅们真的tql&amp;hellip;&lt;/p>
 &lt;p>年级所占比例:
-&lt;img src="https://s1.ax1x.com/2018/11/17/izPzJx.md.png"
+Permalink before if: https://s1.ax1x.com/2018/11/17/izPzJx.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/izPzJx.md.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>比赛难度调查统计：
-&lt;img src="https://s1.ax1x.com/2018/11/17/iziPyD.md.png"
+Permalink before if: https://s1.ax1x.com/2018/11/17/iziPyD.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/iziPyD.md.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>时间安排调查统计：
-&lt;img src="https://s1.ax1x.com/2018/11/17/izi9SK.md.png"
+Permalink before if: https://s1.ax1x.com/2018/11/17/izi9SK.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/izi9SK.md.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>比赛题目调查统计：
-&lt;img src="https://s1.ax1x.com/2018/11/17/iziSW6.md.png"
+Permalink before if: https://s1.ax1x.com/2018/11/17/iziSW6.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/iziSW6.md.png"
 loading="lazy"
 >
 比赛评分调查统计(满分5分)：
-&lt;img src="https://s1.ax1x.com/2018/11/17/iziiOe.md.png"
+Permalink before if: https://s1.ax1x.com/2018/11/17/iziiOe.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/iziiOe.md.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>以上数据均由比赛调查问卷数据统计得出。&lt;/p>
@@ -1927,139 +1901,7 @@ define('__TYPECHO_SECURE__',true);
 &lt;/code>&lt;/pre>
 &lt;p>具体原因没查，我猜也是nginx与typecho的pathinfo问题&lt;/p>
 &lt;h2 id="0x5">0x5
-&lt;/h2>&lt;p>这篇文章主要就到这吧，后续会增加一些自己以后遇到的问题&lt;/p></description></item><item><title>Docker镜像的时间问题</title><link>https://zeddyu.github.io/p/docker%E9%95%9C%E5%83%8F%E7%9A%84%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98/</link><pubDate>Sun, 28 Jan 2018 01:01:00 +0000</pubDate><guid>https://zeddyu.github.io/p/docker%E9%95%9C%E5%83%8F%E7%9A%84%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98/</guid><description>&lt;p>今天刚刚开始做PA0，发现自己对Docker的研究也不是很深，也就是在赛宁的那段日子，算是一个契机吧，让我们用&lt;code>Docker&lt;/code>搭比赛环境，那个时候开始接触的Docker，然后也跟Rex请教了有关Docker的一些知识。还以为算是比较了解Docker了吧，今天发现自己还是菜的呀。&lt;/p>
-&lt;!-- more -->
-&lt;p>首先今天吧，把Debian镜像给弄好了，然后装上了&lt;code>oh my zsh&lt;/code>，然后发现一个显示时间比较方便的主题，我的&lt;code>Mac&lt;/code>是&lt;a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Themes#agnoster">agnoster&lt;/a>的主题，还是比较好看的。但是用久了也想在docker上换换新的来用用。也通过这次课正式地研究一下Docker吧。&lt;/p>
-&lt;p>于是在用&lt;a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Themes#ys">ys&lt;/a>这个主题的时候，发现时间是不对的。这个又不是服务器，所以我觉得还是有问题的，保持着研究问题的态度看了一下。&lt;/p>
-&lt;p>&lt;code>Docker Debian&lt;/code>里用&lt;code>date&lt;/code>命令看一下&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># zedd @ c7c452f36fc4 in ~ [16:24:36]
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ date
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Sat Jan 27 16:25:00 UTC 2018
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>然后查了一下，很快就找到了原来是时区的问题。我的Mac上&lt;code>date&lt;/code>是&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">zedd@ZedddeMac / date
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2018年 1月28日 星期日 00时43分52秒 CST
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>哈，只要改改时区应该就可以了。不过网上给的答案好像都比较麻烦，我&lt;code>Google&lt;/code>到的&lt;a href="http://www.cnblogs.com/zhangmingcheng/p/6233527.html">第一条&lt;/a>，修改&lt;code>Dockerfile&lt;/code>个人认为是一个在创建的时候用的，还有其他的方法可能部分人看不懂，而且格式不太一样。我感觉应该还是有直接修改时区的办法的，毕竟在GUI下还是可以修改时区时间的。&lt;/p>
-&lt;p>下面给出直接的解决方案（操作在Debian 9下）:
-直接用&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">dpkg-reconfigure tzdata
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>若&lt;code>command not found&lt;/code>，可以&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">cd /usr/sbin
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo ./dpkg-reconfigure tzdata
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>然后选择相应的时区与时间，这里我选择了&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">6. Asia
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">69. Shanghai
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>再用&lt;code>date&lt;/code>一看，哈，好了&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># zedd @ c7c452f36fc4 in /usr/sbin [0:55:52]
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ date
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Sun Jan 28 00:56:14 CST 2018
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>顺便说一下，&lt;code>ys&lt;/code>主题上的时间是你上次操作结束的时间。（主题用起来还是不错的，值得推荐。&lt;/p>
-&lt;p>最后再科普一波&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">世界协调时间UTC
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 多数的两地时间表都以GMT来表示，但也有些两地时间表上看不到GMT字样，出现的反而是UTC这3个英文字母，究竟何谓UTC？事实上，UTC指的是Coordinated Universal Time－ 世界协调时间（又称世界标准时间、世界统一时间），是经过平均太阳时(以格林威治时间GMT为准)、地轴运动修正后的新时标以及以「秒」为单位的国际原子时所综合精算而成的时间，计算过程相当严谨精密，因此若以「世界标准时间」的角度来说，UTC比GMT来得更加精准。其误差值必须保持在0.9秒以内，若大于0.9秒则由位于巴黎的国际地球自转事务中央局发布闰秒，使UTC与地球自转周期一致。所以基本上UTC的本质强调的是比GMT更为精确的世界时间标准，不过对于现行表款来说，GMT与UTC的功能与精确度是没有差别的。
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">夏日节约时间DST
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 所谓「夏日节约时间」Daylight Saving Time（简称D.S.T.），是指在夏天太阳升起的比较早时，将时钟拨快一小时，以提早日光的使用，在英国则称为夏令时间(Summer Time)。这个构想于1784年由美国班杰明·富兰克林提出来，1915年德国成为第一个正式实施夏令日光节约时间的国家，以削减灯光照明和耗电开支。自此以后，全球以欧洲和北美为主的约70个国家都引用这个做法。目前被划分成两个时区的印度也正在商讨是否全国该统一实行夏令日光节约时间。欧洲手机上也有很多GSM系统的基地台，除了会传送当地时间外也包括夏令日光节约时间，做为手机的时间标准，使用者可以自行决定要开启或关闭。值得注意的是，某些国家有实施「夏日节约时间」的制度，出国时别忘了跟随当地习惯在表上调整一下，这可是机械表没有的功能设计哦！
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CST时间
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CST却同时可以代表如下 4 个不同的时区：
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Central Standard Time (USA) UT-6:00
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Central Standard Time (Australia) UT+9:30
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">China Standard Time UT+8:00
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Cuba Standard Time UT-4:00
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">可见，CST可以同时表示美国，澳大利亚，中国，古巴四个国家的标准时间。
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---------------------------------
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">部分来自CSDN博客，转载请标明出处：
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">http://www.51testing.com/html/74/248074-209865.html
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div></description></item><item><title>Bootstrap-select碰到的一些问题</title><link>https://zeddyu.github.io/p/bootstrap-select%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/</link><pubDate>Sat, 27 Jan 2018 00:38:00 +0000</pubDate><guid>https://zeddyu.github.io/p/bootstrap-select%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/</guid><description>&lt;p>项目中需要用到的是多选下拉框，由于项目用的是bootstrap，我便找到了bootstrap-select这个可以提供多选下拉框的库。&lt;/p>
+&lt;/h2>&lt;p>这篇文章主要就到这吧，后续会增加一些自己以后遇到的问题&lt;/p></description></item><item><title>Bootstrap-select碰到的一些问题</title><link>https://zeddyu.github.io/p/bootstrap-select%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/</link><pubDate>Sat, 27 Jan 2018 00:38:00 +0000</pubDate><guid>https://zeddyu.github.io/p/bootstrap-select%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/</guid><description>&lt;p>项目中需要用到的是多选下拉框，由于项目用的是bootstrap，我便找到了bootstrap-select这个可以提供多选下拉框的库。&lt;/p>
 &lt;!-- more -->
 &lt;p>因为这个项目是用ajax获取数据然后把数据放入select中的，而原生的select multiple又实在是太僵硬&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">

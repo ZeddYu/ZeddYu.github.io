@@ -320,7 +320,7 @@
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这样只要一次访问成功该 php 文件，即可拿到 shell&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008080.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008080.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008080.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="pass-18">Pass-18
@@ -560,11 +560,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里需要注意的是，&lt;code>save_name[0]&lt;/code>放&lt;code>jpg&lt;/code>就好了，否则&lt;code>$ext&lt;/code>拿到的是&lt;code>upload-20.jpg&lt;/code>，这样整个字符串就会进入&lt;code>!in_array($ext, $allow_suffix)&lt;/code>这个判断里面了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006384.jpg"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006384.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006384.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="conclusion">Conclusion
 &lt;/h2>&lt;p>这个靶场还是挺好的，总结得都相当不错。如果能配合更多的中间件解析漏洞来做的话会更棒，因为很多时候我们做到的仅仅是上传一个 jpg 啥的，如果配合解析漏洞或者文件包含，可以进一步扩大杀伤力。&lt;/p>
-&lt;p>&lt;img src="https://raw.githubusercontent.com/c0ny1/upload-labs/master/doc/mind-map.png"
+&lt;p>Permalink before if: https://raw.githubusercontent.com/c0ny1/upload-labs/master/doc/mind-map.png&lt;img src="https://raw.githubusercontent.com/c0ny1/upload-labs/master/doc/mind-map.png"
 loading="lazy"
 >&lt;/p></description></item></channel></rss>

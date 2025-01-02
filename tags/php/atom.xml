@@ -24,11 +24,11 @@
 &lt;/h3>&lt;p>触发函数有了，那么接下里就是触发条件了。既然是与文件有关的函数均能触发 phar 反序列化，那么伪协议呢？&lt;/p>
 &lt;p>通过 @zsx 师傅的挖掘，发现基本上大多数 PHP stream 都可以通过 phar:// 来触发，但是就是没有提及 php:// 伪协议。&lt;/p>
 &lt;p>So，让我们用最常见的 &lt;code>php://filter/read=convert.base64-encode/resource=&lt;/code>试一下&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820121822.png"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820121822.png&lt;img src="https://blogpic.zdy.one/img/20190820121822.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>好的，那么再看看文件包含如何&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820121956.png"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820121956.png&lt;img src="https://blogpic.zdy.one/img/20190820121956.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>一点也不意外，我们可以通过 php://filter 来绕过一些开头限制进行 phar 反序列化&lt;/p>
@@ -44,15 +44,15 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>禁用了外部实体，虽然题目给出的反射类确实可以反射，而且也可以进行 XXE，也有过相关的 CTF题 &lt;a class="link" href="https://www.anquanke.com/post/id/170299#h2-2" target="_blank" rel="noopener"
 >Annoying class&lt;/a>，虽然控制了 /flag 读取权限，可是为什么还要禁用外部实体呢？难不成 XXE 也可以反序列化？&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150125.png"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820150125.png&lt;img src="https://blogpic.zdy.one/img/20190820150125.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Test.xml 中的内容就是上面 &lt;code>$xml&lt;/code>的内容&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150346.png"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820150346.png&lt;img src="https://blogpic.zdy.one/img/20190820150346.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然 php://filter 在这里也适用&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150839.png"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820150839.png&lt;img src="https://blogpic.zdy.one/img/20190820150839.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mysql">Mysql
@@ -102,7 +102,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>其实也就是 @LoRexxar&amp;rsquo; 在 Tsec 上进行的分享 &lt;a class="link" href="https://paper.seebug.org/998/" target="_blank" rel="noopener"
 >Comprehensive analysis of the mysql client attack chain&lt;/a> 的内容了，@zsx 文章中指出&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820151817.png"
+&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820151817.png&lt;img src="https://blogpic.zdy.one/img/20190820151817.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>既然可以这么触发，那么 Rogue Mysql 的攻击当然适用于 phar 反序列化了。&lt;/p>
@@ -143,216 +143,4 @@ loading="lazy"
 &lt;h2 id="conclusion">Conclusion
 &lt;/h2>&lt;p>最后，如果有小伙伴希望与我一起交流探索 phar 的一些小 trick 或者交流一些其他知识，欢迎来信：zeddyu.lu#gmail.com，如果大家有意愿加入 SU，也欢迎来信到：suers_xctf#126.com&lt;/p>
 &lt;p>最后的最后，很感谢大家的不杀之恩，这次 SUCTF 的举办主要依靠的是新一代队员的努力，由于新一代队员在运维、出题方面经验都不是特别老道，所以在比赛过程中产生了些许意外 &amp;amp; 失误，希望大家多多见谅，在这里给体验不好的师傅们谢罪了，哐哐哐，但是我们也会向着更好的方向努力，带给师傅们更好的比赛体验。&lt;/p>
-&lt;p>像《头号玩家》里面的一句话一样，感谢大家抽时间来打我们的比赛！&lt;/p></description></item><item><title>Some Tricks of Bypass php waf</title><link>https://zeddyu.github.io/p/some-tricks-of-bypass-php-waf/</link><pubDate>Thu, 28 Feb 2019 17:53:59 +0000</pubDate><guid>https://zeddyu.github.io/p/some-tricks-of-bypass-php-waf/</guid><description>&lt;p>起因是年前看了一篇&lt;a class="link" href="https://www.secjuice.com/php-rce-bypass-filters-sanitization-waf/" target="_blank" rel="noopener"
->How To Exploit PHP Remotely To Bypass Filters &amp;amp; WAF Rules&lt;/a>，现在搜了一下发现已经有翻译了。感觉升华也没什么好扩展的，也不太好拿去投稿了，思考了一下，感觉还是当作学习笔记来写算了。&lt;/p>
-&lt;p>以下实现环境均在 php 7.0.31 版本上，并且把 waf 因素考虑在内。&lt;/p>
-&lt;h3 id="引入">引入
-&lt;/h3>&lt;p>首先来看一段 php 代码:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">preg_match&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/system|exec|passthru/&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;code&amp;#39;&lt;/span>&lt;span class="p">])){&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s1">&amp;#39;invalid syntax&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;code&amp;#39;&lt;/span>&lt;span class="p">]);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>执行命令不只这几个函数，还有很多，这里就拿这几个来举例。毫无疑问，这里肯定是可以执行命令。&lt;/p>
-&lt;p>那我们先直接尝试读取&lt;code>/etc/passwd&lt;/code>，显然，这里还没到代码层面就直接被 waf 了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007415.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>原因可能是因为&lt;code>/etc/passwd&lt;/code>的敏感原因&lt;/p>
-&lt;h3 id="绕过-waf">绕过 waf
-&lt;/h3>&lt;p>那我们接下来先尝试绕过 waf ，可以尝试使用&lt;code>/etc/pas\swd&lt;/code>绕过，也可以使用其他空变量，当然方法很多&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002257.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>可以发现，我们是成功绕过 waf ，来到了代码层面，接下来我们就需要考虑怎么绕过命令执行函数了&lt;/p>
-&lt;h3 id="php-转义序列">PHP 转义序列
-&lt;/h3>&lt;p>在谈绕过函数过滤前，我们先了解一下 PHP 的&lt;a class="link" href="http://php.net/manual/zh/regexp.reference.escape.php" target="_blank" rel="noopener"
->转义序列&lt;/a>，简单来说就是使用反斜线转义各种字符形成特定的意义。比如说：&lt;/p>
-&lt;ul>
-&lt;li>&lt;em>\040&lt;/em> 空格的另外一种用法&lt;/li>
-&lt;li>以八进制表示的&lt;code>\[0–7]{1,3}&lt;/code>转义字符会自动适配二进制字符（如&lt;code>\377&lt;/code>，八进制377是10进制255， 因此代表一个全1的字符）&lt;/li>
-&lt;li>&lt;code>\x[0–9A-Fa-f]{1,2}&lt;/code> 表示十六进制转义字符表示法（如&lt;code>\x41&lt;/code>）&lt;/li>
-&lt;li>以Unicode表示的&lt;code>\u{[0–9A-Fa-f]+}&lt;/code>字符，会输出为UTF-8字符串&lt;/li>
-&lt;/ul>
-&lt;p>虽然看起来很普通，但是我们可以使用各种语法来表示字符串，再配合 php 可变函数来绕过各种防御&lt;/p>
-&lt;h3 id="php-可变函数">php 可变函数
-&lt;/h3>&lt;blockquote>
-&lt;p>​ PHP 支持可变函数的概念。这意味着如果一个变量名后有圆括号，PHP 将寻找与变量的值同名的函数，并且尝试执行它。可变函数可以用来实现包括回调函数，函数表在内的一些用途。&lt;/p>
-&lt;p>可变函数不能用于例如 &lt;a class="link" href="http://php.net/manual/zh/function.echo.php" target="_blank" rel="noopener"
->echo&lt;/a>，&lt;a class="link" href="http://php.net/manual/zh/function.print.php" target="_blank" rel="noopener"
->print&lt;/a>，&lt;a class="link" href="http://php.net/manual/zh/function.unset.php" target="_blank" rel="noopener"
->unset()&lt;/a>，&lt;a class="link" href="http://php.net/manual/zh/function.isset.php" target="_blank" rel="noopener"
->isset()&lt;/a>，&lt;a class="link" href="http://php.net/manual/zh/function.empty.php" target="_blank" rel="noopener"
->empty()&lt;/a>，&lt;a class="link" href="http://php.net/manual/zh/function.include.php" target="_blank" rel="noopener"
->include&lt;/a>，&lt;a class="link" href="http://php.net/manual/zh/function.require.php" target="_blank" rel="noopener"
->require&lt;/a> 以及类似的语言结构。需要使用自己的包装函数来将这些结构用作可变函数。&lt;/p>
-&lt;/blockquote>
-&lt;p>看一下官方示例&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">foo&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;In foo()&amp;lt;br /&amp;gt;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">function&lt;/span> &lt;span class="nf">bar&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$arg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;In bar(); argument was &amp;#39;&lt;/span>&lt;span class="si">$arg&lt;/span>&lt;span class="s2">&amp;#39;.&amp;lt;br /&amp;gt;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 使用 echo 的包装函数
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">function&lt;/span> &lt;span class="nf">echoit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$string&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="nv">$string&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$func&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;foo&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$func&lt;/span>&lt;span class="p">();&lt;/span> &lt;span class="c1">// This calls foo()
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$func&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;bar&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$func&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;test&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// This calls bar()
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$func&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;echoit&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$func&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;test&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// This calls echoit()
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>也就是说&lt;code>$var(args)&lt;/code>跟&lt;code>“string”(args);&lt;/code>是与&lt;code>function(args)&lt;/code>等效的。于是我们可以有&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610000584.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>尝试&lt;code>&amp;quot;\x73\x79\x73\x74\x65\x6d&amp;quot;(&amp;quot;whoami&amp;quot;)&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003062.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>确实可以执行无误，然后我们就可以利用这个特性绕过对&lt;code>system&lt;/code>的检测了&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009239.jpg"
-loading="lazy"
->&lt;/p>
-&lt;h3 id="改进输入检测">改进输入检测
-&lt;/h3>&lt;p>上述我们的 payload 中还是用到了双引号，而大多数的时候 waf 不会允许使用双引号的，我们将 php 文件内容修改为&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">preg_match&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/system|exec|passthru|[\&amp;#34;\&amp;#39;]/&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;code&amp;#39;&lt;/span>&lt;span class="p">])){&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s1">&amp;#39;invalid syntax&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;code&amp;#39;&lt;/span>&lt;span class="p">]);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>增加了对单引号与双引号的检测，这时候应该怎么办呢&lt;/p>
-&lt;p>让我们再来看一个特性&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003524.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>也就是说在 PHP 中，字符串表达可以有以上这几种方法，于是我们可以用以上的方式尝试替代双引号。第一种是类似&lt;code>(system)(whoami);&lt;/code>，然而在 php 中我们可以用&lt;code>.&lt;/code>来拼接字符串，于是也可以有&lt;code>(sys.(te).m)(whoami);&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006608.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>也可以使用&lt;code>/?a=system&amp;amp;b=ls&amp;amp;code=$_GET[a]($_GET[b]);&lt;/code>的解析方法来绕过&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004860.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>这里我们还可以使用其他技巧，比如我们可以在函数名和参数内插入注释（这种方法在绕过某些WAF规则集方面非常有用，这些规则集会拦截特定的PHP函数名&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">php -r &amp;#34;echo/*this is a comment*/(foo);&amp;#34;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">php -r &amp;#34;system/*this is a comment*/(whoami);&amp;#34;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">php -r &amp;#34;system/*this is a comment*/(wh./*foo*/(oa)/*bar*/.mi);&amp;#34;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">php -r &amp;#34;(s/*foo*/.(ys)./*bar*/tem)/*this is a comment*/(wh./*foo*/(oa)/*bar*/.mi);&amp;#34;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009365.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001559.jpg"
-loading="lazy"
->&lt;/p>
-&lt;h3 id="get_defined_functions">get_defined_functions
-&lt;/h3>&lt;blockquote>
-&lt;p>​ (PHP 4 &amp;gt;= 4.0.4, PHP 5, PHP 7)&lt;/p>
-&lt;p>​ get_defined_functions — 返回所有已定义函数的数组&lt;/p>
-&lt;p>​ get_defined_functions ([ bool &lt;code>$exclude_disabled&lt;/code> = &lt;strong>FALSE&lt;/strong> ] ) : array&lt;/p>
-&lt;p>​ 获取所有已定义函数的数组。&lt;/p>
-&lt;/blockquote>
-&lt;p>这个函数是可将用户定义的和内置函数均返回的。获取内置函数可以使用&lt;code>$arr[“internal”]&lt;/code>，获取用户定义的函数可以使用&lt;code>$arr[“user”]&lt;/code>。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005250.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>所以我们可以尝试找到&lt;code>system&lt;/code>函数&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008754.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>配合前面的方法，效果拔群，不过&lt;code>system&lt;/code>函数不一定都是 1077 ，使用的时候最好可以&lt;code>grep&lt;/code>查找一下&lt;code>system&lt;/code>函数的下标&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003939.jpg"
-loading="lazy"
->&lt;/p>
-&lt;h3 id="字符数组">字符数组
-&lt;/h3>&lt;p>我们可以将PHP中的每个字符串当成一组字符来使用（基本上与 Python 相同），并且我们可以使用&lt;code>$string[2]&lt;/code>或者&lt;code>$string[-3]&lt;/code>语法来引用单个字符。这种方法也有可能绕过基于PHP函数名的防护规则。比如，我们可以使用&lt;code>$a=&amp;quot;eimstdy&amp;quot;;&lt;/code>这个字符串构造出&lt;code>system(&amp;quot;id&amp;quot;);&lt;/code>语句。需要空格的话就在&lt;code>$a&lt;/code>中加入空格就好了。&lt;/p>
-&lt;p>也可以使用一些内置变量，不再赘述，如下图所示&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006073.jpg"
-loading="lazy"
->&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003486.jpg"
-loading="lazy"
->&lt;/p>
-&lt;h3 id="参考">参考
-&lt;/h3>&lt;p>&lt;a class="link" href="https://www.secjuice.com/php-rce-bypass-filters-sanitization-waf/" target="_blank" rel="noopener"
->How To Exploit PHP Remotely To Bypass Filters &amp;amp; WAF Rules&lt;/a>&lt;/p></description></item></channel></rss>
+&lt;p>像《头号玩家》里面的一句话一样，感谢大家抽时间来打我们的比赛！&lt;/p></description></item></channel></rss>

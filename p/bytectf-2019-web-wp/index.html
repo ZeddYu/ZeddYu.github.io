@@ -164,7 +164,7 @@
 </span></span><span class=line><span class=cl><span class=nx>float</span><span class=p>(</span><span class=mf>1568657564.377</span><span class=p>)</span>
 </span></span></code></pre></td></tr></table></div></div><p>乍一看没什么用，但是我们依然可以配合<code>chr</code>函数来进行 ascii 码转换，当时间到了指定时间，我们就可以拿到<code>.</code>字符了！于是这样一开始如何构造最开始的<code>.</code>这个问题也可以解决了！</p><p>于是整个 payload 就是：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nx>readfile</span><span class=p>(</span><span class=nx>end</span><span class=p>(</span><span class=nx>scandir</span><span class=p>(</span><span class=nx>chr</span><span class=p>(</span><span class=nx>microtime</span><span class=p>(</span><span class=nx>chdir</span><span class=p>(</span><span class=nx>next</span><span class=p>(</span><span class=nx>scandir</span><span class=p>(</span><span class=nx>chr</span><span class=p>(</span><span class=nx>time</span><span class=p>())))))))));</span>
-</span></span></code></pre></td></tr></table></div></div><p>这个方法的缺点也比较明显，需要爆破&mldr;于是我用 intruder 爆了一下，运气也比较好，5s 就出来了。</p><p>Permalink before if: https://blogpic.zdy.one/img/20190917021622.png<img src=https://blogpic.zdy.one/img/20190917021622.png loading=lazy></p><h2 id=ezcms>EzCMS</h2><p>这个题不想评价太多&mldr;拿我出的 SUCTF upload labs 2 来魔改的题，这里就简要说说点，不再详细赘述了。</p><p>这个题也是个上传的环境，但是上传有一个限制以及还有一个可疑的<code>__call</code>魔术方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></span></code></pre></td></tr></table></div></div><p>这个方法的缺点也比较明显，需要爆破&mldr;于是我用 intruder 爆了一下，运气也比较好，5s 就出来了。</p><p><img src=https://blogpic.zdy.one/img/20190917021622.png loading=lazy></p><h2 id=ezcms>EzCMS</h2><p>这个题不想评价太多&mldr;拿我出的 SUCTF upload labs 2 来魔改的题，这里就简要说说点，不再详细赘述了。</p><p>这个题也是个上传的环境，但是上传有一个限制以及还有一个可疑的<code>__call</code>魔术方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -941,17 +941,17 @@
 <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.zdy.one/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.zdy.one/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.zdy.one/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.zdy.one/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.zdy.one/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///ts/main.js defer integrity="sha256-Hpo7r9hGztTDRdCEs1X7jHuudXAcM4+KH4qCx4ATeCY=" crossorigin=anonymous></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script><script>"serviceWorker"in navigator&&window.addEventListener("load",function(){navigator.serviceWorker.register("https://zeddyu.github.io/sw.min.js").then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)})})</script><script type=speculationrules>
-    {
+{
         "prefetch": [
             {
                 "source": "document",
-                "eagerness": "moderate",
+                "eagerness": "moderate"
             }
         ],
         "prerender": [
             {
                 "urls": ["/about", "/archives", "/ads", "/categories", "/links", "/search"],
-                "eagerness": "eager",
+                "eagerness": "eager"
             }
         ]
     }

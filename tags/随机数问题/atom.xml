@@ -82,7 +82,7 @@
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="n">id&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">d1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="k">schema_name&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">information_schema&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">schemata&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">15&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">20&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610001927.jpg&lt;img src="https://blogpic.zdy.one/img/20190610001927.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001927.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -294,7 +294,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>虽然页面不会直接回显，但是点击 id 的超链接过去就可以看到了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002723.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002723.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002723.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-9">Example 9
@@ -378,7 +378,7 @@ loading="lazy"
 &lt;/blockquote>
 &lt;p>进入页面发现比之前多了一个修改的功能，这里以为是可以修改其他人的然后返回修改结果&amp;hellip;谁知道修改自己的都有点小 bug &amp;hellip;&lt;/p>
 &lt;p>后来发现，是可以通过编辑功能在 &lt;code>placeholder&lt;/code>处看到其他人的信息&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004348.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004348.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004348.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mongodb-injection">MongoDB injection
@@ -473,7 +473,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009689.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009689.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009689.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="authentication">Authentication
@@ -797,7 +797,7 @@ loading="lazy"
 &lt;h4 id="example-5-2">Example 5
 &lt;/h4>&lt;p>这里就是几个验证码，而且都是形成了单词，比如 hacker/securtiy 等，官方给的是弄一个字典爆破&lt;/p>
 &lt;h4 id="example-6-2">Example 6
-&lt;/h4>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004116.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004116.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004116.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里是可以直接识别得出来的，字体并没有经过任何变换。&lt;/p>
@@ -818,7 +818,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h4 id="example-8-1">Example 8
-&lt;/h4>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009492.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009492.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009492.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里是 7 的进化，进行了一点扭曲&lt;/p>
@@ -839,7 +839,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h4 id="example-9-1">Example 9
-&lt;/h4>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008020.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008020.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008020.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>简单计算，python 正则取出来直接&lt;code>eval&lt;/code>即可&lt;/p>

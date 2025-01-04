@@ -373,7 +373,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005160.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -873,7 +873,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003780.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -906,7 +906,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008506.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -984,7 +984,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008206.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>

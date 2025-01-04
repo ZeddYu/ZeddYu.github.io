@@ -14,11 +14,11 @@
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
 </span></span></code></pre></td></tr></table></div></div><p>只需要将这个字符串复制，然后保存在一个空白的 txt 文件当中即可触发 Windwos Defender，所以我们先通过这个样例来检查一下自己的 Windows Defender 是否开启。</p><h3 id=mpenginedll>Mpengine.dll</h3><p>根据 Tokyo Westerns 的分析，Windows Defender 有一个核心 dll 文件 Mpengine.dll ，他可以对不同的内容进行分析，包括一些 base64 encode/RAR archived/etc. ，其中比较有意思的是它还有一个 Javascript Engine。</p><p>这个引擎可以分析 HTML 文档，并且可以分析其中的 Javascript 代码，包括对文档中的 DOM 元素的访问。</p><p>我们可以做个简单的验证，我们先只使用以下代码测试：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>mal</span> <span class=o>=</span> <span class=s2>&#34;X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&#34;</span><span class=p>;</span>
-</span></span></code></pre></td></tr></table></div></div><p>Permalink before if: https://blogpic.zdy.one/img/20190911181803.png<img src=https://blogpic.zdy.one/img/20190911181803.png loading=lazy></p><p>可以发现我们并没有触发 Windows Defender，即使字符串是 EICAR 测试样本，说明了字符串不受 EICAR 特征影响。</p><p>接着我们尝试添加一下<code>eval</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://blogpic.zdy.one/img/20190911181803.png loading=lazy></p><p>可以发现我们并没有触发 Windows Defender，即使字符串是 EICAR 测试样本，说明了字符串不受 EICAR 特征影响。</p><p>接着我们尝试添加一下<code>eval</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>mal</span> <span class=o>=</span> <span class=s2>&#34;X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&#34;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=nb>eval</span><span class=p>(</span><span class=nx>mal</span><span class=p>);</span>
-</span></span></code></pre></td></tr></table></div></div><p>Permalink before if: https://blogpic.zdy.one/img/20190911181841.png<img src=https://blogpic.zdy.one/img/20190911181841.png loading=lazy></p><p>没错，在保存的时候就立马触发了 Windows Defender ，足以验证当中有一个 Javascript Engine 进行了内容检测，而且即使没有完整的 Javascript 标签，也可以触发 Windows defender。</p><h3 id=interesting-check>Interesting Check</h3><p>接下来我们再看几个测试例子：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://blogpic.zdy.one/img/20190911181841.png loading=lazy></p><p>没错，在保存的时候就立马触发了 Windows Defender ，足以验证当中有一个 Javascript Engine 进行了内容检测，而且即使没有完整的 Javascript 标签，也可以触发 Windows defender。</p><h3 id=interesting-check>Interesting Check</h3><p>接下来我们再看几个测试例子：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -26,7 +26,7 @@
 </span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>mal</span> <span class=o>=</span> <span class=s2>&#34;X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&#34;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=nb>eval</span><span class=p>(</span><span class=nx>mal</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
-</span></span></code></pre></td></tr></table></div></div><p>Permalink before if: https://blogpic.zdy.one/img/20190912100623.png<img src=https://blogpic.zdy.one/img/20190912100623.png loading=lazy></p><p>非常棒，并没有被检测出恶意内容。</p><p>接着我们再试着加一个<code>&lt;body></code>标签:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://blogpic.zdy.one/img/20190912100623.png loading=lazy></p><p>非常棒，并没有被检测出恶意内容。</p><p>接着我们再试着加一个<code>&lt;body></code>标签:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -36,7 +36,7 @@
 </span></span><span class=line><span class=cl><span class=nb>eval</span><span class=p>(</span><span class=nx>mal</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 </span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span></code></pre></td></tr></table></div></div><p>Permalink before if: https://blogpic.zdy.one/img/20190912100640.png<img src=https://blogpic.zdy.one/img/20190912100640.png loading=lazy></p><p>也很棒，也没有检测出恶意内容。</p><p>让我们再操作一下 DOM 元素：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://blogpic.zdy.one/img/20190912100640.png loading=lazy></p><p>也很棒，也没有检测出恶意内容。</p><p>让我们再操作一下 DOM 元素：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -48,7 +48,7 @@
 </span></span><span class=line><span class=cl><span class=nb>eval</span><span class=p>(</span><span class=nx>mal</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 </span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span></code></pre></td></tr></table></div></div><p>Permalink before if: https://blogpic.zdy.one/img/20190912100648.png<img src=https://blogpic.zdy.one/img/20190912100648.png loading=lazy></p><p>Done! 触发了恶意内容检测。</p><p>那如果我们把 EICAR 内容进行一下拆分呢？</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://blogpic.zdy.one/img/20190912100648.png loading=lazy></p><p>Done! 触发了恶意内容检测。</p><p>那如果我们把 EICAR 内容进行一下拆分呢？</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -60,7 +60,7 @@
 </span></span><span class=line><span class=cl><span class=nb>eval</span><span class=p>(</span><span class=nx>mal</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 </span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>a<span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span></code></pre></td></tr></table></div></div><p>Permalink before if: https://blogpic.zdy.one/img/20190912103004.png<img src=https://blogpic.zdy.one/img/20190912103004.png loading=lazy></p><p>这里我们获取的是<code>&lt;body></code>标签中的第一个字符，也就是<code>a</code>，不构成 EICAR 测试样本，所以触发不了 Windows Defender 也很正常。</p><p>那我们改一下<code>&lt;body></code>标签当中的内容呢？使用<code>*</code>试试看</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://blogpic.zdy.one/img/20190912103004.png loading=lazy></p><p>这里我们获取的是<code>&lt;body></code>标签中的第一个字符，也就是<code>a</code>，不构成 EICAR 测试样本，所以触发不了 Windows Defender 也很正常。</p><p>那我们改一下<code>&lt;body></code>标签当中的内容呢？使用<code>*</code>试试看</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -72,7 +72,7 @@
 </span></span><span class=line><span class=cl><span class=nb>eval</span><span class=p>(</span><span class=nx>mal</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
 </span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>*<span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span></code></pre></td></tr></table></div></div><p>Permalink before if: https://blogpic.zdy.one/img/20190912103146.png<img src=https://blogpic.zdy.one/img/20190912103146.png loading=lazy></p><p>很棒，意料之中地触发了 Windows Defender。</p><h3 id=go-hacking>Go Hacking</h3><p>那触发 Windows Defender 会有什么问题吗？虽然这里看似没什么毛病，但是放到业务代码里面就不一样了。</p><p>仔细想想一般程序猿会这么写文件呢？细心的程序猿在进行写文件之后要 check 一遍是否写入成功，类似:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://blogpic.zdy.one/img/20190912103146.png loading=lazy></p><p>很棒，意料之中地触发了 Windows Defender。</p><h3 id=go-hacking>Go Hacking</h3><p>那触发 Windows Defender 会有什么问题吗？虽然这里看似没什么毛病，但是放到业务代码里面就不一样了。</p><p>仔细想想一般程序猿会这么写文件呢？细心的程序猿在进行写文件之后要 check 一遍是否写入成功，类似:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$err</span> <span class=o>=</span> <span class=nx>file_put_contents</span><span class=p>(</span><span class=s1>&#39;/tmp/file_name&#39;</span><span class=p>,</span> <span class=s1>&#39;something need to be saved&#39;</span><span class=p>);</span>
@@ -150,7 +150,7 @@
 </span></span><span class=line><span class=cl><span class=kc>undefined</span>
 </span></span><span class=line><span class=cl><span class=o>&gt;</span>     <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>n</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=p>{</span> <span class=nx>num</span><span class=o>:</span> <span class=s1>&#39;*&#39;</span> <span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><p>Permalink before if: https://blogpic.zdy.one/img/20190912130704.png<img src=https://blogpic.zdy.one/img/20190912130704.png loading=lazy></p><p>这样我们就可以通过“盲注”的方式获取<code>&lt;body></code>标签中的秘密数据了。</p><h2 id=gyotaku-the-flag>Gyotaku The Flag</h2><p>题目源码在 <a class=link href=https://github.com/icchy/wctf2019-gtf target=_blank rel=noopener>Gyotaku The Flag</a>，slides 在 <a class=link href=https://westerns.tokyo/wctf2019-gtf/wctf2019-gtf-slides.pdf target=_blank rel=noopener>WCTF2019: Gyotaku The Flag</a></p><p>有了以上的知识，让我们回到 WCTF 2019 Gyotaku The Flag 这道题上，这道题有这么几个路由</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://blogpic.zdy.one/img/20190912130704.png loading=lazy></p><p>这样我们就可以通过“盲注”的方式获取<code>&lt;body></code>标签中的秘密数据了。</p><h2 id=gyotaku-the-flag>Gyotaku The Flag</h2><p>题目源码在 <a class=link href=https://github.com/icchy/wctf2019-gtf target=_blank rel=noopener>Gyotaku The Flag</a>，slides 在 <a class=link href=https://westerns.tokyo/wctf2019-gtf/wctf2019-gtf-slides.pdf target=_blank rel=noopener>WCTF2019: Gyotaku The Flag</a></p><p>有了以上的知识，让我们回到 WCTF 2019 Gyotaku The Flag 这道题上，这道题有这么几个路由</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -1081,17 +1081,17 @@
 <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.zdy.one/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.zdy.one/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.zdy.one/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.zdy.one/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.zdy.one/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///ts/main.js defer integrity="sha256-Hpo7r9hGztTDRdCEs1X7jHuudXAcM4+KH4qCx4ATeCY=" crossorigin=anonymous></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script><script>"serviceWorker"in navigator&&window.addEventListener("load",function(){navigator.serviceWorker.register("https://zeddyu.github.io/sw.min.js").then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)})})</script><script type=speculationrules>
-    {
+{
         "prefetch": [
             {
                 "source": "document",
-                "eagerness": "moderate",
+                "eagerness": "moderate"
             }
         ],
         "prerender": [
             {
                 "urls": ["/about", "/archives", "/ads", "/categories", "/links", "/search"],
-                "eagerness": "eager",
+                "eagerness": "eager"
             }
         ]
     }

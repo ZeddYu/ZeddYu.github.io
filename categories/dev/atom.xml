@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on Zeddy's Blog</title><link>https://zeddyu.github.io/categories/dev/</link><description>Recent content in Dev on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 30 Sep 2021 01:15:01 +0800</lastBuildDate><atom:link href="https://zeddyu.github.io/categories/dev/atom.xml" rel="self" type="application/rss+xml"/><item><title>从 Hexo 搬迁至 Hugo</title><link>https://zeddyu.github.io/p/%E4%BB%8E-hexo-%E6%90%AC%E8%BF%81%E8%87%B3-hugo/</link><pubDate>Thu, 30 Sep 2021 01:15:01 +0800</pubDate><guid>https://zeddyu.github.io/p/%E4%BB%8E-hexo-%E6%90%AC%E8%BF%81%E8%87%B3-hugo/</guid><description>&lt;p>由于之前突发奇想，看到某些同学的博客确实好看，心血来潮便花了大概几个晚上把博客生成工具从原来的 Hexo 迁移到了 Hugo 上，便有了这次搬迁记录，也算是给其他想迁移小伙伴一个参考。&lt;/p>
 &lt;h2 id="hugo-vs-hexo">Hugo VS Hexo
 &lt;/h2>&lt;p>根据一些文章 &lt;sup>&lt;a class="link" href="#ref01" >[1]&lt;/a>&lt;/sup>&lt;sup>&lt;a class="link" href="#ref02" >[2]&lt;/a>&lt;/sup>已经给出的对比，Hugo 拥有着比较不错的渲染速度，（这里贴个实测渲染数据），对于我这个目前所有 Posts 比较多，又有比较多图片的用户来说，在渲染速度方面确实也有一定需求。而且最近自己也在学习 Golang ，对于使用 Golang 的工具我还是比较有好感的。我进行了一个小对比，虽然 Hexo 插件用的有些多，但是在满足我个人需求下，使用两个工具对相同文章数量生成静态页面的对比效果如下图所示：&lt;/p>
-&lt;p>Permalink before if: https://z3.ax1x.com/2021/10/01/4TU45F.png&lt;img src="https://z3.ax1x.com/2021/10/01/4TU45F.png"
+&lt;p>&lt;img src="https://z3.ax1x.com/2021/10/01/4TU45F.png"
 loading="lazy"
 alt="左为 Hexo 生成速度 VS 右为 Hugo 生成速度"
 >&lt;/p>
@@ -414,7 +414,7 @@ position: relative;
 >自定义 Hugo Shortcodes 简码&lt;/a> 当中的 notice 部分，除了自己做了一定的字体、颜色定制调整，其他基本上一摸一样，所以这里不再赘述。&lt;/del>&lt;/p>
 &lt;p>&lt;strong>并且这里简单提个醒，对于 Hugo 来说，既是你是在代码段里面写 ShortCodes ，Hugo 也会直接对其进行渲染，并不会将其视为字符串处理。&lt;/strong>~~&lt;/p>
 &lt;p>所以当时我在渲染以上 Shortcodes 的时候就遇到了这个问题，我们得在不需要渲染的 ShortCodes 代码加注释才能使得 Hugo 认为这是一段字符串，也就是如下这个样子：
-Permalink before if: https://i.loli.net/2021/10/02/OS6zmrgE5biZyjA.png&lt;img src="https://i.loli.net/2021/10/02/OS6zmrgE5biZyjA.png"
+&lt;img src="https://i.loli.net/2021/10/02/OS6zmrgE5biZyjA.png"
 loading="lazy"
 alt="carbon.png"
 >&lt;/p>
@@ -688,7 +688,7 @@ alt="carbon.png"
 &lt;/div>
 &lt;/div>&lt;p>以上对图片等一些静态资源都做了缓存，当然最主要的还是缓存操作覆盖主题的 main.js 文件，为了加快这个文件获取，我还特地给该文件使用了 jsdelivr 进行加速。这里值得注意的就是，Service Worker 默认只缓存本站链接的静态文件，如果需要加载其他站点的文件，就需要通过&lt;code>registerRoute&lt;/code>来注册该文件。&lt;/p>
 &lt;p>再经过一番折腾后，在使用了 jsdelivr CDN 加速 js 文件、Service Worker 缓存静态文件双加持下，基本可以做到无痛切换页面了。（尽管看起来还是可能会有 25ms 的瞬间白屏&amp;hellip;但是应该可以说是很大程度上缓减了这个问题，当然得等以后看看还有没有什么新的技术可以来改善这个问题了。&lt;/p>
-&lt;p>Permalink before if: https://i.loli.net/2021/10/02/xAnh9mHa4ts5qG7.png&lt;img src="https://i.loli.net/2021/10/02/xAnh9mHa4ts5qG7.png"
+&lt;p>&lt;img src="https://i.loli.net/2021/10/02/xAnh9mHa4ts5qG7.png"
 loading="lazy"
 alt="Snipaste_2021-10-02_14-10-17.png"
 >&lt;/p>
@@ -739,13 +739,13 @@ alt="Snipaste_2021-10-02_14-10-17.png"
 &lt;/ol></description></item><item><title>Flutter packages get 424问题解决方法</title><link>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</link><pubDate>Mon, 25 Feb 2019 10:25:35 +0000</pubDate><guid>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</guid><description>&lt;p>在我一个项目当中使用&lt;code>flutter packages get &lt;/code>遇到了 HTTP 424 的错误，找了很多方法都没有解决方法，个人解决了之后就此记录下来。&lt;/p>
 &lt;h3 id="问题描述">问题描述
 &lt;/h3>&lt;p>使用&lt;code>flutter packages get -v&lt;/code>打印出步骤错误&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002591.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002591.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002591.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现 404 错误&lt;/p>
 &lt;h3 id="发现问题">发现问题
 &lt;/h3>&lt;p>按照提示，使用&lt;code>pub --trace --verbosity=warning --verbose get --no-precompile&lt;/code>打印出更详细的步骤&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005957.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005957.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005957.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现老是在获取&lt;code>path_provideer 0.5.0+1&lt;/code>这里报出了 424 的错误，一开始以为是不是镜像并没有这个包，自己也去&lt;code>pub.flutter-io.cn&lt;/code>找了一下，确实有&lt;code>path_provideer 0.5.0+1&lt;/code>这个版本的包。&lt;/p>

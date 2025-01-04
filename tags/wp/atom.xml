@@ -27,19 +27,19 @@
 &lt;ol>
 &lt;li>
 &lt;p>登录失败的时候会直接无过滤地回显用户名，这里有一处 HTML 注入&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423014836.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423014836.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423014836.png"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>在提交 issue 处，有一项需要提交 image URL 的地方也存在着 HTML 注入&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423021048.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423021048.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423021048.png"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>题目设置还会利用 session 来存储一些 HTML 元素，例如我们在同一个 session 先登录，再用这个 session 发送一个登录失败的请求，刷新我们已登录的页面我们就可以看到：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424222148.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424222148.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424222148.png"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
@@ -290,7 +290,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;/blockquote>
 &lt;p>所以我们只需要在页面加入一个&lt;code>&amp;lt;em&amp;gt;&lt;/code>标签，即可把内容拆分为单个字母，效果如下：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424182529.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424182529.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424182529.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以这时候我们就可以利用&lt;code>#:~:text=P-,C,T,-F&lt;/code>进行选中了。&lt;/p>
@@ -794,7 +794,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>但是我并没有在 uBlock 看到相关的配置，&lt;code>postMessage&lt;/code>都是使用的默认配置，然后关于默认配置我也查看了部分 Chromium 的源码，对于 UserActivation 默认配置是 false 的&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200425014346.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200425014346.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200425014346.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是我们通过 &lt;a class="link" href="#Verification" >Verification&lt;/a> 环节测试得到的结果确实需要 uBlock 来进行，由于自己时间并不是特别多，最近花太多时间在这题的复盘上，所以最近不打算再深究这部分的内容了，这部分的内容不仅涉及到 User Activation ，还涉及到一些关于 User Activation 抽象模型的代码实现，如果要深究的话就需要花比较多的时间了。&lt;/p>
@@ -880,8 +880,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>This url will make a request like this.&lt;/p>
-&lt;p>Permalink before if: /1.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png"
 width="1136"
 height="1060"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1_hu4319291633957421324.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1_hu18005833859049484385.png 1024w"
@@ -900,8 +899,7 @@ data-flex-basis="257px"
 &lt;p>In &lt;em>passive&lt;/em> mode, the client establishes &lt;em>both&lt;/em> channels. We already know it establishes the command channel in active mode and it does the same here.&lt;/p>
 &lt;/blockquote>
 &lt;p>If we don&amp;rsquo;t inject code through CRLF, we can get the FTP traffic like this:&lt;/p>
-&lt;p>Permalink before if: /2.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/2.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/2.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/2.png"
 width="1044"
 height="784"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/2_hu1148410208877913323.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/2_hu6767240057083691703.png 1024w"
@@ -913,8 +911,7 @@ data-flex-basis="319px"
 &lt;p>So it will use &lt;code>PASV&lt;/code> command to open passive mode and build a connection with client.&lt;/p>
 &lt;p>Why not inject &lt;code>PORT&lt;/code> commant through CRLF to let ftp-srv open active mode and let ftp-srv connect with my server?&lt;/p>
 &lt;p>Yeah. Just like this. I use &lt;code>PORT&lt;/code> command to let ftp-srv connect with my server.&lt;/p>
-&lt;p>Permalink before if: /1.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png"
 width="1136"
 height="1060"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1_hu4319291633957421324.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1_hu18005833859049484385.png 1024w"
@@ -1047,8 +1044,7 @@ data-flex-basis="257px"
 &lt;/h2>&lt;p>The last key to solve this problem is let the ftp server send a http request to rabbitmq server.&lt;/p>
 &lt;p>But how?&lt;/p>
 &lt;p>We notice that we can hide a http message in the profile png and use &lt;code>RRETR&lt;/code> to let the ftp server return the message of png.&lt;/p>
-&lt;p>Permalink before if: /3.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png"
 width="2144"
 height="990"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3_hu4726260500021086370.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3_hu17443567440403927909.png 1024w"
@@ -1085,8 +1081,7 @@ data-flex-basis="519px"
 &lt;p>{% twitter &lt;a class="link" href="https://twitter.com/zwad3/status/1252087190278082562" target="_blank" rel="noopener"
 >https://twitter.com/zwad3/status/1252087190278082562&lt;/a> %}&lt;/p>
 &lt;p>He mentioned we should send the real request followed by 50,000 dumb requests (in one file). I tried this method today and this really gave 100% success rate.&lt;/p>
-&lt;p>Permalink before if: /3.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png"
 width="2144"
 height="990"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3_hu4726260500021086370.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3_hu17443567440403927909.png 1024w"
@@ -1096,8 +1091,7 @@ data-flex-grow="216"
 data-flex-basis="519px"
 >&lt;/p>
 &lt;p>Just like this, I put 1000 http get requests in one file and every time can get flag.&lt;/p>
-&lt;p>Permalink before if: /4.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/4.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/4.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/4.png"
 width="832"
 height="486"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/4_hu1383566469765219018.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/4_hu12810089339028369329.png 1024w"
@@ -1855,7 +1849,7 @@ NULL&lt;/p>
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>很简单的变量覆盖。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009556.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009556.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009556.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-2-web-签到题">Web 2 WEB 签到题
@@ -2232,7 +2226,7 @@ NULL&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里循环使用&lt;code>sprintf&lt;/code>格式化打印&lt;code>$arr&lt;/code>，所以我们只需要让第二次存在一个&lt;code>%s&lt;/code>，即可让他打印出&lt;code>$this-&amp;gt;eacrykey&lt;/code>，所以可以构造&lt;code>nickname=%s&lt;/code>即可得到&lt;code>$this-&amp;gt;eacrykey&lt;/code>为 EzblrbNS&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009342.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009342.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009342.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>之后我们可以发现主要就是要构造&lt;code>$session&lt;/code>这个变量来触发&lt;code>session_read()&lt;/code>函数中的&lt;code>$session = unserialize($session);&lt;/code>&lt;/p>
@@ -2653,7 +2647,7 @@ Flag格式：&lt;code>DDCTF{.....}&lt;/code>，也就是请手动包裹上&lt;co
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>所以我们就可以利用这个特性，利用题目中的&lt;code>event_handler&lt;/code>来执行任意函数。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002577.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002577.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002577.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>利用&lt;code>#&lt;/code>成功绕过了后缀的限制执行了&lt;code>show_flag_function&lt;/code>函数。&lt;/p>
@@ -2775,7 +2769,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这个函数进入循环执行函数的条件为&lt;code>while len(request.event_queue) &amp;gt; 0&lt;/code>，而&lt;code>trigger_event&lt;/code>函数是可以控制&lt;code>request.event_queue&lt;/code>的关键，所以按照我们之前的思路，我们是不是可以利用这个函数来控制我们的执行顺序呢？&lt;/p>
 &lt;p>例如我们可以先尝试构造&lt;code>action:trigger_event%23;action:buy;8&lt;/code>，我们本地可以通过&lt;code>app.logger.info&lt;/code>来查看&lt;code>execute_event_loop&lt;/code>循环中的&lt;code>action&lt;/code>与&lt;code>args&lt;/code>参数，我们可以得到&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005313.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005313.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005313.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到执行了&lt;code>but_handler&lt;/code>函数，我们注意&lt;code>trigger_event&lt;/code>中是可以接受数组的&lt;/p>
@@ -2791,7 +2785,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>对于数组的处理，他会挨个加入到&lt;code>request.event_queue&lt;/code>，所以我们就可以利用传入数组来控制执行顺序，只要我们传入一个第一个参数为&lt;code>but_handler&lt;/code>的函数，第二个参数为&lt;code>get_Flag&lt;/code>的函数就可以实现在调用花费函数之前来输出 Flag 了。&lt;/p>
 &lt;p>怎么构造数组呢？在&lt;code>execute_event_loop&lt;/code>中对于参数的处理可以自己随便测试一下就知道了他是以&lt;code>:;&lt;/code>之后的字符串以&lt;code>#&lt;/code>为分割来形成数组的。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610001621.jpg&lt;img src="https://blogpic.zdy.one/img/20190610001621.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001621.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以这样子我们就成功将&lt;code>get_flag&lt;/code>函数优先调用了。接下来就是处理一些细节的事情了，比如调用&lt;code>get_Flag&lt;/code>在源代码中是&lt;code>get_flag_handler&lt;/code>，所以我们需要传入的参数是&lt;code>action:get_flag&lt;/code>，以及 Flag 最后是通过以下函数调用&lt;code>trigger_event&lt;/code>把 Flag 输出到&lt;code>session['log']&lt;/code>当中的。&lt;/p>
@@ -2810,7 +2804,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>所以我们的 payload 就是&lt;code>action:trigger_event%23;action:buy;8%23action:get_flag;&lt;/code>，再通过p牛的 flask cookie 解密脚本即可得到 flag&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009428.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009428.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009428.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-5-欢迎报名ddctf">Web 5 欢迎报名DDCTF
@@ -2823,19 +2817,19 @@ loading="lazy"
 &lt;p>{% endcolorquote %}&lt;/p>
 &lt;h3 id="hacking-4">Hacking
 &lt;/h3>&lt;p>一开始根本打不了…而且还被人用 Beff 搅屎了&amp;hellip;而且严重怀疑这题是中途改题的…很坑&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008967.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008967.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008967.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>首先题目设置比较简单&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009535.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009535.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009535.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>测试 XSS ，但是贼坑的误导你，返回了想误导你走入 sql 注入的大坑。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004518.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004518.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004518.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以用 xss 拿到 admin.php 的 html 源码&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005558.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005558.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005558.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看到源码中一个接口，直接访问提示需要一个 id 的传参，随便输入之后看到响应包&lt;/p>
@@ -2865,23 +2859,23 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>发现&lt;code>Content-Type&lt;/code>为&lt;code>charset=gbk&lt;/code>，猜测是一个宽字节注入。而且并没有什么过滤，直接开注，可能唯一需要一点 trick 的就是需要用十六进制绕过被转义的单引号了&amp;hellip;&lt;/p>
 &lt;p>注出库名&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002153.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002153.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002153.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>注出表名&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610001782.jpg&lt;img src="https://blogpic.zdy.one/img/20190610001782.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001782.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>注出字段名&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009597.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009597.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009597.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>拿到 flag&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005221.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005221.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005221.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然也可以用 sqlmap 直接跑。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009838.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009838.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009838.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也可以指定使用&lt;code>--tamper unmagicquotes&lt;/code>来进行注入&lt;/p>
@@ -2929,16 +2923,16 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>然后看到一道类似&lt;a class="link" href="https://wulidecade.cn/index.php/archives/127/#menu_index_7" target="_blank" rel="noopener"
 >护网杯Itshop&lt;/a>题目，所以考虑这个地方是不是也是用的是余额-支出这么个操作来溢出呢&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007646.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007646.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007646.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>查找 GoLang 的相关数据类型，用 uint32 成功溢出。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007444.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007444.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007444.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>猜测在 price 转换成 int 的时候发生溢出变成 -1 ，导致余额减去花费大于0，成功绕过判断买到入场券。&lt;/p>
 &lt;p>之后就比较简单了，可以通过输入 ticket 杀 bot ，猜测 id 与 ticket 有某种映射关系，可以注册一系列小号买 ticket 保大号杀。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006639.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006639.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006639.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>附上脚本。&lt;/p>
@@ -3028,7 +3022,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这题还有一种 trick 就是猜榜单已经做出来的师傅的密码，一般 id 都是师傅们的 id ，密码大多都是12345678(别问我怎么知道…我也是12345678&amp;hellip;&lt;/p>
 &lt;p>比如这位师傅，用 12345678 登进去就拿到他的 flag 了。后面就是你敢不敢交的问题了&amp;hellip;手动斜眼，毕竟后面有一段看起来貌似是随机的字符串…可能是主办方用来防作弊的？不得而知…hhhh&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006149.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006149.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006149.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>后面看官方的 wp 发现光房预设解其实是想让选手用 md5 长度拓展攻击去做的，也可以通过下面这题 mysql 弱口令来读吃鸡的源码拿 flag。&lt;/p>
@@ -3519,11 +3513,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以读&lt;code>/etc/passwd&lt;/code>拿到 mysql 的路径，然后根据 mysql 的路径与 flag 在数据库中的位置提示，我们可以直接读&lt;code>/var/lib/mysql/security/flag.ibd&lt;/code>中可以拿到 flag，也可以读&lt;code>/var/lib/mysql/ibdata1&lt;/code>，只是这个文件一般比较大。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004554.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004554.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004554.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也有师傅说可以读&lt;code>.mysqlhistory&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005095.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005095.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005095.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>.mysql_history&lt;/code>虽然读不到数据库内容，但是在这里可以看到这里出题者是用了&lt;code>insert&lt;/code>，我们可以看到他的操作的语句，也拿到了 flag&lt;/p>
@@ -3572,7 +3566,7 @@ loading="lazy"
 &lt;h2 id="hacking">Hacking
 &lt;/h2>&lt;p>由于环境关掉了，这里就不放图了。说一下几个解法。&lt;/p>
 &lt;p>首先通过弱口令 karaf/karaf 进行认证，进入发现是 jetty 的中间件，然后思路一直走偏在这个中间件上，直到有师傅跟我说 ghost pepper 指的是 Jolokia…nb&amp;hellip;&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009331.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009331.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009331.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后又参考了几篇腾讯云鼎的相关文章：&lt;/p>
@@ -3657,13 +3651,13 @@ Let&amp;rsquo;s try to execute &lt;code>/readflag&lt;/code> to get the flag.
 Open basedir: /var/www/html:/tmp/7833d7f27adcba46bdfd6c9c31c89904
 Hint: eval($_POST[&amp;ldquo;backdoor&amp;rdquo;]);&lt;/p>
 &lt;/blockquote>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008570.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008570.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008570.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="the-first-way-to-hack">The first way to Hack
 &lt;/h2>&lt;p>一看题目意图也比较明显，需要我们利用&lt;code>Imagick&lt;/code>这个模块去进行 rce&lt;/p>
 &lt;p>我们先直接看看&lt;code>phpinfo()&lt;/code>，发现果然是能执行命令的基本都被 disable 掉了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002789.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002789.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002789.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们还可以调用&lt;code>readfile()&lt;/code>来查看题目源代码&lt;/p>
@@ -3711,7 +3705,7 @@ loading="lazy"
 &lt;p>open_basedir 将 php 所能打开的文件限制在指定的目录树中，包括文件本身。当程序要使用例如&lt;code>fopen()&lt;/code>或&lt;code>file_get_contents()&lt;/code>打开一个文件时，这个文件的位置将会被检查。当文件在指定的目录树之外，程序将拒绝打开。&lt;/p>
 &lt;p>{% endcolorquote %}&lt;/p>
 &lt;p>例如就像这样，设置了&lt;code>ini_set('open_basedir','/var/www/html');&lt;/code>之后，我们只能在&lt;code>/var/www/html&lt;/code>进行操作，即&lt;code>open_basedir&lt;/code>是用来限制访问目录的&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006126.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006126.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006126.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="bypass-open_basedir">Bypass Open_Basedir
@@ -3733,7 +3727,7 @@ loading="lazy"
 >LD_PRELOAD的偷梁换柱之能&lt;/a>&lt;/p>
 &lt;h3 id="劫持攻击">劫持攻击
 &lt;/h3>&lt;p>参考的绕过文章使用了&lt;code>mail()&lt;/code>函数，我们可以看看&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004191.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004191.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004191.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里确实开启了子进程，那我们再试试引入&lt;code>putenv()&lt;/code>的效果，配合动态链接库尝试劫持，代码来自&lt;a class="link" href="https://github.com/TarlogicSecurity/Chankro" target="_blank" rel="noopener"
@@ -3834,11 +3828,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004080.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004080.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004080.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到已经执行了&lt;code>ls&lt;/code>命令并成功输出了&lt;code>hacked&lt;/code>，使用&lt;code>strace&lt;/code>看看我们可以发现执行顺序。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008064.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008064.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008064.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然还有另一种劫持，直接选择一个函数进行劫持，例如我们通过&lt;code>strace php test.php&lt;/code>发现调用了&lt;code>geteuid()&lt;/code>以及&lt;code>getpid()&lt;/code>函数，我们可以在&lt;code>hack.c&lt;/code>中这么写&lt;/p>
@@ -3883,12 +3877,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这样也可以完成劫持&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002758.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002758.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002758.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="getflag">GetFlag
 &lt;/h3>&lt;p>所以我们需要找到一个可以启动子进程的函数，以实现我们劫持函数做到 RCE 的目的，然后这里我本地调通了但是远程不知道怎么没打通&amp;hellip;&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009740.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009740.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009740.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我直接用&lt;code>new&lt;/code>了一个&lt;code>.jpg&lt;/code>也可以调用子进程，但是服务器却没有触发&amp;hellip;&lt;/p>
@@ -3965,7 +3959,7 @@ loading="lazy"
 &lt;/div>&lt;h3 id="the-other-way">The other way
 &lt;/h3>&lt;p>也可以利用&lt;a class="link" href="https://www.php.net/manual/zh/function.error-log.php" target="_blank" rel="noopener"
 >error_log&lt;/a>这个方法，这个方法也开启了子进程调用了&lt;code>sendmail&lt;/code>方法。按照之前的思路进行就可以了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007064.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007064.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007064.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="参考">参考
@@ -3986,12 +3980,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里参考了其他师傅的 wp ，主要是利用了&lt;code>@BPGDecodeDelegate&lt;/code>对于后缀&lt;code>.bpg&lt;/code>的解析，它会去 PATH 中寻找相关的&lt;code>bpgenc&lt;/code>文件&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009100.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009100.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009100.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们只需要设置一个恶意的 PATH ，并在这个文件夹下放入我们的可执行文件。&lt;/p>
 &lt;p>只要找到函数要执行的文件我们就可以进行操作了。例如下面用了&lt;code>Imagick-&amp;gt;readImage()&lt;/code>的方法&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002391.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002391.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002391.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="conclusion">Conclusion
@@ -4062,7 +4056,7 @@ loading="lazy"
 &lt;p>可以参考&lt;a class="link" href="https://www.freebuf.com/articles/web/149761.html" target="_blank" rel="noopener"
 >Nginx不安全配置可能导致的安全漏洞&lt;/a>与&lt;a class="link" href="https://www.leavesongs.com/PENETRATION/nginx-insecure-configuration.html" target="_blank" rel="noopener"
 >三个案例看Nginx配置安全&lt;/a>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008852.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008852.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008852.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>下载得到源码&lt;/p>
@@ -4190,7 +4184,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当我们直接运行这段代码的时候，就因为调用了一个&lt;code>SoapClient&lt;/code>不存在的方法&lt;code>hack()&lt;/code>导致直接调用了&lt;code>__call()&lt;/code>魔术方法&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005272.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005272.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005272.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>详细可以参考&lt;a class="link" href="https://xz.aliyun.com/t/2148" target="_blank" rel="noopener"
@@ -4482,11 +4476,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>利用反序列化的特点，我们可以直接定义私有变量的值，但是字符串中会有不可见字符，实验如下&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005682.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005682.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005682.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们需要用&lt;code>base64_encode&lt;/code>进行编码，把编码得到的字符串再在 burp 里面进行解码构造请求。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008851.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008851.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008851.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="soapclient-ssrf">SoapClient SSRF
@@ -4539,7 +4533,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当我们请求 8080 的时候，请求的是 miniProxy，但是只能用 GET 请求，而我们之前可以发现&lt;code>SoapClient&lt;/code>只能发 POST 请求&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005778.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005778.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005778.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里大概思路也比较清晰了，就是利用 miniProxy 使用 gopher 协议去访问 mssql 数据库拿到 flag ，但是怎么处理让&lt;code>SoapClient&lt;/code>发送 GET 请求呢？&lt;/p>
@@ -4552,12 +4546,12 @@ loading="lazy"
 &lt;p>The &lt;em>user_agent&lt;/em> option specifies string to use in &lt;em>User-Agent&lt;/em> header.&lt;/p>
 &lt;/blockquote>
 &lt;p>而且在 header 里 &lt;code>User-Agent&lt;/code> 在 &lt;code>Content-Type&lt;/code> 前面，这里我们可以使用 CRLF 进行分隔请求，构造 GET 请求。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005475.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005475.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005475.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="miniproxy-url-scheme-bypass">miniProxy URL scheme bypass
 &lt;/h4>&lt;p>我们自己本地看看 MiniProxy 怎么用。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003617.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003617.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003617.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>随便测一个&lt;code>file:///etc/passwd&lt;/code>，返回&lt;/p>
@@ -4752,7 +4746,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">insert into posts (userid, title, content, attachment) values ({}, &amp;#34;foobar&amp;#34;, (select flag from flag.flag), &amp;#34;foobar&amp;#34;);
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007735.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007735.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007735.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="conclusion">Conclusion
@@ -5306,7 +5300,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这样只要一次访问成功该 php 文件，即可拿到 shell&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008080.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008080.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008080.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="pass-18">Pass-18
@@ -5546,12 +5540,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里需要注意的是，&lt;code>save_name[0]&lt;/code>放&lt;code>jpg&lt;/code>就好了，否则&lt;code>$ext&lt;/code>拿到的是&lt;code>upload-20.jpg&lt;/code>，这样整个字符串就会进入&lt;code>!in_array($ext, $allow_suffix)&lt;/code>这个判断里面了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006384.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006384.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006384.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="conclusion">Conclusion
 &lt;/h2>&lt;p>这个靶场还是挺好的，总结得都相当不错。如果能配合更多的中间件解析漏洞来做的话会更棒，因为很多时候我们做到的仅仅是上传一个 jpg 啥的，如果配合解析漏洞或者文件包含，可以进一步扩大杀伤力。&lt;/p>
-&lt;p>Permalink before if: https://raw.githubusercontent.com/c0ny1/upload-labs/master/doc/mind-map.png&lt;img src="https://raw.githubusercontent.com/c0ny1/upload-labs/master/doc/mind-map.png"
+&lt;p>&lt;img src="https://raw.githubusercontent.com/c0ny1/upload-labs/master/doc/mind-map.png"
 loading="lazy"
 >&lt;/p></description></item><item><title>厦大旅游小记</title><link>https://zeddyu.github.io/p/%E5%8E%A6%E5%A4%A7%E6%97%85%E6%B8%B8%E5%B0%8F%E8%AE%B0/</link><pubDate>Sun, 25 Nov 2018 21:47:28 +0000</pubDate><guid>https://zeddyu.github.io/p/%E5%8E%A6%E5%A4%A7%E6%97%85%E6%B8%B8%E5%B0%8F%E8%AE%B0/</guid><description>&lt;p>这次比赛在赛前看规则我觉得还挺有意思的，毕竟是采用一种新的AWD形式，Web方面采用的是正则配waf的形式去防御，然后当初给&lt;code>@Mio&lt;/code>师傅看的时候，他表示也挺想来的。可惜他们学校没报销就没来了。这次就写写这两天的比赛经验吧。&lt;/p>
 &lt;!-- more -->
@@ -6065,13 +6059,13 @@ loading="lazy"
 &lt;p>以往的攻防比赛，选手对自己&lt;code>web&lt;/code>目录有读写的权力，这样造成了比赛中非常多的选手通过上通防，抓流量记录日志等技巧方式来防守或是攻击得分，并且很多选手通常通过一些“技巧”，通过对比赛&lt;code>check&lt;/code>的绕过，关闭一些关键的正常服务或者全部&lt;code>web&lt;/code>站点服务来在比赛中“苟”住。这样往往导致了很多AWD比赛中&lt;code>web&lt;/code>要么就是被打穿，要么就是“天衣无缝”的情况，&lt;code>web&lt;/code>选手的游戏体验在近期攻防比赛中每况愈下，以网鼎杯&lt;code>web&lt;/code>为例，半决赛跟决赛的&lt;code>check&lt;/code>只检查了&lt;code>index&lt;/code>主页的关键字，导致了很多队伍一开始就进行了删站，只留个&lt;code>index&lt;/code>主页来通过&lt;code>check&lt;/code>，严重破坏了比赛体验。&lt;/p>
 &lt;h3 id="改善">改善？
 &lt;/h3>&lt;p>简而言之就是，本次比赛在理想规则（为啥是理想规则？因为计划与现实完全是理想图与实物图的对比）改变了传统的&lt;code>web&lt;/code>类型的攻防模式，&lt;code>web&lt;/code>目录只读不可写，通过改变&lt;code>waf&lt;/code>正则防御规则来防御攻击，攻击点全靠代码审计来攻击；&lt;code>pwn&lt;/code>类型的与传统攻防相同。（以下三张图片来源于&lt;code>卧龙草堂&lt;/code>公众号）&lt;/p>
-&lt;p>Permalink before if: https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvijd2c0g20pn06c1kx.gif&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvijd2c0g20pn06c1kx.gif"
+&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvijd2c0g20pn06c1kx.gif"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvihrqiug20vz09kkjl.gif&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvihrqiug20vz09kkjl.gif"
+&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvihrqiug20vz09kkjl.gif"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://ws1.sinaimg.cn/large/64ef14dcgy1fxuuxv8ggkg20m20hwe81.gif&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuuxv8ggkg20m20hwe81.gif"
+&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuuxv8ggkg20m20hwe81.gif"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="现实赛前">现实：赛前
@@ -6115,7 +6109,7 @@ loading="lazy"
 &lt;h1 id="dayn">Day N
 &lt;/h1>&lt;p>&lt;code>wordpress&lt;/code>版本是最新的&lt;code>4.9.8&lt;/code>，服务器&lt;code>IIS&lt;/code>，不过服务器版本号忘了。&lt;/p>
 &lt;p>对比之后差异一目了然&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009721.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>主要是两个一句话木马，以及4个插件。&lt;/p>
@@ -6150,7 +6144,7 @@ loading="lazy"
 &lt;/div>&lt;p>后来搜了一下发现竟然是&lt;code>php&lt;/code>版本过高的问题，因为在&lt;code>php7&lt;/code>中动态调用一些函数是被禁止的。详细参考&lt;a class="link" href="http://shuiboye.blogspot.com/2018/01/php200.html" target="_blank" rel="noopener"
 >菜刀连接php一句话木马返回200的原因及解决方法&lt;/a>&lt;/p>
 &lt;p>这里是个密码为-7的一句话。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002229.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002229.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002229.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="poc2">Poc 2
@@ -6193,7 +6187,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里就非常清楚了，是个密码为&lt;code>cmd&lt;/code>的一句话。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006974.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006974.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006974.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="plugin">Plugin
@@ -6208,7 +6202,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h3 id="site-editor">site-editor
 &lt;/h3>&lt;p>首先看&lt;code>site-editor&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004098.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004098.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004098.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以从图中看出，主要是个文件包含的漏洞。&lt;/p>
@@ -6251,22 +6245,22 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">http://localhost/wordpress-awd/wp-content/plugins/site-editor/editor/extensions/pagebuilder/includes/ajax_shortcode_pattern.php?ajax_path=..././..././..././..././..././..././..././wp-includes/pomo/tp.php
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009104.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009104.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009104.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="gift-voucher">gift-voucher
 &lt;/h3>&lt;p>另一个&lt;code>wpscan&lt;/code>扫到的插件是&lt;code>gift-voucher&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006248.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006248.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006248.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到这是个盲注的洞，详细参考&lt;a class="link" href="https://www.exploit-db.com/exploits/45255" target="_blank" rel="noopener"
 >WordPress Plugin Gift Voucher 1.0.5 - (Authenticated) &amp;rsquo;template_id&amp;rsquo; SQL Injection&lt;/a>&lt;/p>
 &lt;p>用&lt;code>sqlmap&lt;/code>扫了一下&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003081.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003081.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003081.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到&lt;code>admin&lt;/code>的密码，如果字典好的话，可以快一些。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005025.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005025.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005025.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="localize-my-post">Localize My Post
@@ -6619,13 +6613,13 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ip=baidu.com%7C%20ls&amp;amp;lookup
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009426.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009426.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009426.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到执行结果。&lt;/p>
 &lt;h2 id="functionphp">Function.php
 &lt;/h2>&lt;p>回过头来，我们再看看还有没有跟官方文件其他不同的文件。除了MAC产生的&lt;code>.DS_Store&lt;/code>文件、&lt;code>._wp-config.php&lt;/code>编辑临时文件、&lt;code>wp-config.php&lt;/code>配置文件，剩下的就是&lt;code>function.php&lt;/code>了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009721.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们对比得到比赛多出了这么一处代码:&lt;/p>

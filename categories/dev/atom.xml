@@ -179,6 +179,23 @@ loading="lazy"
 >&lt;/p>
 &lt;p>其次，后面我会尽量少用图片，因为之前看自己的 Writeup 文章，用图片确实很奢侈，甚至拿到一个 FLAG 都要放张图，当时觉得无所谓，但是现在看起来，这其实没什么必要，因为这些图片跟你只用一句话解释“于是通过这样我拿到了FLAG”达到的表达效果其实并没有太多区别，一行文字能表达清楚的我就尽量不使用图片，除非这张图真的很有意义。&lt;/p>
 &lt;p>再者，对于真要放图的地方，我会考虑其对于阅读效果的影响。十分重要的，离开了这张图片就可能影响表达效果的，我就把他放到自己的 Github Repo 或者 CF R2 上；一般重要的，看情况放在 CF R2 上 或者 SM.MS 上；可以放张图，并且即使这张图挂了都不会影响阅读内容体验的图会放到 SM.MS / 路过等免费图床上。&lt;/p>
+&lt;p>在确定好自己的图床后，可以在 CF 上修改请求 R2 中图片的缓存时间，毕竟图片一般很少更改，我们可以直接增大缓存时间以获得良好的优化效果，我们可以在Cloudflare 面板中：&lt;/p>
+&lt;ol>
+&lt;li>缓存 / Cache Rules 中增加一条规则&lt;/li>
+&lt;li>默认配置下本身他已经帮我们配置好了很多静态资源的扩展名，我们可以直接使用他的配置，并再增加一条匹配规则，使其只匹配我们的图床域名： &lt;code>(http.host eq &amp;quot;yourdomain.com&amp;quot;)&lt;/code>&lt;/li>
+&lt;li>缓存资格：选择 &lt;em>符合缓存条件&lt;/em>&lt;/li>
+&lt;li>边缘TTL：选择 &lt;em>忽略缓存控制标头，使用此 TTL&lt;/em>，缓存时间设置为 &lt;em>1 年&lt;/em>&lt;/li>
+&lt;li>浏览器TTL：选择 &lt;em>替代源服务器，使用此 TTL&lt;/em>，缓存时间设置为 &lt;em>1 年&lt;/em>&lt;/li>
+&lt;li>缓存密钥：开启 &lt;em>缓存欺骗盔甲&lt;/em>&lt;/li>
+&lt;/ol>
+&lt;p>你可以自己选择觉得合适的缓存时间，我这里直接设置得比较大为一年。&lt;/p>
+&lt;p>除此以外，关于图床的优化还可以使用一些专门对于图片的缓存优化，比如 WebP Cloud ，详细参考以下：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.backblaze.com/blog/free-image-hosting-with-cloudflare-transform-rules-and-backblaze-b2/" target="_blank" rel="noopener"
+>Free Image Hosting With Cloudflare Transform Rules and Backblaze B2&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://sspai.com/post/90170" target="_blank" rel="noopener"
+>从零开始搭建你的免费图床系统 （Cloudflare R2 + WebP Cloud + PicGo）&lt;/a>&lt;/li>
+&lt;/ul>
 &lt;h3 id="cloudflare-workers">Cloudflare Workers
 &lt;/h3>&lt;p>CF workers 是 CF 推出的 Serverless 优秀工具，也是经常被用来作反代加速处理的不二选一，用好了的话可以在其免费额度内解决很多国内的网络环境问题，甚至某些魔法问题，可以参考：https://github.com/topics/cloudflare-workers&lt;/p>
 &lt;p>但是目前由于其官方分配的 workers.dev 很早就被屏蔽了，我们就需要绑定一个自己的域名来规避这个问题，后面我们会使用这个功能来实现一些 Google 服务的加速。&lt;/p>
@@ -364,16 +381,28 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当然如果你对 Speculation Rules 感兴趣，也可以参考以下几个文档：&lt;/p>
+&lt;ul>
+&lt;li>
 &lt;p>&lt;a class="link" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/speculationrules" target="_blank" rel="noopener"
 >speculationrules&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
 &lt;p>&lt;a class="link" href="https://wicg.github.io/nav-speculation/speculation-rules.html" target="_blank" rel="noopener"
 >Speculation Rules&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
 &lt;p>&lt;a class="link" href="https://codelabs.developers.google.com/speculation-rules" target="_blank" rel="noopener"
 >通过 Speculation Rules API 实现即时导航&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
 &lt;p>&lt;a class="link" href="https://developer.chrome.com/docs/web-platform/prerender-pages" target="_blank" rel="noopener"
 >Prerender pages in Chrome for instant page navigations&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
 &lt;p>&lt;a class="link" href="https://web.dev/learn/performance/prefetching-prerendering-precaching" target="_blank" rel="noopener"
 >Prefetching, prerendering, and service worker precaching&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ul>
 &lt;h3 id="other-optimizations">Other Optimizations
 &lt;/h3>&lt;p>还有一些其他的优化，可以使用 Chrome 开发者工具栏的 Lighthouse 进行测试，也可以使用在线版 &lt;a class="link" href="https://pagespeed.web.dev/" target="_blank" rel="noopener"
 >PageSpeed Insights&lt;/a> ，也或者使用 &lt;a class="link" href="https://www.webpagetest.org/" target="_blank" rel="noopener"
@@ -399,6 +428,18 @@ loading="lazy"
 &lt;/li>
 &lt;li>Cloudflare Page: CF 大善人的静态页面托管服务，这个取决于国内用户访问 CF 的网络速度&lt;/li>
 &lt;li>还有一些其他静态页面托管服务，但是总体来说与 Github Page 大差不差，没有 Vercel 当初那种能直接提供网络优势的，所以基本没有切换的动力，以及后期确实不考虑运营域名的情况，还是主要以使用 Github Page 为主&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>图床服务：
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.backblaze.com/cloud-storage/pricing" target="_blank" rel="noopener"
+>Backblaze B2&lt;/a>: 提供免费的 10GB 试用，而且外出流量免费，综合对比其他国外的存储服务还是很有优势的&lt;/li>
+&lt;li>Cloudflare R2: 免费 10GB 存储，外出流量免费&lt;/li>
+&lt;li>Onedrive: 个人免费 5GB 存储，外出免费&lt;/li>
+&lt;li>&lt;a class="link" href="https://sm.ms/" target="_blank" rel="noopener"
+>SM.MS&lt;/a> : 个人免费 5GB 存储，外出免费&lt;/li>
+&lt;li>&lt;a class="link" href="https://imgse.com/" target="_blank" rel="noopener"
+>路过图床&lt;/a>: 没有找到免费计划的额度&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;/ul>

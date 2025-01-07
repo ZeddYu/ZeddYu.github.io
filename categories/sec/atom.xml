@@ -3720,23 +3720,23 @@ position: relative;
 &lt;h2 id="simple-example">Simple Example
 &lt;/h2>&lt;p>其实 Dom Clobbering 比较简单，我们看几个简单的例子就能知道它是干什么了的。&lt;/p>
 &lt;h3 id="exmaple-1---create">Exmaple 1 - Create
-&lt;/h3>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225164841.png"
+&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200225164841.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>从图中我们可以看到通过 id 或者 name 属性，我们可以在&lt;code>document&lt;/code>或者&lt;code>window&lt;/code>对象下创建一个对象。&lt;/p>
 &lt;h3 id="example-2---overwrite">Example 2 - Overwrite
-&lt;/h3>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200222145150.png"
+&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200222145150.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到&lt;code>document.cookie&lt;/code>已经被我们用 img 标签给覆盖了&lt;/p>
 &lt;h3 id="example-3---overwrite2">Example 3 - Overwrite2
-&lt;/h3>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225165624.png"
+&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200225165624.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到我们通过多层覆盖掉了&lt;code>document.body.appendChild&lt;/code>方法。&lt;/p>
 &lt;h2 id="attack-method">Attack Method
 &lt;/h2>&lt;p>既然我们可以通过这种方式去创建或者覆盖 document 或者 window 对象的某些值，但是看起来我们举的例子只是利用标签创建或者覆盖最终得到的也是标签，是一个&lt;code>HTMLElment&lt;/code>对象。&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225170736.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200225170736.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是对于大多数情况来说，我们可能更需要将其转换为一个可控的字符串类型，以便我们进行操作。&lt;/p>
@@ -3757,7 +3757,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们可以得到两种标签对象：&lt;code>HTMLAreaElement (&amp;lt;area&amp;gt;)&lt;/code>&amp;amp; &lt;code>HTMLAnchorElement (&amp;lt;a&amp;gt;)&lt;/code>，这两个标签对象我们都可以利用&lt;code>href&lt;/code>属性来进行字符串转换。&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225225659.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200225225659.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="htmlcollection">HTMLCollection
@@ -3828,7 +3828,7 @@ getter Element? namedItem(DOMString name);
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200225232907.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200225232907.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="html-relationships">HTML Relationships
@@ -4138,7 +4138,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们再随便评论一下就好了，就可以触发我们构造的 XSS 了。&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200226153957.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200226153957.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="labclobbering-dom-attributes-to-bypass-html-filters">Lab:Clobbering DOM attributes to bypass HTML filters
@@ -4480,7 +4480,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>把它当作评论提交&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227152312.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200227152312.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是如果直接交给用户点击的话是不会触发的，因为评论是由 aJax 请求拿到的，直接访问的话，Dom 树是还没有评论的，得需要等待 JS 执行完成才会有评论，所以这里我们需要一个延时或者阻塞的操作。比较简单的是利用&lt;code>iframe&lt;/code>进行&lt;code>setTimeout&lt;/code>&lt;/p>
@@ -4493,7 +4493,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里要注意一定要得等评论加载完毕再用&lt;code>#x&lt;/code>选择&lt;code>form&lt;/code>，所以这里的 500ms 需要根据自己的网络情况适当调整。&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200227153949.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200227153949.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="cve-2017-0928-bypassing-sanitization-using-dom-clobbering">CVE-2017-0928 Bypassing sanitization using DOM clobbering

@@ -1473,7 +1473,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>如果需要用户验证就加上&lt;code>--user&lt;/code>选项即可，不需要的话就不用，结果如图所示：&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000343.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20210510000343.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以清楚的看到在显式 FTPS 在使用&lt;code>AUTH SSL&lt;/code>命令之后才与服务器建立的 TLS 连接，并在&lt;code>LIST&lt;/code>之后我们可以看到重新使用了 TLS Session 。&lt;/p>
@@ -1580,7 +1580,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这里我另外增加了&lt;code>--tls-max 1.2&lt;/code>选项，因为在 TLS 1.3 当中， Session ID 传输在加密过程中，不便观察，而 TLS 1.2 可以在 Server Hello 消息中看到 TLS Server 设置的 Session ID，所以这里我们使用&lt;code>--tls-max 1.2&lt;/code>迫使 curl 最大使用 TLS 1.2 版本。&lt;/p>
 &lt;p>我们就可以观察到如下图所示现象：&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510123202.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20210510123202.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到也是在使用&lt;code>PASV&lt;/code>命令之后，也就是数据传输阶段时，重新使用了 Session ID 进行建立 TLS 会话。&lt;/p>
@@ -1766,7 +1766,7 @@ loading="lazy"
 &lt;p>既然是要写入 memcached 我们不难想到 2020 年 black hat 上的议题 When TLS Hack You ，其中作者使用的 demo 就是通过 TLS 配合 DNS Rebinding 来对 memcached 发起 SSRF 攻击，所以如何将我们的 payload 写入到 memcached 当中基本有了个大致的思路，问题是如何实现利用这个思路呢？&lt;/p>
 &lt;p>我们再来看看如果真是使用 TLS Poison 攻击的话，使用 HTTPS 是不是就可以满足以上两个限制的条件了呢？确实如此，&lt;code>https://&lt;/code>并没有使用其他禁止的字符，并且我们可以通过 HTTPS 让题目的&lt;code>file_get_contents&lt;/code>得到任意内容，包括满足他所需要的&lt;code>001e# service=git-upload-pack\n&lt;/code>这个条件。&lt;/p>
 &lt;p>所以似乎看起来 TLS Poison 正是这个题目的关键！如果是这样的话，接下来我们就需要确定，我们应该使用 &lt;code>file_get_contents&lt;/code>还是 git 来进行操作呢？也就是说哪一个支持 TLS 会话重用这个特性呢？我们知道&lt;code>file_get_contents&lt;/code>并没有依赖 libcurl ，我们如果直接查看 PHP 源代码有点麻烦，不如直接通过让其访问我们 TLS Poison Demo 来测试，如果能有支持 TLS 会话重用，在 302 时，也就是第二次访问我们 TLS Server 即会带上 Session ID ，这个我们可以直接用wireshark 本地抓包即可看到了。但是经过测试其实我们可以看到&lt;code>file_get_contents&lt;/code>并没有在第二次 TLS 会话时重用 Session ID，如图所示：&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510000326.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20210510000326.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以接下来我们就只能寄希望于 git 了，那么 git 是否支持 TLS 重用会话？怎么确定 git 是否支持 TLS 会话重用呢？我们能不能确定 git 使用的是什么网络请求资源依赖库呢？比如 libcurl ？如果是 libcurl ，我们就好办了，因为明确知道 libcurl 对于 HTTPS 的支持是可以支持会话重用的，至少对于 OpenSSL 或者 GnuTLS 来说，都是支持此项特性的。&lt;/p>
@@ -1855,7 +1855,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>这里因为题目设置了 sandbox ，占用了 10 字节，而 TLS 1.2 中的 SessionID 局限于 32 字节，所以我们没办法直接使用&lt;code>;/readflag&lt;/code>，否则会超出长度，直接使用&lt;code>;/r*&lt;/code>也可以执行读取 flag 命令。最后打包整理的 Exp 放在：https://github.com/ZeddYu/TLS-poison/tree/master/Practice1-hxp2020/solution1&lt;/p>
 &lt;p>在自己的服务器上搭建好 TLS 服务器之后，最后用 exp.py 自动发包就能拿到 flag 了：&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510212104.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20210510212104.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="solution-2">Solution 2
@@ -1882,7 +1882,7 @@ loading="lazy"
 &lt;p>&lt;strong>PS：这里 FTP 服务记得要完整实现对 PASV 之后的命令处理，否则攻击失败。&lt;/strong>&lt;/p>
 &lt;p>天知道这个坑了我多久&amp;hellip;当时死活都不能复现，问作者 0xbb 也不知道什么情况，又是排 curl 版本，又是排 git 版本，又是排 OpenSSL ，又是排 GnuTLS ，反正各种排 bug ，万念俱灰，最后才找到这个地方&amp;hellip;简直&lt;/p>
 &lt;p>这里我自己编译了一个存在&lt;code>pasv&lt;/code>漏洞的 curl 调试，访问我们的 ftps 服务器之后就会对我们 127.0.0.1:11211 进行 TLS 会话重用，就会将我们的 payload 发送到 11211 端口了：&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210510214036.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20210510214036.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>写入之后基本上就没有什么问题了。&lt;/p>
@@ -1920,7 +1920,7 @@ loading="lazy"
 &lt;/li>
 &lt;/ul>
 &lt;p>至此，完成这个题目的 FTPS 解法。exp 效果图如下：&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20210515015923.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20210515015923.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="something-else">Something else

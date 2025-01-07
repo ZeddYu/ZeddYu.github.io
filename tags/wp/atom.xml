@@ -27,19 +27,19 @@
 &lt;ol>
 &lt;li>
 &lt;p>登录失败的时候会直接无过滤地回显用户名，这里有一处 HTML 注入&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423014836.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200423014836.png"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>在提交 issue 处，有一项需要提交 image URL 的地方也存在着 HTML 注入&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200423021048.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200423021048.png"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>题目设置还会利用 session 来存储一些 HTML 元素，例如我们在同一个 session 先登录，再用这个 session 发送一个登录失败的请求，刷新我们已登录的页面我们就可以看到：&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424222148.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200424222148.png"
 loading="lazy"
 >&lt;/p>
 &lt;/li>
@@ -290,7 +290,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;/blockquote>
 &lt;p>所以我们只需要在页面加入一个&lt;code>&amp;lt;em&amp;gt;&lt;/code>标签，即可把内容拆分为单个字母，效果如下：&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200424182529.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200424182529.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>所以这时候我们就可以利用&lt;code>#:~:text=P-,C,T,-F&lt;/code>进行选中了。&lt;/p>
@@ -794,7 +794,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>但是我并没有在 uBlock 看到相关的配置，&lt;code>postMessage&lt;/code>都是使用的默认配置，然后关于默认配置我也查看了部分 Chromium 的源码，对于 UserActivation 默认配置是 false 的&lt;/p>
-&lt;p>&lt;img src="https://zeddyuimg.oss-cn-shanghai.aliyuncs.com/20200425014346.png"
+&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200425014346.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是我们通过 &lt;a class="link" href="#Verification" >Verification&lt;/a> 环节测试得到的结果确实需要 uBlock 来进行，由于自己时间并不是特别多，最近花太多时间在这题的复盘上，所以最近不打算再深究这部分的内容了，这部分的内容不仅涉及到 User Activation ，还涉及到一些关于 User Activation 抽象模型的代码实现，如果要深究的话就需要花比较多的时间了。&lt;/p>

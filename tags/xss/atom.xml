@@ -118,23 +118,23 @@ position: relative;
 &lt;h2 id="simple-example">Simple Example
 &lt;/h2>&lt;p>其实 Dom Clobbering 比较简单，我们看几个简单的例子就能知道它是干什么了的。&lt;/p>
 &lt;h3 id="exmaple-1---create">Exmaple 1 - Create
-&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200225164841.png"
+&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200225164841.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>从图中我们可以看到通过 id 或者 name 属性，我们可以在&lt;code>document&lt;/code>或者&lt;code>window&lt;/code>对象下创建一个对象。&lt;/p>
 &lt;h3 id="example-2---overwrite">Example 2 - Overwrite
-&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200222145150.png"
+&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200222145150.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到&lt;code>document.cookie&lt;/code>已经被我们用 img 标签给覆盖了&lt;/p>
 &lt;h3 id="example-3---overwrite2">Example 3 - Overwrite2
-&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200225165624.png"
+&lt;/h3>&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200225165624.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到我们通过多层覆盖掉了&lt;code>document.body.appendChild&lt;/code>方法。&lt;/p>
 &lt;h2 id="attack-method">Attack Method
 &lt;/h2>&lt;p>既然我们可以通过这种方式去创建或者覆盖 document 或者 window 对象的某些值，但是看起来我们举的例子只是利用标签创建或者覆盖最终得到的也是标签，是一个&lt;code>HTMLElment&lt;/code>对象。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200225170736.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200225170736.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是对于大多数情况来说，我们可能更需要将其转换为一个可控的字符串类型，以便我们进行操作。&lt;/p>
@@ -155,7 +155,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们可以得到两种标签对象：&lt;code>HTMLAreaElement (&amp;lt;area&amp;gt;)&lt;/code>&amp;amp; &lt;code>HTMLAnchorElement (&amp;lt;a&amp;gt;)&lt;/code>，这两个标签对象我们都可以利用&lt;code>href&lt;/code>属性来进行字符串转换。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200225225659.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200225225659.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="htmlcollection">HTMLCollection
@@ -226,7 +226,7 @@ getter Element? namedItem(DOMString name);
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200225232907.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200225232907.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="html-relationships">HTML Relationships
@@ -536,7 +536,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>我们再随便评论一下就好了，就可以触发我们构造的 XSS 了。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200226153957.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200226153957.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="labclobbering-dom-attributes-to-bypass-html-filters">Lab:Clobbering DOM attributes to bypass HTML filters
@@ -878,7 +878,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>把它当作评论提交&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200227152312.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200227152312.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是如果直接交给用户点击的话是不会触发的，因为评论是由 aJax 请求拿到的，直接访问的话，Dom 树是还没有评论的，得需要等待 JS 执行完成才会有评论，所以这里我们需要一个延时或者阻塞的操作。比较简单的是利用&lt;code>iframe&lt;/code>进行&lt;code>setTimeout&lt;/code>&lt;/p>
@@ -891,7 +891,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>这里要注意一定要得等评论加载完毕再用&lt;code>#x&lt;/code>选择&lt;code>form&lt;/code>，所以这里的 500ms 需要根据自己的网络情况适当调整。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200227153949.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200227153949.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="cve-2017-0928-bypassing-sanitization-using-dom-clobbering">CVE-2017-0928 Bypassing sanitization using DOM clobbering
@@ -1802,7 +1802,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">--&amp;gt;&amp;lt;&lt;/span>&lt;span class="n">svg&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">onload&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">alert&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200131165018.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200131165018.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>但是这里我们并不能直接传入 HTML 编码绕过，得需要加一个 img 标签利用其属性进行绕过，为什么呢？&lt;/p>
@@ -1861,11 +1861,11 @@ loading="lazy"
 >data state&lt;/a>，也就是结束了注释解析状态回到了最开始的 HTML 解析状态，这样就导致我们就成功逃逸了注释符。&lt;/p>
 &lt;h3 id="difficult-version">Difficult Version
 &lt;/h3>&lt;p>再过滤了实体编码&lt;code>&amp;amp;#;&lt;/code>之后我们要怎么绕过呢？我们先给出一个 Trick ，在这里我们可以使用&lt;code>&amp;lt;?&lt;/code>进行绕过。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200131165157.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200131165157.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>可以看到我们在使用了&lt;code>&amp;lt;?&lt;/code>之后成功把 p 标签逃逸了出来，可是为什么呢？我们可以输出第一步的&lt;code>template.innerHTML&lt;/code>看看&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200131165902.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200131165902.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们可以发现在第一步渲染的时候，传入的&lt;code>&amp;lt;?&lt;/code>已经变成了&lt;code>&amp;lt;!--?--&amp;gt;&lt;/code>，存在&lt;code>--&amp;gt;&lt;/code>可以将注释闭合。可是这是为什么呢？&lt;/p>
@@ -2161,7 +2161,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>利用题目中原有的&lt;code>$(&amp;quot;#keanu&amp;quot;).popover(&amp;quot;show&amp;quot;);&lt;/code>来触发我们的 popover ，我们暂且先注释掉题目当中的延迟关闭的功能以便于我们观察。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200201165048.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200201165048.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>尽管 eval 执行出错，但是我们可以发现 number 标签当中确实被我们注入了一些其他的内容&lt;/p>
@@ -2193,7 +2193,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">number=&amp;#39;&amp;amp;name=&amp;lt;button id%3D&amp;#34;keanu&amp;#34; data-toggle%3D&amp;#34;popover&amp;#34; data-container%3D&amp;#34;%23number&amp;#34; data-content%3D&amp;#34;&amp;#39;%3Balert(1)%3B%2F%2F&amp;#34;&amp;gt;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200201170536.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200201170536.png"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="ww3">WW3
@@ -2384,7 +2384,7 @@ loading="lazy"
 &lt;/div>&lt;p>用来进行 DOM 元素操作等，看起来我们的目标就是&lt;code>setTimeout&lt;/code>函数中通过&lt;code>$(&amp;quot;#notify&amp;quot;).html(html)&lt;/code>来执行代码了，所以我们可能需要想办法把 notify 参数设置为 true。&lt;/p>
 &lt;h3 id="dom-clobbering">DOM Clobbering
 &lt;/h3>&lt;p>首先我们先来看看几个比较有趣的例子：&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200201223309.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200201223309.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>根据 MDN 文档&lt;/p>
@@ -2394,11 +2394,11 @@ loading="lazy"
 >same origin policy&lt;/a>.&lt;/p>
 &lt;/blockquote>
 &lt;p>这里的&lt;code>document.domain&lt;/code>并没有获取到我的域名&lt;code>zedd.vv&lt;/code>，反而是获取到了 img 标签，然后我们可以直接输出 document 对象来看看是怎么回事&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200201224629.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200201224629.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>通过这个例子我们可以知道，可以通过一些标签的 id(name) 属性来控制 document(window) 通过 DOM API(BOM API) 获取到的某个东西&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200201224817.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200201224817.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>我查阅过相关资料，也询问过一些前端的专业人员，这里给我的解释是&amp;quot;document 和 window 两个变量，其实是 DOM 和 BOM 的规范，一般来说这两个不应该被当做普通的 JS 对象，但是规范与实现不同&amp;quot;，&amp;ldquo;都是因为上古遗留问题，现在哪有直接写 document.xxx 来获取元素的，TS 和 eslint 都会报错&amp;rdquo;。&lt;/p>
@@ -2573,7 +2573,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200202004222.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200202004222.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>原理都是一样的，这里&lt;code>test&lt;/code>函数在&lt;code>onerror&lt;/code>作用域找到了 x 变量，所以就不会再去找 window 作用域下的 &lt;code>x=false&lt;/code>变量了，所以本题我们需要引入一个&lt;code>name=notify&lt;/code>的标签来“覆盖”掉原来的 notify 变量。&lt;/p>
@@ -2615,7 +2615,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20200201222425.png"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.world/img/20200201222425.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="jquerys-mxss">JQuery&amp;rsquo;s &amp;lsquo;mXSS&amp;rsquo;
@@ -3900,7 +3900,7 @@ alt="http"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>当前目录下随便放置一个文件提供引入即可，然后我们可以发现&lt;code>iframe&lt;/code>当中其实就是个 html 页面&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610009928.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190610009928.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>然后我们尝试对其进行修改&lt;/p>
@@ -3912,7 +3912,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">frames&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">head&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;hasaki!&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003468.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190610003468.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>我们就可以在&lt;code>iframe&lt;/code>的页面中发现&lt;code>&amp;lt;head&amp;gt;&lt;/code>标签内容已经被我们改成了&lt;code>hasaki!&lt;/code>&lt;/p>
@@ -3979,7 +3979,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>可以发现执行了 javascript 代码&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610004313.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190610004313.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2">Example 2
@@ -5285,7 +5285,7 @@ be decoded either&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>得到&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005160.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190610005160.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-2-1">Example 2
@@ -5785,7 +5785,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">id,$b-&amp;gt;id);}system(&amp;#39;ls&amp;#39;);//
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610003780.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190610003780.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h4 id="example-3-2">Example 3
@@ -5818,7 +5818,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>使用&lt;code>/e&lt;/code>修饰符，&lt;code>preg_replace&lt;/code>会将&lt;code>replacement&lt;/code>参数当作 PHP 代码执行，也就是&lt;code>$_GET['new']&lt;/code>&lt;/p>
 &lt;p>所以用&lt;code>new=system('id');&amp;amp;pattern=/test/e&amp;amp;base=jutst test&lt;/code>，即可执行任意命令。&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008506.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190610008506.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="file-upload">File Upload
@@ -5896,7 +5896,7 @@ loading="lazy"
 &lt;/div>&lt;p>于是用&lt;code>%0a&lt;/code>换行执行命令&lt;/p>
 &lt;h4 id="example-3-4">Example 3
 &lt;/h4>&lt;p>直接在后面加貌似会被先过滤跳转，放到 burp 里面加就行了&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610008206.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190610008206.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>看下源代码&lt;/p>

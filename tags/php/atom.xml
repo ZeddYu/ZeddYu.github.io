@@ -24,11 +24,11 @@
 &lt;/h3>&lt;p>触发函数有了，那么接下里就是触发条件了。既然是与文件有关的函数均能触发 phar 反序列化，那么伪协议呢？&lt;/p>
 &lt;p>通过 @zsx 师傅的挖掘，发现基本上大多数 PHP stream 都可以通过 phar:// 来触发，但是就是没有提及 php:// 伪协议。&lt;/p>
 &lt;p>So，让我们用最常见的 &lt;code>php://filter/read=convert.base64-encode/resource=&lt;/code>试一下&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820121822.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820121822.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>好的，那么再看看文件包含如何&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820121956.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820121956.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>一点也不意外，我们可以通过 php://filter 来绕过一些开头限制进行 phar 反序列化&lt;/p>
@@ -44,15 +44,15 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>禁用了外部实体，虽然题目给出的反射类确实可以反射，而且也可以进行 XXE，也有过相关的 CTF题 &lt;a class="link" href="https://www.anquanke.com/post/id/170299#h2-2" target="_blank" rel="noopener"
 >Annoying class&lt;/a>，虽然控制了 /flag 读取权限，可是为什么还要禁用外部实体呢？难不成 XXE 也可以反序列化？&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150125.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820150125.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>Test.xml 中的内容就是上面 &lt;code>$xml&lt;/code>的内容&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150346.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820150346.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>当然 php://filter 在这里也适用&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820150839.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820150839.png"
 loading="lazy"
 >&lt;/p>
 &lt;h3 id="mysql">Mysql
@@ -102,7 +102,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;p>其实也就是 @LoRexxar&amp;rsquo; 在 Tsec 上进行的分享 &lt;a class="link" href="https://paper.seebug.org/998/" target="_blank" rel="noopener"
 >Comprehensive analysis of the mysql client attack chain&lt;/a> 的内容了，@zsx 文章中指出&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190820151817.png"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820151817.png"
 loading="lazy"
 >&lt;/p>
 &lt;p>既然可以这么触发，那么 Rogue Mysql 的攻击当然适用于 phar 反序列化了。&lt;/p>

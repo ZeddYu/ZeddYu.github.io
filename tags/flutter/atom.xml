@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Flutter on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/flutter/</link><description>Recent content in Flutter on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 25 Feb 2019 10:25:35 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/flutter/atom.xml" rel="self" type="application/rss+xml"/><item><title>Flutter packages get 424问题解决方法</title><link>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</link><pubDate>Mon, 25 Feb 2019 10:25:35 +0000</pubDate><guid>https://zeddyu.github.io/p/flutter-packages-get-424%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</guid><description>&lt;p>在我一个项目当中使用&lt;code>flutter packages get &lt;/code>遇到了 HTTP 424 的错误，找了很多方法都没有解决方法，个人解决了之后就此记录下来。&lt;/p>
 &lt;h3 id="问题描述">问题描述
 &lt;/h3>&lt;p>使用&lt;code>flutter packages get -v&lt;/code>打印出步骤错误&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610002591.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190610002591.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现 404 错误&lt;/p>
 &lt;h3 id="发现问题">发现问题
 &lt;/h3>&lt;p>按照提示，使用&lt;code>pub --trace --verbosity=warning --verbose get --no-precompile&lt;/code>打印出更详细的步骤&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.one/img/20190610005957.jpg"
+&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190610005957.jpg"
 loading="lazy"
 >&lt;/p>
 &lt;p>发现老是在获取&lt;code>path_provideer 0.5.0+1&lt;/code>这里报出了 424 的错误，一开始以为是不是镜像并没有这个包，自己也去&lt;code>pub.flutter-io.cn&lt;/code>找了一下，确实有&lt;code>path_provideer 0.5.0+1&lt;/code>这个版本的包。&lt;/p>

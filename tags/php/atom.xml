@@ -1,146 +1,146 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Php on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/php/</link><description>Recent content in Php on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Aug 2019 20:41:16 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/php/atom.xml" rel="self" type="application/rss+xml"/><item><title>SUCTF 2019 出题笔记 &amp; phar 反序列化的一些拓展</title><link>https://zeddyu.github.io/p/suctf-2019-%E5%87%BA%E9%A2%98%E7%AC%94%E8%AE%B0-phar-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8B%93%E5%B1%95/</link><pubDate>Sat, 24 Aug 2019 20:41:16 +0000</pubDate><guid>https://zeddyu.github.io/p/suctf-2019-%E5%87%BA%E9%A2%98%E7%AC%94%E8%AE%B0-phar-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8B%93%E5%B1%95/</guid><description>&lt;p>这次我给 SUCTF 出了三道 Web，分别是 CheckIn 、 pythonginx 、 Upload Labs 2，下面聊一下出题时候的一些思路以及随想，还有最近对于 phar 的一些深入挖掘。&lt;/p>
-&lt;h2 id="checkin">CheckIn
-&lt;/h2>&lt;p>关于 CheckIn 这道题，是我在看 php 文档时候翻到的一个关于 .user.ini 的&lt;a class="link" href="https://www.php.net/manual/en/configuration.file.per-user.php" target="_blank" rel="noopener"
->说明&lt;/a>，然后参考了 &lt;a class="link" href="https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html" target="_blank" rel="noopener"
->user.ini文件构成的PHP后门&lt;/a>，因为是比较久远的东西了，而且我看很多什么上传教程，甚至我认为总结比较全面的&lt;a class="link" href="https://github.com/c0ny1/upload-labs" target="_blank" rel="noopener"
-> upload labs &lt;/a>都未曾提及到这个 trick ，而且回忆了一下以及粗略搜了一下，都没有发现有过 CTF 出过这个 trick ，但是又比较简单，我猜肯定还有些人并不知道这个 trick ，所以就放在了 web1 作为签到的题目。&lt;/p>
-&lt;p>出题的时候直接拿了国赛华东北赛区一个题目源码来改的，原本是想直接 ban 掉&lt;code>htaccess&lt;/code>的，节省大家的时间，不要让大家的思路跑偏。结果打错了成了&lt;code>htacess&lt;/code>&amp;hellip;然后就有一群师傅跑偏了&amp;hellip;又因为权限的问题还被搅屎了&amp;hellip;给师傅们谢罪了哐哐哐&lt;/p>
-&lt;h2 id="pythonginx">pythonginx
-&lt;/h2>&lt;p>pythonginx 没什么特别好说的&amp;hellip;是我思维太局限了&amp;hellip;导致变成了猜 flag 位置的题，这题我是我前几天在 black hat 上看到 &lt;a class="link" href="https://i.blackhat.com/USA-19/Thursday/us-19-Birch-HostSplit-Exploitable-Antipatterns-In-Unicode-Normalization.pdf" target="_blank" rel="noopener"
->us-19-Birch-HostSplit-Exploitable-Antipatterns-In-Unicode-Normalization.pdf&lt;/a> 一个比较好玩的东西，正好拿来出题分享给大家，出题思路在于用 ℆ 这个字符去读取 &lt;code>/user&lt;/code>目录下的敏感文件。&lt;/p>
-&lt;h2 id="upload-labs-2">Upload Labs 2
-&lt;/h2>&lt;p>其实这题最后 admin.php 应该用的&lt;code>__wakeup&lt;/code>&amp;hellip;不应该用的&lt;code>__destruct&lt;/code>&amp;hellip;自己半夜出题不是很清醒&amp;hellip;验题的师傅也没看出问题，搞得考察的最后一环就没了&amp;hellip;&lt;/p>
-&lt;p>这题其实琢磨了挺久，但是由于没有想到有什么好的 pop 链，就出题出成了这个亚子&amp;hellip;&lt;/p>
-&lt;h3 id="finfo_file">FINFO_FILE
-&lt;/h3>&lt;p>最近研究了一波 phar 的反序列化，看了比较多的文章，其中我觉得写的很棒，对 CTFer 特别有用的就是 @seaii 的文章 &lt;a class="link" href="https://paper.seebug.org/680/" target="_blank" rel="noopener"
->利用 phar 拓展 php 反序列化漏洞攻击面&lt;/a> &amp;amp; @zsx 的文章 &lt;a class="link" href="https://blog.zsxsoft.com/post/38" target="_blank" rel="noopener"
->Phar与Stream Wrapper造成PHP RCE的深入挖掘&lt;/a>，通过在这两篇文章的揭露，我们可以发掘到比较多的函数，当我在自己进行研究的时候，发现了&lt;/p>
-&lt;p>&lt;code>finfo_file&lt;/code>/&lt;code>finfo_buffer&lt;/code>/&lt;code>mime_content_type&lt;/code>&lt;/p>
-&lt;p>均通过&lt;code>_php_finfo_get_type&lt;/code>间接调用了关键函数&lt;code>php_stream_open_wrapper_ex&lt;/code>，导致均可以使用&lt;code>phar://&lt;/code>触发 phar 反序列化，所以这里我选择了&lt;code>finfo_file&lt;/code>作为 phar 反序列化的触发函数。&lt;/p>
-&lt;p>三个函数在 &lt;a class="link" href="https://github.com/php/php-src/blob/47b95bd83c8f2b492a32cdfa58247c197271d248/ext/fileinfo/fileinfo.c#L599" target="_blank" rel="noopener"
->fileinfo.c 599 行&lt;/a>中 通过 &lt;code>_php_finfo_get_type&lt;/code> 定义，在 552 行中 &lt;code>_php_finfo_get_types&lt;/code> 调用了 &lt;a class="link" href="https://github.com/php/php-src/blob/47b95bd83c8f2b492a32cdfa58247c197271d248/ext/fileinfo/fileinfo.c#L552" target="_blank" rel="noopener"
->php_stream_open_wrapper_ex&lt;/a>，&lt;/p>
-&lt;h3 id="phpfilter">php://filter
-&lt;/h3>&lt;p>触发函数有了，那么接下里就是触发条件了。既然是与文件有关的函数均能触发 phar 反序列化，那么伪协议呢？&lt;/p>
-&lt;p>通过 @zsx 师傅的挖掘，发现基本上大多数 PHP stream 都可以通过 phar:// 来触发，但是就是没有提及 php:// 伪协议。&lt;/p>
-&lt;p>So，让我们用最常见的 &lt;code>php://filter/read=convert.base64-encode/resource=&lt;/code>试一下&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820121822.png"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Php on Zeddy's Blog</title><link>https://zeddyu.github.io/tags/php/</link><description>Recent content in Php on Zeddy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Aug 2019 20:41:16 +0000</lastBuildDate><atom:link href="https://zeddyu.github.io/tags/php/atom.xml" rel="self" type="application/rss+xml"/><item><title>SUCTF 2019 出题笔记 &amp; phar 反序列化的一些拓展</title><link>https://zeddyu.github.io/p/suctf-2019-%E5%87%BA%E9%A2%98%E7%AC%94%E8%AE%B0-phar-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8B%93%E5%B1%95/</link><pubDate>Sat, 24 Aug 2019 20:41:16 +0000</pubDate><guid>https://zeddyu.github.io/p/suctf-2019-%E5%87%BA%E9%A2%98%E7%AC%94%E8%AE%B0-phar-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8B%93%E5%B1%95/</guid><description>&lt;p&gt;这次我给 SUCTF 出了三道 Web，分别是 CheckIn 、 pythonginx 、 Upload Labs 2，下面聊一下出题时候的一些思路以及随想，还有最近对于 phar 的一些深入挖掘。&lt;/p&gt;
+&lt;h2 id="checkin"&gt;CheckIn
+&lt;/h2&gt;&lt;p&gt;关于 CheckIn 这道题，是我在看 php 文档时候翻到的一个关于 .user.ini 的&lt;a class="link" href="https://www.php.net/manual/en/configuration.file.per-user.php" target="_blank" rel="noopener"
+&gt;说明&lt;/a&gt;，然后参考了 &lt;a class="link" href="https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html" target="_blank" rel="noopener"
+&gt;user.ini文件构成的PHP后门&lt;/a&gt;，因为是比较久远的东西了，而且我看很多什么上传教程，甚至我认为总结比较全面的&lt;a class="link" href="https://github.com/c0ny1/upload-labs" target="_blank" rel="noopener"
+&gt; upload labs &lt;/a&gt;都未曾提及到这个 trick ，而且回忆了一下以及粗略搜了一下，都没有发现有过 CTF 出过这个 trick ，但是又比较简单，我猜肯定还有些人并不知道这个 trick ，所以就放在了 web1 作为签到的题目。&lt;/p&gt;
+&lt;p&gt;出题的时候直接拿了国赛华东北赛区一个题目源码来改的，原本是想直接 ban 掉&lt;code&gt;htaccess&lt;/code&gt;的，节省大家的时间，不要让大家的思路跑偏。结果打错了成了&lt;code&gt;htacess&lt;/code&gt;&amp;hellip;然后就有一群师傅跑偏了&amp;hellip;又因为权限的问题还被搅屎了&amp;hellip;给师傅们谢罪了哐哐哐&lt;/p&gt;
+&lt;h2 id="pythonginx"&gt;pythonginx
+&lt;/h2&gt;&lt;p&gt;pythonginx 没什么特别好说的&amp;hellip;是我思维太局限了&amp;hellip;导致变成了猜 flag 位置的题，这题我是我前几天在 black hat 上看到 &lt;a class="link" href="https://i.blackhat.com/USA-19/Thursday/us-19-Birch-HostSplit-Exploitable-Antipatterns-In-Unicode-Normalization.pdf" target="_blank" rel="noopener"
+&gt;us-19-Birch-HostSplit-Exploitable-Antipatterns-In-Unicode-Normalization.pdf&lt;/a&gt; 一个比较好玩的东西，正好拿来出题分享给大家，出题思路在于用 ℆ 这个字符去读取 &lt;code&gt;/user&lt;/code&gt;目录下的敏感文件。&lt;/p&gt;
+&lt;h2 id="upload-labs-2"&gt;Upload Labs 2
+&lt;/h2&gt;&lt;p&gt;其实这题最后 admin.php 应该用的&lt;code&gt;__wakeup&lt;/code&gt;&amp;hellip;不应该用的&lt;code&gt;__destruct&lt;/code&gt;&amp;hellip;自己半夜出题不是很清醒&amp;hellip;验题的师傅也没看出问题，搞得考察的最后一环就没了&amp;hellip;&lt;/p&gt;
+&lt;p&gt;这题其实琢磨了挺久，但是由于没有想到有什么好的 pop 链，就出题出成了这个亚子&amp;hellip;&lt;/p&gt;
+&lt;h3 id="finfo_file"&gt;FINFO_FILE
+&lt;/h3&gt;&lt;p&gt;最近研究了一波 phar 的反序列化，看了比较多的文章，其中我觉得写的很棒，对 CTFer 特别有用的就是 @seaii 的文章 &lt;a class="link" href="https://paper.seebug.org/680/" target="_blank" rel="noopener"
+&gt;利用 phar 拓展 php 反序列化漏洞攻击面&lt;/a&gt; &amp;amp; @zsx 的文章 &lt;a class="link" href="https://blog.zsxsoft.com/post/38" target="_blank" rel="noopener"
+&gt;Phar与Stream Wrapper造成PHP RCE的深入挖掘&lt;/a&gt;，通过在这两篇文章的揭露，我们可以发掘到比较多的函数，当我在自己进行研究的时候，发现了&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;finfo_file&lt;/code&gt;/&lt;code&gt;finfo_buffer&lt;/code&gt;/&lt;code&gt;mime_content_type&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;均通过&lt;code&gt;_php_finfo_get_type&lt;/code&gt;间接调用了关键函数&lt;code&gt;php_stream_open_wrapper_ex&lt;/code&gt;，导致均可以使用&lt;code&gt;phar://&lt;/code&gt;触发 phar 反序列化，所以这里我选择了&lt;code&gt;finfo_file&lt;/code&gt;作为 phar 反序列化的触发函数。&lt;/p&gt;
+&lt;p&gt;三个函数在 &lt;a class="link" href="https://github.com/php/php-src/blob/47b95bd83c8f2b492a32cdfa58247c197271d248/ext/fileinfo/fileinfo.c#L599" target="_blank" rel="noopener"
+&gt;fileinfo.c 599 行&lt;/a&gt;中 通过 &lt;code&gt;_php_finfo_get_type&lt;/code&gt; 定义，在 552 行中 &lt;code&gt;_php_finfo_get_types&lt;/code&gt; 调用了 &lt;a class="link" href="https://github.com/php/php-src/blob/47b95bd83c8f2b492a32cdfa58247c197271d248/ext/fileinfo/fileinfo.c#L552" target="_blank" rel="noopener"
+&gt;php_stream_open_wrapper_ex&lt;/a&gt;，&lt;/p&gt;
+&lt;h3 id="phpfilter"&gt;php://filter
+&lt;/h3&gt;&lt;p&gt;触发函数有了，那么接下里就是触发条件了。既然是与文件有关的函数均能触发 phar 反序列化，那么伪协议呢？&lt;/p&gt;
+&lt;p&gt;通过 @zsx 师傅的挖掘，发现基本上大多数 PHP stream 都可以通过 phar:// 来触发，但是就是没有提及 php:// 伪协议。&lt;/p&gt;
+&lt;p&gt;So，让我们用最常见的 &lt;code&gt;php://filter/read=convert.base64-encode/resource=&lt;/code&gt;试一下&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://blogpic.zedy.club/img/20190820121822.png"
 loading="lazy"
->&lt;/p>
-&lt;p>好的，那么再看看文件包含如何&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820121956.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;好的，那么再看看文件包含如何&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://blogpic.zedy.club/img/20190820121956.png"
 loading="lazy"
->&lt;/p>
-&lt;p>一点也不意外，我们可以通过 php://filter 来绕过一些开头限制进行 phar 反序列化&lt;/p>
-&lt;h3 id="xxe-2-phar">XXE 2 phar
-&lt;/h3>&lt;p>还有以及神秘的 config.php 只有这么一句话：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">libxml_disable_entity_loader&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">true&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>禁用了外部实体，虽然题目给出的反射类确实可以反射，而且也可以进行 XXE，也有过相关的 CTF题 &lt;a class="link" href="https://www.anquanke.com/post/id/170299#h2-2" target="_blank" rel="noopener"
->Annoying class&lt;/a>，虽然控制了 /flag 读取权限，可是为什么还要禁用外部实体呢？难不成 XXE 也可以反序列化？&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820150125.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;一点也不意外，我们可以通过 php://filter 来绕过一些开头限制进行 phar 反序列化&lt;/p&gt;
+&lt;h3 id="xxe-2-phar"&gt;XXE 2 phar
+&lt;/h3&gt;&lt;p&gt;还有以及神秘的 config.php 只有这么一句话：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;libxml_disable_entity_loader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;禁用了外部实体，虽然题目给出的反射类确实可以反射，而且也可以进行 XXE，也有过相关的 CTF题 &lt;a class="link" href="https://www.anquanke.com/post/id/170299#h2-2" target="_blank" rel="noopener"
+&gt;Annoying class&lt;/a&gt;，虽然控制了 /flag 读取权限，可是为什么还要禁用外部实体呢？难不成 XXE 也可以反序列化？&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://blogpic.zedy.club/img/20190820150125.png"
 loading="lazy"
->&lt;/p>
-&lt;p>Test.xml 中的内容就是上面 &lt;code>$xml&lt;/code>的内容&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820150346.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;Test.xml 中的内容就是上面 &lt;code&gt;$xml&lt;/code&gt;的内容&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://blogpic.zedy.club/img/20190820150346.png"
 loading="lazy"
->&lt;/p>
-&lt;p>当然 php://filter 在这里也适用&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820150839.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;当然 php://filter 在这里也适用&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://blogpic.zedy.club/img/20190820150839.png"
 loading="lazy"
->&lt;/p>
-&lt;h3 id="mysql">Mysql
-&lt;/h3>&lt;p>而后就是 admin.php 中令人异常疑惑的四段代码了：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflect&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionClass&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">clazz&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">instance&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$reflect&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">newInstanceArgs&lt;/span>&lt;span class="p">();&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">clazz&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">func1&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">instance&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">arg1&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">clazz&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">func2&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">instance&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">arg2&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">clazz&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">func3&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">instance&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">arg3&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>有什么用呢？当然如果出题人xx地用&lt;code>__destruct&lt;/code>自然没什么用，如果用&lt;code>__wakeup&lt;/code>，自然得想办法去触发反序列化。然而这四段代码其实正好对应了：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">mysqli&lt;/span>&lt;span class="p">();&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$m&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">init&lt;/span>&lt;span class="p">();&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$m&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">real_connect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;ip&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;select 1&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;select 1&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;select 1&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">3306&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$m&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">query&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;select 1;&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>其实也就是 @LoRexxar&amp;rsquo; 在 Tsec 上进行的分享 &lt;a class="link" href="https://paper.seebug.org/998/" target="_blank" rel="noopener"
->Comprehensive analysis of the mysql client attack chain&lt;/a> 的内容了，@zsx 文章中指出&lt;/p>
-&lt;p>&lt;img src="https://blogpic.zdy.world/img/20190820151817.png"
+&gt;&lt;/p&gt;
+&lt;h3 id="mysql"&gt;Mysql
+&lt;/h3&gt;&lt;p&gt;而后就是 admin.php 中令人异常疑惑的四段代码了：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;ReflectionClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;clazz&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;instance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;$reflect&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;newInstanceArgs&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;ReflectionMethod&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;clazz&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;func1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;ReflectionMethod&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;clazz&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;func2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;ReflectionMethod&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;clazz&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;func3&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;arg3&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;有什么用呢？当然如果出题人xx地用&lt;code&gt;__destruct&lt;/code&gt;自然没什么用，如果用&lt;code&gt;__wakeup&lt;/code&gt;，自然得想办法去触发反序列化。然而这四段代码其实正好对应了：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;mysqli&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$m&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;init&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$m&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;real_connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ip&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;select 1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;select 1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;select 1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3306&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$m&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;query&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;select 1;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;其实也就是 @LoRexxar&amp;rsquo; 在 Tsec 上进行的分享 &lt;a class="link" href="https://paper.seebug.org/998/" target="_blank" rel="noopener"
+&gt;Comprehensive analysis of the mysql client attack chain&lt;/a&gt; 的内容了，@zsx 文章中指出&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://blogpic.zedy.club/img/20190820151817.png"
 loading="lazy"
->&lt;/p>
-&lt;p>既然可以这么触发，那么 Rogue Mysql 的攻击当然适用于 phar 反序列化了。&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflect&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionClass&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Mysqli&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$sql&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nv">$reflect&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">newInstanceArgs&lt;/span>&lt;span class="p">();&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Mysqli&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;init&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$sql&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$arr&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Mysqli&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;real_connect&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$sql&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;ip&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;root&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;123456&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;test&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;3306&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">ReflectionMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Mysqli&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;query&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$reflectionMethod&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="na">invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$sql&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;select 1&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="bonus-php-is-the-best">Bonus: PHP is the best!
-&lt;/h3>&lt;p>&lt;a class="link" href="https://bugs.php.net/bug.php?id=77496" target="_blank" rel="noopener"
->mysqli-&amp;gt;real_connect() overwrites MYSQLI_OPT_LOCAL_INFILE setting&lt;/a>&lt;/p>
-&lt;h3 id="something">Something
-&lt;/h3>&lt;p>总之，这个题目我先分享给大家的点就是这些了，这个题我自己认为自己出的也不是很好，整个构造链没有设计的特别好，参考了比较多的题，比如 2018 N1CTF easy &amp;amp; hard php，2018 LCTF T4lk 1s ch34p,sh0w m3 the sh31l 等等赛题，我觉得这些都是很优质的赛题，我也想向这些赛题去努力，可惜由于自己的知识面以及知识深度的不够，还不能做到那种赛题的程度，尤其是 @K0rz3n 师傅的出题 &lt;a class="link" href="https://www.k0rz3n.com/2018/11/19/LCTF%202018%20T4lk%201s%20ch34p,sh0w%20m3%20the%20sh31l%20%e8%af%a6%e7%bb%86%e5%88%86%e6%9e%90/" target="_blank" rel="noopener"
->blog&lt;/a> ，我前前前后后读了很多遍，最后还是没有做到像 @K0rz3n &amp;amp; @wupco 师傅那样的出题深度，难以望其项背。&lt;/p>
-&lt;h2 id="conclusion">Conclusion
-&lt;/h2>&lt;p>最后，如果有小伙伴希望与我一起交流探索 phar 的一些小 trick 或者交流一些其他知识，欢迎来信：zeddyu.lu#gmail.com，如果大家有意愿加入 SU，也欢迎来信到：suers_xctf#126.com&lt;/p>
-&lt;p>最后的最后，很感谢大家的不杀之恩，这次 SUCTF 的举办主要依靠的是新一代队员的努力，由于新一代队员在运维、出题方面经验都不是特别老道，所以在比赛过程中产生了些许意外 &amp;amp; 失误，希望大家多多见谅，在这里给体验不好的师傅们谢罪了，哐哐哐，但是我们也会向着更好的方向努力，带给师傅们更好的比赛体验。&lt;/p>
-&lt;p>像《头号玩家》里面的一句话一样，感谢大家抽时间来打我们的比赛！&lt;/p></description></item></channel></rss>
+&gt;&lt;/p&gt;
+&lt;p&gt;既然可以这么触发，那么 Rogue Mysql 的攻击当然适用于 phar 反序列化了。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;ReflectionClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Mysqli&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$sql&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;$reflect&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;newInstanceArgs&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;ReflectionMethod&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Mysqli&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;init&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sql&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$arr&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;ReflectionMethod&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Mysqli&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;real_connect&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sql&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;ip&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;root&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;test&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;3306&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;ReflectionMethod&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Mysqli&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;query&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$reflectionMethod&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sql&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;select 1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="bonus-php-is-the-best"&gt;Bonus: PHP is the best!
+&lt;/h3&gt;&lt;p&gt;&lt;a class="link" href="https://bugs.php.net/bug.php?id=77496" target="_blank" rel="noopener"
+&gt;mysqli-&amp;gt;real_connect() overwrites MYSQLI_OPT_LOCAL_INFILE setting&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="something"&gt;Something
+&lt;/h3&gt;&lt;p&gt;总之，这个题目我先分享给大家的点就是这些了，这个题我自己认为自己出的也不是很好，整个构造链没有设计的特别好，参考了比较多的题，比如 2018 N1CTF easy &amp;amp; hard php，2018 LCTF T4lk 1s ch34p,sh0w m3 the sh31l 等等赛题，我觉得这些都是很优质的赛题，我也想向这些赛题去努力，可惜由于自己的知识面以及知识深度的不够，还不能做到那种赛题的程度，尤其是 @K0rz3n 师傅的出题 &lt;a class="link" href="https://www.k0rz3n.com/2018/11/19/LCTF%202018%20T4lk%201s%20ch34p,sh0w%20m3%20the%20sh31l%20%e8%af%a6%e7%bb%86%e5%88%86%e6%9e%90/" target="_blank" rel="noopener"
+&gt;blog&lt;/a&gt; ，我前前前后后读了很多遍，最后还是没有做到像 @K0rz3n &amp;amp; @wupco 师傅那样的出题深度，难以望其项背。&lt;/p&gt;
+&lt;h2 id="conclusion"&gt;Conclusion
+&lt;/h2&gt;&lt;p&gt;最后，如果有小伙伴希望与我一起交流探索 phar 的一些小 trick 或者交流一些其他知识，欢迎来信：zeddyu.lu#gmail.com，如果大家有意愿加入 SU，也欢迎来信到：suers_xctf#126.com&lt;/p&gt;
+&lt;p&gt;最后的最后，很感谢大家的不杀之恩，这次 SUCTF 的举办主要依靠的是新一代队员的努力，由于新一代队员在运维、出题方面经验都不是特别老道，所以在比赛过程中产生了些许意外 &amp;amp; 失误，希望大家多多见谅，在这里给体验不好的师傅们谢罪了，哐哐哐，但是我们也会向着更好的方向努力，带给师傅们更好的比赛体验。&lt;/p&gt;
+&lt;p&gt;像《头号玩家》里面的一句话一样，感谢大家抽时间来打我们的比赛！&lt;/p&gt;</description></item></channel></rss>
